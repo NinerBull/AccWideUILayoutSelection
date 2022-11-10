@@ -83,8 +83,9 @@ AccWideUIFrame:SetScript("OnEvent", function(self, event, arg1, arg2)
 
 
 --(event == "ADDON_LOADED" and arg1 == "AccWideUIFrameLayoutSelection") or
-    if  (event == "PLAYER_LOGIN") or (event == "PLAYER_SPECIALIZATION_CHANGED") then
+    if  (event == "PLAYER_LOGIN") or (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
 
+	print()
 		
 		getLayoutsTable = C_EditMode.GetLayouts()
 		currentActiveLayout = getLayoutsTable["activeLayout"]
