@@ -1,8 +1,8 @@
 # Account Wide UI Layout Selection
 
-This addon allows you to use a UI layout that you've created with the Edit Mode in World of Warcraft, and automatically apply it to all of your characters and specs, instead of having to manually select a UI layout for each one.
+This addon allows you to use the same UI Layout you've created across all your characters and specs automatically, without needing to select it manually every time.
 
-To do this, simply install the addon, and choose your Edit Mode UI in the Edit Mode. Your selected UI Layout is saved and will be used for all your chars!
+To do this, simply install the addon, and your selected UI Layout is saved and will be used for all your chars! To change it, simply select another layout in Edit Mode.
 
 You can configure the addon by typing `/accwideui` into chat.
 

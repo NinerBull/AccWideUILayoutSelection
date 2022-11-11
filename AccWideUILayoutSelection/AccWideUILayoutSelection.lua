@@ -132,13 +132,22 @@ function AccWideUIFrame:InitializeOptions()
 		title2:SetPoint('TOPLEFT', 16, -36)
 		title2:SetText("Makes your chosen Edit Mode Layout apply for all of your characters and specs.")
 		
-		
-		
+		-- Add shortcut to Edit Mode
+		local b1 = CreateFrame("Button", nil, accWideUIPanel, "UIPanelButtonTemplate")
+		b1:SetSize(140 ,20)
+		b1:SetText("Open Edit Mode")
+		b1:SetPoint("TOPLEFT",16,-56)
+		b1:SetScript("OnClick", function()
+			if SettingsPanel:IsShown() then
+				HideUIPanel(SettingsPanel)
+			end
+			ShowUIPanel(EditModeManagerFrame)
+		end)
 		
 		
 		--Enable by Default
 		local chkEnableDefault = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-		chkEnableDefault:SetPoint("TOPLEFT", 16, -60)
+		chkEnableDefault:SetPoint("TOPLEFT", 16, -80)
 		chkEnableDefault.Text:SetText("Enable by default for all New Characters")
 		chkEnableDefault:HookScript("OnClick", function(_, btn, down)
 			AccWideUIData.enableAccountWide = chkEnableDefault:GetChecked()
@@ -148,7 +157,7 @@ function AccWideUIFrame:InitializeOptions()
 		
 		-- Show Text
 		local chkShowText = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-		chkShowText:SetPoint("TOPLEFT", 16, -85)
+		chkShowText:SetPoint("TOPLEFT", 16, -105)
 		chkShowText.Text:SetText("Output to chat when UI is changed by Account Wide UI")
 		chkShowText:HookScript("OnClick", function(_, btn, down)
 				AccWideUIData.enableTextOutput = chkShowText:GetChecked()
@@ -167,14 +176,14 @@ function AccWideUIFrame:InitializeOptions()
 		local titleCS = accWideUIPanel:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 		titleCS:SetJustifyV('TOP')
 		titleCS:SetJustifyH('LEFT')
-		titleCS:SetPoint('TOPLEFT', 16, -160)
+		titleCS:SetPoint('TOPLEFT', 16, -180)
 		titleCS:SetText(csPlayerName .. " Specific Options")
 		
 		--Title for Char Specific2
 		local titleCS2 = accWideUIPanel:CreateFontString("ARTWORK", nil, "GameFontHighlight")
 		titleCS2:SetJustifyV('TOP')
 		titleCS2:SetJustifyH('LEFT')
-		titleCS2:SetPoint('TOPLEFT', 16, -182)
+		titleCS2:SetPoint('TOPLEFT', 16, -202)
 		titleCS2:SetText("Select whether to use the Account Wide UI for this character's Specializations.")
 		
 		
@@ -199,7 +208,7 @@ function AccWideUIFrame:InitializeOptions()
 		if (numSpecializations >= 1) then
 		
 			local chkEnableSpec1 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-			chkEnableSpec1:SetPoint("TOPLEFT", 16, -200)
+			chkEnableSpec1:SetPoint("TOPLEFT", 16, -220)
 			chkEnableSpec1.Text:SetText(specName[1])
 			chkEnableSpec1:HookScript("OnClick", function(_, btn, down)
 				AccWideUIDataChar[1] = chkEnableSpec1:GetChecked()
@@ -211,7 +220,7 @@ function AccWideUIFrame:InitializeOptions()
 		if (numSpecializations >= 2) then
 		
 			local chkEnableSpec2 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-			chkEnableSpec2:SetPoint("TOPLEFT", 16, -222)
+			chkEnableSpec2:SetPoint("TOPLEFT", 16, -242)
 			chkEnableSpec2.Text:SetText(specName[2])
 			chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
 				AccWideUIDataChar[2] = chkEnableSpec2:GetChecked()
@@ -223,7 +232,7 @@ function AccWideUIFrame:InitializeOptions()
 		if (numSpecializations >= 3) then
 		
 			local chkEnableSpec3 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-			chkEnableSpec3:SetPoint("TOPLEFT", 16, -244)
+			chkEnableSpec3:SetPoint("TOPLEFT", 16, -264)
 			chkEnableSpec3.Text:SetText(specName[3])
 			chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
 				AccWideUIDataChar[3] = chkEnableSpec3:GetChecked()
@@ -235,7 +244,7 @@ function AccWideUIFrame:InitializeOptions()
 		if (numSpecializations >= 4) then
 		
 			local chkEnableSpec4 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-			chkEnableSpec4:SetPoint("TOPLEFT", 16, -266)
+			chkEnableSpec4:SetPoint("TOPLEFT", 16, -286)
 			chkEnableSpec4.Text:SetText(specName[4])
 			chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
 				AccWideUIDataChar[4] = chkEnableSpec4:GetChecked()
