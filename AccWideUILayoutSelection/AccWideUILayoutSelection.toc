@@ -6,8 +6,8 @@
 ## SavedVariables: AccWideUIData
 ## SavedVariablesPerCharacter: AccWideUIDataChar
 ## DefaultState: enabled
-## X-Category: Action Bars
+## X-Category: HUDs
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection
-## X-Curse-Project-ID: ???
-## X-WoWI-ID: ???
+## X-Curse-Project-ID: 700820
+## X-WoWI-ID: 26459
 AccWideUILayoutSelection.lua

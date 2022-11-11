@@ -1,6 +1,6 @@
 # Account Wide UI Layout Selection
 
-This addon allows you to use the same UI Layout you've created across all your characters and specs automatically, without needing to select it manually every time.
+This addon allows you to use the same UI Layout you've created in Edit Mode across all your characters and specs automatically, without needing to select it manually every time.
 
 To do this, simply install the addon, and your selected UI Layout is saved and will be used for all your chars! To change it, simply select another layout in Edit Mode.
 
