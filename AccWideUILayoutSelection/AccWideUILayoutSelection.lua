@@ -32,82 +32,86 @@ end)
 
 AccWideUIFrame:SetScript("OnEvent", function(self, event, arg1, arg2)
 
-	if (event == "PLAYER_LOGIN") then
-	
-	
-		getLayoutsTable = C_EditMode.GetLayouts()
-		currentActiveLayout = getLayoutsTable["activeLayout"]
+	if InCombatLockdown() == false then
+		-- do nothing if in combat
 
-		if (AccWideUIData == nil) then
-	
-			AccWideUIData = {
-				enableAccountWide = true,
-				accountWideLayoutID = currentActiveLayout or 1,
-				enableTextOutput = true
-			}
-		
-		end
+		if (event == "PLAYER_LOGIN") then
 		
 		
+			getLayoutsTable = C_EditMode.GetLayouts()
+			currentActiveLayout = getLayoutsTable["activeLayout"]
+
+			if (AccWideUIData == nil) then
 		
-		if (AccWideUIDataChar == nil) then
-	
-			AccWideUIDataChar = {
-					[1] = AccWideUIData.enableAccountWide,
-					[2] = AccWideUIData.enableAccountWide,
-					[3] = AccWideUIData.enableAccountWide,
-					[4] = AccWideUIData.enableAccountWide,
-					[5] = AccWideUIData.enableAccountWide --Temp Spec for fresh chars, adding just in case
-			}
-		
+				AccWideUIData = {
+					enableAccountWide = true,
+					accountWideLayoutID = currentActiveLayout or 1,
+					enableTextOutput = true
+				}
 			
-			print("|cffdb562a<AccountWideUI>:|r This is the first time you have logged in to this character with AccountWideUI installed.")
-			
-			if (AccWideUIData.enableAccountWide == true) then
-				print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been ENABLED by default. Type |cffdb562a/accwideui|r to configure.")
-			else
-				print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been DISABLED by default. Type |cffdb562a/accwideui|r to configure.")
 			end
+			
+			
+			
+			if (AccWideUIDataChar == nil) then
 		
-		
-		else
-		
-			print("|cffdb562a<AccountWideUI>:|r Account Wide UI Addon Loaded! Type |cffdb562a/accwideui|r to configure.")
+				AccWideUIDataChar = {
+						[1] = AccWideUIData.enableAccountWide,
+						[2] = AccWideUIData.enableAccountWide,
+						[3] = AccWideUIData.enableAccountWide,
+						[4] = AccWideUIData.enableAccountWide,
+						[5] = AccWideUIData.enableAccountWide --Temp Spec for fresh chars, adding just in case
+				}
+			
+				
+				print("|cffdb562a<AccountWideUI>:|r This is the first time you have logged in to this character with AccountWideUI installed.")
+				
+				if (AccWideUIData.enableAccountWide == true) then
+					print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been ENABLED by default. Type |cffdb562a/accwideui|r to configure.")
+				else
+					print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been DISABLED by default. Type |cffdb562a/accwideui|r to configure.")
+				end
+			
+			
+			else
+			
+				print("|cffdb562a<AccountWideUI>:|r Account Wide UI Addon Loaded! Type |cffdb562a/accwideui|r to configure.")
+			
+			end
+			
+			AccWideUIFrame.InitializeOptions()
 		
 		end
+
+
+
+	--(event == "ADDON_LOADED" and arg1 == "AccWideUIFrameLayoutSelection") or
+		if  (event == "PLAYER_LOGIN") or (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
+
+
+			getLayoutsTable = C_EditMode.GetLayouts()
+			currentActiveLayout = getLayoutsTable["activeLayout"]
+			currentSpec = GetSpecialization()
+			
+			if (AccWideUIDataChar[currentSpec] == true) then
+				
+
+				--Set the spec
+				C_EditMode.SetActiveLayout(AccWideUIData.accountWideLayoutID)
+				
+				if (AccWideUIData.enableTextOutput == true) then
+					print("|cffdb562a<AccountWideUI>:|r Changed UI Layout for this Specialization to your Account Wide UI. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cffdb562a/accwideui|r to configure.")
+				end
+				
+			
+			--else
 		
-		AccWideUIFrame.InitializeOptions()
+			end
+
+				
+		end
 	
 	end
-
-
-
---(event == "ADDON_LOADED" and arg1 == "AccWideUIFrameLayoutSelection") or
-    if  (event == "PLAYER_LOGIN") or (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
-
-	print()
-		
-		getLayoutsTable = C_EditMode.GetLayouts()
-		currentActiveLayout = getLayoutsTable["activeLayout"]
-		currentSpec = GetSpecialization()
-		
-		if (AccWideUIDataChar[currentSpec] == true) then
-			
-
-			--Set the spec
-			C_EditMode.SetActiveLayout(AccWideUIData.accountWideLayoutID)
-			
-			if (AccWideUIData.enableTextOutput == true) then
-				print("|cffdb562a<AccountWideUI>:|r Changed UI Layout for this Specialization to your Account Wide UI. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cffdb562a/accwideui|r to configure.")
-			end
-			
-		
-		--else
-	
-		end
-
-		    
-    end
 
 end)
 
