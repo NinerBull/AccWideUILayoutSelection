@@ -63,13 +63,16 @@ AccWideUIFrame:SetScript("OnEvent", function(self, event, arg1, arg2)
 						[5] = AccWideUIData.enableAccountWide --Temp Spec for fresh chars, adding just in case
 				}
 			
+				if (AccWideUIData.enableTextOutput == true) then
 				
-				print("|cffdb562a<AccountWideUI>:|r This is the first time you have logged in to this character with AccountWideUI installed.")
+					print("|cffdb562a<AccountWideUI>:|r This is the first time you have logged in to this character with AccountWideUI installed.")
+					
+					if (AccWideUIData.enableAccountWide == true) then
+						print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been ENABLED by default. Type |cffdb562a/accwideui|r to configure.")
+					else
+						print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been DISABLED by default. Type |cffdb562a/accwideui|r to configure.")
+					end
 				
-				if (AccWideUIData.enableAccountWide == true) then
-					print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been ENABLED by default. Type |cffdb562a/accwideui|r to configure.")
-				else
-					print("|cffdb562a<AccountWideUI>:|r Account Wide UI has been DISABLED by default. Type |cffdb562a/accwideui|r to configure.")
 				end
 			
 			
@@ -166,7 +169,7 @@ function AccWideUIFrame:InitializeOptions()
 		-- Show Text
 		local chkShowText = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 		chkShowText:SetPoint("TOPLEFT", 16, -105)
-		chkShowText.Text:SetText("Output to chat when UI is changed by Account Wide UI")
+		chkShowText.Text:SetText("Output to chat when addon is loaded or UI is changed by Account Wide UI")
 		chkShowText:HookScript("OnClick", function(_, btn, down)
 				AccWideUIData.enableTextOutput = chkShowText:GetChecked()
 		end)
