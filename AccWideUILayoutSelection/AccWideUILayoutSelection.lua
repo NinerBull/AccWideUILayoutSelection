@@ -75,7 +75,11 @@ AccWideUIFrame:SetScript("OnEvent", function(self, event, arg1, arg2)
 			
 			else
 			
-				print("|cffdb562a<AccountWideUI>:|r Account Wide UI Addon Loaded! Type |cffdb562a/accwideui|r to configure.")
+				if (AccWideUIData.enableTextOutput == true) then
+			
+					print("|cffdb562a<AccountWideUI>:|r Account Wide UI Addon Loaded! Type |cffdb562a/accwideui|r to configure.")
+				
+				end
 			
 			end
 			
