@@ -16,9 +16,10 @@ Download the latest version from one of the places below, and unzip it in your `
 * [GitHub](https://github.com/NinerBull/AccWideUILayoutSelection/releases/latest)
 * Or put `https://github.com/NinerBull/AccWideUILayoutSelection` into your favourite Addon Manager
 
-To do this, simply install the addon, and your selected UI Layout is saved and will be used for all your chars! To change it, simply select another layout in Edit Mode.
 
 ## Configuration
+Your chosen Edit Mode UI is saved as the Account Wide UI automatically after exiting Edit Mode (unless you have disabled it for your spec as explained below).
+
 You can configure the addon by typing `/accwideui` into chat.
 
 * You can toggle whether the Account Wide UI applies automatically to all new characters (or chars you haven't yet logged into after installing the addon).
