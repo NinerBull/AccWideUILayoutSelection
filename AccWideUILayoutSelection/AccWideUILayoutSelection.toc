@@ -1,6 +1,6 @@
-## Interface: 100005
+## Interface: 100007
 ## Title: Account Wide UI Layout Selection
-## Version: 1.0.3
+## Version: 1.0.4
 ## Notes: This AddOn allows you to choose a HUD layout you've created and apply it account wide to all chars and specs. /accwideui
 ## Author: NinerBull
 ## SavedVariables: AccWideUIData
