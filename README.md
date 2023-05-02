@@ -6,7 +6,7 @@ An addon for World of Warcraft Dragonflight!
 This addon allows you to use the same UI Layout you've created in Edit Mode across all your characters and specs automatically, without needing to select it manually every time.
 
 ## Compatibility
-* **Dragonflight** - 10.0.5
+* **Dragonflight** - 10.1.0
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
