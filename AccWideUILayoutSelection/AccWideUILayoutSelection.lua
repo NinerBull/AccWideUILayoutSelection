@@ -293,5 +293,8 @@ function AccWideUIFrame:InitializeOptions()
 	
 end
 
-
+function AccWideUI_CompartmentClick(addonName, buttonName)
+	InterfaceOptionsFrame_OpenToCategory("Account Wide UI Layout Selection")
+	InterfaceOptionsFrame_OpenToCategory("Account Wide UI Layout Selection")
+end
 
