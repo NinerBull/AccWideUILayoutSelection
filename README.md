@@ -1,9 +1,10 @@
-# Account Wide UI Layout Selection
+# Account Wide Edit Mode Selection
 
 An addon for World of Warcraft Dragonflight!
 
 ## About
 This addon allows you to use the same UI Layout you've created in Edit Mode across all your characters and specs automatically, without needing to select it manually every time.
+By default, it will also save your currently visible Action Bars and enable them account wide too!
 
 ## Compatibility
 * **Dragonflight** - 10.1.0
@@ -22,7 +23,8 @@ Your chosen Edit Mode UI is saved as the Account Wide UI automatically after exi
 
 You can configure the addon by typing `/accwideui` into chat.
 
-* You can toggle whether the Account Wide UI applies automatically to all new characters (or chars you haven't yet logged into after installing the addon).
-* You can toggle whether text is written into chat when the Addon sets your UI Layout.
-* You can toggle whether the Account Wide UI is used on any or all specs. You'll need to do this for every character.
+* Toggle whether the Account Wide UI applies automatically to all new characters (or chars you haven't yet logged into after installing the addon).
+* Toggle whether your currently visible Action Bars are also applied to all of your characters.
+* Toggle whether text is written into chat when the Addon sets your UI Layout.
+* Toggle whether the Account Wide UI is used on any or all specs. You'll need to do this for every character.
 
