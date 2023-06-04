@@ -14,8 +14,7 @@ AccWideUIFrame:RegisterEvent("PLAYER_LOGOUT")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
-
-
+	
 
 	hooksecurefunc(C_EditMode, "OnEditModeExit", function()
 			
@@ -148,7 +147,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					if (AccWideUIData.enableTextOutput == true) then
 				
-						print("|cffdb562a<AccountWideEditMode>:|r Account Wide Edit Mode Selection Addon Loaded! Type |cffdb562a/accwideui|r to configure.")
+						print("|cffdb562a<AccountWideEditMode>:|r Account Wide Edit Mode Selection Addon Loaded!")
 					
 					end
 				
@@ -183,16 +182,6 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						Settings.SetValue("PROXY_SHOW_ACTIONBAR_6", AccWideUIData.ActionBars.Bar6)
 						Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUIData.ActionBars.Bar7)
 						Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUIData.ActionBars.Bar8)
-						
-						--[[
-						AccWideUIData.ActionBars.Bar2 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_2")
-						AccWideUIData.ActionBars.Bar3 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_3")
-						AccWideUIData.ActionBars.Bar4 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_4")
-						AccWideUIData.ActionBars.Bar5 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_5")
-						AccWideUIData.ActionBars.Bar6 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_6")
-						AccWideUIData.ActionBars.Bar7 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_7")
-						AccWideUIData.ActionBars.Bar8 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_8")
-						]]--
 					
 					end
 					
@@ -218,7 +207,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 			if  (event == "PLAYER_LOGOUT") then
 			
-			
+				--Save Shown Action Bars
 				if (AccWideUIData.accountWideActionBars == true) then
 
 					AccWideUIData.ActionBars.Bar2 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_2")
@@ -331,26 +320,24 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 			
 			
-			
-		
 			--Specialisations
-			specName = {}
-			numSpecializations = GetNumSpecializations(false, false)
-		
-			for specx = 1, numSpecializations, 1 do
-			
-				specName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
-			
+			AccWideUISpecName = {}
+			AccWideUINumSpecializations = GetNumSpecializations(false, false)
+
+			for specx = 1, AccWideUINumSpecializations, 1 do
+				AccWideUISpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
 			end
+				
+			
 		
-			--tprint(specName)
+			--tprint(AccWideUISpecName)
 			
 			
-			if (numSpecializations >= 1) then
+			if (AccWideUINumSpecializations >= 1) then
 			
 				local chkEnableSpec1 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 				chkEnableSpec1:SetPoint("TOPLEFT", 16, -230)
-				chkEnableSpec1.Text:SetText(specName[1])
+				chkEnableSpec1.Text:SetText(AccWideUISpecName[1])
 				chkEnableSpec1:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[1] = chkEnableSpec1:GetChecked()
 				end)
@@ -358,11 +345,11 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 			end
 			
-			if (numSpecializations >= 2) then
+			if (AccWideUINumSpecializations >= 2) then
 			
 				local chkEnableSpec2 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 				chkEnableSpec2:SetPoint("TOPLEFT", 16, -252)
-				chkEnableSpec2.Text:SetText(specName[2])
+				chkEnableSpec2.Text:SetText(AccWideUISpecName[2])
 				chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[2] = chkEnableSpec2:GetChecked()
 				end)
@@ -370,11 +357,11 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 			end
 			
-			if (numSpecializations >= 3) then
+			if (AccWideUINumSpecializations >= 3) then
 			
 				local chkEnableSpec3 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 				chkEnableSpec3:SetPoint("TOPLEFT", 16, -274)
-				chkEnableSpec3.Text:SetText(specName[3])
+				chkEnableSpec3.Text:SetText(AccWideUISpecName[3])
 				chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[3] = chkEnableSpec3:GetChecked()
 				end)
@@ -382,11 +369,11 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 			end
 			
-			if (numSpecializations >= 4) then
+			if (AccWideUINumSpecializations >= 4) then
 			
 				local chkEnableSpec4 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 				chkEnableSpec4:SetPoint("TOPLEFT", 16, -296)
-				chkEnableSpec4.Text:SetText(specName[4])
+				chkEnableSpec4.Text:SetText(AccWideUISpecName[4])
 				chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[4] = chkEnableSpec4:GetChecked()
 				end)
@@ -394,11 +381,11 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 			end
 			
-			if (numSpecializations >= 5) then
+			if (AccWideUINumSpecializations >= 5) then
 			
 				local chkEnableSpec5 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 				chkEnableSpec5:SetPoint("TOPLEFT", 16, -318)
-				chkEnableSpec5.Text:SetText(specName[5])
+				chkEnableSpec5.Text:SetText(AccWideUISpecName[5])
 				chkEnableSpec5:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[5] = chkEnableSpec5:GetChecked()
 				end)
@@ -426,9 +413,82 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		
 	end
 
+
+
+
+
+	function AccWideUI_CompartmentIsSpecActive(thisSpec)
+	
+		if (thisSpec == true) then
+			return("|TInterface\\RaidFrame\\ReadyCheck-Ready:0|t")
+		else
+			return("|TInterface\\RaidFrame\\ReadyCheck-NotReady:0|t")
+		end	
+	
+	end
+	
+	
+
+	
+	--Addon Compartment
+	local AccWideUITooltip
+
 	function AccWideUI_CompartmentClick(addonName, buttonName)
 		InterfaceOptionsFrame_OpenToCategory("Account Wide Edit Mode Selection")
 		InterfaceOptionsFrame_OpenToCategory("Account Wide Edit Mode Selection")
+	end
+
+	function AccWideUI_CompartmentHover(addonName, buttonName)
+		if (not AccWideUITooltip) then
+			AccWideUITooltip = CreateFrame("GameTooltip", "AccWideUITooltip_Compartment", UIParent, "GameTooltipTemplate")
+		end
+		
+		local classDisplayName, class = UnitClass("player");
+		local classColorString = RAID_CLASS_COLORS[class].colorStr;
+		
+		AccWideUITooltip:SetOwner(buttonName, "ANCHOR_LEFT");
+		AccWideUITooltip:SetText("Account Wide Edit Mode Selection")
+		
+		AccWideUITooltip:AddLine(" ", 1, 1, 1)
+		AccWideUITooltip:AddLine("Current Settings for |c" .. classColorString .. UnitName("player") .. "|r:", 1, 1, 1)
+		AccWideUITooltip:AddLine(" ", 1, 1, 1)
+		
+		--Specialisations
+		AccWideUISpecName = {}
+		AccWideUINumSpecializations = GetNumSpecializations(false, false)
+
+		for specx = 1, AccWideUINumSpecializations, 1 do
+			AccWideUISpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
+		end
+		
+		if (AccWideUINumSpecializations >= 1) then
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[1] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[1]), nil, nil, nil, 1, 1, 1)
+		end
+		
+		if (AccWideUINumSpecializations >= 2) then
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[2] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[2]), nil, nil, nil, 1, 1, 1)
+		end
+		
+		if (AccWideUINumSpecializations >= 3) then
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[3] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[3]), nil, nil, nil, 1, 1, 1)
+		end
+		
+		if (AccWideUINumSpecializations >= 4) then
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[4] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[4]), nil, nil, nil, 1, 1, 1)
+		end
+		
+		if (AccWideUINumSpecializations >= 5) then
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[5] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[5]), nil, nil, nil, 1, 1, 1)
+		end
+		
+		AccWideUITooltip:AddLine(" ", 1, 1, 1)
+		AccWideUITooltip:AddLine("Click to change settings.", 0, 1, 0)
+		
+		AccWideUITooltip:Show()
+	end
+
+	function AccWideUI_CompartmentLeave(buttonName)
+		AccWideUITooltip:Hide()
 	end
 
 

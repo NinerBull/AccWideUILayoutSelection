@@ -11,5 +11,7 @@
 ## X-Curse-Project-ID: 700820
 ## X-WoWI-ID: 26459
 ## AddonCompartmentFunc: AccWideUI_CompartmentClick
+## AddonCompartmentFuncOnEnter: AccWideUI_CompartmentHover
+## AddonCompartmentFuncOnLeave: AccWideUI_CompartmentLeave
 ## IconTexture: Interface\Icons\inv_glyph_primewarrior.blp
 AccWideUILayoutSelection.lua
