@@ -5,10 +5,6 @@ AccWideUIFrame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 AccWideUIFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
 AccWideUIFrame:RegisterEvent("SETTINGS_LOADED")
 AccWideUIFrame:RegisterEvent("PLAYER_LOGOUT")
---AccWideUIFrame:RegisterEvent("ActionBarShownSettingUpdated")
-
-
-
 
 
 
@@ -19,9 +15,9 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	hooksecurefunc(C_EditMode, "OnEditModeExit", function()
 			
 		
-		getLayoutsTable = C_EditMode.GetLayouts()
-		currentActiveLayout = getLayoutsTable["activeLayout"]
-		currentSpec = GetSpecialization()
+		local getLayoutsTable = C_EditMode.GetLayouts()
+		local currentActiveLayout = getLayoutsTable["activeLayout"]
+		local currentSpec = GetSpecialization()
 		
 
 		
@@ -53,9 +49,8 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			if (event == "SETTINGS_LOADED") then
 			
 			
-				getLayoutsTable = C_EditMode.GetLayouts()
-				currentActiveLayout = getLayoutsTable["activeLayout"]
-				
+				local getLayoutsTable = C_EditMode.GetLayouts()
+				local currentActiveLayout = getLayoutsTable["activeLayout"]
 				
 
 				if (AccWideUIData == nil) then
@@ -67,7 +62,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				end
 				
 				if (AccWideUIData.accountWideLayoutID == nil) then
-					AccWideUIData.accountWideLayoutID = 1
+					AccWideUIData.accountWideLayoutID = currentActiveLayout or 1
 				end
 				
 				if (AccWideUIData.accountWideActionBars == nil) then
@@ -159,13 +154,12 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 
 
-		--(event == "ADDON_LOADED" and arg1 == "AccWideUIFrameLayoutSelection") or
 			if  (event == "SETTINGS_LOADED") or (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
 
 
-				getLayoutsTable = C_EditMode.GetLayouts()
-				currentActiveLayout = getLayoutsTable["activeLayout"]
-				currentSpec = GetSpecialization()
+				local getLayoutsTable = C_EditMode.GetLayouts()
+				local currentActiveLayout = getLayoutsTable["activeLayout"]
+				local currentSpec = GetSpecialization()
 				
 				if (AccWideUIDataChar[currentSpec] == true) then
 					
@@ -190,8 +184,6 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						print("|cffdb562a<AccountWideEditMode>:|r Changed UI Layout for this Specialization to your Account Wide UI. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cffdb562a/accwideeditmode|r to configure.")
 					end
 					
-				
-				--else
 			
 				end
 
@@ -230,6 +222,11 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		end
 
 	end)
+
+
+
+
+
 
 
 	function AccWideUIFrame:InitializeOptions()
@@ -297,17 +294,15 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		
 		
 
-			
-			
-			
-			csPlayerName = UnitName("player")
+			local classDisplayName, class = UnitClass("player");
+			local classColorString = RAID_CLASS_COLORS[class].colorStr;
 			
 			--Title for Char Specific
 			local titleCS = accWideUIPanel:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 			titleCS:SetJustifyV('TOP')
 			titleCS:SetJustifyH('LEFT')
 			titleCS:SetPoint('TOPLEFT', 16, -190)
-			titleCS:SetText(csPlayerName .. " Specific Options")
+			titleCS:SetText("|c" .. classColorString .. UnitName("player") .. "|r Specific Options")
 			
 			--Title for Char Specific2
 			local titleCS2 = accWideUIPanel:CreateFontString("ARTWORK", nil, "GameFontHighlight")
@@ -328,11 +323,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				AccWideUISpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
 			end
 				
-			
-		
-			--tprint(AccWideUISpecName)
-			
-			
+
 			if (AccWideUINumSpecializations >= 1) then
 			
 				local chkEnableSpec1 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
@@ -348,7 +339,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			if (AccWideUINumSpecializations >= 2) then
 			
 				local chkEnableSpec2 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-				chkEnableSpec2:SetPoint("TOPLEFT", 16, -252)
+				chkEnableSpec2:SetPoint("TOPLEFT", 16, -255)
 				chkEnableSpec2.Text:SetText(AccWideUISpecName[2])
 				chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[2] = chkEnableSpec2:GetChecked()
@@ -360,7 +351,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			if (AccWideUINumSpecializations >= 3) then
 			
 				local chkEnableSpec3 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-				chkEnableSpec3:SetPoint("TOPLEFT", 16, -274)
+				chkEnableSpec3:SetPoint("TOPLEFT", 16, -280)
 				chkEnableSpec3.Text:SetText(AccWideUISpecName[3])
 				chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[3] = chkEnableSpec3:GetChecked()
@@ -372,7 +363,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			if (AccWideUINumSpecializations >= 4) then
 			
 				local chkEnableSpec4 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-				chkEnableSpec4:SetPoint("TOPLEFT", 16, -296)
+				chkEnableSpec4:SetPoint("TOPLEFT", 16, -305)
 				chkEnableSpec4.Text:SetText(AccWideUISpecName[4])
 				chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[4] = chkEnableSpec4:GetChecked()
@@ -384,7 +375,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			if (AccWideUINumSpecializations >= 5) then
 			
 				local chkEnableSpec5 = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
-				chkEnableSpec5:SetPoint("TOPLEFT", 16, -318)
+				chkEnableSpec5:SetPoint("TOPLEFT", 16, -330)
 				chkEnableSpec5.Text:SetText(AccWideUISpecName[5])
 				chkEnableSpec5:HookScript("OnClick", function(_, btn, down)
 					AccWideUIDataChar[5] = chkEnableSpec5:GetChecked()
@@ -392,10 +383,6 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				chkEnableSpec5:SetChecked(AccWideUIDataChar[5])
 
 			end
-			
-			
-			
-			
 			
 			
 			
@@ -417,6 +404,14 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 
 
+
+
+
+
+
+
+
+
 	function AccWideUI_CompartmentIsSpecActive(thisSpec)
 	
 		if (thisSpec == true) then
@@ -429,6 +424,9 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	
 	
 
+	
+	
+	
 	
 	--Addon Compartment
 	local AccWideUITooltip
@@ -449,9 +447,9 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		AccWideUITooltip:SetOwner(buttonName, "ANCHOR_LEFT");
 		AccWideUITooltip:SetText("Account Wide Edit Mode Selection")
 		
-		AccWideUITooltip:AddLine(" ", 1, 1, 1)
-		AccWideUITooltip:AddLine("Current Settings for |c" .. classColorString .. UnitName("player") .. "|r:", 1, 1, 1)
-		AccWideUITooltip:AddLine(" ", 1, 1, 1)
+		AccWideUITooltip:AddLine(" ")
+		AccWideUITooltip:AddLine("Current Settings for |c" .. classColorString .. UnitName("player") .. "|r:",  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+		AccWideUITooltip:AddLine(" ")
 		
 		--Specialisations
 		AccWideUISpecName = {}
@@ -462,27 +460,27 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		end
 		
 		if (AccWideUINumSpecializations >= 1) then
-			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[1] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[1]), nil, nil, nil, 1, 1, 1)
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[1] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[1]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 		end
 		
 		if (AccWideUINumSpecializations >= 2) then
-			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[2] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[2]), nil, nil, nil, 1, 1, 1)
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[2] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[2]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 		end
 		
 		if (AccWideUINumSpecializations >= 3) then
-			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[3] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[3]), nil, nil, nil, 1, 1, 1)
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[3] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[3]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 		end
 		
 		if (AccWideUINumSpecializations >= 4) then
-			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[4] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[4]), nil, nil, nil, 1, 1, 1)
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[4] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[4]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 		end
 		
 		if (AccWideUINumSpecializations >= 5) then
-			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[5] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[5]), nil, nil, nil, 1, 1, 1)
+			AccWideUITooltip:AddDoubleLine(AccWideUISpecName[5] .. ":", AccWideUI_CompartmentIsSpecActive(AccWideUIDataChar[5]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 		end
 		
-		AccWideUITooltip:AddLine(" ", 1, 1, 1)
-		AccWideUITooltip:AddLine("Click to change settings.", 0, 1, 0)
+		AccWideUITooltip:AddLine(" ")
+		AccWideUITooltip:AddLine("Click to change settings.",  GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b)
 		
 		AccWideUITooltip:Show()
 	end
@@ -492,8 +490,16 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	end
 
 
+
+
+
+
 else
 
+
+
 	print("|cffdb562a<AccountWideEditMode>:|r This addon only works in Retail WoW.")
+	
+	
 
 end
