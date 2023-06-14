@@ -28,7 +28,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			AccWideUIData.accountWideLayoutID = currentActiveLayout
 			
 			if (AccWideUIData.enableTextOutput == true) then
-				print("|cffdb562a<AccountWideEditMode>:|r Saved your Account Wide Edit Mode to the selected Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cffdb562a/accwideeditmode|r to configure.")
+				print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Saved your Account Wide Edit Mode to the selected Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 			end
 
 		end
@@ -127,12 +127,12 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					if (AccWideUIData.enableTextOutput == true) then
 					
-						print("|cffdb562a<AccountWideEditMode>:|r This is the first time you have logged in to this character with AccountWideEditMode installed.")
+						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r This is the first time you have logged in to this character with AccountWideEditMode installed.")
 						
 						if (AccWideUIData.enableAccountWide == true) then
-							print("|cffdb562a<AccountWideEditMode>:|r Account Wide Edit Mode Selection has been ENABLED by default. Type |cffdb562a/accwideeditmode|r to configure.")
+							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Selection has been ENABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 						else
-							print("|cffdb562a<AccountWideEditMode>:|r Account Wide Edit Mode Selection has been DISABLED by default. Type |cffdb562a/accwideeditmode|r to configure.")
+							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Selection has been DISABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 						end
 					
 					end
@@ -142,7 +142,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					if (AccWideUIData.enableTextOutput == true) then
 				
-						print("|cffdb562a<AccountWideEditMode>:|r Account Wide Edit Mode Selection Addon Loaded!")
+						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Selection Addon Loaded!")
 					
 					end
 				
@@ -181,7 +181,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
 					
 					if (AccWideUIData.enableTextOutput == true) then
-						print("|cffdb562a<AccountWideEditMode>:|r Changed UI Layout for this Specialization to your Account Wide UI. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cffdb562a/accwideeditmode|r to configure.")
+						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Changed UI Layout for this Specialization to your Account Wide UI. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 					end
 					
 			
@@ -498,7 +498,7 @@ else
 
 
 
-	print("|cffdb562a<AccountWideEditMode>:|r This addon only works in Retail WoW.")
+	print("<AccountWideEditMode>: This addon only works in Retail WoW.")
 	
 	
 
