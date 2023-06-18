@@ -1,5 +1,5 @@
 ## Interface: 100100
-## Title: Account Wide Edit Mode Selection
+## Title: Account Wide Edit Mode Layout
 ## Version: 1.0.5
 ## Notes: This AddOn allows you to choose a HUD layout you've created in Edit Mode, and apply it account wide to all chars and specs. /accwideui
 ## Author: NinerBull

@@ -1,4 +1,4 @@
-# Account Wide Edit Mode Selection
+# Account Wide Edit Mode Layout
 
 An addon for World of Warcraft Dragonflight!
 

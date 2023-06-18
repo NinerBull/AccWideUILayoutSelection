@@ -28,7 +28,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			AccWideUIData.accountWideLayoutID = currentActiveLayout
 			
 			if (AccWideUIData.enableTextOutput == true) then
-				print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Saved your Account Wide Edit Mode to the selected Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+				print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Saved your selected Edit Mode Layout as the Account Wide Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 			end
 
 		end
@@ -130,9 +130,9 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r This is the first time you have logged in to this character with AccountWideEditMode installed.")
 						
 						if (AccWideUIData.enableAccountWide == true) then
-							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Selection has been ENABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Layout has been ENABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 						else
-							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Selection has been DISABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Layout has been DISABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 						end
 					
 					end
@@ -142,7 +142,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					if (AccWideUIData.enableTextOutput == true) then
 				
-						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Selection Addon Loaded!")
+						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Layout Addon Loaded!")
 					
 					end
 				
@@ -181,7 +181,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
 					
 					if (AccWideUIData.enableTextOutput == true) then
-						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Changed UI Layout for this Specialization to your Account Wide UI. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Changed UI Layout for this Specialization to your Account Wide Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
 					end
 					
 			
@@ -232,7 +232,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	function AccWideUIFrame:InitializeOptions()
 		
 			accWideUIPanel = CreateFrame("Frame")
-			accWideUIPanel.name = "Account Wide Edit Mode Selection"
+			accWideUIPanel.name = "Account Wide Edit Mode Layout"
 			InterfaceOptions_AddCategory(accWideUIPanel) 
 
 			--Title
@@ -240,7 +240,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			title:SetJustifyV('TOP')
 			title:SetJustifyH('LEFT')
 			title:SetPoint('TOPLEFT', 16, -16)
-			title:SetText("Account Wide Edit Mode Selection")
+			title:SetText("Account Wide Edit Mode Layout")
 			
 			--Title2
 			local title2 = accWideUIPanel:CreateFontString("ARTWORK", nil, "GameFontHighlight")
@@ -272,7 +272,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			chkEnableDefault:SetChecked(AccWideUIData.enableAccountWide)
 			
 			
-			-- Show Text
+			-- Save action bars
 			local chkSaveActionBar = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 			chkSaveActionBar:SetPoint("TOPLEFT", 16, -105)
 			chkSaveActionBar.Text:SetText("Also save which Action Bars are visible")
@@ -285,7 +285,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			-- Show Text
 			local chkShowText = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 			chkShowText:SetPoint("TOPLEFT", 16, -130)
-			chkShowText.Text:SetText("Output to chat when addon is loaded or UI is changed by Account Wide UI")
+			chkShowText.Text:SetText("Output to chat when addon is loaded or UI is changed by Account Wide Layout")
 			chkShowText:HookScript("OnClick", function(_, btn, down)
 					AccWideUIData.enableTextOutput = chkShowText:GetChecked()
 			end)
@@ -309,7 +309,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			titleCS2:SetJustifyV('TOP')
 			titleCS2:SetJustifyH('LEFT')
 			titleCS2:SetPoint('TOPLEFT', 16, -212)
-			titleCS2:SetText("Select whether to use the Account Wide UI for this character's Specializations.")
+			titleCS2:SetText("Select whether to use the Account Wide Layout for this character's Specializations.")
 			
 			
 			
@@ -432,8 +432,8 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	local AccWideUITooltip
 
 	function AccWideUI_CompartmentClick(addonName, buttonName)
-		InterfaceOptionsFrame_OpenToCategory("Account Wide Edit Mode Selection")
-		InterfaceOptionsFrame_OpenToCategory("Account Wide Edit Mode Selection")
+		InterfaceOptionsFrame_OpenToCategory("Account Wide Edit Mode Layout")
+		InterfaceOptionsFrame_OpenToCategory("Account Wide Edit Mode Layout")
 	end
 
 	function AccWideUI_CompartmentHover(addonName, buttonName)
@@ -445,7 +445,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		local classColorString = RAID_CLASS_COLORS[class].colorStr;
 		
 		AccWideUITooltip:SetOwner(buttonName, "ANCHOR_LEFT");
-		AccWideUITooltip:SetText("Account Wide Edit Mode Selection")
+		AccWideUITooltip:SetText("Account Wide Edit Mode Layout")
 		
 		AccWideUITooltip:AddLine(" ")
 		AccWideUITooltip:AddLine("Current Settings for |c" .. classColorString .. UnitName("player") .. "|r:",  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
