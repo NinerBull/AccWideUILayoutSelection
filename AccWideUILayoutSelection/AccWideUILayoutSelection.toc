@@ -1,17 +1,20 @@
 ## Interface: 100100
 ## Title: Account Wide Edit Mode Layout
 ## Version: 1.0.5
-## Notes: This AddOn allows you to choose a HUD layout you've created in Edit Mode, and apply it account wide to all chars and specs. /accwideeditmode
+## Notes: This AddOn allows you to choose a UI layout you've created in Edit Mode, and apply it account wide to all chars and specs. /accwideeditmode
 ## Author: NinerBull
 ## SavedVariables: AccWideUIData
 ## SavedVariablesPerCharacter: AccWideUIDataChar
 ## DefaultState: enabled
+
 ## X-Category: HUDs
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection
 ## X-Curse-Project-ID: 700820
 ## X-WoWI-ID: 26459
+
+## IconTexture: Interface\Icons\inv_glyph_primewarrior.blp
 ## AddonCompartmentFunc: AccWideUI_CompartmentClick
 ## AddonCompartmentFuncOnEnter: AccWideUI_CompartmentHover
 ## AddonCompartmentFuncOnLeave: AccWideUI_CompartmentLeave
-## IconTexture: Interface\Icons\inv_glyph_primewarrior.blp
+
 AccWideUILayoutSelection.lua
