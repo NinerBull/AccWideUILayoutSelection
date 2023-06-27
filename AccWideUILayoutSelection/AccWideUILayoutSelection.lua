@@ -8,8 +8,15 @@ AccWideUIFrame:RegisterEvent("PLAYER_LOGOUT")
 
 
 
+local AccWideUITextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<AccountWideEditMode>")
+local AccWideUITextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/accwideeditmode")
+
+
+
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
+
+	
 	
 
 	hooksecurefunc(C_EditMode, "OnEditModeExit", function()
@@ -28,7 +35,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			AccWideUIData.accountWideLayoutID = currentActiveLayout
 			
 			if (AccWideUIData.enableTextOutput == true) then
-				print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Saved your selected Edit Mode Layout as the Account Wide Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+				print(AccWideUITextName .. " Saved your selected Edit Mode Layout as the Account Wide Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type " .. AccWideUITextSlash .. " to configure.")
 			end
 
 		end
@@ -127,12 +134,12 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					if (AccWideUIData.enableTextOutput == true) then
 					
-						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r This is the first time you have logged in to this character with AccountWideEditMode installed.")
+						print(AccWideUITextName .. " This is the first time you have logged in to this character with AccountWideEditMode installed.")
 						
 						if (AccWideUIData.enableAccountWide == true) then
-							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Layout has been ENABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+							print(AccWideUITextName .. " Account Wide Edit Mode Layout has been ENABLED by default. Type " .. AccWideUITextSlash .. " to configure.")
 						else
-							print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Layout has been DISABLED by default. Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+							print(AccWideUITextName .. " Account Wide Edit Mode Layout has been DISABLED by default. Type " .. AccWideUITextSlash .. " to configure.")
 						end
 					
 					end
@@ -142,7 +149,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					if (AccWideUIData.enableTextOutput == true) then
 				
-						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Account Wide Edit Mode Layout Addon Loaded!")
+						print(AccWideUITextName .. " Account Wide Edit Mode Layout Addon Loaded!")
 					
 					end
 				
@@ -181,7 +188,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
 					
 					if (AccWideUIData.enableTextOutput == true) then
-						print("|cnITEM_LEGENDARY_COLOR:<AccountWideEditMode>:|r Changed UI Layout for this Specialization to your Account Wide Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type |cnITEM_LEGENDARY_COLOR:/accwideeditmode|r to configure.")
+						print(AccWideUITextName .. " Changed UI Layout for this Specialization to your Account Wide Layout. (ID " .. AccWideUIData.accountWideLayoutID .. "). Type " .. AccWideUITextSlash .. " to configure.")
 					end
 					
 			
@@ -285,7 +292,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			-- Show Text
 			local chkShowText = CreateFrame("CheckButton", nil, accWideUIPanel, "InterfaceOptionsCheckButtonTemplate")
 			chkShowText:SetPoint("TOPLEFT", 16, -130)
-			chkShowText.Text:SetText("Output to chat when addon is loaded or UI is changed by Account Wide Layout")
+			chkShowText.Text:SetText("Output to chat when addon is loaded or UI is changed by this addon.")
 			chkShowText:HookScript("OnClick", function(_, btn, down)
 					AccWideUIData.enableTextOutput = chkShowText:GetChecked()
 			end)
@@ -302,7 +309,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			titleCS:SetJustifyV('TOP')
 			titleCS:SetJustifyH('LEFT')
 			titleCS:SetPoint('TOPLEFT', 16, -190)
-			titleCS:SetText("|c" .. classColorString .. UnitName("player") .. "|r Specific Options")
+			titleCS:SetText(WrapTextInColorCode(UnitName("player"), classColorString) .. " Specific Options")
 			
 			--Title for Char Specific2
 			local titleCS2 = accWideUIPanel:CreateFontString("ARTWORK", nil, "GameFontHighlight")
@@ -498,7 +505,7 @@ else
 
 
 
-	print("<AccountWideEditMode>: This addon only works in Retail WoW.")
+	print(AccWideUITextName .. " This addon only works in Retail WoW.")
 	
 	
 
