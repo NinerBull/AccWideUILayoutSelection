@@ -3,8 +3,8 @@
 ## Version: 1.0.5
 ## Notes: This AddOn allows you to choose a UI layout you've created in Edit Mode, and apply it account wide to all chars and specs. /accwideeditmode
 ## Author: NinerBull
-## SavedVariables: AccWideUIData
-## SavedVariablesPerCharacter: AccWideUIDataChar
+## SavedVariables: AccWideUIData, AccWideUI_AccountData
+## SavedVariablesPerCharacter: AccWideUIDataChar, AccWideUI_CharData
 ## DefaultState: enabled
 
 ## X-Category: HUDs
