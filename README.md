@@ -7,7 +7,7 @@ This addon allows you to automatically apply the same UI Layout you've created i
 By default, it will also save your currently visible Action Bars and enable them account wide too!
 
 ## Compatibility
-* **Dragonflight** - 10.1.0
+* **Dragonflight** - 10.1.5
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
