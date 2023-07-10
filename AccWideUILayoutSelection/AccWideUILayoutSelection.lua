@@ -61,12 +61,12 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 				
 				--Upgrade
-				if (AccWideUIData ~= nil) then
+				if (type(AccWideUIData) ~= "nil") then
 					AccWideUI_AccountData = AccWideUIData
 					AccWideUIData = nil
 				end
 				
-				if (AccWideUIDataChar ~= nil) then
+				if (type(AccWideUIDataChar) ~= "nil") then
 					AccWideUI_CharData = AccWideUIDataChar
 					AccWideUIDataChar = nil
 				end
@@ -74,58 +74,58 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 				
 
-				if (AccWideUI_AccountData == nil) then
+				if (type(AccWideUI_AccountData) ~= "table") then
 					AccWideUI_AccountData = {}
 				end
 				
-				if (AccWideUI_AccountData.enableAccountWide == nil) then
+				if (type(AccWideUI_AccountData.enableAccountWide) ~= "boolean") then
 					AccWideUI_AccountData.enableAccountWide = true
 				end
 				
-				if (AccWideUI_AccountData.accountWideLayoutID == nil) then
+				if (type(AccWideUI_AccountData.accountWideLayoutID) ~= "number") then
 					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout or 1
 				end
 				
-				if (AccWideUI_AccountData.accountWideActionBars == nil) then
+				if (type(AccWideUI_AccountData.accountWideActionBars) ~= "boolean") then
 					AccWideUI_AccountData.accountWideActionBars = true
 				end
 				
-				if (AccWideUI_AccountData.enableTextOutput == nil) then
+				if (type(AccWideUI_AccountData.accountWideActionBars) ~= "boolean") then
 					AccWideUI_AccountData.enableTextOutput = true
 				end
 				
 				
 				
 				
-				if (AccWideUI_AccountData.ActionBars == nil) then
+				if (type(AccWideUI_AccountData.ActionBars) ~= "table") then
 					AccWideUI_AccountData.ActionBars = {}
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar2 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar2 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_2")
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar3 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar3 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_3")
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar4 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar4 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_4")
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar5 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar5 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_5")
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar6 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar6 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_6")
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar7 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar7 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_7")
 				end
 				
-				if (AccWideUI_AccountData.ActionBars.Bar8 == nil) then
+				if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
 					AccWideUI_AccountData.ActionBars.Bar8 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_8")
 				end
 				
@@ -136,7 +136,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 				
 				
-				if (AccWideUI_CharData == nil) then
+				if (type(AccWideUI_CharData) ~= "table") then
 			
 					AccWideUI_CharData = {
 							[1] = AccWideUI_AccountData.enableAccountWide,
