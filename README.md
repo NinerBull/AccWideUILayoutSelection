@@ -23,10 +23,11 @@ Your chosen Edit Mode Layout is saved as the Account Wide Layout automatically a
 
 You can configure the addon by typing `/accwideeditmode` into chat.
 
-* Toggle whether the Account Wide Layout applies automatically to all new characters (or chars you haven't yet logged into after installing the addon).
-* Toggle whether your currently visible Action Bars are applied Account Wide.
-* Toggle whether your current Nameplate Settings are applied Account Wide.
-* Toggle whether your current Party/Raid Frame Settings are applied Account Wide.
-* Toggle whether your current Arena Frame Settings are applied Account Wide.
-* Toggle whether the changes above are taken into effect on any or all specs. You'll need to do this for every character.
-
+You can change the following options:
+* Whether the Account Wide Options apply automatically to all new characters (or chars you haven't yet logged into after installing the addon).
+* Whether your currently selected Edit Mode Layout is applied Account Wide.
+* Whether your currently visible Action Bars are applied Account Wide.
+* Whether your current Nameplate Settings are applied Account Wide.
+* Whether your current Party/Raid Frame Settings are applied Account Wide.
+* Whether your current Arena Frame Settings are applied Account Wide.
+* Whether the changes above are taken into effect on any or all specs for your character.
