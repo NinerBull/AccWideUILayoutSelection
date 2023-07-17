@@ -128,6 +128,13 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 		"raidFramesWidth",
 		"raidFramesHealthText",
 		"showPartyPets",
+		"raidOptionLocked",
+		"raidOptionIsShown",
+		"raidOptionSortMode",
+		"raidOptionDisplayPets",
+		"raidOptionShowBorders",
+		"raidOptionKeepGroupsTogether",	
+		"raidOptionDisplayMainTankAndAssist",
 	}
 	
 	
@@ -354,7 +361,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 			
 			if  (event == "PLAYER_LOGOUT") then
-			
+				
 				AccWideUI:SaveUISettings()
 
 			end
