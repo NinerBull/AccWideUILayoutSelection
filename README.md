@@ -1,4 +1,4 @@
-# Account Wide Edit Mode Layout
+# Account Wide Interface Option Settings
 
 An addon for World of Warcraft Dragonflight!
 
@@ -26,4 +26,4 @@ Download the latest version from one of the places below, and unzip it in your `
 ## Configuration
 Your chosen Edit Mode Layout is saved as the Account Wide Layout automatically after exiting Edit Mode (unless you have disabled it for your spec as explained below).
 
-You can configure the addon by typing `/accwideeditmode` into chat.
+You can configure the addon by typing `/accwideinterface` into chat.

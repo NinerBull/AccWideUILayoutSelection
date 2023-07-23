@@ -1,7 +1,7 @@
 ## Interface: 100105
-## Title: Account Wide Edit Mode Layout
+## Title: Account Wide Interface Option Settings
 ## Version: 1.1.0
-## Notes: This AddOn allows you to choose a UI layout you've created in Edit Mode, and apply it account wide to all chars and specs. /accwideeditmode
+## Notes: This AddOn will make various Character-Specific Interface settings work Account Wide. /accwideinterface
 ## Author: NinerBull
 ## SavedVariables: AccWideUIData, AccWideUI_AccountData
 ## SavedVariablesPerCharacter: AccWideUIDataChar, AccWideUI_CharData
