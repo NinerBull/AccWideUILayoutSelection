@@ -34,9 +34,9 @@ local AccWideUI_ThisCategory = nil
 				
 				local getLayoutsTable = C_EditMode.GetLayouts()
 				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = GetSpecialization()
+				local currentSpec = tostring(GetSpecialization())
 				
-				if (AccWideUI_CharData[currentSpec] == true) then
+				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 
 					--Set the spec
 					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
@@ -143,6 +143,7 @@ local AccWideUI_ThisCategory = nil
 		"raidOptionShowBorders",
 		"raidOptionKeepGroupsTogether",	
 		"raidOptionDisplayMainTankAndAssist",
+		"raidFramesDisplayOnlyHealerPowerBars"
 	}
 	
 	
@@ -319,31 +320,24 @@ local AccWideUI_ThisCategory = nil
 				
 				
 				
-				
-				
-				
-				
+				if ((type(AccWideUI_CharData) == "table") and (AccWideUI_CharData["accWideSpec1"] == nil)) then
+					AccWideUI_CharData = nil
+				end
 				
 				
 				if (type(AccWideUI_CharData) ~= "table") then
 			
 					AccWideUI_CharData = {
-							[1] = AccWideUI_AccountData.enableAccountWide,
-							[2] = AccWideUI_AccountData.enableAccountWide,
-							[3] = AccWideUI_AccountData.enableAccountWide,
-							[4] = AccWideUI_AccountData.enableAccountWide,
-							[5] = AccWideUI_AccountData.enableAccountWide --Temp Spec for fresh chars, adding just in case
+							["accWideSpec1"] = AccWideUI_AccountData.enableAccountWide,
+							["accWideSpec2"] = AccWideUI_AccountData.enableAccountWide,
+							["accWideSpec3"] = AccWideUI_AccountData.enableAccountWide,
+							["accWideSpec4"] = AccWideUI_AccountData.enableAccountWide,
+							["accWideSpec5"] = AccWideUI_AccountData.enableAccountWide --Temp Spec for fresh chars, adding just in case
 					}
 				
 					if (AccWideUI_AccountData.enableTextOutput == true) then
 					
 						print(AccWideUI_TextName .. " This is the first time you have logged in to this character with AccountWideInterface installed.")
-						
-						if (AccWideUI_AccountData.enableAccountWide == true) then
-							print(AccWideUI_TextName .. " Account Wide Interface Option Settings has been ENABLED by default. Type " .. AccWideUI_TextSlash .. " to configure.")
-						else
-							print(AccWideUI_TextName .. " Account Wide Interface Option Settings has been DISABLED by default. Type " .. AccWideUI_TextSlash .. " to configure.")
-						end
 					
 					end
 				
@@ -398,6 +392,158 @@ local AccWideUI_ThisCategory = nil
 
 	function AccWideUI_Frame:InitializeOptions()
 	
+	
+		--[[
+	
+		local category, layout = Settings.RegisterVerticalLayoutCategory("Account Wide Interface Option Settings")
+		Settings.AccWideUISettingsID = category:GetID();
+		
+		
+		-- Show Text
+		do
+			local variable, name, tooltip = "enableTextOutput", "Output to Chat", "Outputs to the chat window when this addon has been loaded.";
+			local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+			Settings.CreateCheckBox(category, setting, tooltip);
+		end
+		
+		
+		layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("What should be saved Account Wide?"));
+		
+		-- Save Edit Mode Layout
+		do
+			local variable, name, tooltip = "accountWideLayout", "Chosen Edit Mode Layout", "Makes the chosen Edit Mode Layout work across Account Wide.";
+			local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+			Settings.CreateCheckBox(category, setting, tooltip);
+		end
+		
+		
+		-- Save Action Bars
+		do
+			local variable, name, tooltip = "accountWideActionBars", "Visible Action Bars", "Makes the currently visible Action Bars work Account Wide.\n\nNote that this does not affect what abilities you have on your bars, only which bars are visible.";
+			local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+			Settings.CreateCheckBox(category, setting, tooltip);
+		end
+		
+		
+		-- Save Nameplates
+		do
+			local variable, name, tooltip = "accountWideNameplates", "Nameplate Settings", "Makes various Nameplate Settings work Account Wide.";
+			local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+			Settings.CreateCheckBox(category, setting, tooltip);
+		end
+		
+		--Save Raid Frames
+		do
+			local variable, name, tooltip = "accountWideRaidFrames", "Party/Raid Frame Settings", "Makes various Party and Raid Frame Settings work Account Wide.";
+			local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+			Settings.CreateCheckBox(category, setting, tooltip);
+		end
+		
+		--Save Arena Frames
+		do
+			local variable, name, tooltip = "accountWideArenaFrames", "Arena Frame Settings", "Makes various Arena Frame Settings work Account Wide.";
+			local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+			Settings.CreateCheckBox(category, setting, tooltip);
+		end
+		
+		
+			
+		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+		
+		
+	
+			layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Edit Mode Layout Settings"));
+
+
+			-- Enable by Default
+			do
+				local variable, name, tooltip = "enableAccountWide", "Enforce Chosen Layout by Default", "Enables the Edit Mode Layout Per-Spec by default for all of your characters.";
+				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
+				Settings.CreateCheckBox(category, setting, tooltip);
+			end
+		
+	
+		
+		
+		
+			local classColorString = C_ClassColor.GetClassColor(UnitClass("player"));
+		
+		
+			layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(classColorString:WrapTextInColorCode(UnitName("player")) .. "'s Per-Spec Edit Mode Settings"));
+			
+			--Specialisations
+			
+			
+			
+				AccWideUI_SpecName = {}
+				AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
+				
+				for specx = 1, AccWideUI_NumSpecializations, 1 do
+					AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
+				end
+				
+				
+				
+				if (AccWideUI_NumSpecializations >= 1) then
+				
+					do
+						local variable, name, tooltip = "accWideSpec1", AccWideUI_SpecName[1], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[1] .. " spec.";
+						local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
+						Settings.CreateCheckBox(category, setting, tooltip);
+					end
+				
+				end
+				
+				if (AccWideUI_NumSpecializations >= 2) then
+				
+					do
+						local variable, name, tooltip = "accWideSpec2", AccWideUI_SpecName[2], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[2] .. " spec.";
+						local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
+						Settings.CreateCheckBox(category, setting, tooltip);
+					end
+				
+				end
+				
+				if (AccWideUI_NumSpecializations >= 3) then
+				
+					do
+						local variable, name, tooltip = "accWideSpec3", AccWideUI_SpecName[3], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[3] .. " spec.";
+						local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
+						Settings.CreateCheckBox(category, setting, tooltip);
+					end
+				
+				end
+				
+				if (AccWideUI_NumSpecializations >= 4) then
+				
+					do
+						local variable, name, tooltip = "accWideSpec4", AccWideUI_SpecName[4], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[4] .. " spec.";
+						local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
+						Settings.CreateCheckBox(category, setting, tooltip);
+					end
+				
+				end
+				
+				if (AccWideUI_NumSpecializations >= 5) then
+				
+					do
+						local variable, name, tooltip = "accWideSpec5", AccWideUI_SpecName[5], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[5] .. " spec.";
+						local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
+						Settings.CreateCheckBox(category, setting, tooltip);
+					end
+				
+				end
+				
+		
+		
+		
+		end
+		
+	
+		
+		Settings.RegisterAddOnCategory(category);
+	]]--
+		
 		
 			AccWideUI_OptionsPanelFrame = CreateFrame("Frame")
 			AccWideUI_OptionsPanelFrame.name = "Account Wide Interface Option Settings"
@@ -443,7 +589,7 @@ local AccWideUI_ThisCategory = nil
 			--Enable by Default
 			local chkEnableDefault = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkEnableDefault:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkEnableDefault.Text:SetText("Enable by default for all New Characters")
+			chkEnableDefault.Text:SetText("Enable Edit Mode by default for all New Characters")
 			chkEnableDefault:HookScript("OnClick", function(_, btn, down)
 				AccWideUI_AccountData.enableAccountWide = chkEnableDefault:GetChecked()
 			end)
@@ -606,9 +752,9 @@ local AccWideUI_ThisCategory = nil
 					chkEnableSpec1:SetPoint("TOPLEFT", thisPointX, thisPointY)
 					chkEnableSpec1.Text:SetText(AccWideUI_SpecName[1])
 					chkEnableSpec1:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData[1] = chkEnableSpec1:GetChecked()
+						AccWideUI_CharData["accWideSpec" .. 1] = chkEnableSpec1:GetChecked()
 					end)
-					chkEnableSpec1:SetChecked(AccWideUI_CharData[1])
+					chkEnableSpec1:SetChecked(AccWideUI_CharData["accWideSpec" .. 1])
 
 				end
 				
@@ -620,9 +766,9 @@ local AccWideUI_ThisCategory = nil
 					chkEnableSpec2:SetPoint("TOPLEFT", thisPointX, thisPointY)
 					chkEnableSpec2.Text:SetText(AccWideUI_SpecName[2])
 					chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData[2] = chkEnableSpec2:GetChecked()
+						AccWideUI_CharData["accWideSpec" .. 2] = chkEnableSpec2:GetChecked()
 					end)
-					chkEnableSpec2:SetChecked(AccWideUI_CharData[2])
+					chkEnableSpec2:SetChecked(AccWideUI_CharData["accWideSpec" .. 2])
 
 				end
 				
@@ -634,9 +780,9 @@ local AccWideUI_ThisCategory = nil
 					chkEnableSpec3:SetPoint("TOPLEFT", thisPointX, thisPointY)
 					chkEnableSpec3.Text:SetText(AccWideUI_SpecName[3])
 					chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData[3] = chkEnableSpec3:GetChecked()
+						AccWideUI_CharData["accWideSpec" .. 3] = chkEnableSpec3:GetChecked()
 					end)
-					chkEnableSpec3:SetChecked(AccWideUI_CharData[3])
+					chkEnableSpec3:SetChecked(AccWideUI_CharData["accWideSpec" .. 3])
 
 				end
 				
@@ -648,9 +794,9 @@ local AccWideUI_ThisCategory = nil
 					chkEnableSpec4:SetPoint("TOPLEFT", thisPointX, thisPointY)
 					chkEnableSpec4.Text:SetText(AccWideUI_SpecName[4])
 					chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData[4] = chkEnableSpec4:GetChecked()
+						AccWideUI_CharData["accWideSpec" .. 4] = chkEnableSpec4:GetChecked()
 					end)
-					chkEnableSpec4:SetChecked(AccWideUI_CharData[4])
+					chkEnableSpec4:SetChecked(AccWideUI_CharData["accWideSpec" .. 4])
 
 				end
 				
@@ -662,9 +808,9 @@ local AccWideUI_ThisCategory = nil
 					chkEnableSpec5:SetPoint("TOPLEFT", thisPointX, thisPointY)
 					chkEnableSpec5.Text:SetText(AccWideUI_SpecName[5])
 					chkEnableSpec5:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData[5] = chkEnableSpec5:GetChecked()
+						AccWideUI_CharData["accWideSpec" .. 5] = chkEnableSpec5:GetChecked()
 					end)
-					chkEnableSpec5:SetChecked(AccWideUI_CharData[5])
+					chkEnableSpec5:SetChecked(AccWideUI_CharData["accWideSpec" .. 5])
 
 				end
 				
@@ -704,9 +850,9 @@ local AccWideUI_ThisCategory = nil
 			-- Use Acc Wide Layout
 			local getLayoutsTable = C_EditMode.GetLayouts()
 			local currentActiveLayout = getLayoutsTable["activeLayout"]
-			local currentSpec = GetSpecialization()
+			local currentSpec = tostring(GetSpecialization())
 			
-			if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData[currentSpec] == true) then
+			if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 			
 
 				if (AccWideUI_AccountData.enableDebug == true) then
@@ -923,23 +1069,23 @@ local AccWideUI_ThisCategory = nil
 			end
 			
 			if (AccWideUI_NumSpecializations >= 1) then
-				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[1] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData[1]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[1] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData["accWideSpec" .. 1]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 			end
 			
 			if (AccWideUI_NumSpecializations >= 2) then
-				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[2] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData[2]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[2] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData["accWideSpec" .. 2]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 			end
 			
 			if (AccWideUI_NumSpecializations >= 3) then
-				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[3] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData[3]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[3] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData["accWideSpec" .. 3]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 			end
 			
 			if (AccWideUI_NumSpecializations >= 4) then
-				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[4] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData[4]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[4] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData["accWideSpec" .. 4]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 			end
 			
 			if (AccWideUI_NumSpecializations >= 5) then
-				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[5] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData[5]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+				AccWideUI_Tooltip:AddDoubleLine(AccWideUI_SpecName[5] .. ":", AccWideUI:CompartmentIsSpecActive(AccWideUI_CharData["accWideSpec" .. 5]), nil, nil, nil,  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
 			end
 			
 			AccWideUI_Tooltip:AddLine(" ")
