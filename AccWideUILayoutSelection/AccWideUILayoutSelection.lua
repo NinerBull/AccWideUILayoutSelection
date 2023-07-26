@@ -4,13 +4,10 @@ AccWideUI_Frame:RegisterEvent("PLAYER_LOGIN")
 AccWideUI_Frame:RegisterEvent("SETTINGS_LOADED")
 AccWideUI_Frame:RegisterEvent("PLAYER_LOGOUT")
 
-if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-end
 
-if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-	AccWideUI_Frame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
-end
+AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+AccWideUI_Frame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
+
 
 
 local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<Account Wide Interface>")
@@ -20,40 +17,40 @@ local AccWideUI_ThisCategory = nil
 
 	AccWideUI = {}
 	
-	
-	if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
-		hooksecurefunc(C_EditMode, "OnEditModeExit", function()
+
+
+	hooksecurefunc(C_EditMode, "OnEditModeExit", function()
+	
+		if (AccWideUI_AccountData.accountWideLayout == true) then
 		
-			if (AccWideUI_AccountData.accountWideLayout == true) then
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Saving Acc Wide UI.")
+			end
+				
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Acc Wide UI.")
-				end
-					
-				
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = tostring(GetSpecialization())
-				
-				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
+			local getLayoutsTable = C_EditMode.GetLayouts()
+			local currentActiveLayout = getLayoutsTable["activeLayout"]
+			local currentSpec = tostring(GetSpecialization())
+			
+			if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 
-					--Set the spec
-					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
-					
-					AccWideUI:SaveUISettings()
+				--Set the spec
+				AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
+				
+				AccWideUI:SaveUISettings()
 
-				end
-				
-				
-				
-				
-				
-			end -- EO accountWideLayout
-				
-		end)
+			end
+			
+			
+			
+			
+			
+		end -- EO accountWideLayout
+			
+	end)
 	
-	end
+
 	
 	
 	AccWideUI_Table_NameplateVariables = {
@@ -143,7 +140,8 @@ local AccWideUI_ThisCategory = nil
 		"raidOptionShowBorders",
 		"raidOptionKeepGroupsTogether",	
 		"raidOptionDisplayMainTankAndAssist",
-		"raidFramesDisplayOnlyHealerPowerBars"
+		"raidFramesDisplayOnlyHealerPowerBars",
+		"useCompactPartyFrames"
 	}
 	
 	
@@ -157,23 +155,23 @@ local AccWideUI_ThisCategory = nil
 		"pvpFramesDisplayClassColor",
 		"pvpFramesDisplayOnlyHealerPowerBars",
 	}
-
+	
 	
 
 	AccWideUI_Frame:SetScript("OnEvent", function(self, event, arg1, arg2)
 
-		if InCombatLockdown() == false then
+		if (InCombatLockdown() == false) then
 			-- do nothing if in combat
 
 			if (event == "SETTINGS_LOADED") then
 			
 			
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					local getLayoutsTable = C_EditMode.GetLayouts()
-					local currentActiveLayout = getLayoutsTable["activeLayout"]
-				end
-				
-				
+		
+				local getLayoutsTable = C_EditMode.GetLayouts()
+				local currentActiveLayout = getLayoutsTable["activeLayout"]
+		
+			
+			
 				
 				
 				--Upgrade
@@ -198,12 +196,9 @@ local AccWideUI_ThisCategory = nil
 					AccWideUI_AccountData.enableDebug = false
 				end
 				
+	
 				if (type(AccWideUI_AccountData.enableAccountWide) ~= "boolean") then
 					AccWideUI_AccountData.enableAccountWide = true
-				end
-				
-				if (type(AccWideUI_AccountData.enableTextOutput) ~= "boolean") then
-					AccWideUI_AccountData.enableTextOutput = true
 				end
 				
 				if (type(AccWideUI_AccountData.accountWideLayoutID) ~= "number") then
@@ -213,7 +208,12 @@ local AccWideUI_ThisCategory = nil
 				if (type(AccWideUI_AccountData.accountWideLayout) ~= "boolean") then
 					AccWideUI_AccountData.accountWideLayout = true
 				end
+	
 				
+				if (type(AccWideUI_AccountData.enableTextOutput) ~= "boolean") then
+					AccWideUI_AccountData.enableTextOutput = true
+				end
+
 				if (type(AccWideUI_AccountData.accountWideActionBars) ~= "boolean") then
 					AccWideUI_AccountData.accountWideActionBars = true
 				end
@@ -245,43 +245,36 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 				
-				
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				
-					if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar2 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_2")
-					end
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar3 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_3")
-					end
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar4 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_4")
-					end
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar5 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_5")
-					end
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar6 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_6")
-					end
-				
-					if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar7 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_7")
-					end
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar8 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_8")
-					end
-				
+
+			
+				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar2 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_2")
 				end
 				
+				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar3 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_3")
+				end
 				
+				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar4 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_4")
+				end
 				
+				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar5 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_5")
+				end
 				
+				if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar6 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_6")
+				end
+			
+				if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar7 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_7")
+				end
+				
+				if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar8 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_8")
+				end
+
 				
 				-- Nameplates Variables
 				if (type(AccWideUI_AccountData.Nameplates) ~= "table") then
@@ -318,10 +311,11 @@ local AccWideUI_ThisCategory = nil
 					end
 				end
 				
-				
-				
+			
+
 				if ((type(AccWideUI_CharData) == "table") and (AccWideUI_CharData["accWideSpec1"] == nil)) then
 					AccWideUI_CharData = nil
+					print(AccWideUI_TextName .. " Removed Invalid Char Data.")
 				end
 				
 				
@@ -351,6 +345,7 @@ local AccWideUI_ThisCategory = nil
 					end
 				
 				end
+		
 				
 				AccWideUI_Frame.InitializeOptions()
 			
@@ -358,14 +353,19 @@ local AccWideUI_ThisCategory = nil
 
 
 
-			if  (event == "SETTINGS_LOADED") or (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
+			if  (event == "SETTINGS_LOADED") then
 			
 				AccWideUI:LoadUISettings()
 	
 			end --EO Settings Loaded
 			
 			
-			
+			if  (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
+				
+				AccWideUI:SaveUISettings()
+				AccWideUI:LoadUISettings()
+	
+			end --EO Settings Loaded
 			
 			
 			
@@ -447,8 +447,7 @@ local AccWideUI_ThisCategory = nil
 		end
 		
 		
-			
-		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+
 		
 		
 	
@@ -535,9 +534,7 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 		
-		
-		
-		end
+
 		
 	
 		
@@ -569,6 +566,7 @@ local AccWideUI_ThisCategory = nil
 			title2:SetPoint('TOPLEFT', thisPointX, thisPointY)
 			title2:SetText("Makes your chosen Interface Options apply for all of your characters and specs.")
 			
+
 			thisPointY = thisPointY - 20
 			
 			-- Add shortcut to Edit Mode
@@ -594,7 +592,8 @@ local AccWideUI_ThisCategory = nil
 				AccWideUI_AccountData.enableAccountWide = chkEnableDefault:GetChecked()
 			end)
 			chkEnableDefault:SetChecked(AccWideUI_AccountData.enableAccountWide)
-			
+		
+	
 			
 			
 			thisPointY = thisPointY - 25
@@ -634,23 +633,19 @@ local AccWideUI_ThisCategory = nil
 			titleSA2:SetText("What kind of UI settings would you like to save Account Wide?")
 			
 			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 			thisPointY = thisPointY - 25 
-			
-				-- Save Edit Mode Layout
-				local chkSaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkSaveEditModeLayout.Text:SetText("Chosen Edit Mode Layout")
-				chkSaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideLayout = chkSaveEditModeLayout:GetChecked()
-				end)
-				chkSaveEditModeLayout:SetChecked(AccWideUI_AccountData.accountWideLayout)
-			
-			end
-			
-			
-			
+		
+			-- Save Edit Mode Layout
+			local chkSaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkSaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkSaveEditModeLayout.Text:SetText("Chosen Edit Mode Layout")
+			chkSaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideLayout = chkSaveEditModeLayout:GetChecked()
+			end)
+			chkSaveEditModeLayout:SetChecked(AccWideUI_AccountData.accountWideLayout)
+
+
 			thisPointY = thisPointY - 25 
 			
 			
@@ -702,121 +697,119 @@ local AccWideUI_ThisCategory = nil
 			
 			
 
+
 		
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-			
-			
-				thisPointY = -375
+			thisPointY = -375
 
-				local classColorString = C_ClassColor.GetClassColor(UnitClass("player"));
-				
-				--Title for Char Specific
-				local titleCS = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
-				titleCS:SetJustifyV('TOP')
-				titleCS:SetJustifyH('LEFT')
-				titleCS:SetPoint('TOPLEFT', thisPointX, thisPointY)
-				titleCS:SetText(classColorString:WrapTextInColorCode(UnitName("player")) .. " Specific Options")
-				
-				thisPointY = thisPointY - 25
-				
-				--Title for Char Specific2
-				local titleCS2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
-				titleCS2:SetJustifyV('TOP')
-				titleCS2:SetJustifyH('LEFT')
-				titleCS2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-				titleCS2:SetText("Select whether to use the chosen Edit Mode layout for this character's Specializations.")
-				
-				
-				
-				
-				
-				--Specialisations
+			local classColorString = C_ClassColor.GetClassColor(UnitClass("player"));
+			
+			--Title for Char Specific
+			local titleCS = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
+			titleCS:SetJustifyV('TOP')
+			titleCS:SetJustifyH('LEFT')
+			titleCS:SetPoint('TOPLEFT', thisPointX, thisPointY)
+			titleCS:SetText(classColorString:WrapTextInColorCode(UnitName("player")) .. " Specific Options")
+			
+			thisPointY = thisPointY - 25
+			
+			--Title for Char Specific2
+			local titleCS2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
+			titleCS2:SetJustifyV('TOP')
+			titleCS2:SetJustifyH('LEFT')
+			titleCS2:SetPoint('TOPLEFT', thisPointX, thisPointY)
+			titleCS2:SetText("Select whether to use the chosen Edit Mode layout for this character's Specializations.")
 			
 			
 			
-				AccWideUI_SpecName = {}
-				AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
+			
+			
+			--Specialisations
+		
+		
+		
+			AccWideUI_SpecName = {}
+			AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 
-				for specx = 1, AccWideUI_NumSpecializations, 1 do
-					AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
-				end
-				
-				thisPointY = -395
-					
-
-				if (AccWideUI_NumSpecializations >= 1) then
-				
-					thisPointY = thisPointY - 25
-				
-					local chkEnableSpec1 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec1:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec1.Text:SetText(AccWideUI_SpecName[1])
-					chkEnableSpec1:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 1] = chkEnableSpec1:GetChecked()
-					end)
-					chkEnableSpec1:SetChecked(AccWideUI_CharData["accWideSpec" .. 1])
-
-				end
-				
-				if (AccWideUI_NumSpecializations >= 2) then
-				
-					thisPointY = thisPointY - 25
-				
-					local chkEnableSpec2 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec2:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec2.Text:SetText(AccWideUI_SpecName[2])
-					chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 2] = chkEnableSpec2:GetChecked()
-					end)
-					chkEnableSpec2:SetChecked(AccWideUI_CharData["accWideSpec" .. 2])
-
-				end
-				
-				if (AccWideUI_NumSpecializations >= 3) then
-				
-					thisPointY = thisPointY - 25
-				
-					local chkEnableSpec3 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec3:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec3.Text:SetText(AccWideUI_SpecName[3])
-					chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 3] = chkEnableSpec3:GetChecked()
-					end)
-					chkEnableSpec3:SetChecked(AccWideUI_CharData["accWideSpec" .. 3])
-
-				end
-				
-				if (AccWideUI_NumSpecializations >= 4) then
-				
-					thisPointY = thisPointY - 25
-				
-					local chkEnableSpec4 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec4:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec4.Text:SetText(AccWideUI_SpecName[4])
-					chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 4] = chkEnableSpec4:GetChecked()
-					end)
-					chkEnableSpec4:SetChecked(AccWideUI_CharData["accWideSpec" .. 4])
-
-				end
-				
-				if (AccWideUI_NumSpecializations >= 5) then
-				
-					thisPointY = thisPointY - 25
-				
-					local chkEnableSpec5 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec5:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec5.Text:SetText(AccWideUI_SpecName[5])
-					chkEnableSpec5:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 5] = chkEnableSpec5:GetChecked()
-					end)
-					chkEnableSpec5:SetChecked(AccWideUI_CharData["accWideSpec" .. 5])
-
-				end
-				
-				
+			for specx = 1, AccWideUI_NumSpecializations, 1 do
+				AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
 			end
 			
+			thisPointY = -395
+				
+
+			if (AccWideUI_NumSpecializations >= 1) then
+			
+				thisPointY = thisPointY - 25
+			
+				local chkEnableSpec1 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkEnableSpec1:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkEnableSpec1.Text:SetText(AccWideUI_SpecName[1])
+				chkEnableSpec1:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_CharData["accWideSpec" .. 1] = chkEnableSpec1:GetChecked()
+				end)
+				chkEnableSpec1:SetChecked(AccWideUI_CharData["accWideSpec" .. 1])
+
+			end
+			
+			if (AccWideUI_NumSpecializations >= 2) then
+			
+				thisPointY = thisPointY - 25
+			
+				local chkEnableSpec2 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkEnableSpec2:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkEnableSpec2.Text:SetText(AccWideUI_SpecName[2])
+				chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_CharData["accWideSpec" .. 2] = chkEnableSpec2:GetChecked()
+				end)
+				chkEnableSpec2:SetChecked(AccWideUI_CharData["accWideSpec" .. 2])
+
+			end
+			
+			if (AccWideUI_NumSpecializations >= 3) then
+			
+				thisPointY = thisPointY - 25
+			
+				local chkEnableSpec3 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkEnableSpec3:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkEnableSpec3.Text:SetText(AccWideUI_SpecName[3])
+				chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_CharData["accWideSpec" .. 3] = chkEnableSpec3:GetChecked()
+				end)
+				chkEnableSpec3:SetChecked(AccWideUI_CharData["accWideSpec" .. 3])
+
+			end
+			
+			if (AccWideUI_NumSpecializations >= 4) then
+			
+				thisPointY = thisPointY - 25
+			
+				local chkEnableSpec4 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkEnableSpec4:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkEnableSpec4.Text:SetText(AccWideUI_SpecName[4])
+				chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_CharData["accWideSpec" .. 4] = chkEnableSpec4:GetChecked()
+				end)
+				chkEnableSpec4:SetChecked(AccWideUI_CharData["accWideSpec" .. 4])
+
+			end
+			
+			if (AccWideUI_NumSpecializations >= 5) then
+			
+				thisPointY = thisPointY - 25
+			
+				local chkEnableSpec5 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkEnableSpec5:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkEnableSpec5.Text:SetText(AccWideUI_SpecName[5])
+				chkEnableSpec5:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_CharData["accWideSpec" .. 5] = chkEnableSpec5:GetChecked()
+				end)
+				chkEnableSpec5:SetChecked(AccWideUI_CharData["accWideSpec" .. 5])
+
+			end
+			
+			
+
+		
 		
 			
 			SLASH_ACCWIDEUI1 = "/accwideui"
@@ -843,30 +836,24 @@ local AccWideUI_ThisCategory = nil
 		end
 		
 		
+		-- Use Acc Wide Layout
+		local getLayoutsTable = C_EditMode.GetLayouts()
+		local currentActiveLayout = getLayoutsTable["activeLayout"]
+		local currentSpec = tostring(GetSpecialization())
 		
+		if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 		
-		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-		
-			-- Use Acc Wide Layout
-			local getLayoutsTable = C_EditMode.GetLayouts()
-			local currentActiveLayout = getLayoutsTable["activeLayout"]
-			local currentSpec = tostring(GetSpecialization())
-			
-			if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-			
 
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Acc Wide UI.")
-				end
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Loading Acc Wide UI.")
+			end
 
-				--Set the spec
-				C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
+			--Set the spec
+			C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
+	
 		
-			
-			end -- eo accountWideLayout
-		
-		end
-		
+		end -- eo accountWideLayout
+
 		
 		
 		-- Use Action Bars
@@ -875,8 +862,7 @@ local AccWideUI_ThisCategory = nil
 			if (AccWideUI_AccountData.enableDebug == true) then
 				print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 			end
-		
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
 				Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", AccWideUI_AccountData.ActionBars.Bar2)
 				Settings.SetValue("PROXY_SHOW_ACTIONBAR_3", AccWideUI_AccountData.ActionBars.Bar3)
 				Settings.SetValue("PROXY_SHOW_ACTIONBAR_4", AccWideUI_AccountData.ActionBars.Bar4)
@@ -884,8 +870,6 @@ local AccWideUI_ThisCategory = nil
 				Settings.SetValue("PROXY_SHOW_ACTIONBAR_6", AccWideUI_AccountData.ActionBars.Bar6)
 				Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUI_AccountData.ActionBars.Bar7)
 				Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUI_AccountData.ActionBars.Bar8)
-			end
-			
 		
 		end -- EO accountWideActionBars
 
@@ -945,7 +929,6 @@ local AccWideUI_ThisCategory = nil
 			print(AccWideUI_TextName .. " Saving UI Settings.")
 		end
 		
-		local currentSpec = GetSpecialization()
 	
 		--Save Shown Action Bars
 		if (AccWideUI_AccountData.accountWideActionBars == true) then
@@ -954,7 +937,6 @@ local AccWideUI_ThisCategory = nil
 				print(AccWideUI_TextName .. " Saving Action Bar Settings.")
 			end
 
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				AccWideUI_AccountData.ActionBars.Bar2 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_2")
 				AccWideUI_AccountData.ActionBars.Bar3 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_3")
 				AccWideUI_AccountData.ActionBars.Bar4 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_4")
@@ -962,7 +944,7 @@ local AccWideUI_ThisCategory = nil
 				AccWideUI_AccountData.ActionBars.Bar6 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_6")
 				AccWideUI_AccountData.ActionBars.Bar7 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_7")
 				AccWideUI_AccountData.ActionBars.Bar8 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_8")
-			end
+	
 		
 		end
 		
@@ -1046,7 +1028,6 @@ local AccWideUI_ThisCategory = nil
 
 	function AccWideUI_CompartmentHover(addonName, buttonName)
 	
-		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			if (not AccWideUI_Tooltip) then
 				AccWideUI_Tooltip = CreateFrame("GameTooltip", "AccWideUI_Tooltip_Compartment", UIParent, "GameTooltipTemplate")
 			end
@@ -1093,13 +1074,10 @@ local AccWideUI_ThisCategory = nil
 			
 			AccWideUI_Tooltip:Show()
 		
-		end
 	end
 
 	function AccWideUI_CompartmentLeave(buttonName)
-		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			AccWideUI_Tooltip:Hide()
-		end
 	end
 
 
