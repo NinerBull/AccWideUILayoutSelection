@@ -16,7 +16,7 @@ It allows you to automatically apply the following to all characters on your acc
 * Arena Frame Settings
 
 ## Compatibility
-* **Dragonflight** - 10.1.5
+* **Dragonflight** - 10.1.7
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
