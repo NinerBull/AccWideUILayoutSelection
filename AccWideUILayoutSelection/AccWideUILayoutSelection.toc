@@ -1,10 +1,10 @@
 ## Interface: 100107
 ## Title: Account Wide Interface Option Settings
-## Version: 1.1.1
+## Version: 1.1.2
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /accwideinterface
 ## Author: NinerBull
-## SavedVariables: AccWideUIData, AccWideUI_AccountData
-## SavedVariablesPerCharacter: AccWideUIDataChar, AccWideUI_CharData
+## SavedVariables: AccWideUI_AccountData
+## SavedVariablesPerCharacter: AccWideUI_CharData
 ## DefaultState: enabled
 
 ## X-Category: HUDs

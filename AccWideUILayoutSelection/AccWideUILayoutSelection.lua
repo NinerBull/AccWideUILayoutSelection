@@ -3,15 +3,11 @@ local AccWideUI_Frame = CreateFrame("Frame")
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 
-	AccWideUI_Frame:RegisterEvent("ADDON_LOADED")
-	AccWideUI_Frame:RegisterEvent("PLAYER_LOGIN")
+	AccWideUI_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	AccWideUI_Frame:RegisterEvent("SETTINGS_LOADED")
 	AccWideUI_Frame:RegisterEvent("PLAYER_LOGOUT")
 
-
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
-	AccWideUI_Frame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
-
 
 
 	local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<Account Wide Interface>")
@@ -168,28 +164,13 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				-- do nothing if in combat
 
 				if (event == "SETTINGS_LOADED") then
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
-				
-			
-					local getLayoutsTable = C_EditMode.GetLayouts()
-					local currentActiveLayout = getLayoutsTable["activeLayout"]
-			
-				
-				
-					
-					
-					--Upgrade
-					if (type(AccWideUIData) ~= "nil") then
-						AccWideUI_AccountData = AccWideUIData
-						AccWideUIData = nil
-					end
-					
-					if (type(AccWideUIDataChar) ~= "nil") then
-						AccWideUI_CharData = AccWideUIDataChar
-						AccWideUIDataChar = nil
-					end
-					
-					
+						local getLayoutsTable = C_EditMode.GetLayouts()
+						local currentActiveLayout = getLayoutsTable["activeLayout"]
+						
+					end		
 					
 
 					if (type(AccWideUI_AccountData) ~= "table") then
@@ -200,6 +181,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						AccWideUI_AccountData.enableDebug = false
 					end
 					
+				
 		
 					if (type(AccWideUI_AccountData.enableAccountWide) ~= "boolean") then
 						AccWideUI_AccountData.enableAccountWide = true
@@ -278,6 +260,9 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
 						AccWideUI_AccountData.ActionBars.Bar8 = Settings.GetValue("PROXY_SHOW_ACTIONBAR_8")
 					end
+
+
+
 
 					
 					-- Nameplates Variables
@@ -704,8 +689,9 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 			
 				thisPointY = -375
+				local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
+				
 
-				local classColorString = C_ClassColor.GetClassColor(UnitClass("player"));
 				
 				--Title for Char Specific
 				local titleCS = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
