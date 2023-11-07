@@ -16,7 +16,7 @@ It allows you to automatically apply the following to all characters on your acc
 * Arena Frame Settings
 
 ## Compatibility
-* **Dragonflight** - 10.1.7
+* **Dragonflight** - 10.2.0
 * **WotLK Classic** - 3.4.3
 * **Classic Era** - 1.14.4
 
