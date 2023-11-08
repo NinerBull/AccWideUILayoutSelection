@@ -776,7 +776,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 
 					for specx = 1, AccWideUI_NumSpecializations, 1 do
-						AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
+						AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)), UnitSex("player"))
 					end
 					
 					thisPointY = -395
