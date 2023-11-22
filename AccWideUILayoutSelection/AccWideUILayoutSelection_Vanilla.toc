@@ -1,6 +1,6 @@
-## Interface: 11404
+## Interface: 11500
 ## Title: Account Wide Interface Option Settings
-## Version: 1.1.6
+## Version: 1.1.7
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /accwideinterface
 ## Author: NinerBull
 ## SavedVariables: AccWideUI_AccountData

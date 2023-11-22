@@ -515,7 +515,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 					
 					for specx = 1, AccWideUI_NumSpecializations, 1 do
-						AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
+						AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, GetSpecializationInfo(specx)))
 					end
 					
 					
@@ -776,7 +776,8 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 
 					for specx = 1, AccWideUI_NumSpecializations, 1 do
-						AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)), UnitSex("player"))
+						AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, GetSpecializationInfo(specx)))
+						
 					end
 					
 					thisPointY = -395
@@ -876,96 +877,106 @@ local AccWideUI_Frame = CreateFrame("Frame")
 		
 		function AccWideUI_Frame:LoadUISettings()
 		
-			if (AccWideUI_AccountData.enableDebug == true) then
-				print(AccWideUI_TextName .. " Loading UI Settings.")
-			end
-			
-			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-			
-				-- Use Acc Wide Layout
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = tostring(GetSpecialization())
+			if (InCombatLockdown()) then
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Not loading UI Settings while in combat.")
+				end
 				
-				if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-				
-
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Acc Wide UI.")
-					end
-
-					--Set the spec
-					C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
+			else
 			
 				
-			end -- eo accountWideLayout
-
-			end
 			
-			-- Use Action Bars
-			if (AccWideUI_AccountData.accountWideActionBars == true) then
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Loading UI Settings.")
+				end
+				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					-- Use Acc Wide Layout
+					local getLayoutsTable = C_EditMode.GetLayouts()
+					local currentActiveLayout = getLayoutsTable["activeLayout"]
+					local currentSpec = tostring(GetSpecialization())
 					
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Action Bar Settings.")
+					if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
+					
+
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Acc Wide UI.")
+						end
+
+						--Set the spec
+						C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
+				
+					
+				end -- eo accountWideLayout
+
 				end
 				
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar2))
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_3", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar3))
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_4", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar4))
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_5", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar5))
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-						Settings.SetValue("PROXY_SHOW_ACTIONBAR_6", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar6))
-						Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar7))
-						Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar8))
+				-- Use Action Bars
+				if (AccWideUI_AccountData.accountWideActionBars == true) then
+						
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 					end
-			
-			end -- EO accountWideActionBars
+					
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar2))
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_3", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar3))
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_4", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar4))
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_5", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar5))
+						if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+							Settings.SetValue("PROXY_SHOW_ACTIONBAR_6", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar6))
+							Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar7))
+							Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar8))
+						end
+				
+				end -- EO accountWideActionBars
 
 
-			-- Use Nameplates
-			if (AccWideUI_AccountData.accountWideNameplates == true) then
+				-- Use Nameplates
+				if (AccWideUI_AccountData.accountWideNameplates == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Nameplate Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_NameplateVariables) do
+						SetCVar(v, AccWideUI_AccountData.Nameplates[v])
+					end
+				
+				end -- EO accountWideNameplates
+				
+				
+				
+				-- Use Raid Frames
+				if (AccWideUI_AccountData.accountWideRaidFrames == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
+						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
+					end
+				
+				end -- EO accountWideRaidFrames
+				
+				
+				-- Use Arena Frames
+				if (AccWideUI_AccountData.accountWideArenaFrames == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
+						SetCVar(v, AccWideUI_AccountData.ArenaFrames[v])
+					end
+				
+				end -- EO accountWideRaidFrames
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Nameplate Settings.")
-				end
 			
-				for k, v in pairs(AccWideUI_Table_NameplateVariables) do
-					SetCVar(v, AccWideUI_AccountData.Nameplates[v])
-				end
-			
-			end -- EO accountWideNameplates
-			
-			
-			
-			-- Use Raid Frames
-			if (AccWideUI_AccountData.accountWideRaidFrames == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-					SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
-				end
-			
-			end -- EO accountWideRaidFrames
-			
-			
-			-- Use Arena Frames
-			if (AccWideUI_AccountData.accountWideArenaFrames == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-					SetCVar(v, AccWideUI_AccountData.ArenaFrames[v])
-				end
-			
-			end -- EO accountWideRaidFrames
-			
-			
+			end
 		
 		end
 
@@ -974,75 +985,83 @@ local AccWideUI_Frame = CreateFrame("Frame")
 
 		function AccWideUI_Frame:SaveUISettings()
 		
-			if (AccWideUI_AccountData.enableDebug == true) then
-				print(AccWideUI_TextName .. " Saving UI Settings.")
-			end
-			
 		
-			--Save Shown Action Bars
-			if (AccWideUI_AccountData.accountWideActionBars == true) then
+			if (InCombatLockdown()) then
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Not saving UI Settings while in combat.")
+				end
+				
+			else
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Action Bar Settings.")
+					print(AccWideUI_TextName .. " Saving UI Settings.")
 				end
-
-					AccWideUI_AccountData.ActionBars.Bar2 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
-					AccWideUI_AccountData.ActionBars.Bar3 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
-					AccWideUI_AccountData.ActionBars.Bar4 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
-					AccWideUI_AccountData.ActionBars.Bar5 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-						AccWideUI_AccountData.ActionBars.Bar6 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
-						AccWideUI_AccountData.ActionBars.Bar7 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
-						AccWideUI_AccountData.ActionBars.Bar8 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
+				
+			
+				--Save Shown Action Bars
+				if (AccWideUI_AccountData.accountWideActionBars == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Action Bar Settings.")
 					end
-		
+
+						AccWideUI_AccountData.ActionBars.Bar2 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
+						AccWideUI_AccountData.ActionBars.Bar3 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
+						AccWideUI_AccountData.ActionBars.Bar4 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
+						AccWideUI_AccountData.ActionBars.Bar5 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
+						if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+							AccWideUI_AccountData.ActionBars.Bar6 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
+							AccWideUI_AccountData.ActionBars.Bar7 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
+							AccWideUI_AccountData.ActionBars.Bar8 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
+						end
+			
+				
+				end
+				
+				
+				-- Save Nameplates
+				if (AccWideUI_AccountData.accountWideNameplates == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Nameplate Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_NameplateVariables) do
+						AccWideUI_AccountData.Nameplates[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideNameplates
+				
+				
+				
+				-- Save Raid Frames
+				if (AccWideUI_AccountData.accountWideRaidFrames == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Raid Frame Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
+						AccWideUI_AccountData.RaidFrames[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideRaidFrames
+				
+				
+				-- Save Arena Frames
+				if (AccWideUI_AccountData.accountWideArenaFrames == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Arena Frame Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
+						AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideRaidFrames
 			
 			end
-			
-			
-			-- Save Nameplates
-			if (AccWideUI_AccountData.accountWideNameplates == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Nameplate Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_NameplateVariables) do
-					AccWideUI_AccountData.Nameplates[v] = GetCVar(v) or nil
-				end
-			
-			end -- EO accountWideNameplates
-			
-			
-			
-			-- Save Raid Frames
-			if (AccWideUI_AccountData.accountWideRaidFrames == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Raid Frame Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-					AccWideUI_AccountData.RaidFrames[v] = GetCVar(v) or nil
-				end
-			
-			end -- EO accountWideRaidFrames
-			
-			
-			-- Save Arena Frames
-			if (AccWideUI_AccountData.accountWideArenaFrames == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Arena Frame Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-					AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
-				end
-			
-			end -- EO accountWideRaidFrames
-			
-		
 		
 		end
 
@@ -1099,7 +1118,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 
 					for specx = 1, AccWideUI_NumSpecializations, 1 do
-						AccWideUI_SpecName[specx] = GetSpecializationNameForSpecID(select(1, GetSpecializationInfo(specx)))
+						AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, GetSpecializationInfo(specx)))
 					end
 					
 					if (AccWideUI_NumSpecializations >= 1) then
