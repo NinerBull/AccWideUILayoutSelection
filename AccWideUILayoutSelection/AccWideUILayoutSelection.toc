@@ -11,6 +11,7 @@
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection
 ## X-Curse-Project-ID: 700820
 ## X-WoWI-ID: 26459
+## X-Wago-ID: n6VPMLGd
 
 ## IconTexture: Interface\Icons\inv_glyph_primewarrior.blp
 ## AddonCompartmentFunc: AccWideUI_CompartmentClick
