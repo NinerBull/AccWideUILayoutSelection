@@ -25,6 +25,7 @@ Download the latest version from one of the places below, and unzip it in your `
 
 * [CurseForge](https://www.curseforge.com/wow/addons/account-wide-ui)
 * [WoWInterface](https://www.wowinterface.com/downloads/info26459-AccountWideUILayoutSelection.html)
+* [Wago](https://addons.wago.io/addons/account-wide-ui)
 * [GitHub](https://github.com/NinerBull/AccWideUILayoutSelection/releases/latest)
 * Or put `https://github.com/NinerBull/AccWideUILayoutSelection` into your favourite Addon Manager
 
