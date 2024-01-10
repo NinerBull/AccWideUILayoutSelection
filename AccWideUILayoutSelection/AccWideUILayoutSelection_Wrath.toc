@@ -2,7 +2,7 @@
 ## Title: Account Wide Interface Option Settings
 ## Version: 1.1.8
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /accwideinterface
-## Author: NinerBull
+## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUI_AccountData
 ## SavedVariablesPerCharacter: AccWideUI_CharData
 ## DefaultState: enabled
