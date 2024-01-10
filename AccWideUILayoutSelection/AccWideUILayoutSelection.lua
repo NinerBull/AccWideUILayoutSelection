@@ -153,7 +153,8 @@ local AccWideUI_Frame = CreateFrame("Frame")
 			"raidOptionKeepGroupsTogether",	
 			"raidOptionDisplayMainTankAndAssist",
 			"raidFramesDisplayOnlyHealerPowerBars",
-			"useCompactPartyFrames"
+			"useCompactPartyFrames",
+			"activeCUFProfile"
 		}
 		
 		
