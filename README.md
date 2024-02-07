@@ -18,7 +18,7 @@ It allows you to automatically apply the following to all characters on your acc
 ## Compatibility
 * **Dragonflight** - 10.2.5
 * **WotLK Classic** - 3.4.3
-* **Classic Era** - 1.15.0
+* **Classic Era** - 1.15.1
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
