@@ -24,8 +24,6 @@ local AccWideUI_Frame = CreateFrame("Frame")
 	local AccWideUI_TextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/accwideinterface")
 	local AccWideUI_ThisCategory = nil
 
-
-		--AccWideUI = {}
 		
 
 		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -154,7 +152,9 @@ local AccWideUI_Frame = CreateFrame("Frame")
 			"raidOptionDisplayMainTankAndAssist",
 			"raidFramesDisplayOnlyHealerPowerBars",
 			"useCompactPartyFrames",
-			"activeCUFProfile"
+			"activeCUFProfile",
+			"showDispelDebuffs",
+			"threatWarning"
 		}
 		
 		
@@ -168,6 +168,25 @@ local AccWideUI_Frame = CreateFrame("Frame")
 			"pvpFramesDisplayClassColor",
 			"pvpFramesDisplayOnlyHealerPowerBars",
 		}
+		
+		AccWideUI_Table_BlockSocialVariables = {
+			"blockChannelInvites",
+			"blockTrades"
+		}
+		
+		AccWideUI_Table_SpellOverlayVariables = {
+			"displaySpellActivationOverlays",
+			"spellActivationOverlayOpacity"
+		}
+		
+		AccWideUI_Table_AutoLootVariables = {
+			"autoLootDefault",
+			"autoLootRate"
+		}
+
+		
+		
+		
 		
 		
 
@@ -192,6 +211,10 @@ local AccWideUI_Frame = CreateFrame("Frame")
 
 					if (type(AccWideUI_AccountData) ~= "table") then
 						AccWideUI_AccountData = {}
+					end
+					
+					if (type(AccWideUI_AccountData.SpecialVariables) ~= "table") then
+						AccWideUI_AccountData.SpecialVariables = {}
 					end
 					
 					if (type(AccWideUI_AccountData.enableDebug) ~= "boolean") then
@@ -237,7 +260,24 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						AccWideUI_AccountData.accountWideArenaFrames = true
 					end
 					
+					if (type(AccWideUI_AccountData.accountWideBlockSocialVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideBlockSocialVariables = true
+					end
 					
+					if (type(AccWideUI_AccountData.accountWideSpellOverlayVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideSpellOverlayVariables = true
+					end
+					
+					if (type(AccWideUI_AccountData.accountWideAutoLootVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideAutoLootVariables = true
+					end
+					
+					
+					
+					--Special
+					if (type(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites) ~= "boolean") then
+						AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
+					end
 					
 					
 					
@@ -327,6 +367,43 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						end
 					end
 					
+					
+					-- Block Social Variables
+					if (type(AccWideUI_AccountData.BlockSocial) ~= "table") then
+						AccWideUI_AccountData.BlockSocial = {}
+					end
+					
+					for k, v in pairs(AccWideUI_Table_BlockSocialVariables) do
+						if (type(AccWideUI_AccountData.BlockSocial[v]) == "nil") then
+							AccWideUI_AccountData.BlockSocial[v] = GetCVar(v) or nil
+						end
+					end
+					
+					
+					-- Block Social Variables
+					if (type(AccWideUI_AccountData.SpellOverlay) ~= "table") then
+						AccWideUI_AccountData.SpellOverlay = {}
+					end
+					
+					for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
+						if (type(AccWideUI_AccountData.SpellOverlay[v]) == "nil") then
+							AccWideUI_AccountData.SpellOverlay[v] = GetCVar(v) or nil
+						end
+					end
+					
+					-- Auto Loot Variables
+					if (type(AccWideUI_AccountData.AutoLoot) ~= "table") then
+						AccWideUI_AccountData.AutoLoot = {}
+					end
+					
+					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+						if (type(AccWideUI_AccountData.AutoLoot[v]) == "nil") then
+							AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
+						end
+					end
+				
+				
+				
 				
 				
 					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -349,7 +426,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						
 							if (AccWideUI_AccountData.enableTextOutput == true) then
 							
-								print(AccWideUI_TextName .. " This is the first time you have logged in to this character with AccountWideInterface installed.")
+								print(AccWideUI_TextName .. " This is the first time you have logged in to this character with the Account Wide Interface Option Settings addon installed.")
 							
 							end
 						
@@ -430,159 +507,14 @@ local AccWideUI_Frame = CreateFrame("Frame")
 
 		function AccWideUI_Frame:InitializeOptions()
 		
-		
-			--[[
-		
-			local category, layout = Settings.RegisterVerticalLayoutCategory("Account Wide Interface Option Settings")
-			Settings.AccWideUISettingsID = category:GetID();
-			
-			
-			-- Show Text
-			do
-				local variable, name, tooltip = "enableTextOutput", "Output to Chat", "Outputs to the chat window when this addon has been loaded.";
-				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-				Settings.CreateCheckBox(category, setting, tooltip);
-			end
-			
-			
-			layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("What should be saved Account Wide?"));
-			
-			-- Save Edit Mode Layout
-			do
-				local variable, name, tooltip = "accountWideLayout", "Chosen Edit Mode Layout", "Makes the chosen Edit Mode Layout work across Account Wide.";
-				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-				Settings.CreateCheckBox(category, setting, tooltip);
-			end
-			
-			
-			-- Save Action Bars
-			do
-				local variable, name, tooltip = "accountWideActionBars", "Visible Action Bars", "Makes the currently visible Action Bars work Account Wide.\n\nNote that this does not affect what abilities you have on your bars, only which bars are visible.";
-				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-				Settings.CreateCheckBox(category, setting, tooltip);
-			end
-			
-			
-			-- Save Nameplates
-			do
-				local variable, name, tooltip = "accountWideNameplates", "Nameplate Settings", "Makes various Nameplate Settings work Account Wide.";
-				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-				Settings.CreateCheckBox(category, setting, tooltip);
-			end
-			
-			--Save Raid Frames
-			do
-				local variable, name, tooltip = "accountWideRaidFrames", "Party/Raid Frame Settings", "Makes various Party and Raid Frame Settings work Account Wide.";
-				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-				Settings.CreateCheckBox(category, setting, tooltip);
-			end
-			
-			--Save Arena Frames
-			do
-				local variable, name, tooltip = "accountWideArenaFrames", "Arena Frame Settings", "Makes various Arena Frame Settings work Account Wide.";
-				local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-				Settings.CreateCheckBox(category, setting, tooltip);
-			end
-			
-			
 
-			
-			
-		
-				layout:AddInitializer(CreateSettingsListSectionHeaderInitializer("Edit Mode Layout Settings"));
-
-
-				-- Enable by Default
-				do
-					local variable, name, tooltip = "enableAccountWide", "Enforce Chosen Layout by Default", "Enables the Edit Mode Layout Per-Spec by default for all of your characters.";
-					local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_AccountData, type(AccWideUI_AccountData[variable]), name, true);
-					Settings.CreateCheckBox(category, setting, tooltip);
-				end
-			
-		
-			
-			
-			
-				local classColorString = C_ClassColor.GetClassColor(UnitClass("player"));
-			
-			
-				layout:AddInitializer(CreateSettingsListSectionHeaderInitializer(classColorString:WrapTextInColorCode(UnitName("player")) .. "'s Per-Spec Edit Mode Settings"));
 				
-				--Specialisations
+				local AccWideUI_OptionsPanelFrame = CreateFrame("Frame");
 				
+				local category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, "Account Wide Interface Option Setting")
+				Settings.RegisterAddOnCategory(category)
 				
-				
-					AccWideUI_SpecName = {}
-					AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
-					
-					for specx = 1, AccWideUI_NumSpecializations, 1 do
-						AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, GetSpecializationInfo(specx)))
-					end
-					
-					
-					
-					if (AccWideUI_NumSpecializations >= 1) then
-					
-						do
-							local variable, name, tooltip = "accWideSpec1", AccWideUI_SpecName[1], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[1] .. " spec.";
-							local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
-							Settings.CreateCheckBox(category, setting, tooltip);
-						end
-					
-					end
-					
-					if (AccWideUI_NumSpecializations >= 2) then
-					
-						do
-							local variable, name, tooltip = "accWideSpec2", AccWideUI_SpecName[2], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[2] .. " spec.";
-							local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
-							Settings.CreateCheckBox(category, setting, tooltip);
-						end
-					
-					end
-					
-					if (AccWideUI_NumSpecializations >= 3) then
-					
-						do
-							local variable, name, tooltip = "accWideSpec3", AccWideUI_SpecName[3], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[3] .. " spec.";
-							local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
-							Settings.CreateCheckBox(category, setting, tooltip);
-						end
-					
-					end
-					
-					if (AccWideUI_NumSpecializations >= 4) then
-					
-						do
-							local variable, name, tooltip = "accWideSpec4", AccWideUI_SpecName[4], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[4] .. " spec.";
-							local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
-							Settings.CreateCheckBox(category, setting, tooltip);
-						end
-					
-					end
-					
-					if (AccWideUI_NumSpecializations >= 5) then
-					
-						do
-							local variable, name, tooltip = "accWideSpec5", AccWideUI_SpecName[5], "Enforces the chosen Account Wide Edit Mode Layout for your " .. AccWideUI_SpecName[5] .. " spec.";
-							local setting = Settings.RegisterProxySetting(category, variable, AccWideUI_CharData, type(AccWideUI_CharData[variable]), name, true);
-							Settings.CreateCheckBox(category, setting, tooltip);
-						end
-					
-					end
-					
-			
-
-			
-		
-			
-			Settings.RegisterAddOnCategory(category);
-		]]--
-			
-			
-				AccWideUI_OptionsPanelFrame = CreateFrame("Frame")
-				AccWideUI_OptionsPanelFrame.name = "Account Wide Interface Option Settings"
-				InterfaceOptions_AddCategory(AccWideUI_OptionsPanelFrame) 
+				AccWideUI_OptionsPanelFrameCategoryID = category:GetID()
 				
 				
 				local thisPointX = 16
@@ -672,6 +604,8 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				titleSA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
 				titleSA2:SetText("What kind of UI settings would you like to save Account Wide?")
 				
+				local thisPointY2 = thisPointY
+				
 				
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -740,6 +674,60 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				
 				
 				
+				
+				-- 2nd Column
+				
+				thisPointX = 230
+				
+				thisPointY2 = thisPointY2 - 25 
+								
+				
+				-- Block Social Variables
+				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkSaveArenaFrames.Text:SetText("Block Guild/Trade/Channel Invite Settings")
+				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideBlockSocialVariables = chkSaveArenaFrames:GetChecked()
+				end)
+				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideBlockSocialVariables)
+				
+				
+				
+				thisPointY2 = thisPointY2 - 25 
+				
+				
+				-- Spell Overlay Variables
+				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkSaveArenaFrames.Text:SetText("Spell Overlay Settings")
+				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideSpellOverlayVariables = chkSaveArenaFrames:GetChecked()
+				end)
+				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideSpellOverlayVariables)
+				
+				
+				
+				thisPointY2 = thisPointY2 - 25 
+				
+				
+				-- Auto Loot Variables
+				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkSaveArenaFrames.Text:SetText("Auto Loot Settings")
+				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideAutoLootVariables = chkSaveArenaFrames:GetChecked()
+				end)
+				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				thisPointX = 16
 
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
@@ -863,8 +851,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				SLASH_ACCWIDEUI2 = "/accwideeditmode"
 				SLASH_ACCWIDEUI3 = "/accwideinterface"
 				function SlashCmdList.ACCWIDEUI(msg)
-					InterfaceOptionsFrame_OpenToCategory(AccWideUI_OptionsPanelFrame)
-					InterfaceOptionsFrame_OpenToCategory(AccWideUI_OptionsPanelFrame)
+					Settings.OpenToCategory(AccWideUI_OptionsPanelFrameCategoryID)
 				end
 				
 				
@@ -975,6 +962,52 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					end
 				
 				end -- EO accountWideRaidFrames
+				
+				
+				-- Block Social Variables
+				if (AccWideUI_AccountData.accountWideBlockSocialVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Block Social Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_BlockSocialVariables) do
+						SetCVar(v, AccWideUI_AccountData.BlockSocial[v])
+					end
+					
+					--Special
+					SetAutoDeclineGuildInvites(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites)
+				
+				end -- EO accountWideBlockSocialVariables
+				
+				
+				-- Spell Overlay Variables
+				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Spell Overlay Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
+						SetCVar(v, AccWideUI_AccountData.SpellOverlay[v])
+					end
+				
+				end -- EO accountWideSpellOverlayVariables
+				
+				
+				-- Auto Loot Variables
+				if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Auto Loot Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+						SetCVar(v, AccWideUI_AccountData.AutoLoot[v])
+					end
+				
+				end -- EO accountWideAutoLootVariables
+				
 			
 			
 			end
@@ -1061,6 +1094,52 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					end
 				
 				end -- EO accountWideRaidFrames
+				
+				
+				-- Save Social Variables
+				if (AccWideUI_AccountData.accountWideBlockSocialVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Block Social Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_BlockSocialVariables) do
+						AccWideUI_AccountData.BlockSocial[v] = GetCVar(v) or nil
+					end
+					
+					-- Special
+					AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
+				
+				end -- EO accountWideBlockSocialVariables
+				
+				
+				-- Save Spell Overlay Variables
+				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Spell Overlay Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
+						AccWideUI_AccountData.SpellOverlay[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideSpellOverlayVariables
+				
+				
+				-- Save Auto Loot Variables
+				if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Auto Loot Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+						AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideSpellOverlayVariables
+				
 			
 			end
 		
@@ -1093,8 +1172,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 		local AccWideUI_Tooltip
 
 		function AccWideUI_CompartmentClick(addonName, buttonName)
-			InterfaceOptionsFrame_OpenToCategory("Account Wide Interface Option Settings")
-			InterfaceOptionsFrame_OpenToCategory("Account Wide Interface Option Settings")
+			Settings.OpenToCategory(AccWideUI_OptionsPanelFrameCategoryID)
 		end
 
 		function AccWideUI_CompartmentHover(addonName, buttonName)
