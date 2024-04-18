@@ -256,16 +256,20 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						AccWideUI_AccountData.accountWideRaidFrames = true
 					end
 					
-					if (type(AccWideUI_AccountData.accountWideArenaFrames) ~= "boolean") then
-						AccWideUI_AccountData.accountWideArenaFrames = true
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+						if (type(AccWideUI_AccountData.accountWideArenaFrames) ~= "boolean") then
+							AccWideUI_AccountData.accountWideArenaFrames = true
+						end
 					end
 					
 					if (type(AccWideUI_AccountData.accountWideBlockSocialVariables) ~= "boolean") then
 						AccWideUI_AccountData.accountWideBlockSocialVariables = true
 					end
 					
-					if (type(AccWideUI_AccountData.accountWideSpellOverlayVariables) ~= "boolean") then
-						AccWideUI_AccountData.accountWideSpellOverlayVariables = true
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+						if (type(AccWideUI_AccountData.accountWideSpellOverlayVariables) ~= "boolean") then
+							AccWideUI_AccountData.accountWideSpellOverlayVariables = true
+						end
 					end
 					
 					if (type(AccWideUI_AccountData.accountWideAutoLootVariables) ~= "boolean") then
@@ -660,18 +664,21 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				end)
 				chkSaveRaidFrames:SetChecked(AccWideUI_AccountData.accountWideRaidFrames)
 				
-				thisPointY = thisPointY - 25 
 				
 				
-				-- Save Arena Frames
-				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkSaveArenaFrames.Text:SetText("Arena Frame Settings")
-				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideArenaFrames = chkSaveArenaFrames:GetChecked()
-				end)
-				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideArenaFrames)
-				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					thisPointY = thisPointY - 25 
+					
+					
+					-- Save Arena Frames
+					local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkSaveArenaFrames.Text:SetText("Arena Frame Settings")
+					chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.accountWideArenaFrames = chkSaveArenaFrames:GetChecked()
+					end)
+					chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideArenaFrames)
+				end
 				
 				
 				
@@ -692,18 +699,19 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideBlockSocialVariables)
 				
 				
-				
-				thisPointY2 = thisPointY2 - 25 
-				
-				
-				-- Spell Overlay Variables
-				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkSaveArenaFrames.Text:SetText("Spell Overlay Settings")
-				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideSpellOverlayVariables = chkSaveArenaFrames:GetChecked()
-				end)
-				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideSpellOverlayVariables)
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					thisPointY2 = thisPointY2 - 25 
+					
+					
+					-- Spell Overlay Variables
+					local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+					chkSaveArenaFrames.Text:SetText("Spell Overlay Settings")
+					chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.accountWideSpellOverlayVariables = chkSaveArenaFrames:GetChecked()
+					end)
+					chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideSpellOverlayVariables)
+				end
 				
 				
 				
@@ -950,18 +958,20 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				end -- EO accountWideRaidFrames
 				
 				
-				-- Use Arena Frames
-				if (AccWideUI_AccountData.accountWideArenaFrames == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
-					end
-				
-					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-						SetCVar(v, AccWideUI_AccountData.ArenaFrames[v])
-					end
-				
-				end -- EO accountWideRaidFrames
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Use Arena Frames
+					if (AccWideUI_AccountData.accountWideArenaFrames == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
+							SetCVar(v, AccWideUI_AccountData.ArenaFrames[v])
+						end
+					
+					end -- EO accountWideArenaFrames
+				end
 				
 				
 				-- Block Social Variables
@@ -980,19 +990,20 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				
 				end -- EO accountWideBlockSocialVariables
 				
-				
-				-- Spell Overlay Variables
-				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Spell Overlay Settings.")
-					end
-				
-					for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
-						SetCVar(v, AccWideUI_AccountData.SpellOverlay[v])
-					end
-				
-				end -- EO accountWideSpellOverlayVariables
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Spell Overlay Variables
+					if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Spell Overlay Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
+							SetCVar(v, AccWideUI_AccountData.SpellOverlay[v])
+						end
+					
+					end -- EO accountWideSpellOverlayVariables
+				end
 				
 				
 				-- Auto Loot Variables
@@ -1082,18 +1093,20 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				end -- EO accountWideRaidFrames
 				
 				
-				-- Save Arena Frames
-				if (AccWideUI_AccountData.accountWideArenaFrames == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Saving Arena Frame Settings.")
-					end
-				
-					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-						AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
-					end
-				
-				end -- EO accountWideRaidFrames
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Save Arena Frames
+					if (AccWideUI_AccountData.accountWideArenaFrames == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Saving Arena Frame Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
+							AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
+						end
+					
+					end -- EO accountWideArenaFrames
+				end
 				
 				
 				-- Save Social Variables
@@ -1113,18 +1126,20 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				end -- EO accountWideBlockSocialVariables
 				
 				
-				-- Save Spell Overlay Variables
-				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Saving Spell Overlay Settings.")
-					end
-				
-					for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
-						AccWideUI_AccountData.SpellOverlay[v] = GetCVar(v) or nil
-					end
-				
-				end -- EO accountWideSpellOverlayVariables
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Save Spell Overlay Variables
+					if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Saving Spell Overlay Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
+							AccWideUI_AccountData.SpellOverlay[v] = GetCVar(v) or nil
+						end
+					
+					end -- EO accountWideSpellOverlayVariables
+				end
 				
 				
 				-- Save Auto Loot Variables
@@ -1138,7 +1153,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
 					end
 				
-				end -- EO accountWideSpellOverlayVariables
+				end -- EO accountWideAutoLootVariables
 				
 			
 			end
