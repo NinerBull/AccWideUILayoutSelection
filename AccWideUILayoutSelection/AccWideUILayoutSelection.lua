@@ -183,6 +183,15 @@ local AccWideUI_Frame = CreateFrame("Frame")
 			"autoLootDefault",
 			"autoLootRate"
 		}
+		
+		AccWideUI_Table_LossOfControlVariables = {
+			"lossOfControl",
+			"lossOfControlFull",
+			"lossOfControlInterrupt",
+			"lossOfControlRoot",
+			"lossOfControlSilence"
+		}
+		
 
 		
 		
@@ -276,6 +285,14 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						AccWideUI_AccountData.accountWideAutoLootVariables = true
 					end
 					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						
+						if (type(AccWideUI_AccountData.accountWideLossOfControlVariables) ~= "boolean") then
+							AccWideUI_AccountData.accountWideLossOfControlVariables = true
+						end
+						
+					end
+					
 					
 					
 					--Special
@@ -360,14 +377,16 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					end
 					
 					
-					-- Arena Frame Variables
-					if (type(AccWideUI_AccountData.ArenaFrames) ~= "table") then
-						AccWideUI_AccountData.ArenaFrames = {}
-					end
-					
-					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-						if (type(AccWideUI_AccountData.ArenaFrames[v]) == "nil") then
-							AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+						-- Arena Frame Variables
+						if (type(AccWideUI_AccountData.ArenaFrames) ~= "table") then
+							AccWideUI_AccountData.ArenaFrames = {}
+						end
+						
+						for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
+							if (type(AccWideUI_AccountData.ArenaFrames[v]) == "nil") then
+								AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
+							end
 						end
 					end
 					
@@ -384,7 +403,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					end
 					
 					
-					-- Block Social Variables
+					-- Spell Overlay Variables
 					if (type(AccWideUI_AccountData.SpellOverlay) ~= "table") then
 						AccWideUI_AccountData.SpellOverlay = {}
 					end
@@ -395,6 +414,7 @@ local AccWideUI_Frame = CreateFrame("Frame")
 						end
 					end
 					
+					
 					-- Auto Loot Variables
 					if (type(AccWideUI_AccountData.AutoLoot) ~= "table") then
 						AccWideUI_AccountData.AutoLoot = {}
@@ -403,6 +423,21 @@ local AccWideUI_Frame = CreateFrame("Frame")
 					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
 						if (type(AccWideUI_AccountData.AutoLoot[v]) == "nil") then
 							AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
+						end
+					end
+					
+					
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						-- Loss Of Control Variables
+						if (type(AccWideUI_AccountData.LossOfControl) ~= "table") then
+							AccWideUI_AccountData.LossOfControl = {}
+						end
+						
+						for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
+							if (type(AccWideUI_AccountData.LossOfControl[v]) == "nil") then
+								AccWideUI_AccountData.LossOfControl[v] = GetCVar(v) or nil
+							end
 						end
 					end
 				
@@ -719,15 +754,30 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				
 				
 				-- Auto Loot Variables
-				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkSaveArenaFrames.Text:SetText("Auto Loot Settings")
-				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideAutoLootVariables = chkSaveArenaFrames:GetChecked()
+				local chkSaveAutoLoot = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkSaveAutoLoot:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkSaveAutoLoot.Text:SetText("Auto Loot Settings")
+				chkSaveAutoLoot:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideAutoLootVariables = chkSaveAutoLoot:GetChecked()
 				end)
-				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
+				chkSaveAutoLoot:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
 				
 				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					
+					thisPointY2 = thisPointY2 - 25 
+				
+					-- Save Loss of Control Variables
+					local chkSaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkSaveLossOfControl:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+					chkSaveLossOfControl.Text:SetText("Loss of Control Settings")
+					chkSaveLossOfControl:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.accountWideLossOfControlVariables = chkSaveLossOfControl:GetChecked()
+					end)
+					chkSaveLossOfControl:SetChecked(AccWideUI_AccountData.accountWideLossOfControlVariables)
+				
+				end
 				
 				
 				
@@ -1019,6 +1069,25 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				
 				end -- EO accountWideAutoLootVariables
 				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					-- Loss of Control Variables
+					if (AccWideUI_AccountData.accountWideLossOfControlVariables == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Loss of Control Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+							SetCVar(v, AccWideUI_AccountData.LossOfControl[v])
+						end
+					
+					end -- EO accountWideLossOfControlVariables
+				
+				
+				end
+				
 			
 			
 			end
@@ -1142,15 +1211,15 @@ local AccWideUI_Frame = CreateFrame("Frame")
 				end
 				
 				
-				-- Save Auto Loot Variables
+				-- Save Loss of Control Variables
 				if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
 				
 					if (AccWideUI_AccountData.enableDebug == true) then
 						print(AccWideUI_TextName .. " Saving Auto Loot Settings.")
 					end
 				
-					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
-						AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
+					for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
+						AccWideUI_AccountData.LossOfControl[v] = GetCVar(v) or nil
 					end
 				
 				end -- EO accountWideAutoLootVariables
