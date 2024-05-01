@@ -1,4 +1,4 @@
-## Interface: 100207
+## Interface: 11502
 ## Title: Account Wide Interface Option Settings
 ## Version: 1.1.12
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /accwideinterface

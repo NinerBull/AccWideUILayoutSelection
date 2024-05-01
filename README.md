@@ -1,6 +1,6 @@
 # Account Wide Interface Option Settings
 
-An addon for World of Warcraft Dragonflight!
+An addon for World of Warcraft Dragonflight, Cataclysm Classic and Classic Era!
 
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw75851.jpg)
 
@@ -17,10 +17,11 @@ It allows you to automatically apply the following to all characters on your acc
 * Block Guild/Trade/Channel Invite Settings
 * Spell Overlay Settings
 * Auto Loot Settings
+* Block General/Trade/Services Chat Channels
 
 ## Compatibility
-* **Dragonflight** - 10.2.6
-* **WotLK Classic** - 3.4.3
+* **Dragonflight** - 10.2.7
+* **Cataclysm Classic** - 4.4.0
 * **Classic Era** - 1.15.2
 
 ## Installation
