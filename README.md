@@ -17,7 +17,7 @@ It allows you to automatically apply the following to all characters on your acc
 * Block Guild/Trade/Channel Invite Settings
 * Spell Overlay Settings
 * Auto Loot Settings
-* Block General/Trade/Services Chat Channels
+* Block General/LocalDefense/Trade/Services Chat Channels
 
 ## Compatibility
 * **Dragonflight** - 10.2.7

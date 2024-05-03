@@ -312,6 +312,10 @@ local AccWideUI_ThisCategory = nil
 					AccWideUI_AccountData.ChatChannels.BlockGeneral = false
 				end
 				
+				if (type(AccWideUI_AccountData.ChatChannels.BlockLocalDefense) ~= "boolean") then
+					AccWideUI_AccountData.ChatChannels.BlockLocalDefense = false
+				end
+				
 				if (type(AccWideUI_AccountData.ChatChannels.BlockTrade) ~= "boolean") then
 					AccWideUI_AccountData.ChatChannels.BlockTrade = false
 				end
@@ -556,6 +560,12 @@ local AccWideUI_ThisCategory = nil
 				if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
 					if (GetChannelName((GetChannelName("General"))) > 0) then
 						LeaveChannelByName("General")
+					end
+				end
+				
+				if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
+					if (GetChannelName((GetChannelName("LocalDefense"))) > 0) then
+						LeaveChannelByName("LocalDefense")
 					end
 				end
 				
@@ -865,6 +875,19 @@ local AccWideUI_ThisCategory = nil
 					AccWideUI_AccountData.ChatChannels.BlockGeneral = chkBlockGeneralChat:GetChecked()
 			end)
 			chkBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
+			
+			--thisPointY = thisPointY - 25 
+			thisPointX = thisPointX + 128
+			
+			
+			-- LocalDefense Chat
+			local chkBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkBlockLocalDefenseChat.Text:SetText("LocalDefense Chat")
+			chkBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkBlockLocalDefenseChat:GetChecked()
+			end)
+			chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
 			
 			--thisPointY = thisPointY - 25 
 			thisPointX = thisPointX + 128
