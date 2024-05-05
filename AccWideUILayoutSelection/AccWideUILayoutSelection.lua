@@ -850,7 +850,7 @@ local AccWideUI_ThisCategory = nil
 			titleCAA:SetJustifyV('TOP')
 			titleCAA:SetJustifyH('LEFT')
 			titleCAA:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleCAA:SetText("Block Chat Channels")
+			titleCAA:SetText("Block Chat Channels Account Wide")
 			
 			
 			thisPointY = thisPointY - 25
@@ -861,7 +861,7 @@ local AccWideUI_ThisCategory = nil
 			titleCAA2:SetJustifyV('TOP')
 			titleCAA2:SetJustifyH('LEFT')
 			titleCAA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleCAA2:SetText("Check the channels below that you do not want any of your characters to join.")
+			titleCAA2:SetText("Check the channels below that you do not want any of your characters on this account to join.")
 			
 			thisPointY = thisPointY - 20
 			
