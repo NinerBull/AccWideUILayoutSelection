@@ -2,7 +2,7 @@
 
 An addon for World of Warcraft Dragonflight, Cataclysm Classic and Classic Era!
 
-![Info Img](https://cdn-wow.mmoui.com/preview/pvw75851.jpg)
+![Info Img](https://cdn-wow.mmoui.com/preview/pvw76258.jpg)
 
 ## About
 This addon aims to help keep your Base UI consistent across all of your characters on your account by saving and loading variables that are normally character specific.
