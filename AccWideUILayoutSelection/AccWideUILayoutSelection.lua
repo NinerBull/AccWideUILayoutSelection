@@ -522,10 +522,9 @@ local AccWideUI_ThisCategory = nil
 
 			if  (event == "SETTINGS_LOADED") then
 			
-				
-				
-				RunNextFrame(function() 
-					AccWideUI_Frame:LoadUISettings() 
+
+				C_Timer.After(1, function() 
+					AccWideUI_Frame:LoadUISettings()
 				end)
 				
 				C_Timer.After(10, function() 
@@ -548,7 +547,7 @@ local AccWideUI_ThisCategory = nil
 			
 			
 			
-			if  (event == "PLAYER_LOGOUT" or event == "PLAYER_LEAVING_WORLD") then
+			if  (event == "PLAYER_LOGOUT") then
 				
 				AccWideUI_Frame:SaveUISettings()
 
@@ -1219,7 +1218,7 @@ local AccWideUI_ThisCategory = nil
 						print(AccWideUI_TextName .. " Loading Loss of Control Settings.")
 					end
 				
-					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+					for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
 						SetCVar(v, AccWideUI_AccountData.LossOfControl[v])
 					end
 				
@@ -1351,18 +1350,33 @@ local AccWideUI_ThisCategory = nil
 			end
 			
 			
-			-- Save Loss of Control Variables
+			-- Save Auto Loot Variables
 			if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Saving Auto Loot Settings.")
 				end
 			
+				for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+					AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
+				end
+			
+			end -- EO accountWideAutoLootVariables
+			
+			
+			
+			-- Save Loss of Control Variables
+			if (AccWideUI_AccountData.accountWideLossOfControlVariables == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Saving Loss of Control Settings.")
+				end
+			
 				for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
 					AccWideUI_AccountData.LossOfControl[v] = GetCVar(v) or nil
 				end
 			
-			end -- EO accountWideAutoLootVariables
+			end -- EO accountWideLossOfControlVariables
 			
 		
 		end
