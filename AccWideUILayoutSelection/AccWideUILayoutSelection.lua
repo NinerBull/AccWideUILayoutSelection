@@ -876,7 +876,11 @@ local AccWideUI_ThisCategory = nil
 			chkBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
 			
 			--thisPointY = thisPointY - 25 
-			thisPointX = thisPointX + 128
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				thisPointX = thisPointX + 128
+			else
+				thisPointX = thisPointX + 192
+			end
 			
 			
 			-- LocalDefense Chat
@@ -889,7 +893,11 @@ local AccWideUI_ThisCategory = nil
 			chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
 			
 			--thisPointY = thisPointY - 25 
-			thisPointX = thisPointX + 128
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				thisPointX = thisPointX + 128
+			else
+				thisPointX = thisPointX + 192
+			end
 			
 			
 			-- Trade Chat
@@ -902,7 +910,11 @@ local AccWideUI_ThisCategory = nil
 			chkBlockTradeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockTrade)
 			
 			--thisPointY = thisPointY - 25 
-			thisPointX = thisPointX + 128
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				thisPointX = thisPointX + 128
+			else
+				thisPointX = thisPointX + 192
+			end
 			
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -916,7 +928,11 @@ local AccWideUI_ThisCategory = nil
 				chkBlockServicesChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockServices)
 				
 				--thisPointY = thisPointY - 25 
-				thisPointX = thisPointX + 128
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					thisPointX = thisPointX + 128
+				else
+					thisPointX = thisPointX + 192
+				end
 			end
 			
 			
