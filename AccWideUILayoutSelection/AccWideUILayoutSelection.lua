@@ -14,6 +14,8 @@ AccWideUI_Frame:RegisterEvent("SETTINGS_LOADED")
 AccWideUI_Frame:RegisterEvent("PLAYER_LOGOUT")
 AccWideUI_Frame:RegisterEvent("PLAYER_LEAVING_WORLD")
 AccWideUI_Frame:RegisterEvent("CHANNEL_UI_UPDATE")
+AccWideUI_Frame:RegisterEvent("DISABLE_DECLINE_GUILD_INVITE")
+AccWideUI_Frame:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
@@ -546,14 +548,23 @@ local AccWideUI_ThisCategory = nil
 			
 			
 			
-			
+			-- Save all settings when logging out
 			if  (event == "PLAYER_LOGOUT") then
-				
 				AccWideUI_Frame:SaveUISettings()
-
 			end
 			
 			
+			--Save Block Guild Setting with these 2
+			if (event == "DISABLE_DECLINE_GUILD_INVITE") then
+				AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = false
+			end
+			
+			if (event == "ENABLE_DECLINE_GUILD_INVITE") then
+				AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = true
+			end
+			
+			
+			-- Remove player from channels if they're blocked
 			if (event == "CHANNEL_UI_UPDATE") then
 	
 				if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
@@ -1190,6 +1201,7 @@ local AccWideUI_ThisCategory = nil
 					SetCVar(v, AccWideUI_AccountData.BlockSocial[v])
 				end
 				
+				
 				--Special
 				SetAutoDeclineGuildInvites(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites)
 			
@@ -1345,7 +1357,7 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 				-- Special
-				AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
+				--AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
 			
 			end -- EO accountWideBlockSocialVariables
 			
