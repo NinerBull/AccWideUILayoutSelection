@@ -1,6 +1,6 @@
 # Account Wide Interface Option Settings
 
-An addon for World of Warcraft Dragonflight, Cataclysm Classic and Classic Era!
+An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic Era!
 
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw76258.jpg)
 
@@ -20,9 +20,9 @@ It allows you to automatically apply the following to all characters on your acc
 * Block General/LocalDefense/Trade/Services Chat Channels
 
 ## Compatibility
-* **Dragonflight** - 10.2.7
+* **The War Within** - 11.0.0
 * **Cataclysm Classic** - 4.4.0
-* **Classic Era** - 1.15.2
+* **Classic Era** - 1.15.3
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
