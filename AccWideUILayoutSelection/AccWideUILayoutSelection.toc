@@ -1,11 +1,12 @@
 ## Interface: 110000, 110002, 40400, 11503
 ## Title: Account Wide Interface Option Settings
-## Version: 1.1.15
+## Version: 1.1.16
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /accwideinterface
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUI_AccountData
 ## SavedVariablesPerCharacter: AccWideUI_CharData
 ## DefaultState: enabled
+## OptionalDeps: BlockBlizzChatChannels
 
 ## X-Category: HUDs
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection

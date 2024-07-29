@@ -1,5 +1,7 @@
 local AccWideUI_Frame = CreateFrame("Frame")
 
+local AccWideUI_OptionsPanelFrame
+local AccWideUI_Category
 
 local function AccWideUI_ToBoolean(str)
 	local bool = false
@@ -16,6 +18,7 @@ AccWideUI_Frame:RegisterEvent("PLAYER_LEAVING_WORLD")
 AccWideUI_Frame:RegisterEvent("CHANNEL_UI_UPDATE")
 AccWideUI_Frame:RegisterEvent("DISABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
+AccWideUI_Frame:RegisterEvent("ADDON_LOADED")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
@@ -307,25 +310,37 @@ local AccWideUI_ThisCategory = nil
 				
 				
 				
+				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 				
-				
-				--Chat Channels
-				if (type(AccWideUI_AccountData.ChatChannels.BlockGeneral) ~= "boolean") then
-					AccWideUI_AccountData.ChatChannels.BlockGeneral = false
-				end
-				
-				if (type(AccWideUI_AccountData.ChatChannels.BlockLocalDefense) ~= "boolean") then
-					AccWideUI_AccountData.ChatChannels.BlockLocalDefense = false
-				end
-				
-				if (type(AccWideUI_AccountData.ChatChannels.BlockTrade) ~= "boolean") then
-					AccWideUI_AccountData.ChatChannels.BlockTrade = false
-				end
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					if (type(AccWideUI_AccountData.ChatChannels.BlockServices) ~= "boolean") then
-						AccWideUI_AccountData.ChatChannels.BlockServices = false
+					--Chat Channels
+					if (type(AccWideUI_AccountData.ChatChannels.BlockGeneral) ~= "boolean") then
+						AccWideUI_AccountData.ChatChannels.BlockGeneral = false
 					end
+					
+					if (type(AccWideUI_AccountData.ChatChannels.BlockLocalDefense) ~= "boolean") then
+						AccWideUI_AccountData.ChatChannels.BlockLocalDefense = false
+					end
+					
+					if (type(AccWideUI_AccountData.ChatChannels.BlockTrade) ~= "boolean") then
+						AccWideUI_AccountData.ChatChannels.BlockTrade = false
+					end
+					
+					if (type(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup) ~= "boolean") then
+						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = false
+					end
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						if (type(AccWideUI_AccountData.ChatChannels.BlockServices) ~= "boolean") then
+							AccWideUI_AccountData.ChatChannels.BlockServices = false
+						end
+					end
+					
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+						if (type(AccWideUI_AccountData.ChatChannels.BlockWorldDefense) ~= "boolean") then
+							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = false
+						end
+					end
+				
 				end
 				
 				
@@ -516,7 +531,17 @@ local AccWideUI_ThisCategory = nil
 						
 				end
 				
-				AccWideUI_Frame.InitializeOptions()
+				AccWideUI_Frame.InitializeOptionsSettings()
+			
+			end
+			
+			
+			
+			if (event == "ADDON_LOADED" and arg1 == "AccWideUILayoutSelection") then
+			
+			
+				AccWideUI_Frame:InitializeOptionsFrame()
+			
 			
 			end
 
@@ -564,35 +589,45 @@ local AccWideUI_ThisCategory = nil
 			end
 			
 			
-			-- Remove player from channels if they're blocked
-			if (event == "CHANNEL_UI_UPDATE") then
-	
-				if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
-					if (GetChannelName((GetChannelName("General"))) > 0) then
-						LeaveChannelByName("General")
-					end
-				end
-				
-				if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
-					if (GetChannelName((GetChannelName("LocalDefense"))) > 0) then
-						LeaveChannelByName("LocalDefense")
-					end
-				end
-				
-				if (AccWideUI_AccountData.ChatChannels.BlockTrade == true) then
-					if (GetChannelName((GetChannelName("Trade"))) > 0) then
-						LeaveChannelByName("Trade")
-					end
-				end
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
-						if (GetChannelName((GetChannelName("Services"))) > 0) then
-							LeaveChannelByName("Services")
+			if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+			
+				-- Remove player from channels if they're blocked
+				if (event == "CHANNEL_UI_UPDATE") then
+		
+					if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
+						if (GetChannelName((GetChannelName("General"))) > 0) then
+							LeaveChannelByName("General")
 						end
 					end
+					
+					if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
+						if (GetChannelName((GetChannelName("LocalDefense"))) > 0) then
+							LeaveChannelByName("LocalDefense")
+						end
+					end
+					
+					if (AccWideUI_AccountData.ChatChannels.BlockTrade == true) then
+						if (GetChannelName((GetChannelName("Trade"))) > 0) then
+							LeaveChannelByName("Trade")
+						end
+					end
+					
+					if (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true) then
+						if (GetChannelName((GetChannelName("LookingForGroup"))) > 0) then
+							LeaveChannelByName("LookingForGroup")
+						end
+					end
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
+							if (GetChannelName((GetChannelName("Services"))) > 0) then
+								LeaveChannelByName("Services")
+							end
+						end
+					end
+				
+				
 				end
-			
 			
 			end
 			
@@ -601,22 +636,25 @@ local AccWideUI_ThisCategory = nil
 
 	end)
 
+	function AccWideUI_Frame:InitializeOptionsFrame()
+	
+	
+			AccWideUI_OptionsPanelFrame = CreateFrame("Frame");
+			
+			AccWideUI_Category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, "Account Wide Interface Option Setting")
+			Settings.RegisterAddOnCategory(AccWideUI_Category)
+			
+			AccWideUI_OptionsPanelFrameCategoryID = AccWideUI_Category:GetID()
+	
+	
+	end
 
 
-
-
-
-
-	function AccWideUI_Frame:InitializeOptions()
+	function AccWideUI_Frame:InitializeOptionsSettings()
 	
 
 			
-			local AccWideUI_OptionsPanelFrame = CreateFrame("Frame");
 			
-			local category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, "Account Wide Interface Option Setting")
-			Settings.RegisterAddOnCategory(category)
-			
-			AccWideUI_OptionsPanelFrameCategoryID = category:GetID()
 			
 			
 			local thisPointX = 16
@@ -850,104 +888,116 @@ local AccWideUI_ThisCategory = nil
 			
 			--Chat Channels
 			
-			thisPointX = 16
-			
-			thisPointY = -355
-			
-			
-			--Title for Chat Channels
-			local titleCAA = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
-			titleCAA:SetJustifyV('TOP')
-			titleCAA:SetJustifyH('LEFT')
-			titleCAA:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleCAA:SetText("Block Chat Channels Account Wide")
-			
-			
-			thisPointY = thisPointY - 25
-			
-			
-			--Title for  Chat Channels2
-			local titleCAA2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
-			titleCAA2:SetJustifyV('TOP')
-			titleCAA2:SetJustifyH('LEFT')
-			titleCAA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleCAA2:SetText("Check the channels below that you do not want any of your characters on this account to join.")
-			
-			thisPointY = thisPointY - 20
-			
-			
-			
-			-- General Chat
-			local chkBlockGeneralChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkBlockGeneralChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkBlockGeneralChat.Text:SetText("General Chat")
-			chkBlockGeneralChat:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.ChatChannels.BlockGeneral = chkBlockGeneralChat:GetChecked()
-			end)
-			chkBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
-			
-			--thisPointY = thisPointY - 25 
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				thisPointX = thisPointX + 128
-			else
-				thisPointX = thisPointX + 192
-			end
-			
-			
-			-- LocalDefense Chat
-			local chkBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkBlockLocalDefenseChat.Text:SetText("LocalDefense Chat")
-			chkBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkBlockLocalDefenseChat:GetChecked()
-			end)
-			chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
-			
-			--thisPointY = thisPointY - 25 
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				thisPointX = thisPointX + 128
-			else
-				thisPointX = thisPointX + 192
-			end
-			
-			
-			-- Trade Chat
-			local chkBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkBlockTradeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkBlockTradeChat.Text:SetText("Trade Chat")
-			chkBlockTradeChat:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.ChatChannels.BlockTrade = chkBlockTradeChat:GetChecked()
-			end)
-			chkBlockTradeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockTrade)
-			
-			--thisPointY = thisPointY - 25 
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				thisPointX = thisPointX + 128
-			else
-				thisPointX = thisPointX + 192
-			end
-			
-			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				-- Services Chat
-				local chkBlockServicesChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockServicesChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockServicesChat.Text:SetText("Services Chat")
-				chkBlockServicesChat:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockServices = chkBlockServicesChat:GetChecked()
-				end)
-				chkBlockServicesChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockServices)
+			if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 				
-				--thisPointY = thisPointY - 25 
+				thisPointX = 16
+				
+				thisPointY = -355
+				
+				
+				--Title for Chat Channels
+				local titleCAA = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
+				titleCAA:SetJustifyV('TOP')
+				titleCAA:SetJustifyH('LEFT')
+				titleCAA:SetPoint('TOPLEFT', thisPointX, thisPointY)
+				titleCAA:SetText("Block Blizzard Chat Channels Account Wide")
+				
+				
+				thisPointY = thisPointY - 25
+				
+				
+				--Title for  Chat Channels2
+				local titleCAA2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
+				titleCAA2:SetJustifyV('TOP')
+				titleCAA2:SetJustifyH('LEFT')
+				titleCAA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
+				titleCAA2:SetText("Check the channels below that you do not want any of your characters on this account to join.")
+				
+				thisPointY = thisPointY - 20
+				
+				
+				
+				-- General Chat
+				local chkBlockGeneralChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkBlockGeneralChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkBlockGeneralChat.Text:SetText("General")
+				chkBlockGeneralChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockGeneral = chkBlockGeneralChat:GetChecked()
+				end)
+				chkBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
+				
+				thisPointX = thisPointX + 128
+				
+				-- Trade Chat
+				local chkBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkBlockTradeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkBlockTradeChat.Text:SetText("Trade")
+				chkBlockTradeChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockTrade = chkBlockTradeChat:GetChecked()
+				end)
+				chkBlockTradeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockTrade)
+				
+				thisPointX = thisPointX + 128
+				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					-- Services Chat
+					local chkBlockServicesChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkBlockServicesChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkBlockServicesChat.Text:SetText("Services")
+					chkBlockServicesChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockServices = chkBlockServicesChat:GetChecked()
+					end)
+					chkBlockServicesChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockServices)
+					
 					thisPointX = thisPointX + 128
-				else
-					thisPointX = thisPointX + 192
 				end
+				
+				
+				-- LocalDefense Chat
+				local chkBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkBlockLocalDefenseChat.Text:SetText("LocalDefense")
+				chkBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkBlockLocalDefenseChat:GetChecked()
+				end)
+				chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
+				
+				thisPointX = thisPointX + 128
+				
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+					-- WorldDefense Chat
+					local chkBlockWorldDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkBlockWorldDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkBlockWorldDefenseChat.Text:SetText("WorldDefense")
+					chkBlockWorldDefenseChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = chkBlockWorldDefenseChat:GetChecked()
+					end)
+					chkBlockWorldDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockWorldDefense)
+					
+					thisPointX = thisPointX + 128
+				end
+				
+				
+				-- LookingForGroup Chat
+				local chkBlockLookingForGroup = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkBlockLookingForGroup:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkBlockLookingForGroup.Text:SetText("LFG")
+				chkBlockLookingForGroup:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = chkBlockLookingForGroup:GetChecked()
+				end)
+				chkBlockLookingForGroup:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup)
+				
+				--thisPointX = thisPointX + 128
+				
+				
+				
+				
+				
+				
+				
+			
 			end
-			
-			
-			
 			
 			
 			
@@ -957,8 +1007,14 @@ local AccWideUI_ThisCategory = nil
 			thisPointX = 16
 
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
+				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+					thisPointY = -455
+				else
+					thisPointY = -355
+				end
 		
-				thisPointY = -455
+				
 				local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
 				
 
