@@ -618,6 +618,14 @@ local AccWideUI_ThisCategory = nil
 							end
 						end
 					end
+					
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+						if (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true) then
+							if (GetChannelName((GetChannelName("WorldDefense"))) > 0) then
+								LeaveChannelByName("WorldDefense")
+							end
+						end
+					end
 				
 				
 				end
