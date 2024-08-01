@@ -531,19 +531,12 @@ local AccWideUI_ThisCategory = nil
 						
 				end
 				
+				AccWideUI_Frame:InitializeOptionsFrame()
 				AccWideUI_Frame.InitializeOptionsSettings()
 			
 			end
 			
 			
-			
-			if (event == "ADDON_LOADED" and arg1 == "AccWideUILayoutSelection") then
-			
-			
-				AccWideUI_Frame:InitializeOptionsFrame()
-			
-			
-			end
 
 
 
