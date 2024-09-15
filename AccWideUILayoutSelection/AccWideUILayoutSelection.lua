@@ -1,3 +1,11 @@
+--[[
+=====================================================
+Account Wide Interface Option Settings
+https://github.com/NinerBull/AccWideUILayoutSelection
+=====================================================
+]]--
+
+
 local AccWideUI_Frame = CreateFrame("Frame")
 
 local AccWideUI_OptionsPanelFrame
@@ -25,7 +33,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 end
 
 local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<Account Wide Interface>")
-local AccWideUI_TextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/accwideinterface")
+local AccWideUI_TextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/awi")
 local AccWideUI_ThisCategory = nil
 
 	
@@ -583,7 +591,7 @@ local AccWideUI_ThisCategory = nil
 			
 			
 			if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
-			
+
 				-- Remove player from channels if they're blocked
 				if (event == "CHANNEL_UI_UPDATE") then
 		
@@ -1131,6 +1139,8 @@ local AccWideUI_ThisCategory = nil
 			SLASH_ACCWIDEUI1 = "/accwideui"
 			SLASH_ACCWIDEUI2 = "/accwideeditmode"
 			SLASH_ACCWIDEUI3 = "/accwideinterface"
+			SLASH_ACCWIDEUI4 = "/accwide"
+			SLASH_ACCWIDEUI5 = "/awi"
 			function SlashCmdList.ACCWIDEUI(msg)
 				Settings.OpenToCategory(AccWideUI_OptionsPanelFrameCategoryID)
 			end
