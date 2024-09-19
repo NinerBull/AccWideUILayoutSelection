@@ -204,7 +204,15 @@ local AccWideUI_ThisCategory = nil
 		"lossOfControlSilence"
 	}
 	
-
+	AccWideUI_Table_SoftTargetVariables = {
+		"SoftTargetEnemy",
+		"SoftTargetEnemyArc",
+		"SoftTargetEnemyRange",
+		"SoftTargetForce",
+		"SoftTargetFriend",
+		"SoftTargetFriendArc",
+		"SoftTargetFriendRange"
+	}
 	
 	
 	
@@ -299,6 +307,10 @@ local AccWideUI_ThisCategory = nil
 				
 				if (type(AccWideUI_AccountData.accountWideAutoLootVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideAutoLootVariables = true
+				end
+				
+				if (type(AccWideUI_AccountData.accountWideSoftTargetVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideSoftTargetVariables = true
 				end
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -490,7 +502,19 @@ local AccWideUI_ThisCategory = nil
 				end
 			
 			
-			
+				-- Soft Target Variables
+				if (type(AccWideUI_AccountData.SoftTarget) ~= "table") then
+					AccWideUI_AccountData.SoftTarget = {}
+				end
+				
+				for k, v in pairs(AccWideUI_Table_SoftTargetVariables) do
+					if (type(AccWideUI_AccountData.SoftTarget[v]) == "nil") then
+						AccWideUI_AccountData.SoftTarget[v] = GetCVar(v) or nil
+					end
+				end
+				
+				
+				
 			
 			
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -890,6 +914,18 @@ local AccWideUI_ThisCategory = nil
 			end
 			
 			
+			
+			thisPointY2 = thisPointY2 - 25 
+			
+			
+			-- Soft Target Variables
+			local chkSaveSoftTarget = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkSaveSoftTarget:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkSaveSoftTarget.Text:SetText("Action Targeting Settings")
+			chkSaveSoftTarget:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideSoftTargetVariables = chkSaveSoftTarget:GetChecked()
+			end)
+			chkSaveSoftTarget:SetChecked(AccWideUI_AccountData.accountWideSoftTargetVariables)
 			
 			
 			
@@ -1322,6 +1358,20 @@ local AccWideUI_ThisCategory = nil
 			
 			end
 			
+			
+			-- Soft Target Variables
+			if (AccWideUI_AccountData.accountWideSoftTargetVariables == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Loading Soft Target Settings.")
+				end
+			
+				for k, v in pairs(AccWideUI_Table_SoftTargetVariables) do
+					SetCVar(v, AccWideUI_AccountData.SoftTarget[v])
+				end
+			
+			end -- EO accountWideSoftTargetVariables
+			
 		
 		
 		end
@@ -1472,6 +1522,20 @@ local AccWideUI_ThisCategory = nil
 				end
 			
 			end -- EO accountWideLossOfControlVariables
+			
+			
+			-- Save Soft Target Variables
+			if (AccWideUI_AccountData.accountWideSoftTargetVariables == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Saving Soft Target Settings.")
+				end
+			
+				for k, v in pairs(AccWideUI_Table_SoftTargetVariables) do
+					AccWideUI_AccountData.SoftTarget[v] = GetCVar(v) or nil
+				end
+			
+			end -- EO accountWideSoftTargetVariables
 			
 		
 		end
