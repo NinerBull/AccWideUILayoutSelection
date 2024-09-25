@@ -40,4 +40,4 @@ NOTE: After installation/upgrade, you should log into the character that you hav
 
 Your chosen Edit Mode Layout is saved as the Account Wide Layout automatically after exiting Edit Mode (unless you have disabled it for your spec).
 
-You can configure the addon by typing `/accwideinterface` into chat.
+You can configure the addon by typing `/awi` into chat.
