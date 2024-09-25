@@ -20,9 +20,9 @@ It allows you to automatically apply the following to all characters on your acc
 * Block General/LocalDefense/Trade/Services Chat Channels
 
 ## Compatibility
-* **The War Within** - 11.0.0
-* **Cataclysm Classic** - 4.4.0
-* **Classic Era** - 1.15.3
+* **The War Within** - 11.0.2 & 11.0.5
+* **Cataclysm Classic** - 4.4.0 & 4.4.1
+* **Classic Era** - 1.15.4
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
