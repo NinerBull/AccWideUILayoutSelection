@@ -18,6 +18,7 @@ It allows you to automatically apply the following to all characters on your acc
 * Spell Overlay Settings
 * Auto Loot Settings
 * Block General/LocalDefense/Trade/Services Chat Channels
+* Action Targeting Settings
 
 ## Compatibility
 * **The War Within** - 11.0.2 & 11.0.5
