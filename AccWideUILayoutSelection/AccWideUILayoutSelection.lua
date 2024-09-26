@@ -374,21 +374,21 @@ local AccWideUI_ThisCategory = nil
 				
 				
 
-			
-				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar2 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
+				
+				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar2 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
 				end
 				
-				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar3 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar3 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
 				end
 				
-				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar4 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar4 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
 				end
 				
-				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar5 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar5 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
 				end
 				
 				
@@ -396,16 +396,16 @@ local AccWideUI_ThisCategory = nil
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
-					if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "string") then
-						AccWideUI_AccountData.ActionBars.Bar6 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
+					if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "boolean") then
+						AccWideUI_AccountData.ActionBars.Bar6 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
 					end
 				
-					if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "string") then
-						AccWideUI_AccountData.ActionBars.Bar7 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
+					if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "boolean") then
+						AccWideUI_AccountData.ActionBars.Bar7 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
 					end
 					
-					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "string") then
-						AccWideUI_AccountData.ActionBars.Bar8 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
+					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
+						AccWideUI_AccountData.ActionBars.Bar8 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
 					end
 				
 				end
@@ -581,7 +581,25 @@ local AccWideUI_ThisCategory = nil
 				
 				C_Timer.After(10, function() 
 					AccWideUI_Frame:LoadUISettings()
+					
 				end)
+				
+				print(type(AccWideUI_ProxyShowCallback))
+					EventRegistry:RegisterCallback("ActionBarShownSettingUpdated",AccWideUI_ProxyShowCallback);
+				
+				
+				
+				--[[
+				Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_2", AccWideUI_Frame:ProxyShowCallback)
+				Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_3", AccWideUI_Frame:ProxyShowCallback)
+				Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_4", AccWideUI_Frame:ProxyShowCallback)
+				Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_5", AccWideUI_Frame:ProxyShowCallback)
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_6", AccWideUI_Frame:ProxyShowCallback)
+					Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_7", AccWideUI_Frame:ProxyShowCallback)
+					Settings.SetOnValueChangedCallback("PROXY_SHOW_ACTIONBAR_8", AccWideUI_Frame:ProxyShowCallback)
+				end
+				]]--
 			
 				
 	
@@ -592,6 +610,7 @@ local AccWideUI_ThisCategory = nil
 				
 				AccWideUI_Frame:SaveUISettings()
 				AccWideUI_Frame:LoadUISettings()
+				
 	
 			end --EO Settings Loaded
 			
@@ -599,8 +618,31 @@ local AccWideUI_ThisCategory = nil
 			
 			
 			-- Save all settings when logging out
-			if  (event == "PLAYER_LOGOUT") then
+			if  (event == "PLAYER_LEAVING_WORLD") then
 				AccWideUI_Frame:SaveUISettings()
+				
+				-- Set Value here to avoid taint
+				if (AccWideUI_AccountData.accountWideActionBars == true) then
+					Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", AccWideUI_AccountData.ActionBars.Bar2)
+					Settings.SetValue("PROXY_SHOW_ACTIONBAR_3", AccWideUI_AccountData.ActionBars.Bar3)
+					Settings.SetValue("PROXY_SHOW_ACTIONBAR_4", AccWideUI_AccountData.ActionBars.Bar4)
+					Settings.SetValue("PROXY_SHOW_ACTIONBAR_5", AccWideUI_AccountData.ActionBars.Bar5)
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_6", AccWideUI_AccountData.ActionBars.Bar6)
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUI_AccountData.ActionBars.Bar7)
+						Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUI_AccountData.ActionBars.Bar8)
+					end
+				end
+				
+				
+			end
+			
+			if  (event == "PLAYER_ENTERING_WORLD") then
+				
+				C_Timer.After(11, function() 
+					AccWideUI_Frame:DoActionBarMods();
+				end)
+			
 			end
 			
 			
@@ -1187,10 +1229,130 @@ local AccWideUI_ThisCategory = nil
 
 
 
+	function AccWideUI_Frame:DoActionBarMods()
+	
+		if (AccWideUI_AccountData.enableDebug == true) then
+			print(AccWideUI_TextName .. " Doing Action Bar Mods.")
+		end
+	
+		if ((AccWideUI_AccountData.ActionBars.Bar2) == true) then
+			MultiBarBottomLeft:Show()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Show Bar 2.")
+			end
+		else
+			MultiBarBottomLeft:Hide()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Hide Bar 2.")
+			end
+		end
+		
 
+		
+		if ((AccWideUI_AccountData.ActionBars.Bar3) == true) then
+			MultiBarBottomRight:Show()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Show Bar 3.")
+			end
+		else
+			MultiBarBottomRight:Hide()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Hide Bar 3.")
+			end
+		end
+		
+		if ((AccWideUI_AccountData.ActionBars.Bar4) == true) then
+			MultiBarRight:Show()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Show Bar 4.")
+			end
+		else
+			MultiBarRight:Hide()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Hide Bar 4.")
+			end
+		end
+		
+		if ((AccWideUI_AccountData.ActionBars.Bar5) == true) then
+			MultiBarLeft:Show()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Show Bar 5.")
+			end
+		else
+			MultiBarLeft:Hide()
+			
+			if (AccWideUI_AccountData.enableDebug == true) then
+				print(AccWideUI_TextName .. " Hide Bar 5.")
+			end
+		end
+		
+		
+		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+		
+			if ((AccWideUI_AccountData.ActionBars.Bar6) == true) then
+				MultiBar5:Show()
+				
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Show Bar 6.")
+				end
+			else
+				MultiBar5:Hide()
+				
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Hide Bar 6.")
+				end
+			end	
+
+			if ((AccWideUI_AccountData.ActionBars.Bar7) == true) then
+				MultiBar6:Show()
+				
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Show Bar 7.")
+				end
+			else
+				MultiBar6:Hide()
+				
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Hide Bar 7.")
+				end
+			end	
+			
+			if ((AccWideUI_AccountData.ActionBars.Bar8) == true) then
+				MultiBar7:Show()
+				
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Show Bar 8.")
+				end
+			else
+				MultiBar7:Hide()
+				
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Hide Bar 8.")
+				end
+			end	
+		
+		end
+		
+		
+		--[[
+		MultiActionBar_Update()
+		StatusTrackingBarManager:UpdateBarTicks();
+		EventRegistry:TriggerEvent("ActionBarShownSettingUpdated");
+		]]
+	
+	end
 
 	
 	function AccWideUI_Frame:LoadUISettings()
+	
+	
 	
 		if (InCombatLockdown()) then
 			if (AccWideUI_AccountData.enableDebug == true) then
@@ -1204,6 +1366,8 @@ local AccWideUI_ThisCategory = nil
 			if (AccWideUI_AccountData.enableDebug == true) then
 				print(AccWideUI_TextName .. " Loading UI Settings.")
 			end
+			
+			
 			
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -1224,9 +1388,11 @@ local AccWideUI_ThisCategory = nil
 					C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
 			
 				
-			end -- eo accountWideLayout
+				end -- eo accountWideLayout
 
 			end
+			
+			
 			
 			-- Use Action Bars
 			if (AccWideUI_AccountData.accountWideActionBars == true) then
@@ -1235,6 +1401,7 @@ local AccWideUI_ThisCategory = nil
 					print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 				end
 				
+					--[[
 					Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar2))
 					Settings.SetValue("PROXY_SHOW_ACTIONBAR_3", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar3))
 					Settings.SetValue("PROXY_SHOW_ACTIONBAR_4", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar4))
@@ -1244,9 +1411,14 @@ local AccWideUI_ThisCategory = nil
 						Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar7))
 						Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar8))
 					end
+					]]
+					
+					AccWideUI_Frame:DoActionBarMods()
+					
 			
 			end -- EO accountWideActionBars
-
+			
+			
 
 			-- Use Nameplates
 			if (AccWideUI_AccountData.accountWideNameplates == true) then
@@ -1372,7 +1544,7 @@ local AccWideUI_ThisCategory = nil
 			
 			end -- EO accountWideSoftTargetVariables
 			
-		
+			
 		
 		end
 	
@@ -1397,7 +1569,7 @@ local AccWideUI_ThisCategory = nil
 			
 		
 			--Save Shown Action Bars
-			if (AccWideUI_AccountData.accountWideActionBars == true) then
+			--[[if (AccWideUI_AccountData.accountWideActionBars == true) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Saving Action Bar Settings.")
@@ -1414,7 +1586,20 @@ local AccWideUI_ThisCategory = nil
 					end
 		
 			
-			end
+			end]]
+			
+				if (AccWideUI_AccountData.accountWideActionBars == true) then
+					AccWideUI_AccountData.ActionBars.Bar2 = (MultiBarBottomLeft:IsShown())
+					AccWideUI_AccountData.ActionBars.Bar3 = (MultiBarBottomRight:IsShown())
+					AccWideUI_AccountData.ActionBars.Bar4 = (MultiBarRight:IsShown())
+					AccWideUI_AccountData.ActionBars.Bar5 = (MultiBarLeft:IsShown())
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						AccWideUI_AccountData.ActionBars.Bar6 = (MultiBar5:IsShown())
+						AccWideUI_AccountData.ActionBars.Bar7 = (MultiBar6:IsShown())
+						AccWideUI_AccountData.ActionBars.Bar8 = (MultiBar7:IsShown())
+					end
+				end
 			
 			
 			-- Save Nameplates
@@ -1560,9 +1745,22 @@ local AccWideUI_ThisCategory = nil
 	end
 	
 	
-
 	
 	
+	function AccWideUI_ProxyShowCallback()
+		
+		AccWideUI_AccountData.ActionBars.Bar2 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
+		AccWideUI_AccountData.ActionBars.Bar3 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
+		AccWideUI_AccountData.ActionBars.Bar5 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
+		AccWideUI_AccountData.ActionBars.Bar5 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
+		
+		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			AccWideUI_AccountData.ActionBars.Bar6 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
+			AccWideUI_AccountData.ActionBars.Bar7 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
+			AccWideUI_AccountData.ActionBars.Bar8 = (Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
+		end
+		
+	end
 	
 	
 	--Addon Compartment
