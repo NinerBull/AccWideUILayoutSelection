@@ -1,6 +1,6 @@
 ## Interface: 110002, 110005, 40400, 40401, 11504
 ## Title: Account Wide Interface Option Settings
-## Version: 1.1.17
+## Version: 1.1.18
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /awi
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUI_AccountData

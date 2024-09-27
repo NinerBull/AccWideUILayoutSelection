@@ -372,23 +372,34 @@ local AccWideUI_ThisCategory = nil
 					AccWideUI_AccountData.ActionBars = {}
 				end
 				
+				AccWideUI_ActionBarsDefault = {}
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					AccWideUI_ActionBarsDefault.Bar2, AccWideUI_ActionBarsDefault.Bar3, AccWideUI_ActionBarsDefault.Bar4, AccWideUI_ActionBarsDefault.Bar5, AccWideUI_ActionBarsDefault.Bar6, AccWideUI_ActionBarsDefault.Bar7, AccWideUI_ActionBarsDefault.Bar8 = GetActionBarToggles()
+				
+				else
+				
+					AccWideUI_ActionBarsDefault.Bar2, AccWideUI_ActionBarsDefault.Bar3, AccWideUI_ActionBarsDefault.Bar4, AccWideUI_ActionBarsDefault.Bar5 = GetActionBarToggles()
+				
+				end
 				
 
 			
-				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar2 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar2 = AccWideUI_ActionBarsDefault.Bar2
 				end
 				
-				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar3 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar3 = AccWideUI_ActionBarsDefault.Bar3
 				end
 				
-				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar4 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar4 = AccWideUI_ActionBarsDefault.Bar4
 				end
 				
-				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "string") then
-					AccWideUI_AccountData.ActionBars.Bar5 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
+				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "boolean") then
+					AccWideUI_AccountData.ActionBars.Bar5 = AccWideUI_ActionBarsDefault.Bar5
 				end
 				
 				
@@ -396,16 +407,16 @@ local AccWideUI_ThisCategory = nil
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
-					if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "string") then
-						AccWideUI_AccountData.ActionBars.Bar6 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
+					if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "boolean") then
+						AccWideUI_AccountData.ActionBars.Bar6 = AccWideUI_ActionBarsDefault.Bar6
 					end
 				
-					if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "string") then
-						AccWideUI_AccountData.ActionBars.Bar7 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
+					if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "boolean") then
+						AccWideUI_AccountData.ActionBars.Bar7 = AccWideUI_ActionBarsDefault.Bar7
 					end
 					
-					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "string") then
-						AccWideUI_AccountData.ActionBars.Bar8 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
+					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
+						AccWideUI_AccountData.ActionBars.Bar8 = AccWideUI_ActionBarsDefault.Bar8
 					end
 				
 				end
@@ -1234,16 +1245,18 @@ local AccWideUI_ThisCategory = nil
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 				end
-				
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar2))
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_3", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar3))
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_4", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar4))
-					Settings.SetValue("PROXY_SHOW_ACTIONBAR_5", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar5))
+					
 					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-						Settings.SetValue("PROXY_SHOW_ACTIONBAR_6", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar6))
-						Settings.SetValue("PROXY_SHOW_ACTIONBAR_7", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar7))
-						Settings.SetValue("PROXY_SHOW_ACTIONBAR_8", AccWideUI_ToBoolean(AccWideUI_AccountData.ActionBars.Bar8))
+						
+						SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8)
+					
+					else
+					
+						SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5)
+					
 					end
+					
+					MultiActionBar_Update()
 			
 			end -- EO accountWideActionBars
 
@@ -1403,17 +1416,12 @@ local AccWideUI_ThisCategory = nil
 					print(AccWideUI_TextName .. " Saving Action Bar Settings.")
 				end
 
-					AccWideUI_AccountData.ActionBars.Bar2 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_2"))
-					AccWideUI_AccountData.ActionBars.Bar3 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_3"))
-					AccWideUI_AccountData.ActionBars.Bar4 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_4"))
-					AccWideUI_AccountData.ActionBars.Bar5 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_5"))
 					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-						AccWideUI_AccountData.ActionBars.Bar6 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_6"))
-						AccWideUI_AccountData.ActionBars.Bar7 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_7"))
-						AccWideUI_AccountData.ActionBars.Bar8 = tostring(Settings.GetValue("PROXY_SHOW_ACTIONBAR_8"))
+						AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8 = GetActionBarToggles()
+					else
+						AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5 = GetActionBarToggles()
 					end
-		
-			
+
 			end
 			
 			
