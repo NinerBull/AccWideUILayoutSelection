@@ -214,7 +214,97 @@ local AccWideUI_ThisCategory = nil
 		"SoftTargetFriendRange"
 	}
 	
-	
+	AccWideUI_Table_ChatTypes = {
+		"SYSTEM",
+		"SAY",
+		"PARTY",
+		"RAID",
+		"GUILD",
+		"OFFICER",
+		"YELL",
+		"WHISPER",
+		"SMART_WHISPER",
+		"WHISPER_INFORM",
+		"REPLY",
+		"EMOTE",
+		"TEXT_EMOTE",
+		"MONSTER_SAY",
+		"MONSTER_PARTY",
+		"MONSTER_YELL",
+		"MONSTER_WHISPER",
+		"MONSTER_EMOTE",
+		"CHANNEL",
+		"CHANNEL_JOIN",
+		"CHANNEL_LEAVE",
+		"CHANNEL_LIST",
+		"CHANNEL_NOTICE",
+		"CHANNEL_NOTICE_USER",
+		"TARGETICONS",
+		"AFK",
+		"DND",
+		"IGNORED",
+		"SKILL",
+		"LOOT",
+		"CURRENCY",
+		"MONEY",
+		"OPENING",
+		"TRADESKILLS",
+		"PET_INFO",
+		"COMBAT_MISC_INFO",
+		"COMBAT_XP_GAIN",
+		"COMBAT_HONOR_GAIN",
+		"COMBAT_FACTION_CHANGE",
+		"BG_SYSTEM_NEUTRAL",
+		"BG_SYSTEM_ALLIANCE",
+		"BG_SYSTEM_HORDE",
+		"RAID_LEADER",
+		"RAID_WARNING",
+		"RAID_BOSS_WHISPER",
+		"RAID_BOSS_EMOTE",
+		"QUEST_BOSS_EMOTE",
+		"FILTERED",
+		"INSTANCE_CHAT",
+		"INSTANCE_CHAT_LEADER",
+		"RESTRICTED",
+		"CHANNEL1",
+		"CHANNEL2",
+		"CHANNEL3",
+		"CHANNEL4",
+		"CHANNEL5",
+		"CHANNEL6",
+		"CHANNEL7",
+		"CHANNEL8",
+		"CHANNEL9",
+		"CHANNEL10",
+		"CHANNEL11",
+		"CHANNEL12",
+		"CHANNEL13",
+		"CHANNEL14",
+		"CHANNEL15",
+		"CHANNEL16",
+		"CHANNEL17",
+		"CHANNEL18",
+		"CHANNEL19",
+		"CHANNEL20",
+		"ACHIEVEMENT",
+		"GUILD_ACHIEVEMENT",
+		"PARTY_LEADER",
+		"BN_WHISPER",
+		"BN_WHISPER_INFORM",
+		"BN_ALERT",
+		"BN_BROADCAST",
+		"BN_BROADCAST_INFORM",
+		"BN_INLINE_TOAST_ALERT",
+		"BN_INLINE_TOAST_BROADCAST",
+		"BN_INLINE_TOAST_BROADCAST_INFORM",
+		"BN_WHISPER_PLAYER_OFFLINE",
+		"PET_BATTLE_COMBAT_LOG",
+		"PET_BATTLE_INFO",
+		"GUILD_ITEM_LOOTED",
+		"COMMUNITIES_CHANNEL",
+		"VOICE_TEXT",
+		"PING"
+	}
 	
 	
 	
@@ -320,6 +410,11 @@ local AccWideUI_ThisCategory = nil
 					end
 					
 				end
+				
+				if (type(AccWideUI_AccountData.accountWideChatWindowVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideChatWindowVariables = true
+				end
+				
 				
 				
 				
@@ -524,6 +619,97 @@ local AccWideUI_ThisCategory = nil
 					end
 				end
 				
+				
+				-- Chat Window Variables
+				if (type(AccWideUI_AccountData.ChatWindows) ~= "table") then
+					AccWideUI_AccountData.ChatWindows = {}
+				end
+				
+				
+				
+				
+				
+				for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+				
+					local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+					
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame]) ~= "table") then
+						AccWideUI_AccountData.ChatWindows[thisChatFrame] = {}
+					end
+						
+					-- Chat Window Info
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo) ~= "table") then
+						local name, size, r, g, b, a, isShown, isLocked, isDocked, isUninteractable = GetChatWindowInfo(thisChatFrame);
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo = {
+							["name"] = name,
+							["size"] = size,
+							["r"] = r,
+							["g"] = g,
+							["b"] = b,
+							["a"] = a,
+							["isShown"] = isShown,
+							["isLocked"] = isLocked,
+							["isDocked"] = isDocked,
+							["isUninteractable"] = isUninteractable
+						}
+					end
+					
+					--Positions
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions) ~= "table") then
+						local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions = {
+							["point"] = point,
+							["xOffset"] = xOffset,
+							["yOffset"] = yOffset
+						}
+					end
+
+					
+					--Dimensions
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions) ~= "table") then
+						local width, height = GetChatWindowSavedDimensions(thisChatFrame);
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions = {
+							["width"] = width,
+							["height"] = height
+						}
+					end
+	
+					
+					--Message Types
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) ~= "table") then
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes = {GetChatWindowMessages(thisChatFrame)}
+					end
+
+
+				end -- eo ChatFrame
+				
+				
+				
+				
+				
+				
+				-- Chat Channels
+				if (type(AccWideUI_AccountData.ChatChannelsJoined) ~= "table") then
+					AccWideUI_AccountData.ChatChannelsJoined = {}
+					local channels = {GetChannelList()}
+					for i = 1, #channels, 3 do
+						local id, name, disabled = channels[i], channels[i+1], channels[i+2]
+						AccWideUI_AccountData.ChatChannelsJoined[id] = name
+					end
+				end
+				
+				--Chat Colours Etc
+				if (type(AccWideUI_AccountData.ChatInfo) ~= "table") then
+					AccWideUI_AccountData.ChatInfo = {}
+					for k, v in pairs(AccWideUI_Table_ChatTypes) do
+						if (type(ChatTypeInfo[v]) == "table") then
+							
+							local thisChatTypeInfo = ChatTypeInfo[v]
+							
+							AccWideUI_AccountData.ChatInfo[v] = { ChatTypeInfo[v] }
+						end
+					end
+				end
 				
 				
 			
@@ -861,6 +1047,19 @@ local AccWideUI_ThisCategory = nil
 			end
 			
 			
+			thisPointY = thisPointY - 25 
+			
+			
+			-- Save Chat Window
+			local chkSaveChatWindow = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkSaveChatWindow:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkSaveChatWindow.Text:SetText("Chat Window Settings")
+			chkSaveChatWindow:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideChatWindowVariables = chkSaveChatWindow:GetChecked()
+			end)
+			chkSaveChatWindow:SetChecked(AccWideUI_AccountData.accountWideChatWindowVariables)
+			
+			
 			
 			-- 2nd Column
 			
@@ -948,7 +1147,7 @@ local AccWideUI_ThisCategory = nil
 				
 				thisPointX = 16
 				
-				thisPointY = -355
+				thisPointY = -385
 				
 				
 				--Title for Chat Channels
@@ -1065,9 +1264,9 @@ local AccWideUI_ThisCategory = nil
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
-					thisPointY = -455
+					thisPointY = -485
 				else
-					thisPointY = -355
+					thisPointY = -385
 				end
 		
 				
@@ -1387,6 +1586,143 @@ local AccWideUI_ThisCategory = nil
 			
 		
 		
+			-- Chat Window Settings
+			
+			if (AccWideUI_AccountData.accountWideChatWindowVariables == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Loading Chat Window Settings.")
+				end
+				
+				
+				
+				C_Timer.After(10, function() 
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Joining Chat Channels.")
+					end
+					-- Chat Channels
+					for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
+						JoinChannelByName(v)
+					end
+				end)
+				
+				C_Timer.After(15, function() 
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Reordering Chat Channels.")
+					end
+					--Reorder Chat Channels
+					for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
+						
+						local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
+						
+						if (id ~= k) then
+							-- Move Channel
+							C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+						end
+						
+					end
+				end)
+				
+				
+				C_Timer.After(20, function() 
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
+					end
+					-- Chat Colours
+					for k, v in pairs(AccWideUI_Table_ChatTypes) do
+						ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+					end
+				end)
+				
+				
+				
+				
+				
+				-- Individual Chat Window/Tab Settings
+				for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+					
+					local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+					
+					
+					SetChatWindowAlpha(
+						thisChatFrame, 
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
+					)
+					
+					SetChatWindowColor(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.r,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.g,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.b
+					)
+					
+					SetChatWindowDocked(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked
+					)
+					
+					SetChatWindowLocked(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isLocked
+					)
+					
+					SetChatWindowShown(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown
+					)
+					
+					SetChatWindowUninteractable(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isUninteractable
+					)
+					
+					SetChatWindowName(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.name
+					)
+					
+					SetChatWindowSize(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.size
+					)
+					
+					SetChatWindowSavedDimensions(
+						thisChatFrame,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.width,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.height
+					)
+					
+					
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset) ~= "nil") then
+						SetChatWindowSavedPosition(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.point,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.yOffset
+						)
+					end
+					
+					
+					-- Types of Chat
+					ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+					
+					for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
+						 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+					end
+					
+					
+					
+					
+					
+					FloatingChatFrame_Update(thisChatFrame)
+
+				end
+			
+				FCF_DockUpdate()
+			
+			end
+		
 		end
 	
 	end
@@ -1544,6 +1880,102 @@ local AccWideUI_ThisCategory = nil
 				end
 			
 			end -- EO accountWideSoftTargetVariables
+			
+			
+			
+			-- Save Chat Window Variables
+			if (AccWideUI_AccountData.accountWideChatWindowVariables == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Saving Chat Window Settings.")
+				end
+			
+			
+				for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+				
+					local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+					
+						
+					-- Chat Window Info
+					do
+						local name, size, r, g, b, a, isShown, isLocked, isDocked, isUninteractable = GetChatWindowInfo(thisChatFrame);
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo = {
+							["name"] = name,
+							["size"] = size,
+							["r"] = r,
+							["g"] = g,
+							["b"] = b,
+							["a"] = a,
+							["isShown"] = isShown,
+							["isLocked"] = isLocked,
+							["isDocked"] = isDocked,
+							["isUninteractable"] = isUninteractable
+						}
+					end
+					
+					--Positions
+					do
+						local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions = {
+							["point"] = point,
+							["xOffset"] = xOffset,
+							["yOffset"] = yOffset
+						}
+					end
+
+					
+					--Dimensions
+					do
+						local width, height = GetChatWindowSavedDimensions(thisChatFrame);
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions = {
+							["width"] = width,
+							["height"] = height
+						}
+					end
+	
+					
+					--Message Types
+					do
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes = {GetChatWindowMessages(thisChatFrame)}
+					end
+					
+					
+					
+
+				end -- eo ChatFrame
+				
+				
+				
+				-- Chat Channels
+				do
+					AccWideUI_AccountData.ChatChannelsJoined = {}
+					local channels = {GetChannelList()}
+					for i = 1, #channels, 3 do
+						local id, name, disabled = channels[i], channels[i+1], channels[i+2]
+						AccWideUI_AccountData.ChatChannelsJoined[id] = name
+					end
+				end
+				
+				
+				--Chat Colours Etc
+				do
+					AccWideUI_AccountData.ChatInfo = {}
+					for k, v in pairs(AccWideUI_Table_ChatTypes) do
+						if (type(ChatTypeInfo[v]) == "table") then
+							
+							local thisChatTypeInfo = ChatTypeInfo[v]
+							
+							AccWideUI_AccountData.ChatInfo[v] = { ChatTypeInfo[v] }
+						end
+					end
+				end
+			
+			
+			
+			
+			
+			
+			end
 			
 		
 		end
