@@ -214,6 +214,7 @@ local AccWideUI_ThisCategory = nil
 		"SoftTargetFriendRange"
 	}
 	
+	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	AccWideUI_Table_ChatTypes = {
 		"SYSTEM",
 		"SAY",
