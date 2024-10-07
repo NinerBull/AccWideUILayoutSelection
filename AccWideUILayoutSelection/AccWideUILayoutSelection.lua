@@ -1632,7 +1632,9 @@ local AccWideUI_ThisCategory = nil
 					end
 					-- Chat Colours
 					for k, v in pairs(AccWideUI_Table_ChatTypes) do
-						ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+						if (type(ChatTypeInfo[v]) == "table") then
+							ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+						end
 					end
 				end)
 				
