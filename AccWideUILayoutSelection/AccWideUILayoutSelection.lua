@@ -164,7 +164,7 @@ local AccWideUI_ThisCategory = nil
 		"raidOptionDisplayMainTankAndAssist",
 		"raidFramesDisplayOnlyHealerPowerBars",
 		"useCompactPartyFrames",
-		"activeCUFProfile",
+		--"activeCUFProfile",
 		"showDispelDebuffs",
 		"threatWarning"
 	}
@@ -404,6 +404,8 @@ local AccWideUI_ThisCategory = nil
 					AccWideUI_AccountData.accountWideSoftTargetVariables = true
 				end
 				
+				
+				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
 					if (type(AccWideUI_AccountData.accountWideLossOfControlVariables) ~= "boolean") then
@@ -412,8 +414,14 @@ local AccWideUI_ThisCategory = nil
 					
 				end
 				
+
+				
 				if (type(AccWideUI_AccountData.accountWideChatWindowVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideChatWindowVariables = true
+				end
+				
+				if (type(AccWideUI_AccountData.accountWideChatChannelVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideChatChannelVariables = true
 				end
 				
 				
@@ -531,7 +539,7 @@ local AccWideUI_ThisCategory = nil
 					end
 				end
 				
-
+				
 				-- Raid Frame Variables
 				if (type(AccWideUI_AccountData.RaidFrames) ~= "table") then
 					AccWideUI_AccountData.RaidFrames = {}
@@ -542,6 +550,61 @@ local AccWideUI_ThisCategory = nil
 						AccWideUI_AccountData.RaidFrames[v] = GetCVar(v) or nil
 					end
 				end
+				
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Raid Frame Profile Settings
+					if (type(AccWideUI_AccountData.RaidFrameProfiles) ~= "table") then
+						AccWideUI_AccountData.RaidFrameProfiles = {}
+						
+						for i=1, GetMaxNumCUFProfiles() do
+													
+							local thisRaidProfileName = GetRaidProfileName(i) or nil
+						
+							if (type(thisRaidProfileName) ~= "nil") then
+								if (RaidProfileExists(thisRaidProfileName)) then
+								
+									
+									AccWideUI_AccountData.RaidFrameProfiles[i] = {}
+								
+									AccWideUI_AccountData.RaidFrameProfiles[i].name = thisRaidProfileName
+									AccWideUI_AccountData.RaidFrameProfiles[i].isActive = false
+									
+									
+									if (thisRaidProfileName == GetActiveRaidProfile()) then
+										AccWideUI_AccountData.RaidFrameProfiles[i].isActive = true
+									end
+									
+									
+									AccWideUI_AccountData.RaidFrameProfiles[i].options =  GetRaidProfileFlattenedOptions(GetRaidProfileName(i))  
+									
+									local isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = GetRaidProfileSavedPosition(GetRaidProfileName(i))
+									
+									AccWideUI_AccountData.RaidFrameProfiles[i].position = {
+										["isDynamic"] = isDynamic,
+										["topPoint"] = topPoint,
+										["topOffset"] = topOffset,
+										["bottomPoint"] = bottomPoint,
+										["bottomOffset"] = bottomOffset,
+										["leftPoint"] = leftPoint,
+										["leftOffset"] = leftOffset
+									}
+									
+								
+								else
+										
+									AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+
+								end
+							end
+						
+						end
+						
+					end
+				
+				end
+
+				
 				
 				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
@@ -771,11 +834,7 @@ local AccWideUI_ThisCategory = nil
 
 
 			if  (event == "SETTINGS_LOADED") then
-			
-
-				C_Timer.After(1, function() 
-					AccWideUI_Frame:LoadUISettings()
-				end)
+	
 				
 				C_Timer.After(10, function() 
 					AccWideUI_Frame:LoadUISettings()
@@ -1059,6 +1118,21 @@ local AccWideUI_ThisCategory = nil
 					AccWideUI_AccountData.accountWideChatWindowVariables = chkSaveChatWindow:GetChecked()
 			end)
 			chkSaveChatWindow:SetChecked(AccWideUI_AccountData.accountWideChatWindowVariables)
+			
+			thisPointY = thisPointY - 25 
+			
+			
+			-- Save Chat Channels
+			local chkSaveChatChannels = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkSaveChatChannels:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkSaveChatChannels.Text:SetText("+ Custom Chat Channels (Req. Chat Window Settings)")
+			chkSaveChatChannels:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideChatChannelVariables = chkSaveChatChannels:GetChecked()
+			end)
+			chkSaveChatChannels:SetChecked(AccWideUI_AccountData.accountWideChatChannelVariables)
+			
+			
+			
 			
 			
 			
@@ -1478,6 +1552,7 @@ local AccWideUI_ThisCategory = nil
 			
 			-- Use Raid Frames
 			if (AccWideUI_AccountData.accountWideRaidFrames == true) then
+		
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
@@ -1486,6 +1561,84 @@ local AccWideUI_ThisCategory = nil
 				for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
 					SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
 				end
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					
+					for i=1, GetMaxNumCUFProfiles() do
+					
+						local thisRaidProfileName = GetRaidProfileName(i) or nil
+						
+						if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
+							if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
+
+								if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
+									CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+								end
+								
+								SetRaidProfileSavedPosition(
+									AccWideUI_AccountData.RaidFrameProfiles[i].name,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
+									AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
+								)
+								
+								for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
+									SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
+								end
+										
+								if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
+									CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+								end
+						
+							end
+						end
+				
+					end
+					
+					
+					--remove old
+					for i=1, GetMaxNumCUFProfiles() do
+					
+						local keepThisOne = false
+							
+						local thisRaidProfileName = GetRaidProfileName(i) or nil
+						
+						if (type(thisRaidProfileName) == "string") then
+					
+							for y=1, GetMaxNumCUFProfiles() do
+							
+								if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
+									if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
+										keepThisOne = true
+										if (AccWideUI_AccountData.enableDebug == true) then
+											print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
+										end
+									end
+								end
+							
+							end
+						
+						end
+						
+						if (type(thisRaidProfileName) == "string" and keepThisOne == false) then
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
+							end
+							DeleteRaidProfile(thisRaidProfileName)
+							AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+						end
+						
+					end
+					
+
+				end
+				
+	
+				
 			
 			end -- EO accountWideRaidFrames
 			
@@ -1596,48 +1749,54 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 				
+				if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
 				
-				C_Timer.After(10, function() 
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Joining Chat Channels.")
-					end
-					-- Chat Channels
-					for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
-						JoinChannelByName(v)
-					end
-				end)
-				
-				C_Timer.After(15, function() 
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Reordering Chat Channels.")
-					end
-					--Reorder Chat Channels
-					for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
-						
-						local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
-						
-						if (id ~= k) then
-							-- Move Channel
-							C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+					C_Timer.After(10, function() 
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Joining Chat Channels.")
 						end
-						
-					end
-				end)
-				
-				
-				C_Timer.After(20, function() 
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
-					end
-					-- Chat Colours
-					for k, v in pairs(AccWideUI_Table_ChatTypes) do
-						if (type(ChatTypeInfo[v]) == "table") then
-							ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+						-- Chat Channels
+						for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
+							JoinChannelByName(v)
 						end
-					end
-				end)
+					end)
+					
+					C_Timer.After(15, function() 
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Reordering Chat Channels.")
+						end
+						--Reorder Chat Channels
+						for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
+							
+							local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
+							
+							if (id ~= k) then
+								-- Move Channel
+								C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+							end
+							
+						end
+					end)
+					
+					
+					C_Timer.After(20, function() 
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
+						end
+						-- Chat Colours
+						for k, v in pairs(AccWideUI_Table_ChatTypes) do
+							if (type(ChatTypeInfo[v]) == "table") then
+								ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+								
+								SetChatColorNameByClass(v, AccWideUI_AccountData.ChatInfo[v][1].colorNameByClass)
+								
+							end
+						end
+					end)
 				
+				
+				end
 				
 				
 				
@@ -1708,11 +1867,20 @@ local AccWideUI_ThisCategory = nil
 					
 					
 					-- Types of Chat
-					ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
 					
-					for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
-						 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
-					end
+					C_Timer.After(25, function() 
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Setting Chat Types.")
+						end
+					
+					
+						ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+						
+						for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
+							 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+						end
+					end)
 					
 					
 					
@@ -1789,6 +1957,52 @@ local AccWideUI_ThisCategory = nil
 				for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
 					AccWideUI_AccountData.RaidFrames[v] = GetCVar(v) or nil
 				end
+				
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					for i=1, GetMaxNumCUFProfiles() do
+														
+						local thisRaidProfileName = GetRaidProfileName(i) or nil
+					
+						if (type(thisRaidProfileName) ~= "nil") then
+							if (RaidProfileExists(thisRaidProfileName)) then
+							
+								
+								AccWideUI_AccountData.RaidFrameProfiles[i] = {}
+							
+								AccWideUI_AccountData.RaidFrameProfiles[i].name = thisRaidProfileName
+								AccWideUI_AccountData.RaidFrameProfiles[i].isActive = false
+								
+								
+								if (thisRaidProfileName == GetActiveRaidProfile()) then
+									AccWideUI_AccountData.RaidFrameProfiles[i].isActive = true
+								end
+								
+								
+								AccWideUI_AccountData.RaidFrameProfiles[i].options =  GetRaidProfileFlattenedOptions(GetRaidProfileName(i))  
+								
+								local isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = GetRaidProfileSavedPosition(GetRaidProfileName(i))
+								
+								AccWideUI_AccountData.RaidFrameProfiles[i].position = {
+									["isDynamic"] = isDynamic,
+									["topPoint"] = topPoint,
+									["topOffset"] = topOffset,
+									["bottomPoint"] = bottomPoint,
+									["bottomOffset"] = bottomOffset,
+									["leftPoint"] = leftPoint,
+									["leftOffset"] = leftOffset
+								}
+								
+							
+							else
+									
+								AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+
+							end
+						end
+					end
+			end
+				
 			
 			end -- EO accountWideRaidFrames
 			
@@ -1948,15 +2162,18 @@ local AccWideUI_ThisCategory = nil
 				end -- eo ChatFrame
 				
 				
+				if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
 				
-				-- Chat Channels
-				do
-					AccWideUI_AccountData.ChatChannelsJoined = {}
-					local channels = {GetChannelList()}
-					for i = 1, #channels, 3 do
-						local id, name, disabled = channels[i], channels[i+1], channels[i+2]
-						AccWideUI_AccountData.ChatChannelsJoined[id] = name
+					-- Chat Channels
+					do
+						AccWideUI_AccountData.ChatChannelsJoined = {}
+						local channels = {GetChannelList()}
+						for i = 1, #channels, 3 do
+							local id, name, disabled = channels[i], channels[i+1], channels[i+2]
+							AccWideUI_AccountData.ChatChannelsJoined[id] = name
+						end
 					end
+				
 				end
 				
 				
