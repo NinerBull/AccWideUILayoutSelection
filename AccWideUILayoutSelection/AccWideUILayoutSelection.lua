@@ -743,6 +743,23 @@ local AccWideUI_ThisCategory = nil
 					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) ~= "table") then
 						AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes = {GetChatWindowMessages(thisChatFrame)}
 					end
+					
+					
+					--Chat Channels
+					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible) ~= "table") then
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible = {}
+						
+						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+						
+						for i = 1, #thisWindowChannels, 2 do
+							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+							table.insert(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible, chn)
+						end
+						
+					end
+					
+					
+					
 
 
 				end -- eo ChatFrame
@@ -752,7 +769,7 @@ local AccWideUI_ThisCategory = nil
 				
 				
 				
-				-- Chat Channels
+				-- Chat Types
 				if (type(AccWideUI_AccountData.ChatChannelsJoined) ~= "table") then
 					AccWideUI_AccountData.ChatChannelsJoined = {}
 					local channels = {GetChannelList()}
@@ -761,6 +778,7 @@ local AccWideUI_ThisCategory = nil
 						AccWideUI_AccountData.ChatChannelsJoined[id] = name
 					end
 				end
+				
 				
 				--Chat Colours Etc
 				if (type(AccWideUI_AccountData.ChatInfo) ~= "table") then
@@ -1779,8 +1797,9 @@ local AccWideUI_ThisCategory = nil
 						end
 					end)
 					
+	
 					
-					C_Timer.After(20, function() 
+					C_Timer.After(17.5, function() 
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
 						end
@@ -1865,21 +1884,57 @@ local AccWideUI_ThisCategory = nil
 						)
 					end
 					
+					--Visible Chat Channels
+					C_Timer.After((20 + (thisChatFrame * 2)), function() 
+					
+						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+					
+						for i = 1, #thisWindowChannels, 2 do
+							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+							
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Removing " .. chn .. " From Chat Window " .. thisChatFrame .. ".")
+							end
+							
+							ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+						end
+					
+						for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible) do
+						
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Adding " .. v .. " To Chat Window " .. thisChatFrame .. ".")
+							end
+							
+							ChatFrame_AddChannel(thisChatFrameVar, v)
+							
+						end
+						
+					
+					
+						
+					
+					end)
+					
 					
 					-- Types of Chat
+					C_Timer.After((25 + (thisChatFrame * 2)), function() 
 					
-					C_Timer.After(25, function() 
+						if ((AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown == true) or (AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked)) then
 					
-						if (AccWideUI_AccountData.enableDebug == true) then
-							print(AccWideUI_TextName .. " Setting Chat Types.")
-						end
-					
-					
-						ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Setting Chat Types for Chat Window " .. thisChatFrame .. ".")
+							end
 						
-						for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
-							 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+						
+							ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+							
+							for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
+								 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+								 print(AccWideUI_TextName .. " Adding " .. v .. " to Chat Window " .. thisChatFrame .. ".")
+							end
+						
 						end
+						
 					end)
 					
 					
@@ -2157,6 +2212,20 @@ local AccWideUI_ThisCategory = nil
 					end
 					
 					
+					--Chat Channels
+					do
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible = {}
+						
+						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+						
+						for i = 1, #thisWindowChannels, 2 do
+							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+							table.insert(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible, chn)
+						end
+						
+					end
+						
+					
 					
 
 				end -- eo ChatFrame
@@ -2190,7 +2259,8 @@ local AccWideUI_ThisCategory = nil
 					end
 				end
 			
-			
+				
+				
 			
 			
 			
