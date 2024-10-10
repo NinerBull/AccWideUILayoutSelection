@@ -8,6 +8,10 @@ https://github.com/NinerBull/AccWideUILayoutSelection
 
 local AccWideUI_Frame = CreateFrame("Frame")
 
+
+local AccWideUI_Frame_HasLoadedSettings = false
+local AccWideUI_Frame_HasDoneInitialLoad = false
+
 local AccWideUI_OptionsPanelFrame
 local AccWideUI_Category
 
@@ -27,6 +31,8 @@ AccWideUI_Frame:RegisterEvent("CHANNEL_UI_UPDATE")
 AccWideUI_Frame:RegisterEvent("DISABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("ADDON_LOADED")
+AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_DISABLED")
+AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_ENABLED")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
@@ -314,10 +320,14 @@ local AccWideUI_ThisCategory = nil
 
 		if (InCombatLockdown() == false) then
 			-- do nothing if in combat
+			
+			
+		
+			
 
 			if (event == "SETTINGS_LOADED") then
 			
-			
+				
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
@@ -844,6 +854,8 @@ local AccWideUI_ThisCategory = nil
 				
 				AccWideUI_Frame:InitializeOptionsFrame()
 				AccWideUI_Frame.InitializeOptionsSettings()
+				
+				AccWideUI_Frame_HasLoadedSettings = true
 			
 			end
 			
@@ -851,11 +863,16 @@ local AccWideUI_ThisCategory = nil
 
 
 
-			if  (event == "SETTINGS_LOADED") then
-	
+			if (event == "LOADING_SCREEN_DISABLED" and AccWideUI_Frame_HasLoadedSettings == true and AccWideUI_Frame_HasDoneInitialLoad == false) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Doing Initial Load.")
+				end
+		
 				
-				C_Timer.After(10, function() 
+				C_Timer.After(5, function() 
 					AccWideUI_Frame:LoadUISettings()
+					AccWideUI_Frame_HasDoneInitialLoad = true
 				end)
 			
 				
@@ -866,7 +883,7 @@ local AccWideUI_ThisCategory = nil
 			if  (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
 				
 				AccWideUI_Frame:SaveUISettings()
-				AccWideUI_Frame:LoadUISettings()
+				AccWideUI_Frame:LoadUISettings(true)
 	
 			end --EO Settings Loaded
 			
@@ -1493,7 +1510,9 @@ local AccWideUI_ThisCategory = nil
 
 
 	
-	function AccWideUI_Frame:LoadUISettings()
+	function AccWideUI_Frame:LoadUISettings(doNotLoadChatSettings)
+	
+		doNotLoadChatSettings = doNotLoadChatSettings or false
 	
 		if (InCombatLockdown()) then
 			if (AccWideUI_AccountData.enableDebug == true) then
@@ -1694,6 +1713,7 @@ local AccWideUI_ThisCategory = nil
 			
 			end -- EO accountWideBlockSocialVariables
 			
+			
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
 				-- Spell Overlay Variables
 				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
@@ -1760,7 +1780,7 @@ local AccWideUI_ThisCategory = nil
 		
 			-- Chat Window Settings
 			
-			if (AccWideUI_AccountData.accountWideChatWindowVariables == true) then
+			if (AccWideUI_AccountData.accountWideChatWindowVariables == true and doNotLoadChatSettings == false) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Loading Chat Window Settings.")
@@ -1769,7 +1789,7 @@ local AccWideUI_ThisCategory = nil
 				
 				if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
 				
-					C_Timer.After(10, function() 
+					C_Timer.After(5, function() 
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Joining Chat Channels.")
 						end
@@ -1779,7 +1799,7 @@ local AccWideUI_ThisCategory = nil
 						end
 					end)
 					
-					C_Timer.After(15, function() 
+					C_Timer.After(10, function() 
 					
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Reordering Chat Channels.")
@@ -1799,7 +1819,7 @@ local AccWideUI_ThisCategory = nil
 					
 	
 					
-					C_Timer.After(17.5, function() 
+					C_Timer.After(12, function() 
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
 						end
@@ -1885,7 +1905,7 @@ local AccWideUI_ThisCategory = nil
 					end
 					
 					--Visible Chat Channels
-					C_Timer.After((20 + (thisChatFrame * 2)), function() 
+					C_Timer.After((15 + (thisChatFrame * 2)), function() 
 					
 						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
 					
@@ -1917,7 +1937,7 @@ local AccWideUI_ThisCategory = nil
 					
 					
 					-- Types of Chat
-					C_Timer.After((25 + (thisChatFrame * 2)), function() 
+					C_Timer.After((20 + (thisChatFrame * 2)), function() 
 					
 						if ((AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown == true) or (AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked)) then
 					
