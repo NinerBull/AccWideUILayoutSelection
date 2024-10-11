@@ -1950,7 +1950,9 @@ local AccWideUI_ThisCategory = nil
 							
 							for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
 								 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
-								 print(AccWideUI_TextName .. " Adding " .. v .. " to Chat Window " .. thisChatFrame .. ".")
+								 if (AccWideUI_AccountData.enableDebug == true) then
+									print(AccWideUI_TextName .. " Adding " .. v .. " to Chat Window " .. thisChatFrame .. ".")
+								 end
 							end
 						
 						end
