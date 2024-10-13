@@ -1257,7 +1257,7 @@ local AccWideUI_ThisCategory = nil
 				
 				thisPointX = 16
 				
-				thisPointY = -385
+				thisPointY = -400
 				
 				
 				--Title for Chat Channels
@@ -1374,9 +1374,9 @@ local AccWideUI_ThisCategory = nil
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
-					thisPointY = -485
+					thisPointY = -490
 				else
-					thisPointY = -385
+					thisPointY = -400
 				end
 		
 				
