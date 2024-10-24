@@ -1799,6 +1799,8 @@ local AccWideUI_ThisCategory = nil
 						end
 					end)
 					
+					
+					
 					C_Timer.After(10, function() 
 					
 						if (AccWideUI_AccountData.enableDebug == true) then
@@ -1826,10 +1828,11 @@ local AccWideUI_ThisCategory = nil
 						-- Chat Colours
 						for k, v in pairs(AccWideUI_Table_ChatTypes) do
 							if (type(ChatTypeInfo[v]) == "table") then
-								ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
-								
-								SetChatColorNameByClass(v, AccWideUI_AccountData.ChatInfo[v][1].colorNameByClass)
-								
+								if (type(AccWideUI_AccountData.ChatInfo[v][1]) == "table") then
+									ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+									
+									SetChatColorNameByClass(v, AccWideUI_AccountData.ChatInfo[v][1].colorNameByClass)
+								end
 							end
 						end
 					end)

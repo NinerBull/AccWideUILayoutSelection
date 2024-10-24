@@ -5,9 +5,9 @@ An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic E
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw76258.jpg)
 
 ## About
-This addon aims to help keep your Base UI consistent across all of your characters on your account by saving and loading variables that are normally character specific.
+This addon helps keep your Base UI consistent across all of your characters on your account by synchronizing variables that are normally character specific.
 
-It allows you to automatically apply the following to all characters on your account:
+By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific:
 
 * Chosen Edit Mode Layout
 * Visible Action Bars
@@ -17,11 +17,12 @@ It allows you to automatically apply the following to all characters on your acc
 * Block Guild/Trade/Channel Invite Settings
 * Spell Overlay Settings
 * Auto Loot Settings
-* Block General/LocalDefense/Trade/Services Chat Channels
 * Action Targeting Settings
+* Chat Window/Channel Settings
+* Bonus: Block General/LocalDefense/Trade/Services Chat Channels
 
 ## Compatibility
-* **The War Within** - 11.0.2 & 11.0.5
+* **The War Within** - 11.0.5
 * **Cataclysm Classic** - 4.4.0 & 4.4.1
 * **Classic Era** - 1.15.4
 
