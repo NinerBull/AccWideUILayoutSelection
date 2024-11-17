@@ -6,6 +6,8 @@ https://github.com/NinerBull/AccWideUILayoutSelection
 ]]--
 
 
+local AccWideUI_SaveVersion = 1.2
+
 local AccWideUI_Frame = CreateFrame("Frame")
 
 
@@ -23,16 +25,18 @@ local function AccWideUI_ToBoolean(str)
 	return bool
 end
 
-AccWideUI_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+
 AccWideUI_Frame:RegisterEvent("SETTINGS_LOADED")
 AccWideUI_Frame:RegisterEvent("PLAYER_LOGOUT")
-AccWideUI_Frame:RegisterEvent("PLAYER_LEAVING_WORLD")
 AccWideUI_Frame:RegisterEvent("CHANNEL_UI_UPDATE")
 AccWideUI_Frame:RegisterEvent("DISABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
-AccWideUI_Frame:RegisterEvent("ADDON_LOADED")
 AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_DISABLED")
-AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_ENABLED")
+
+--AccWideUI_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+--AccWideUI_Frame:RegisterEvent("PLAYER_LEAVING_WORLD")
+--AccWideUI_Frame:RegisterEvent("ADDON_LOADED")
+--AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_ENABLED")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
@@ -463,7 +467,7 @@ local AccWideUI_ThisCategory = nil
 						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = false
 					end
 					
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 						if (type(AccWideUI_AccountData.ChatChannels.BlockServices) ~= "boolean") then
 							AccWideUI_AccountData.ChatChannels.BlockServices = false
 						end
@@ -852,6 +856,16 @@ local AccWideUI_ThisCategory = nil
 						
 				end
 				
+				
+				
+				if (AccWideUI_AccountData.SaveVersion ~= AccWideUI_SaveVersion) then
+				
+					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
+					
+					print(AccWideUI_TextName .. " New! The addon can now save many of your chat settings. Type " .. AccWideUI_TextSlash .. " to configure.")
+				
+				end
+				
 				AccWideUI_Frame:InitializeOptionsFrame()
 				AccWideUI_Frame.InitializeOptionsSettings()
 				
@@ -935,7 +949,7 @@ local AccWideUI_ThisCategory = nil
 						end
 					end
 					
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 						if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
 							if (GetChannelName((GetChannelName("Services"))) > 0) then
 								LeaveChannelByName("Services")
@@ -1304,7 +1318,7 @@ local AccWideUI_ThisCategory = nil
 				
 				thisPointX = thisPointX + 128
 				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 					-- Services Chat
 					local chkBlockServicesChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 					chkBlockServicesChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1821,7 +1835,7 @@ local AccWideUI_ThisCategory = nil
 					
 	
 					
-					C_Timer.After(12, function() 
+					C_Timer.After(13, function() 
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
 						end
@@ -1908,7 +1922,7 @@ local AccWideUI_ThisCategory = nil
 					end
 					
 					--Visible Chat Channels
-					C_Timer.After((15 + (thisChatFrame * 2)), function() 
+					C_Timer.After((16 + (thisChatFrame * 2)), function() 
 					
 						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
 					
