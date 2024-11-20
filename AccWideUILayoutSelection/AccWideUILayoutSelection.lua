@@ -862,7 +862,12 @@ local AccWideUI_ThisCategory = nil
 				
 					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
 					
-					print(AccWideUI_TextName .. " New! The addon can now save many of your chat settings. Type " .. AccWideUI_TextSlash .. " to configure.")
+					AccWideUI_UpdateNotice = WHITE_FONT_COLOR:WrapTextInColorCode(AccWideUI_TextName .. " Updated! The addon can now synchronise many of your chat settings. Type " .. AccWideUI_TextSlash .. " to configure.")
+					
+					C_Timer.After(10, function() 
+						--RaidNotice_AddMessage(RaidBossEmoteFrame, AccWideUI_UpdateNotice, ChatTypeInfo["RAID_WARNING"]) 
+						print(AccWideUI_UpdateNotice)
+					end)
 				
 				end
 				
@@ -1274,6 +1279,15 @@ local AccWideUI_ThisCategory = nil
 				thisPointY = -400
 				
 				
+				thisPointYPlus = 128
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+					thisPointYPlus = 110
+				end
+				
+				
+				
+				
 				--Title for Chat Channels
 				local titleCAA = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
 				titleCAA:SetJustifyV('TOP')
@@ -1305,7 +1319,7 @@ local AccWideUI_ThisCategory = nil
 				end)
 				chkBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
 				
-				thisPointX = thisPointX + 128
+				thisPointX = thisPointX + thisPointYPlus
 				
 				-- Trade Chat
 				local chkBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1316,7 +1330,7 @@ local AccWideUI_ThisCategory = nil
 				end)
 				chkBlockTradeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockTrade)
 				
-				thisPointX = thisPointX + 128
+				thisPointX = thisPointX + thisPointYPlus
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 					-- Services Chat
@@ -1328,7 +1342,7 @@ local AccWideUI_ThisCategory = nil
 					end)
 					chkBlockServicesChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockServices)
 					
-					thisPointX = thisPointX + 128
+					thisPointX = thisPointX + thisPointYPlus
 				end
 				
 				
@@ -1341,7 +1355,7 @@ local AccWideUI_ThisCategory = nil
 				end)
 				chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
 				
-				thisPointX = thisPointX + 128
+				thisPointX = thisPointX + thisPointYPlus
 				
 				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
@@ -1354,7 +1368,7 @@ local AccWideUI_ThisCategory = nil
 					end)
 					chkBlockWorldDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockWorldDefense)
 					
-					thisPointX = thisPointX + 128
+					thisPointX = thisPointX + thisPointYPlus
 				end
 				
 				
@@ -1367,7 +1381,7 @@ local AccWideUI_ThisCategory = nil
 				end)
 				chkBlockLookingForGroup:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup)
 				
-				--thisPointX = thisPointX + 128
+				--thisPointX = thisPointX + thisPointYPlus
 				
 				
 				
@@ -1862,10 +1876,21 @@ local AccWideUI_ThisCategory = nil
 					
 					local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
 					
+					FCF_SetWindowAlpha(
+						thisChatFrameVar, 
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
+					)
 					
 					SetChatWindowAlpha(
 						thisChatFrame, 
 						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
+					)
+					
+					FCF_SetWindowColor(
+						thisChatFrameVar,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.r,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.g,
+						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.b
 					)
 					
 					SetChatWindowColor(
