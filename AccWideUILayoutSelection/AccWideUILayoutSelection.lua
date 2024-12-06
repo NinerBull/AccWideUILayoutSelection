@@ -45,6 +45,51 @@ end
 local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<Account Wide Interface>")
 local AccWideUI_TextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/awi")
 local AccWideUI_ThisCategory = nil
+local AccWideUI_DividerGraphic = "interface\\friendsframe\\ui-friendsframe-onlinedivider"
+
+
+AccWideUI_ChatName_General = "General"
+AccWideUI_ChatName_Trade = "Trade"
+AccWideUI_ChatName_Services = "Services"
+AccWideUI_ChatName_LocalDefense = "LocalDefense"
+AccWideUI_ChatName_WorldDefense = "WorldDefense"
+AccWideUI_ChatName_LookingForGroup = "LookingForGroup"
+
+
+-- https://wago.tools/db2/ChatChannels
+
+if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+
+	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
+	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
+	AccWideUI_ChatName_Services = C_ChatInfo.GetChannelShortcutForChannelID(42)
+	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
+	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
+
+end
+
+
+if (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) then
+
+	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
+	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
+	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
+	AccWideUI_ChatName_WorldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
+	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
+
+end
+
+
+if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+
+	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
+	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
+	AccWideUI_ChatName_Services = C_ChatInfo.GetChannelShortcutForChannelID(45)
+	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
+	AccWideUI_ChatName_WorldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
+	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(24)
+
+end
 
 	
 
@@ -224,6 +269,23 @@ local AccWideUI_ThisCategory = nil
 		"SoftTargetFriendRange"
 	}
 	
+	AccWideUI_Table_TutorialVariables = {
+		"closedInfoFrames",
+		"closedExtraAbiltyTutorials",
+		"lastVoidStorageTutorial",
+		"covenantMissionTutorial",
+		"orderHallMissionTutorial",
+		"lastGarrisonMissionTutorial",
+		"lastVoidStorageTutorial",
+		"orderHallMissionTutorial",
+		"shipyardMissionTutorialAreaBuff",
+		"shipyardMissionTutorialBlockade",
+		"shipyardMissionTutorialFirst",
+		"soulbindsActivatedTutorial",
+		"soulbindsLandingPageTutorial",
+		"soulbindsViewedTutorial"
+	}
+	
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	AccWideUI_Table_ChatTypes = {
 		"SYSTEM",
@@ -378,7 +440,7 @@ local AccWideUI_ThisCategory = nil
 				end
 	
 				
-				if (type(AccWideUI_AccountData.enableTextOutput) ~= "boolean") then
+				if (type(AccWideUI_AccountData.enableText	) ~= "boolean") then
 					AccWideUI_AccountData.enableTextOutput = true
 				end
 
@@ -416,6 +478,11 @@ local AccWideUI_ThisCategory = nil
 				
 				if (type(AccWideUI_AccountData.accountWideSoftTargetVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideSoftTargetVariables = true
+				end
+				
+				--Experimental
+				if (type(AccWideUI_AccountData.accountWideTutorialVariablesExperimental) ~= "boolean") then
+					AccWideUI_AccountData.accountWideTutorialVariablesExperimental = false
 				end
 				
 				
@@ -698,6 +765,21 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 				
+				
+				-- Tutorial Variables
+				if (type(AccWideUI_AccountData.Tutorials) ~= "table") then
+					AccWideUI_AccountData.Tutorials = {}
+				end
+				
+				for k, v in pairs(AccWideUI_Table_TutorialVariables) do
+					if (type(AccWideUI_AccountData.Tutorials[v]) == "nil") then
+						AccWideUI_AccountData.Tutorials[v] = GetCVar(v) or nil
+					end
+				end
+				
+				
+				
+				
 				-- Chat Window Variables
 				if (type(AccWideUI_AccountData.ChatWindows) ~= "table") then
 					AccWideUI_AccountData.ChatWindows = {}
@@ -931,41 +1013,41 @@ local AccWideUI_ThisCategory = nil
 				if (event == "CHANNEL_UI_UPDATE") then
 		
 					if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
-						if (GetChannelName((GetChannelName("General"))) > 0) then
-							LeaveChannelByName("General")
+						if (GetChannelName((GetChannelName(AccWideUI_ChatName_General))) > 0) then
+							LeaveChannelByName(AccWideUI_ChatName_General)
 						end
 					end
 					
 					if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
-						if (GetChannelName((GetChannelName("LocalDefense"))) > 0) then
-							LeaveChannelByName("LocalDefense")
+						if (GetChannelName((GetChannelName(AccWideUI_ChatName_LocalDefense))) > 0) then
+							LeaveChannelByName(AccWideUI_ChatName_LocalDefense)
 						end
 					end
 					
 					if (AccWideUI_AccountData.ChatChannels.BlockTrade == true) then
-						if (GetChannelName((GetChannelName("Trade"))) > 0) then
-							LeaveChannelByName("Trade")
+						if (GetChannelName((GetChannelName(AccWideUI_ChatName_Trade))) > 0) then
+							LeaveChannelByName(AccWideUI_ChatName_Trade)
 						end
 					end
 					
 					if (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true) then
-						if (GetChannelName((GetChannelName("LookingForGroup"))) > 0) then
-							LeaveChannelByName("LookingForGroup")
+						if (GetChannelName((GetChannelName(AccWideUI_ChatName_LookingForGroup))) > 0) then
+							LeaveChannelByName(AccWideUI_ChatName_LookingForGroup)
 						end
 					end
 					
 					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 						if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
-							if (GetChannelName((GetChannelName("Services"))) > 0) then
-								LeaveChannelByName("Services")
+							if (GetChannelName((GetChannelName(AccWideUI_ChatName_Services))) > 0) then
+								LeaveChannelByName(AccWideUI_ChatName_Services)
 							end
 						end
 					end
 					
 					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 						if (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true) then
-							if (GetChannelName((GetChannelName("WorldDefense"))) > 0) then
-								LeaveChannelByName("WorldDefense")
+							if (GetChannelName((GetChannelName(AccWideUI_ChatName_WorldDefense))) > 0) then
+								LeaveChannelByName(AccWideUI_ChatName_WorldDefense)
 							end
 						end
 					end
@@ -1018,12 +1100,26 @@ local AccWideUI_ThisCategory = nil
 			title2:SetJustifyV('TOP')
 			title2:SetJustifyH('LEFT')
 			title2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			title2:SetText("Makes your chosen Interface Options apply for all of your characters and specs.")
+			title2:SetText("Makes various Interface Options synchronise across all of your characters and specs.")
 			
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
 				thisPointY = thisPointY - 20
+				
+				
+				--Enable by Default
+				local chkEnableDefault = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkEnableDefault:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkEnableDefault.Text:SetText("Enable Chosen Edit Mode by default for all New Characters")
+				chkEnableDefault:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.enableAccountWide = chkEnableDefault:GetChecked()
+				end)
+				chkEnableDefault:SetChecked(AccWideUI_AccountData.enableAccountWide)
+				
+				thisPointX = 360
+				
+				thisPointY = thisPointY - 2
 				
 				-- Add shortcut to Edit Mode
 				local b1 = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
@@ -1036,24 +1132,13 @@ local AccWideUI_ThisCategory = nil
 					end
 					ShowUIPanel(EditModeManagerFrame)
 				end)
-				
-				
-				thisPointY = thisPointY - 30
-				
-				--Enable by Default
-				local chkEnableDefault = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkEnableDefault:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkEnableDefault.Text:SetText("Enable Edit Mode by default for all New Characters")
-				chkEnableDefault:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.enableAccountWide = chkEnableDefault:GetChecked()
-				end)
-				chkEnableDefault:SetChecked(AccWideUI_AccountData.enableAccountWide)
 		
 			end
 			
 			
 			thisPointY = thisPointY - 25
 			
+			thisPointX = 16
 			
 			-- Show Text
 			local chkShowText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1067,7 +1152,7 @@ local AccWideUI_ThisCategory = nil
 			
 			
 			
-			thisPointY = -160
+			thisPointY = -130
 			
 			
 			--Title for Which Save Options
@@ -1081,12 +1166,15 @@ local AccWideUI_ThisCategory = nil
 			thisPointY = thisPointY - 20
 			
 			
+
+			
+			
 			--Title for  Which Save Options 2
 			local titleSA2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
 			titleSA2:SetJustifyV('TOP')
 			titleSA2:SetJustifyH('LEFT')
 			titleSA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleSA2:SetText("What kind of UI settings would you like to save Account Wide?")
+			titleSA2:SetText("Which UI settings would you like to synchronise Account Wide?")
 			
 			local thisPointY2 = thisPointY
 			
@@ -1179,7 +1267,7 @@ local AccWideUI_ThisCategory = nil
 			-- Save Chat Channels
 			local chkSaveChatChannels = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkSaveChatChannels:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkSaveChatChannels.Text:SetText("+ Custom Chat Channels (Req. Chat Window Settings)")
+			chkSaveChatChannels.Text:SetText("+ Custom Chat Channels")
 			chkSaveChatChannels:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideChatChannelVariables = chkSaveChatChannels:GetChecked()
 			end)
@@ -1268,6 +1356,19 @@ local AccWideUI_ThisCategory = nil
 			
 			
 			
+			thisPointY2 = thisPointY2 - 25 
+			
+			-- Tutorial Variables
+			local chkSaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkSaveTutorials:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkSaveTutorials.Text:SetText("Viewed Tutorials " .. ITEM_LEGENDARY_COLOR:WrapTextInColorCode("(Experimental)"))
+			chkSaveTutorials:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideTutorialVariablesExperimental = chkSaveTutorials:GetChecked()
+			end)
+			chkSaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialVariablesExperimental)
+			
+			
+			
 			
 			
 			--Chat Channels
@@ -1276,15 +1377,12 @@ local AccWideUI_ThisCategory = nil
 				
 				thisPointX = 16
 				
-				thisPointY = -400
+				thisPointY = -380
 				
 				
 				thisPointYPlus = 128
 				
-				if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
-					thisPointYPlus = 110
-				end
-				
+			
 				
 				
 				
@@ -1313,7 +1411,7 @@ local AccWideUI_ThisCategory = nil
 				-- General Chat
 				local chkBlockGeneralChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkBlockGeneralChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockGeneralChat.Text:SetText("General")
+				chkBlockGeneralChat.Text:SetText(AccWideUI_ChatName_General)
 				chkBlockGeneralChat:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.ChatChannels.BlockGeneral = chkBlockGeneralChat:GetChecked()
 				end)
@@ -1324,7 +1422,7 @@ local AccWideUI_ThisCategory = nil
 				-- Trade Chat
 				local chkBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkBlockTradeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockTradeChat.Text:SetText("Trade")
+				chkBlockTradeChat.Text:SetText(AccWideUI_ChatName_Trade)
 				chkBlockTradeChat:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.ChatChannels.BlockTrade = chkBlockTradeChat:GetChecked()
 				end)
@@ -1332,11 +1430,40 @@ local AccWideUI_ThisCategory = nil
 				
 				thisPointX = thisPointX + thisPointYPlus
 				
+			
+				-- LocalDefense Chat
+				local chkBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkBlockLocalDefenseChat.Text:SetText(AccWideUI_ChatName_LocalDefense)
+				chkBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkBlockLocalDefenseChat:GetChecked()
+				end)
+				chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
+				
+				thisPointX = thisPointX + thisPointYPlus
+				
+				-- LookingForGroup Chat
+				local chkBlockLookingForGroup = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkBlockLookingForGroup:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkBlockLookingForGroup.Text:SetText(AccWideUI_ChatName_LookingForGroup)
+				chkBlockLookingForGroup:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = chkBlockLookingForGroup:GetChecked()
+				end)
+				chkBlockLookingForGroup:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup)
+				
+				
+				
+				thisPointX = 16
+				
+				thisPointY = thisPointY - 24
+				
+				
+				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 					-- Services Chat
 					local chkBlockServicesChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 					chkBlockServicesChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkBlockServicesChat.Text:SetText("Services")
+					chkBlockServicesChat.Text:SetText(AccWideUI_ChatName_Services)
 					chkBlockServicesChat:HookScript("OnClick", function(_, btn, down)
 							AccWideUI_AccountData.ChatChannels.BlockServices = chkBlockServicesChat:GetChecked()
 					end)
@@ -1346,23 +1473,11 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 				
-				-- LocalDefense Chat
-				local chkBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockLocalDefenseChat.Text:SetText("LocalDefense")
-				chkBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkBlockLocalDefenseChat:GetChecked()
-				end)
-				chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
-				
-				thisPointX = thisPointX + thisPointYPlus
-				
-				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 					-- WorldDefense Chat
 					local chkBlockWorldDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 					chkBlockWorldDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkBlockWorldDefenseChat.Text:SetText("WorldDefense")
+					chkBlockWorldDefenseChat.Text:SetText(AccWideUI_ChatName_WorldDefense)
 					chkBlockWorldDefenseChat:HookScript("OnClick", function(_, btn, down)
 							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = chkBlockWorldDefenseChat:GetChecked()
 					end)
@@ -1372,16 +1487,9 @@ local AccWideUI_ThisCategory = nil
 				end
 				
 				
-				-- LookingForGroup Chat
-				local chkBlockLookingForGroup = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockLookingForGroup:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockLookingForGroup.Text:SetText("LFG")
-				chkBlockLookingForGroup:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = chkBlockLookingForGroup:GetChecked()
-				end)
-				chkBlockLookingForGroup:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup)
 				
-				--thisPointX = thisPointX + thisPointYPlus
+				
+				
 				
 				
 				
@@ -1402,9 +1510,9 @@ local AccWideUI_ThisCategory = nil
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
-					thisPointY = -490
+					thisPointY = -500
 				else
-					thisPointY = -400
+					thisPointY = -380
 				end
 		
 				
@@ -1517,6 +1625,13 @@ local AccWideUI_ThisCategory = nil
 				
 			
 			end
+			
+			
+			local titlePet = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlightSmall")
+			titlePet:SetJustifyV('BOTTOM')
+			titlePet:SetJustifyH('RIGHT')
+			titlePet:SetPoint('BOTTOMRIGHT', -15, 15)
+			titlePet:SetText(VERY_DARK_GRAY_COLOR:WrapTextInColorCode("Dedicated to Petrel <3"))
 		
 		
 			
@@ -1804,7 +1919,22 @@ local AccWideUI_ThisCategory = nil
 			
 			end -- EO accountWideSoftTargetVariables
 			
-		
+			
+			
+			-- Tutorial Variables
+			if (AccWideUI_AccountData.accountWideTutorialVariablesExperimental == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Loading Tutorial Settings.")
+				end
+			
+				for k, v in pairs(AccWideUI_Table_TutorialVariables) do
+					SetCVar(v, AccWideUI_AccountData.Tutorials[v])
+				end
+			end -- EO accountWideTutorialVariables
+			
+			
+			
 		
 			-- Chat Window Settings
 			
@@ -2216,6 +2346,21 @@ local AccWideUI_ThisCategory = nil
 				end
 			
 			end -- EO accountWideSoftTargetVariables
+			
+			
+			-- Save Tutorial Variables
+			if (AccWideUI_AccountData.accountWideTutorialVariablesExperimental == true) then
+			
+				if (AccWideUI_AccountData.enableDebug == true) then
+					print(AccWideUI_TextName .. " Saving Tutorial Settings.")
+				end
+			
+				for k, v in pairs(AccWideUI_Table_TutorialVariables) do
+					AccWideUI_AccountData.Tutorials[v] = GetCVar(v) or nil
+				end
+			
+			end -- EO accountWideTutorialVariables
+			
 			
 			
 			
