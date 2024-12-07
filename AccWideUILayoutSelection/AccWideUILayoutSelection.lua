@@ -131,6 +131,8 @@ end
 	
 	
 	AccWideUI_Table_NameplateVariables = {
+		"ColorNameplateNameBySelection",
+		"clampTargetNameplateToScreen",
 		"NamePlateClassificationScale",
 		"nameplateClassResourceTopInset",
 		"nameplateGameObjectMaxDistance",
@@ -269,21 +271,25 @@ end
 		"SoftTargetFriendRange"
 	}
 	
-	AccWideUI_Table_TutorialVariables = {
+	AccWideUI_Table_TutorialTooltipVariables = {
 		"closedInfoFrames",
 		"closedExtraAbiltyTutorials",
-		"lastVoidStorageTutorial",
+		"lastVoidStorageTutorial" --[[,
 		"covenantMissionTutorial",
 		"orderHallMissionTutorial",
 		"lastGarrisonMissionTutorial",
-		"lastVoidStorageTutorial",
-		"orderHallMissionTutorial",
 		"shipyardMissionTutorialAreaBuff",
 		"shipyardMissionTutorialBlockade",
 		"shipyardMissionTutorialFirst",
+		"dangerousShipyardMissionWarningAlreadyShown",
 		"soulbindsActivatedTutorial",
 		"soulbindsLandingPageTutorial",
-		"soulbindsViewedTutorial"
+		"soulbindsViewedTutorial"]]
+	}
+	
+	
+	AccWideUI_Table_ActionBarVariables = {
+		"multiBarRightVerticalLayout"
 	}
 	
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
@@ -440,7 +446,7 @@ end
 				end
 	
 				
-				if (type(AccWideUI_AccountData.enableText	) ~= "boolean") then
+				if (type(AccWideUI_AccountData.enableTextOutput) ~= "boolean") then
 					AccWideUI_AccountData.enableTextOutput = true
 				end
 
@@ -481,8 +487,8 @@ end
 				end
 				
 				--Experimental
-				if (type(AccWideUI_AccountData.accountWideTutorialVariablesExperimental) ~= "boolean") then
-					AccWideUI_AccountData.accountWideTutorialVariablesExperimental = false
+				if (type(AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental) ~= "boolean") then
+					AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental = false
 				end
 				
 				
@@ -556,6 +562,20 @@ end
 				if (type(AccWideUI_AccountData.ActionBars) ~= "table") then
 					AccWideUI_AccountData.ActionBars = {}
 				end
+				
+				
+				-- CVars
+				if (type(AccWideUI_AccountData.ActionBars.ActionBarVariables) ~= "table") then
+					AccWideUI_AccountData.ActionBars.ActionBarVariables = {}
+				end
+				
+				for k, v in pairs(AccWideUI_Table_ActionBarVariables) do
+					if (type(AccWideUI_AccountData.ActionBars.ActionBarVariables[v]) == "nil") then
+						AccWideUI_AccountData.ActionBars.ActionBarVariables[v] = GetCVar(v) or nil
+					end
+				end
+				
+				
 				
 				AccWideUI_ActionBarsDefault = {}
 				
@@ -767,13 +787,13 @@ end
 				
 				
 				-- Tutorial Variables
-				if (type(AccWideUI_AccountData.Tutorials) ~= "table") then
-					AccWideUI_AccountData.Tutorials = {}
+				if (type(AccWideUI_AccountData.TutorialTooltips) ~= "table") then
+					AccWideUI_AccountData.TutorialTooltips = {}
 				end
 				
-				for k, v in pairs(AccWideUI_Table_TutorialVariables) do
-					if (type(AccWideUI_AccountData.Tutorials[v]) == "nil") then
-						AccWideUI_AccountData.Tutorials[v] = GetCVar(v) or nil
+				for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
+					if (type(AccWideUI_AccountData.TutorialTooltips[v]) == "nil") then
+						AccWideUI_AccountData.TutorialTooltips[v] = GetCVar(v) or nil
 					end
 				end
 				
@@ -1361,11 +1381,11 @@ end
 			-- Tutorial Variables
 			local chkSaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkSaveTutorials:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkSaveTutorials.Text:SetText("Viewed Tutorials " .. ITEM_LEGENDARY_COLOR:WrapTextInColorCode("(Experimental)"))
+			chkSaveTutorials.Text:SetText("Viewed Tutorial Tooltips " .. ITEM_LEGENDARY_COLOR:WrapTextInColorCode("(Experimental)"))
 			chkSaveTutorials:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideTutorialVariablesExperimental = chkSaveTutorials:GetChecked()
+					AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental = chkSaveTutorials:GetChecked()
 			end)
-			chkSaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialVariablesExperimental)
+			chkSaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental)
 			
 			
 			
@@ -1699,6 +1719,11 @@ end
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 				end
+				
+				
+				for k, v in pairs(AccWideUI_Table_ActionBarVariables) do
+					SetCVar(v, AccWideUI_AccountData.ActionBars.ActionBarVariables[v])
+				end
 					
 					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						
@@ -1922,14 +1947,14 @@ end
 			
 			
 			-- Tutorial Variables
-			if (AccWideUI_AccountData.accountWideTutorialVariablesExperimental == true) then
+			if (AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental == true) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Tutorial Settings.")
+					print(AccWideUI_TextName .. " Loading Tutorial Tooltip Settings.")
 				end
 			
-				for k, v in pairs(AccWideUI_Table_TutorialVariables) do
-					SetCVar(v, AccWideUI_AccountData.Tutorials[v])
+				for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
+					SetCVar(v, AccWideUI_AccountData.TutorialTooltips[v])
 				end
 			end -- EO accountWideTutorialVariables
 			
@@ -2171,6 +2196,10 @@ end
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Saving Action Bar Settings.")
 				end
+				
+				for k, v in pairs(AccWideUI_Table_ActionBarVariables) do
+					AccWideUI_AccountData.ActionBars.ActionBarVariables[v] = GetCVar(v) or nil
+				end
 
 					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8 = GetActionBarToggles()
@@ -2349,14 +2378,14 @@ end
 			
 			
 			-- Save Tutorial Variables
-			if (AccWideUI_AccountData.accountWideTutorialVariablesExperimental == true) then
+			if (AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental == true) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Tutorial Settings.")
+					print(AccWideUI_TextName .. " Saving Tutorial Tooltip Settings.")
 				end
 			
-				for k, v in pairs(AccWideUI_Table_TutorialVariables) do
-					AccWideUI_AccountData.Tutorials[v] = GetCVar(v) or nil
+				for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
+					AccWideUI_AccountData.TutorialTooltips[v] = GetCVar(v) or nil
 				end
 			
 			end -- EO accountWideTutorialVariables
