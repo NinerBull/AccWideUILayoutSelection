@@ -6,7 +6,7 @@ https://github.com/NinerBull/AccWideUILayoutSelection
 ]]--
 
 
-local AccWideUI_SaveVersion = 1.2
+local AccWideUI_SaveVersion = 2
 
 local AccWideUI_Frame = CreateFrame("Frame")
 
@@ -408,7 +408,10 @@ end
 					
 				end		
 				
-
+				
+				if (type(AccWideUI_AccountData.SaveVersion) ~= "number") then
+					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
+				end
 
 
 				if (type(AccWideUI_AccountData) ~= "table") then
@@ -486,10 +489,14 @@ end
 					AccWideUI_AccountData.accountWideSoftTargetVariables = true
 				end
 				
-				--Experimental
-				if (type(AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental) ~= "boolean") then
-					AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental = false
+				if (type(AccWideUI_AccountData.accountWideTutorialTooltipVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideTutorialTooltipVariables = true
 				end
+				
+				
+				--[[if (type(AccWideUI_AccountData.accountWideBagSortingSettings) ~= "boolean") then
+					AccWideUI_AccountData.accountWideBagSortingSettings = true
+				end]]
 				
 				
 				
@@ -518,6 +525,17 @@ end
 				if (type(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites) ~= "boolean") then
 					AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
 				end
+				
+				
+				--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					if (type(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft) ~= "boolean") then
+						AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
+					end
+					
+					if (type(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight) ~= "boolean") then
+						AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
+					end
+				end]]
 				
 				
 				
@@ -959,19 +977,17 @@ end
 				end
 				
 				
-				
-				if (AccWideUI_AccountData.SaveVersion ~= AccWideUI_SaveVersion) then
-				
-					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
-					
-					AccWideUI_UpdateNotice = WHITE_FONT_COLOR:WrapTextInColorCode(AccWideUI_TextName .. " Updated! The addon can now synchronise many of your chat settings. Type " .. AccWideUI_TextSlash .. " to configure.")
-					
+				-- Update Notices
+				if (AccWideUI_AccountData.SaveVersion < 2) then
+					AccWideUI_UpdateNotice2 = WHITE_FONT_COLOR:WrapTextInColorCode(AccWideUI_TextName .. " Updated! The addon can now synchronise many of your chat settings and the Pop-Up Tutorial Tooltips you have viewed. Type " .. AccWideUI_TextSlash .. " to configure.")
 					C_Timer.After(10, function() 
-						--RaidNotice_AddMessage(RaidBossEmoteFrame, AccWideUI_UpdateNotice, ChatTypeInfo["RAID_WARNING"]) 
-						print(AccWideUI_UpdateNotice)
+						print(AccWideUI_UpdateNotice2)
 					end)
-				
 				end
+				
+						
+				AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
+				
 				
 				AccWideUI_Frame:InitializeOptionsFrame()
 				AccWideUI_Frame.InitializeOptionsSettings()
@@ -1171,9 +1187,19 @@ end
 			
 			
 			
+			thisPointY = thisPointY - 35
+			
+			local acBorder1 = AccWideUI_OptionsPanelFrame:CreateTexture(nil, "BACKGROUND")
+			acBorder1:SetHeight(8)
+			acBorder1:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			acBorder1:SetPoint("RIGHT", thisPointX, 0)
+			acBorder1:SetTexture(AccWideUI_DividerGraphic)
+			
+			
+			
 			
 			thisPointY = -130
-			
+	
 			
 			--Title for Which Save Options
 			local titleSA = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
@@ -1381,12 +1407,30 @@ end
 			-- Tutorial Variables
 			local chkSaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkSaveTutorials:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkSaveTutorials.Text:SetText("Viewed Tutorial Tooltips " .. ITEM_LEGENDARY_COLOR:WrapTextInColorCode("(Experimental)"))
+			chkSaveTutorials.Text:SetText("Viewed Tutorial Tooltips")
 			chkSaveTutorials:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental = chkSaveTutorials:GetChecked()
+					AccWideUI_AccountData.accountWideTutorialTooltipVariables = chkSaveTutorials:GetChecked()
 			end)
-			chkSaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental)
+			chkSaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariables)
 			
+			
+			
+			
+			
+			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+				thisPointY2 = thisPointY2 - 25 
+			
+				-- Save Bag Sorting Variables
+				local chkSaveBagSorting = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkSaveBagSorting:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkSaveBagSorting.Text:SetText("Bag/Bank Sorting Settings")
+				chkSaveBagSorting:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideBagSortingSettings = chkSaveBagSorting:GetChecked()
+				end)
+				chkSaveBagSorting:SetChecked(AccWideUI_AccountData.accountWideBagSortingSettings)
+			
+			end]]
 			
 			
 			
@@ -1397,12 +1441,20 @@ end
 				
 				thisPointX = 16
 				
-				thisPointY = -380
-				
+				thisPointY = -354
 				
 				thisPointYPlus = 128
 				
 			
+				local acBorder2 = AccWideUI_OptionsPanelFrame:CreateTexture(nil, "BACKGROUND")
+				acBorder2:SetHeight(8)
+				acBorder2:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				acBorder2:SetPoint("RIGHT", thisPointX, 0)
+				acBorder2:SetTexture(AccWideUI_DividerGraphic)
+				
+
+				
+				thisPointY = thisPointY - 18
 				
 				
 				
@@ -1530,10 +1582,20 @@ end
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
-					thisPointY = -500
+					thisPointY = -470
 				else
-					thisPointY = -380
+					thisPointY = -354
 				end
+				
+				
+				local acBorder3 = AccWideUI_OptionsPanelFrame:CreateTexture(nil, "BACKGROUND")
+				acBorder3:SetHeight(8)
+				acBorder3:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				acBorder3:SetPoint("RIGHT", thisPointX, 0)
+				acBorder3:SetTexture(AccWideUI_DividerGraphic)
+				
+				
+				thisPointY = thisPointY - 18
 		
 				
 				local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
@@ -1651,7 +1713,7 @@ end
 			titlePet:SetJustifyV('BOTTOM')
 			titlePet:SetJustifyH('RIGHT')
 			titlePet:SetPoint('BOTTOMRIGHT', -15, 15)
-			titlePet:SetText(VERY_DARK_GRAY_COLOR:WrapTextInColorCode("Dedicated to Petrel <3"))
+			titlePet:SetText(QUEST_INELIGIBLE_GRAY:WrapTextInColorCode("Dedicated to Petrel <3"))
 		
 		
 			
@@ -1927,7 +1989,6 @@ end
 				
 				end -- EO accountWideLossOfControlVariables
 			
-			
 			end
 			
 			
@@ -1947,7 +2008,7 @@ end
 			
 			
 			-- Tutorial Variables
-			if (AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental == true) then
+			if (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Loading Tutorial Tooltip Settings.")
@@ -1960,6 +2021,22 @@ end
 			
 			
 			
+			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
+				-- Bag Sorting Variables
+				if (AccWideUI_AccountData.accountWideBagSortingSettings == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Bag Sorting Settings.")
+					end
+				
+					C_Container.SetSortBagsRightToLeft(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft)
+					C_Container.SetInsertItemsLeftToRight(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight)
+				
+				end -- EO accountWideBagSortingSettings
+			
+			end]]
+		
 		
 			-- Chat Window Settings
 			
@@ -1972,7 +2049,7 @@ end
 				
 				if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
 				
-					C_Timer.After(5, function() 
+					C_Timer.After(10, function() 
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Joining Chat Channels.")
 						end
@@ -1984,7 +2061,7 @@ end
 					
 					
 					
-					C_Timer.After(10, function() 
+					C_Timer.After(14, function() 
 					
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Reordering Chat Channels.")
@@ -2004,7 +2081,7 @@ end
 					
 	
 					
-					C_Timer.After(13, function() 
+					C_Timer.After(16, function() 
 						if (AccWideUI_AccountData.enableDebug == true) then
 							print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
 						end
@@ -2102,7 +2179,7 @@ end
 					end
 					
 					--Visible Chat Channels
-					C_Timer.After((16 + (thisChatFrame * 2)), function() 
+					C_Timer.After((18 + (thisChatFrame * 2)), function() 
 					
 						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
 					
@@ -2312,8 +2389,6 @@ end
 					AccWideUI_AccountData.BlockSocial[v] = GetCVar(v) or nil
 				end
 				
-				-- Special
-				--AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
 			
 			end -- EO accountWideBlockSocialVariables
 			
@@ -2378,7 +2453,7 @@ end
 			
 			
 			-- Save Tutorial Variables
-			if (AccWideUI_AccountData.accountWideTutorialTooltipVariablesExperimental == true) then
+			if (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true) then
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
 					print(AccWideUI_TextName .. " Saving Tutorial Tooltip Settings.")
@@ -2391,6 +2466,22 @@ end
 			end -- EO accountWideTutorialVariables
 			
 			
+			
+			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
+				-- Save Bag Sorting Variables
+				if (AccWideUI_AccountData.accountWideBagSortingSettings == true) then
+					
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Bag Sorting Settings.")
+					end
+				
+					AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
+					AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
+				
+				end -- EO accountWideBagSortingSettings
+			
+			end]]
 			
 			
 			-- Save Chat Window Variables
