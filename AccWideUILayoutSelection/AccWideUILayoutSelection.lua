@@ -1708,12 +1708,12 @@ end
 			
 			end
 			
-			
+			local colorPet = CreateColor(0.3, 0.3, 0.3)
 			local titlePet = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlightSmall")
 			titlePet:SetJustifyV('BOTTOM')
 			titlePet:SetJustifyH('RIGHT')
 			titlePet:SetPoint('BOTTOMRIGHT', -15, 15)
-			titlePet:SetText(QUEST_INELIGIBLE_GRAY:WrapTextInColorCode("Dedicated to Petrel <3"))
+			titlePet:SetText(colorPet:WrapTextInColorCode("Dedicated to Petrel <3"))
 		
 		
 			
