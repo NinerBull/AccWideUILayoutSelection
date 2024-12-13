@@ -1103,7 +1103,7 @@ end
 	
 			AccWideUI_OptionsPanelFrame = CreateFrame("Frame");
 			
-			AccWideUI_Category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, "Account Wide Interface Option Setting")
+			AccWideUI_Category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, "Account Wide Interface Option Settings")
 			Settings.RegisterAddOnCategory(AccWideUI_Category)
 			
 			AccWideUI_OptionsPanelFrameCategoryID = AccWideUI_Category:GetID()
@@ -1145,13 +1145,13 @@ end
 				
 				
 				--Enable by Default
-				local chkEnableDefault = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkEnableDefault:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkEnableDefault.Text:SetText("Enable Chosen Edit Mode by default for all New Characters")
-				chkEnableDefault:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.enableAccountWide = chkEnableDefault:GetChecked()
+				local chkAWIEnableDefault = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWIEnableDefault:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWIEnableDefault.Text:SetText("Enable Chosen Edit Mode by default for all New Characters")
+				chkAWIEnableDefault:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.enableAccountWide = chkAWIEnableDefault:GetChecked()
 				end)
-				chkEnableDefault:SetChecked(AccWideUI_AccountData.enableAccountWide)
+				chkAWIEnableDefault:SetChecked(AccWideUI_AccountData.enableAccountWide)
 				
 				thisPointX = 360
 				
@@ -1177,28 +1177,27 @@ end
 			thisPointX = 16
 			
 			-- Show Text
-			local chkShowText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkShowText:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkShowText.Text:SetText("Output to chat when addon is loaded")
-			chkShowText:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.enableTextOutput = chkShowText:GetChecked()
+			local chkAWIShowText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWIShowText:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWIShowText.Text:SetText("Output to chat when addon is loaded")
+			chkAWIShowText:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.enableTextOutput = chkAWIShowText:GetChecked()
 			end)
-			chkShowText:SetChecked(AccWideUI_AccountData.enableTextOutput)
+			chkAWIShowText:SetChecked(AccWideUI_AccountData.enableTextOutput)
 			
 			
 			
-			thisPointY = thisPointY - 35
+			thisPointY = thisPointY - 30
 			
 			local acBorder1 = AccWideUI_OptionsPanelFrame:CreateTexture(nil, "BACKGROUND")
 			acBorder1:SetHeight(8)
 			acBorder1:SetPoint("TOPLEFT", thisPointX, thisPointY)
 			acBorder1:SetPoint("RIGHT", thisPointX, 0)
 			acBorder1:SetTexture(AccWideUI_DividerGraphic)
+
 			
+			thisPointY = thisPointY - 20
 			
-			
-			
-			thisPointY = -130
 	
 			
 			--Title for Which Save Options
@@ -1231,13 +1230,13 @@ end
 				thisPointY = thisPointY - 25 
 			
 				-- Save Edit Mode Layout
-				local chkSaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkSaveEditModeLayout.Text:SetText("Chosen Edit Mode Layout")
-				chkSaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideLayout = chkSaveEditModeLayout:GetChecked()
+				local chkAWISaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWISaveEditModeLayout.Text:SetText("Chosen Edit Mode Layout")
+				chkAWISaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideLayout = chkAWISaveEditModeLayout:GetChecked()
 				end)
-				chkSaveEditModeLayout:SetChecked(AccWideUI_AccountData.accountWideLayout)
+				chkAWISaveEditModeLayout:SetChecked(AccWideUI_AccountData.accountWideLayout)
 			
 			end
 
@@ -1246,37 +1245,37 @@ end
 			
 			
 			-- Save Action Bars
-			local chkSaveActionBar = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveActionBar:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkSaveActionBar.Text:SetText("Visible Action Bars")
-			chkSaveActionBar:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideActionBars = chkSaveActionBar:GetChecked()
+			local chkAWISaveActionBar = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveActionBar:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveActionBar.Text:SetText("Visible Action Bars")
+			chkAWISaveActionBar:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideActionBars = chkAWISaveActionBar:GetChecked()
 			end)
-			chkSaveActionBar:SetChecked(AccWideUI_AccountData.accountWideActionBars)
+			chkAWISaveActionBar:SetChecked(AccWideUI_AccountData.accountWideActionBars)
 			
 			thisPointY = thisPointY - 25 
 			
 			
 			-- Save Nameplates
-			local chkSaveNameplates = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveNameplates:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkSaveNameplates.Text:SetText("Nameplate Settings")
-			chkSaveNameplates:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideNameplates = chkSaveNameplates:GetChecked()
+			local chkAWISaveNameplates = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveNameplates:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveNameplates.Text:SetText("Nameplate Settings")
+			chkAWISaveNameplates:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideNameplates = chkAWISaveNameplates:GetChecked()
 			end)
-			chkSaveNameplates:SetChecked(AccWideUI_AccountData.accountWideNameplates)
+			chkAWISaveNameplates:SetChecked(AccWideUI_AccountData.accountWideNameplates)
 			
 			thisPointY = thisPointY - 25 
 			
 			
 			-- Save Raid Frames
-			local chkSaveRaidFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveRaidFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkSaveRaidFrames.Text:SetText("Party/Raid Frame Settings")
-			chkSaveRaidFrames:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideRaidFrames = chkSaveRaidFrames:GetChecked()
+			local chkAWISaveRaidFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveRaidFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveRaidFrames.Text:SetText("Party/Raid Frame Settings")
+			chkAWISaveRaidFrames:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideRaidFrames = chkAWISaveRaidFrames:GetChecked()
 			end)
-			chkSaveRaidFrames:SetChecked(AccWideUI_AccountData.accountWideRaidFrames)
+			chkAWISaveRaidFrames:SetChecked(AccWideUI_AccountData.accountWideRaidFrames)
 			
 			
 			
@@ -1285,13 +1284,13 @@ end
 				
 				
 				-- Save Arena Frames
-				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkSaveArenaFrames.Text:SetText("Arena Frame Settings")
-				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideArenaFrames = chkSaveArenaFrames:GetChecked()
+				local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWISaveArenaFrames.Text:SetText("Arena Frame Settings")
+				chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideArenaFrames = chkAWISaveArenaFrames:GetChecked()
 				end)
-				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideArenaFrames)
+				chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideArenaFrames)
 			end
 			
 			
@@ -1299,27 +1298,37 @@ end
 			
 			
 			-- Save Chat Window
-			local chkSaveChatWindow = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveChatWindow:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkSaveChatWindow.Text:SetText("Chat Window Settings")
-			chkSaveChatWindow:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideChatWindowVariables = chkSaveChatWindow:GetChecked()
+			local chkAWISaveChatWindow = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveChatWindow:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveChatWindow.Text:SetText("Chat Window Settings")
+			chkAWISaveChatWindow:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideChatWindowVariables = chkAWISaveChatWindow:GetChecked()
+					
+					if (chkAWISaveChatWindow:GetChecked() == true) then
+						chkAWISaveChatChannels:Enable()
+					else
+						chkAWISaveChatChannels:Disable()
+					end
 			end)
-			chkSaveChatWindow:SetChecked(AccWideUI_AccountData.accountWideChatWindowVariables)
+			chkAWISaveChatWindow:SetChecked(AccWideUI_AccountData.accountWideChatWindowVariables)
 			
 			thisPointY = thisPointY - 25 
 			
 			
 			-- Save Chat Channels
-			local chkSaveChatChannels = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveChatChannels:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkSaveChatChannels.Text:SetText("+ Custom Chat Channels")
-			chkSaveChatChannels:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideChatChannelVariables = chkSaveChatChannels:GetChecked()
+			chkAWISaveChatChannels = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveChatChannels:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveChatChannels.Text:SetText("+ Custom Chat Channels")
+			chkAWISaveChatChannels:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideChatChannelVariables = chkAWISaveChatChannels:GetChecked()
 			end)
-			chkSaveChatChannels:SetChecked(AccWideUI_AccountData.accountWideChatChannelVariables)
+			chkAWISaveChatChannels:SetChecked(AccWideUI_AccountData.accountWideChatChannelVariables)
 			
-			
+			if (AccWideUI_AccountData.accountWideChatWindowVariables == true) then
+				chkAWISaveChatChannels:Enable()
+			else
+				chkAWISaveChatChannels:Disable()
+			end
 			
 			
 			
@@ -1332,13 +1341,13 @@ end
 							
 			
 			-- Block Social Variables
-			local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkSaveArenaFrames.Text:SetText("Block Guild/Trade/Channel Invite Settings")
-			chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideBlockSocialVariables = chkSaveArenaFrames:GetChecked()
+			local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveArenaFrames.Text:SetText("Block Guild/Trade/Channel Invite Settings")
+			chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideBlockSocialVariables = chkAWISaveArenaFrames:GetChecked()
 			end)
-			chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideBlockSocialVariables)
+			chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideBlockSocialVariables)
 			
 			
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
@@ -1346,13 +1355,13 @@ end
 				
 				
 				-- Spell Overlay Variables
-				local chkSaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkSaveArenaFrames.Text:SetText("Spell Overlay Settings")
-				chkSaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideSpellOverlayVariables = chkSaveArenaFrames:GetChecked()
+				local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkAWISaveArenaFrames.Text:SetText("Spell Overlay Settings")
+				chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideSpellOverlayVariables = chkAWISaveArenaFrames:GetChecked()
 				end)
-				chkSaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideSpellOverlayVariables)
+				chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideSpellOverlayVariables)
 			end
 			
 			
@@ -1361,13 +1370,13 @@ end
 			
 			
 			-- Auto Loot Variables
-			local chkSaveAutoLoot = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveAutoLoot:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkSaveAutoLoot.Text:SetText("Auto Loot Settings")
-			chkSaveAutoLoot:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideAutoLootVariables = chkSaveAutoLoot:GetChecked()
+			local chkAWISaveAutoLoot = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveAutoLoot:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveAutoLoot.Text:SetText("Auto Loot Settings")
+			chkAWISaveAutoLoot:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideAutoLootVariables = chkAWISaveAutoLoot:GetChecked()
 			end)
-			chkSaveAutoLoot:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
+			chkAWISaveAutoLoot:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
 			
 			
 			
@@ -1376,13 +1385,13 @@ end
 				thisPointY2 = thisPointY2 - 25 
 			
 				-- Save Loss of Control Variables
-				local chkSaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveLossOfControl:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkSaveLossOfControl.Text:SetText("Loss of Control Settings")
-				chkSaveLossOfControl:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideLossOfControlVariables = chkSaveLossOfControl:GetChecked()
+				local chkAWISaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveLossOfControl:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkAWISaveLossOfControl.Text:SetText("Loss of Control Settings")
+				chkAWISaveLossOfControl:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideLossOfControlVariables = chkAWISaveLossOfControl:GetChecked()
 				end)
-				chkSaveLossOfControl:SetChecked(AccWideUI_AccountData.accountWideLossOfControlVariables)
+				chkAWISaveLossOfControl:SetChecked(AccWideUI_AccountData.accountWideLossOfControlVariables)
 			
 			end
 			
@@ -1392,26 +1401,26 @@ end
 			
 			
 			-- Soft Target Variables
-			local chkSaveSoftTarget = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveSoftTarget:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkSaveSoftTarget.Text:SetText("Action Targeting Settings")
-			chkSaveSoftTarget:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideSoftTargetVariables = chkSaveSoftTarget:GetChecked()
+			local chkAWISaveSoftTarget = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveSoftTarget:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveSoftTarget.Text:SetText("Action Targeting Settings")
+			chkAWISaveSoftTarget:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideSoftTargetVariables = chkAWISaveSoftTarget:GetChecked()
 			end)
-			chkSaveSoftTarget:SetChecked(AccWideUI_AccountData.accountWideSoftTargetVariables)
+			chkAWISaveSoftTarget:SetChecked(AccWideUI_AccountData.accountWideSoftTargetVariables)
 			
 			
 			
 			thisPointY2 = thisPointY2 - 25 
 			
 			-- Tutorial Variables
-			local chkSaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkSaveTutorials:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkSaveTutorials.Text:SetText("Viewed Tutorial Tooltips")
-			chkSaveTutorials:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideTutorialTooltipVariables = chkSaveTutorials:GetChecked()
+			local chkAWISaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveTutorials:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveTutorials.Text:SetText("Viewed Tutorial Tooltips")
+			chkAWISaveTutorials:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideTutorialTooltipVariables = chkAWISaveTutorials:GetChecked()
 			end)
-			chkSaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariables)
+			chkAWISaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariables)
 			
 			
 			
@@ -1422,18 +1431,20 @@ end
 				thisPointY2 = thisPointY2 - 25 
 			
 				-- Save Bag Sorting Variables
-				local chkSaveBagSorting = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkSaveBagSorting:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkSaveBagSorting.Text:SetText("Bag/Bank Sorting Settings")
-				chkSaveBagSorting:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideBagSortingSettings = chkSaveBagSorting:GetChecked()
+				local chkAWISaveBagSorting = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveBagSorting:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+				chkAWISaveBagSorting.Text:SetText("Bag/Bank Sorting Settings")
+				chkAWISaveBagSorting:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideBagSortingSettings = chkAWISaveBagSorting:GetChecked()
 				end)
-				chkSaveBagSorting:SetChecked(AccWideUI_AccountData.accountWideBagSortingSettings)
+				chkAWISaveBagSorting:SetChecked(AccWideUI_AccountData.accountWideBagSortingSettings)
 			
 			end]]
 			
 			
-			
+			if (thisPointY2 < thisPointY) then
+				thisPointY = thisPointY2
+			end
 			
 			--Chat Channels
 			
@@ -1441,7 +1452,7 @@ end
 				
 				thisPointX = 16
 				
-				thisPointY = -354
+				thisPointY = thisPointY - 30
 				
 				thisPointYPlus = 128
 				
@@ -1454,7 +1465,7 @@ end
 				
 
 				
-				thisPointY = thisPointY - 18
+				thisPointY = thisPointY - 20
 				
 				
 				
@@ -1481,47 +1492,47 @@ end
 				
 				
 				-- General Chat
-				local chkBlockGeneralChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockGeneralChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockGeneralChat.Text:SetText(AccWideUI_ChatName_General)
-				chkBlockGeneralChat:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockGeneral = chkBlockGeneralChat:GetChecked()
+				local chkAWIBlockGeneralChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWIBlockGeneralChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWIBlockGeneralChat.Text:SetText(AccWideUI_ChatName_General)
+				chkAWIBlockGeneralChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockGeneral = chkAWIBlockGeneralChat:GetChecked()
 				end)
-				chkBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
+				chkAWIBlockGeneralChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGeneral)
 				
 				thisPointX = thisPointX + thisPointYPlus
 				
 				-- Trade Chat
-				local chkBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockTradeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockTradeChat.Text:SetText(AccWideUI_ChatName_Trade)
-				chkBlockTradeChat:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockTrade = chkBlockTradeChat:GetChecked()
+				local chkAWIBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWIBlockTradeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWIBlockTradeChat.Text:SetText(AccWideUI_ChatName_Trade)
+				chkAWIBlockTradeChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockTrade = chkAWIBlockTradeChat:GetChecked()
 				end)
-				chkBlockTradeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockTrade)
+				chkAWIBlockTradeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockTrade)
 				
 				thisPointX = thisPointX + thisPointYPlus
 				
 			
 				-- LocalDefense Chat
-				local chkBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockLocalDefenseChat.Text:SetText(AccWideUI_ChatName_LocalDefense)
-				chkBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkBlockLocalDefenseChat:GetChecked()
+				local chkAWIBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWIBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWIBlockLocalDefenseChat.Text:SetText(AccWideUI_ChatName_LocalDefense)
+				chkAWIBlockLocalDefenseChat:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockLocalDefense = chkAWIBlockLocalDefenseChat:GetChecked()
 				end)
-				chkBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
+				chkAWIBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
 				
 				thisPointX = thisPointX + thisPointYPlus
 				
 				-- LookingForGroup Chat
-				local chkBlockLookingForGroup = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkBlockLookingForGroup:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkBlockLookingForGroup.Text:SetText(AccWideUI_ChatName_LookingForGroup)
-				chkBlockLookingForGroup:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = chkBlockLookingForGroup:GetChecked()
+				local chkAWIBlockLookingForGroup = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWIBlockLookingForGroup:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWIBlockLookingForGroup.Text:SetText(AccWideUI_ChatName_LookingForGroup)
+				chkAWIBlockLookingForGroup:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.ChatChannels.BlockLookingForGroup = chkAWIBlockLookingForGroup:GetChecked()
 				end)
-				chkBlockLookingForGroup:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup)
+				chkAWIBlockLookingForGroup:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLookingForGroup)
 				
 				
 				
@@ -1533,13 +1544,13 @@ end
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 					-- Services Chat
-					local chkBlockServicesChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkBlockServicesChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkBlockServicesChat.Text:SetText(AccWideUI_ChatName_Services)
-					chkBlockServicesChat:HookScript("OnClick", function(_, btn, down)
-							AccWideUI_AccountData.ChatChannels.BlockServices = chkBlockServicesChat:GetChecked()
+					local chkAWIBlockServicesChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIBlockServicesChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIBlockServicesChat.Text:SetText(AccWideUI_ChatName_Services)
+					chkAWIBlockServicesChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockServices = chkAWIBlockServicesChat:GetChecked()
 					end)
-					chkBlockServicesChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockServices)
+					chkAWIBlockServicesChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockServices)
 					
 					thisPointX = thisPointX + thisPointYPlus
 				end
@@ -1547,13 +1558,13 @@ end
 				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 					-- WorldDefense Chat
-					local chkBlockWorldDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkBlockWorldDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkBlockWorldDefenseChat.Text:SetText(AccWideUI_ChatName_WorldDefense)
-					chkBlockWorldDefenseChat:HookScript("OnClick", function(_, btn, down)
-							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = chkBlockWorldDefenseChat:GetChecked()
+					local chkAWIBlockWorldDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIBlockWorldDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIBlockWorldDefenseChat.Text:SetText(AccWideUI_ChatName_WorldDefense)
+					chkAWIBlockWorldDefenseChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = chkAWIBlockWorldDefenseChat:GetChecked()
 					end)
-					chkBlockWorldDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockWorldDefense)
+					chkAWIBlockWorldDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockWorldDefense)
 					
 					thisPointX = thisPointX + thisPointYPlus
 				end
@@ -1581,11 +1592,13 @@ end
 
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
-				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+				--[[if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 					thisPointY = -470
 				else
 					thisPointY = -354
-				end
+				end]]
+				
+				thisPointY = thisPointY - 30
 				
 				
 				local acBorder3 = AccWideUI_OptionsPanelFrame:CreateTexture(nil, "BACKGROUND")
@@ -1595,7 +1608,7 @@ end
 				acBorder3:SetTexture(AccWideUI_DividerGraphic)
 				
 				
-				thisPointY = thisPointY - 18
+				thisPointY = thisPointY - 20
 		
 				
 				local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
@@ -1639,13 +1652,13 @@ end
 				
 					
 				
-					local chkEnableSpec1 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec1:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec1.Text:SetText(AccWideUI_SpecName[1])
-					chkEnableSpec1:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 1] = chkEnableSpec1:GetChecked()
+					local chkAWIEnableSpec1 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIEnableSpec1:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIEnableSpec1.Text:SetText(AccWideUI_SpecName[1])
+					chkAWIEnableSpec1:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_CharData["accWideSpec" .. 1] = chkAWIEnableSpec1:GetChecked()
 					end)
-					chkEnableSpec1:SetChecked(AccWideUI_CharData["accWideSpec" .. 1])
+					chkAWIEnableSpec1:SetChecked(AccWideUI_CharData["accWideSpec" .. 1])
 
 				end
 				
@@ -1653,13 +1666,13 @@ end
 				
 					thisPointX = thisPointX + 128
 				
-					local chkEnableSpec2 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec2:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec2.Text:SetText(AccWideUI_SpecName[2])
-					chkEnableSpec2:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 2] = chkEnableSpec2:GetChecked()
+					local chkAWIEnableSpec2 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIEnableSpec2:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIEnableSpec2.Text:SetText(AccWideUI_SpecName[2])
+					chkAWIEnableSpec2:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_CharData["accWideSpec" .. 2] = chkAWIEnableSpec2:GetChecked()
 					end)
-					chkEnableSpec2:SetChecked(AccWideUI_CharData["accWideSpec" .. 2])
+					chkAWIEnableSpec2:SetChecked(AccWideUI_CharData["accWideSpec" .. 2])
 
 				end
 				
@@ -1667,13 +1680,13 @@ end
 				
 					thisPointX = thisPointX + 128
 				
-					local chkEnableSpec3 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec3:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec3.Text:SetText(AccWideUI_SpecName[3])
-					chkEnableSpec3:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 3] = chkEnableSpec3:GetChecked()
+					local chkAWIEnableSpec3 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIEnableSpec3:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIEnableSpec3.Text:SetText(AccWideUI_SpecName[3])
+					chkAWIEnableSpec3:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_CharData["accWideSpec" .. 3] = chkAWIEnableSpec3:GetChecked()
 					end)
-					chkEnableSpec3:SetChecked(AccWideUI_CharData["accWideSpec" .. 3])
+					chkAWIEnableSpec3:SetChecked(AccWideUI_CharData["accWideSpec" .. 3])
 
 				end
 				
@@ -1681,13 +1694,13 @@ end
 				
 					thisPointX = thisPointX + 128
 				
-					local chkEnableSpec4 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec4:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec4.Text:SetText(AccWideUI_SpecName[4])
-					chkEnableSpec4:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 4] = chkEnableSpec4:GetChecked()
+					local chkAWIEnableSpec4 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIEnableSpec4:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIEnableSpec4.Text:SetText(AccWideUI_SpecName[4])
+					chkAWIEnableSpec4:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_CharData["accWideSpec" .. 4] = chkAWIEnableSpec4:GetChecked()
 					end)
-					chkEnableSpec4:SetChecked(AccWideUI_CharData["accWideSpec" .. 4])
+					chkAWIEnableSpec4:SetChecked(AccWideUI_CharData["accWideSpec" .. 4])
 
 				end
 				
@@ -1695,18 +1708,21 @@ end
 				
 					thisPointX = thisPointX + 128
 				
-					local chkEnableSpec5 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-					chkEnableSpec5:SetPoint("TOPLEFT", thisPointX, thisPointY)
-					chkEnableSpec5.Text:SetText(AccWideUI_SpecName[5])
-					chkEnableSpec5:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_CharData["accWideSpec" .. 5] = chkEnableSpec5:GetChecked()
+					local chkAWIEnableSpec5 = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIEnableSpec5:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIEnableSpec5.Text:SetText(AccWideUI_SpecName[5])
+					chkAWIEnableSpec5:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_CharData["accWideSpec" .. 5] = chkAWIEnableSpec5:GetChecked()
 					end)
-					chkEnableSpec5:SetChecked(AccWideUI_CharData["accWideSpec" .. 5])
+					chkAWIEnableSpec5:SetChecked(AccWideUI_CharData["accWideSpec" .. 5])
 
 				end
 				
 			
 			end
+			
+			
+			
 			
 			local colorPet = CreateColor(0.3, 0.3, 0.3)
 			local titlePet = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlightSmall")
