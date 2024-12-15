@@ -1,4 +1,4 @@
-## Interface: 110005, 110007, 40401, 11505
+## Interface: 110007, 40401, 11505
 ## Title: Account Wide Interface Option Settings
 ## Version: 1.2.0
 ## Notes: Makes various Character-Specific Interface Settings work Account Wide. /awi
@@ -19,4 +19,17 @@
 ## AddonCompartmentFuncOnEnter: AccWideUI_CompartmentHover
 ## AddonCompartmentFuncOnLeave: AccWideUI_CompartmentLeave
 
+locale/locale.core.lua
+locale/locale.enUS.lua
+# locale/locale.koKR.lua
+# locale/locale.frFR.lua
+# locale/locale.deDE.lua
+# locale/locale.zhCN.lua
+# locale/locale.esES.lua
+# locale/locale.zhTW.lua
+# locale/locale.esMX.lua
+# locale/locale.ruRU.lua
+# locale/locale.ptBR.lua
+# locale/locale.ptPT.lua
+# locale/locale.itIT.lua
 AccWideUILayoutSelection.lua

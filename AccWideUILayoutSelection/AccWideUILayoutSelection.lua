@@ -5,6 +5,7 @@ https://github.com/NinerBull/AccWideUILayoutSelection
 =====================================================
 ]]--
 
+local _, L = ...;
 
 local AccWideUI_SaveVersion = 2
 
@@ -42,7 +43,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
 end
 
-local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<Account Wide Interface>")
+local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<" .. L.ACCWUI_ADDONNAME_SHORT .. ">")
 local AccWideUI_TextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/awi")
 local AccWideUI_ThisCategory = nil
 local AccWideUI_DividerGraphic = "interface\\friendsframe\\ui-friendsframe-onlinedivider"
@@ -950,7 +951,7 @@ end
 					
 						if (AccWideUI_AccountData.enableTextOutput == true) then
 						
-							print(AccWideUI_TextName .. " This is the first time you have logged in to this character with the Account Wide Interface Option Settings addon installed.")
+							print(AccWideUI_TextName .. " " .. L.ACCWUI_LOAD_FIRST_TIME_CHAR)
 						
 						end
 					
@@ -959,7 +960,8 @@ end
 					
 						if (AccWideUI_AccountData.enableTextOutput == true) then
 					
-							print(AccWideUI_TextName .. " Account Wide Interface Option Settings Addon Loaded! Type " .. AccWideUI_TextSlash .. " to configure.")
+							print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))
+							
 						
 						end
 					
@@ -970,7 +972,7 @@ end
 				
 					if (AccWideUI_AccountData.enableTextOutput == true) then
 					
-							print(AccWideUI_TextName .. " Account Wide Interface Option Settings Addon Loaded! Type " .. AccWideUI_TextSlash .. " to configure.")
+							print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))
 						
 					end
 						
@@ -979,7 +981,7 @@ end
 				
 				-- Update Notices
 				if (AccWideUI_AccountData.SaveVersion < 2) then
-					AccWideUI_UpdateNotice2 = WHITE_FONT_COLOR:WrapTextInColorCode(AccWideUI_TextName .. " Updated! The addon can now synchronise many of your chat settings and the Pop-Up Tutorial Tooltips you have viewed. Type " .. AccWideUI_TextSlash .. " to configure.")
+					AccWideUI_UpdateNotice2 = WHITE_FONT_COLOR:WrapTextInColorCode(AccWideUI_TextName .. " " ..  string.format(L.ACCWUI_LOAD_SAVEUPDATE_1, AccWideUI_TextSlash))
 					C_Timer.After(10, function() 
 						print(AccWideUI_UpdateNotice2)
 					end)
@@ -1103,7 +1105,7 @@ end
 	
 			AccWideUI_OptionsPanelFrame = CreateFrame("Frame");
 			
-			AccWideUI_Category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, "Account Wide Interface Option Settings")
+			AccWideUI_Category = Settings.RegisterCanvasLayoutCategory(AccWideUI_OptionsPanelFrame, L.ACCWUI_ADDONNAME)
 			Settings.RegisterAddOnCategory(AccWideUI_Category)
 			
 			AccWideUI_OptionsPanelFrameCategoryID = AccWideUI_Category:GetID()
@@ -1127,7 +1129,7 @@ end
 			title:SetJustifyV('TOP')
 			title:SetJustifyH('LEFT')
 			title:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			title:SetText("Account Wide Interface Option Settings")
+			title:SetText(L.ACCWUI_ADDONNAME)
 			
 			thisPointY = thisPointY - 20
 			
@@ -1136,7 +1138,7 @@ end
 			title2:SetJustifyV('TOP')
 			title2:SetJustifyH('LEFT')
 			title2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			title2:SetText("Makes various Interface Options synchronise across all of your characters and specs.")
+			title2:SetText(L.ACCWUI_OPT_TITLE_DESC)
 			
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -1147,7 +1149,7 @@ end
 				--Enable by Default
 				local chkAWIEnableDefault = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWIEnableDefault:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkAWIEnableDefault.Text:SetText("Enable Chosen Edit Mode by default for all New Characters")
+				chkAWIEnableDefault.Text:SetText(L.ACCWUI_OPT_CHK_EDITMODE)
 				chkAWIEnableDefault:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.enableAccountWide = chkAWIEnableDefault:GetChecked()
 				end)
@@ -1160,7 +1162,7 @@ end
 				-- Add shortcut to Edit Mode
 				local b1 = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
 				b1:SetSize(140 ,20)
-				b1:SetText("Open Edit Mode")
+				b1:SetText(L.ACCWUI_OPT_BTN_EDITMODE)
 				b1:SetPoint("TOPLEFT",thisPointX, thisPointY)
 				b1:SetScript("OnClick", function()
 					if SettingsPanel:IsShown() then
@@ -1179,7 +1181,7 @@ end
 			-- Show Text
 			local chkAWIShowText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWIShowText:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWIShowText.Text:SetText("Output to chat when addon is loaded")
+			chkAWIShowText.Text:SetText(L.ACCWUI_OPT_CHK_TOCHAT)
 			chkAWIShowText:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.enableTextOutput = chkAWIShowText:GetChecked()
 			end)
@@ -1205,7 +1207,7 @@ end
 			titleSA:SetJustifyV('TOP')
 			titleSA:SetJustifyH('LEFT')
 			titleSA:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleSA:SetText("Enable Account Wide Modules")
+			titleSA:SetText(L.ACCWUI_OPT_MODULES_TITLE)
 			
 			
 			thisPointY = thisPointY - 20
@@ -1219,7 +1221,7 @@ end
 			titleSA2:SetJustifyV('TOP')
 			titleSA2:SetJustifyH('LEFT')
 			titleSA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-			titleSA2:SetText("Which UI settings would you like to synchronise Account Wide?")
+			titleSA2:SetText(L.ACCWUI_OPT_MODULES_DESC)
 			
 			local thisPointY2 = thisPointY
 			
@@ -1232,7 +1234,7 @@ end
 				-- Save Edit Mode Layout
 				local chkAWISaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWISaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkAWISaveEditModeLayout.Text:SetText("Chosen Edit Mode Layout")
+				chkAWISaveEditModeLayout.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_EDITMODE)
 				chkAWISaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.accountWideLayout = chkAWISaveEditModeLayout:GetChecked()
 				end)
@@ -1247,7 +1249,7 @@ end
 			-- Save Action Bars
 			local chkAWISaveActionBar = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveActionBar:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWISaveActionBar.Text:SetText("Visible Action Bars")
+			chkAWISaveActionBar.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_ACTIONBARS)
 			chkAWISaveActionBar:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideActionBars = chkAWISaveActionBar:GetChecked()
 			end)
@@ -1259,7 +1261,7 @@ end
 			-- Save Nameplates
 			local chkAWISaveNameplates = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveNameplates:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWISaveNameplates.Text:SetText("Nameplate Settings")
+			chkAWISaveNameplates.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_NAMEPLATES)
 			chkAWISaveNameplates:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideNameplates = chkAWISaveNameplates:GetChecked()
 			end)
@@ -1271,7 +1273,7 @@ end
 			-- Save Raid Frames
 			local chkAWISaveRaidFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveRaidFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWISaveRaidFrames.Text:SetText("Party/Raid Frame Settings")
+			chkAWISaveRaidFrames.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_PARTYRAID)
 			chkAWISaveRaidFrames:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideRaidFrames = chkAWISaveRaidFrames:GetChecked()
 			end)
@@ -1286,7 +1288,7 @@ end
 				-- Save Arena Frames
 				local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkAWISaveArenaFrames.Text:SetText("Arena Frame Settings")
+				chkAWISaveArenaFrames.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_ARENA)
 				chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.accountWideArenaFrames = chkAWISaveArenaFrames:GetChecked()
 				end)
@@ -1300,7 +1302,7 @@ end
 			-- Save Chat Window
 			local chkAWISaveChatWindow = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveChatWindow:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWISaveChatWindow.Text:SetText("Chat Window Settings")
+			chkAWISaveChatWindow.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_CHATWINDOW)
 			chkAWISaveChatWindow:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideChatWindowVariables = chkAWISaveChatWindow:GetChecked()
 					
@@ -1318,7 +1320,7 @@ end
 			-- Save Chat Channels
 			chkAWISaveChatChannels = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveChatChannels:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWISaveChatChannels.Text:SetText("+ Custom Chat Channels")
+			chkAWISaveChatChannels.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_CHATCHANNELS)
 			chkAWISaveChatChannels:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideChatChannelVariables = chkAWISaveChatChannels:GetChecked()
 			end)
@@ -1343,7 +1345,7 @@ end
 			-- Block Social Variables
 			local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkAWISaveArenaFrames.Text:SetText("Block Guild/Trade/Channel Invite Settings")
+			chkAWISaveArenaFrames.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_TRADEGUILD)
 			chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideBlockSocialVariables = chkAWISaveArenaFrames:GetChecked()
 			end)
@@ -1357,7 +1359,7 @@ end
 				-- Spell Overlay Variables
 				local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkAWISaveArenaFrames.Text:SetText("Spell Overlay Settings")
+				chkAWISaveArenaFrames.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY)
 				chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.accountWideSpellOverlayVariables = chkAWISaveArenaFrames:GetChecked()
 				end)
@@ -1372,7 +1374,7 @@ end
 			-- Auto Loot Variables
 			local chkAWISaveAutoLoot = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveAutoLoot:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkAWISaveAutoLoot.Text:SetText("Auto Loot Settings")
+			chkAWISaveAutoLoot.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_AUTOLOOT)
 			chkAWISaveAutoLoot:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideAutoLootVariables = chkAWISaveAutoLoot:GetChecked()
 			end)
@@ -1387,7 +1389,7 @@ end
 				-- Save Loss of Control Variables
 				local chkAWISaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWISaveLossOfControl:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkAWISaveLossOfControl.Text:SetText("Loss of Control Settings")
+				chkAWISaveLossOfControl.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_LOC)
 				chkAWISaveLossOfControl:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.accountWideLossOfControlVariables = chkAWISaveLossOfControl:GetChecked()
 				end)
@@ -1403,7 +1405,7 @@ end
 			-- Soft Target Variables
 			local chkAWISaveSoftTarget = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveSoftTarget:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkAWISaveSoftTarget.Text:SetText("Action Targeting Settings")
+			chkAWISaveSoftTarget.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_TARGETING)
 			chkAWISaveSoftTarget:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideSoftTargetVariables = chkAWISaveSoftTarget:GetChecked()
 			end)
@@ -1416,7 +1418,7 @@ end
 			-- Tutorial Variables
 			local chkAWISaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveTutorials:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkAWISaveTutorials.Text:SetText("Viewed Tutorial Tooltips")
+			chkAWISaveTutorials.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP)
 			chkAWISaveTutorials:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.accountWideTutorialTooltipVariables = chkAWISaveTutorials:GetChecked()
 			end)
@@ -1474,7 +1476,7 @@ end
 				titleCAA:SetJustifyV('TOP')
 				titleCAA:SetJustifyH('LEFT')
 				titleCAA:SetPoint('TOPLEFT', thisPointX, thisPointY)
-				titleCAA:SetText("Block Blizzard Chat Channels Account Wide")
+				titleCAA:SetText(L.ACCWUI_BLOCKBLIZZ_TITLE)
 				
 				
 				thisPointY = thisPointY - 25
@@ -1485,7 +1487,7 @@ end
 				titleCAA2:SetJustifyV('TOP')
 				titleCAA2:SetJustifyH('LEFT')
 				titleCAA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-				titleCAA2:SetText("Check the channels below that you do not want any of your characters on this account to join.")
+				titleCAA2:SetText(L.ACCWUI_BLOCKBLIZZ_DESC)
 				
 				thisPointY = thisPointY - 20
 				
@@ -1622,7 +1624,7 @@ end
 				titleCS:SetJustifyV('TOP')
 				titleCS:SetJustifyH('LEFT')
 				titleCS:SetPoint('TOPLEFT', thisPointX, thisPointY)
-				titleCS:SetText(classColorString:WrapTextInColorCode(UnitName("player")) .. " Specific Options")
+				titleCS:SetText(string.format(L.ACCWUI_CHARSPECIFIC_TITLE, classColorString:WrapTextInColorCode(UnitName("player"))))
 				
 				thisPointY = thisPointY - 25
 				
@@ -1631,7 +1633,7 @@ end
 				titleCS2:SetJustifyV('TOP')
 				titleCS2:SetJustifyH('LEFT')
 				titleCS2:SetPoint('TOPLEFT', thisPointX, thisPointY)
-				titleCS2:SetText("Select whether to use the chosen Edit Mode layout for this character's Specializations.")
+				titleCS2:SetText(L.ACCWUI_CHARSPECIFIC_DESC)
 			
 
 			
@@ -2656,12 +2658,12 @@ end
 			local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
 			
 			AccWideUI_Tooltip:SetOwner(buttonName, "ANCHOR_LEFT");
-			AccWideUI_Tooltip:SetText("Account Wide Interface Option Settings")
+			AccWideUI_Tooltip:SetText(L.ACCWUI_ADDONNAME)
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 				AccWideUI_Tooltip:AddLine(" ")
-				AccWideUI_Tooltip:AddLine("Current Settings for " .. classColorString:WrapTextInColorCode(UnitName("player")) .. ":",  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b)
+				AccWideUI_Tooltip:AddLine(string.format(L.ACCWUI_ADCOM_CURRENT,classColorString:WrapTextInColorCode(UnitName("player"))),  WHITE_FONT_COLOR.r, WHITE_FONT_COLOR.g, WHITE_FONT_COLOR.b) 
 				AccWideUI_Tooltip:AddLine(" ")
 				
 				--Specialisations
@@ -2695,7 +2697,7 @@ end
 			end
 			
 			AccWideUI_Tooltip:AddLine(" ")
-			AccWideUI_Tooltip:AddLine("Click to change settings.",  GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b)
+			AccWideUI_Tooltip:AddLine(L.ACCWUI_ADCOM_CHANGE,  GREEN_FONT_COLOR.r, GREEN_FONT_COLOR.g, GREEN_FONT_COLOR.b)
 			
 			AccWideUI_Tooltip:Show()
 		
