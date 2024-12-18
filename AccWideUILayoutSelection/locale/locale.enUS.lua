@@ -26,7 +26,7 @@ local _, L = ...;
 	L.ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY = "Spell Overlay Settings"
 	L.ACCWUI_OPT_MODULES_CHK_AUTOLOOT = "Auto Loot Settings"
 	L.ACCWUI_OPT_MODULES_CHK_LOC = "Loss of Control Settings"
-	L.ACCWUI_OPT_MODULES_CHK_TARGETING = "Loss of Control Settings"
+	L.ACCWUI_OPT_MODULES_CHK_TARGETING = "Action Targeting Settings"
 	L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP = "Viewed Tutorial Tooltips"
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Block Blizzard Chat Channels Account Wide"
