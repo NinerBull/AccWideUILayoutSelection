@@ -2,7 +2,7 @@
 
 An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic Era!
 
-![Info Img](https://cdn-wow.mmoui.com/preview/pvw76258.jpg)
+![Info Img](https://cdn-wow.mmoui.com/preview/pvw76793.jpg)
 
 ## About
 This addon helps to keep your Base UI consistent across all of your characters by synchronizing variables that are normally character specific to all of your characters on your account.
