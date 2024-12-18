@@ -17,12 +17,13 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Spell Overlay Settings
 * Auto Loot Settings
 * Action Targeting Settings
-* Block Guild/Trade/Channel Invite Settings
 * Chat Window/Channel Settings
-* Bonus: Block General/Trade/Services/LocalDefense Chat Channels
+* Viewed Tutorial Tooltips
+* Block Guild/Trade/Channel Invite Settings
+* Block General/Trade/Services/LocalDefense Chat Channels
 
 ## Compatibility
-* **The War Within** - 11.0.5 & 11.0.7
+* **The War Within** - 11.0.7
 * **Cataclysm Classic** - 4.4.1
 * **Classic Era** - 1.15.5
 
