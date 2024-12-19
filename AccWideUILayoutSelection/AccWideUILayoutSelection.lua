@@ -408,15 +408,14 @@ end
 					local currentActiveLayout = getLayoutsTable["activeLayout"]
 					
 				end		
-				
+	
+	
+				if (type(AccWideUI_AccountData) ~= "table") then
+					AccWideUI_AccountData = {}
+				end
 				
 				if (type(AccWideUI_AccountData.SaveVersion) ~= "number") then
 					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
-				end
-
-
-				if (type(AccWideUI_AccountData) ~= "table") then
-					AccWideUI_AccountData = {}
 				end
 				
 				if (type(AccWideUI_AccountData.SpecialVariables) ~= "table") then
@@ -1725,8 +1724,8 @@ end
 			
 			
 			
-			
-			local colorPet = CreateColor(0.3, 0.3, 0.3)
+
+			local colorPet = CreateColor(0.25, 0.25, 0.25)
 			local titlePet = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlightSmall")
 			titlePet:SetJustifyV('BOTTOM')
 			titlePet:SetJustifyH('RIGHT')
