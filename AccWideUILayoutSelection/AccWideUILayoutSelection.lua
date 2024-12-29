@@ -47,7 +47,10 @@ local AccWideUI_TextSlash = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("/awi")
 local AccWideUI_ThisCategory = nil
 local AccWideUI_DividerGraphic = "interface\\friendsframe\\ui-friendsframe-onlinedivider"
 
+local AccWideUI_ThisPlayerName, AccWideUI_ThisPlayerRealm = UnitFullName("player") 
 
+
+--Chat Channel Stuff
 AccWideUI_ChatName_General = "General"
 AccWideUI_ChatName_Trade = "Trade"
 AccWideUI_ChatName_Services = "Services"
@@ -99,9 +102,9 @@ end
 		
 			if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 		
-				if (AccWideUI_AccountData.accountWideLayout == true) then
+				if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Saving Acc Wide UI.")
 					end
 						
@@ -386,13 +389,12 @@ end
 	}
 	
 	
-	
+	-- Popups for first time set up
 	StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP"] = {
 		text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L.ACCWUI_ADDONNAME .. "\n--------------------------------") .. "\n\n" .. L.ACCWUI_FIRSTTIME_LINE1 .. "\n" .. L.ACCWUI_FIRSTTIME_LINE2,
 		button1 = string.format(L.ACCWUI_FIRSTTIME_BTN1, UnitName("player")),
 		button2 = L.ACCWUI_FIRSTTIME_BTN2,
 		verticalButtonLayout = true,
-		--sound = SOUNDKIT.GS_CHARACTER_CREATION_CREATE_CHAR,
 		OnAccept  = function()
 			AccWideUI_AccountData.HasDoneFirstTimeSetup = true
 			AccWideUI_Frame:SaveUISettings()
@@ -401,23 +403,25 @@ end
 			AccWideUI_Frame.InitializeOptionsSettings()
 			AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
 			AccWideUI_Frame_HasLoadedSettings = true
-			StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP_ACCEPTED")
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				local getLayoutsTable = C_EditMode.GetLayouts()
 				local currentActiveLayout = getLayoutsTable["activeLayout"]
 				local currentSpec = tostring(GetSpecialization())
-				
 				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-					--Set the spec
 					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
 				end
 			end
 			if (AccWideUI_AccountData.enableTextOutput == true) then
 				print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))	
 			end
+			C_Timer.After(0.1, function() 
+				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP_ACCEPTED")
+			end)
 		end,
 		OnCancel = function()
-			StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED")
+			C_Timer.After(0.1, function() 
+				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED")
+			end)
 		end,
 		timeout = 0,
 		whileDead = true,
@@ -455,6 +459,8 @@ end
 
 			if (event == "SETTINGS_LOADED") then
 			
+				AccWideUI_ThisPlayerName, AccWideUI_ThisPlayerRealm = UnitFullName("player")
+			
 				
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -469,14 +475,41 @@ end
 					AccWideUI_AccountData = {}
 				end
 				
+				if (type(AccWideUI_AccountData.printDebugTextToChat) ~= "boolean") then
+					AccWideUI_AccountData.printDebugTextToChat = false
+				end
+				
+				if (type(AccWideUI_AccountData.FirstSaved) ~= "table") then
+					AccWideUI_AccountData.FirstSaved = {}
+				end
+				if (type(AccWideUI_AccountData.FirstSaved.Character) ~= "string") then
+					AccWideUI_AccountData.FirstSaved.Character = AccWideUI_ThisPlayerName .. "-" .. AccWideUI_ThisPlayerRealm
+				end
+				if (type(AccWideUI_AccountData.FirstSaved.UnixTime) ~= "number") then
+					AccWideUI_AccountData.FirstSaved.UnixTime = GetServerTime()
+				end
+				
+				if (type(AccWideUI_AccountData.LastSaved) ~= "table") then
+					AccWideUI_AccountData.LastSaved = {}
+				end
+				if (type(AccWideUI_AccountData.LastSaved.Character) ~= "string") then
+					AccWideUI_AccountData.LastSaved.Character = "Unknown"
+				end
+				if (type(AccWideUI_AccountData.LastSaved.UnixTime) ~= "number") then
+					AccWideUI_AccountData.LastSaved.UnixTime = GetServerTime()
+				end
+				
+				if (type(AccWideUI_AccountData.printWhenLastSaved) ~= "boolean") then
+					AccWideUI_AccountData.printWhenLastSaved = false
+				end
+				
+				
 				if (type(AccWideUI_AccountData.HasDoneFirstTimeSetup) ~= "boolean") then
 					AccWideUI_AccountData.HasDoneFirstTimeSetup = false
 				end
 				
 				if (type(AccWideUI_AccountData.SaveVersion) ~= "number") then
 					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
-				else
-					--AccWideUI_AccountData.HasDoneFirstTimeSetup = true
 				end
 				
 				-- Upgrade from older version
@@ -486,7 +519,6 @@ end
 					end
 				end
 				
-				
 				if (type(AccWideUI_AccountData.SpecialVariables) ~= "table") then
 					AccWideUI_AccountData.SpecialVariables = {}
 				end
@@ -495,20 +527,11 @@ end
 					AccWideUI_AccountData.ChatChannels = {}
 				end
 				
-				
-				
-				if (type(AccWideUI_AccountData.enableDebug) ~= "boolean") then
-					AccWideUI_AccountData.enableDebug = false
-				end
-				
-				
-	
 				if (type(AccWideUI_AccountData.enableAccountWide) ~= "boolean") then
 					AccWideUI_AccountData.enableAccountWide = true
 				end
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					
 					if (type(AccWideUI_AccountData.accountWideLayoutID) ~= "number") then
 						AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout or 1
 					end
@@ -516,10 +539,8 @@ end
 					if (type(AccWideUI_AccountData.accountWideLayout) ~= "boolean") then
 						AccWideUI_AccountData.accountWideLayout = true
 					end
-				
 				end
 	
-				
 				if (type(AccWideUI_AccountData.enableTextOutput) ~= "boolean") then
 					AccWideUI_AccountData.enableTextOutput = true
 				end
@@ -569,14 +590,10 @@ end
 				end]]
 
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					
 					if (type(AccWideUI_AccountData.accountWideLossOfControlVariables) ~= "boolean") then
 						AccWideUI_AccountData.accountWideLossOfControlVariables = true
 					end
-					
 				end
-				
-
 				
 				if (type(AccWideUI_AccountData.accountWideChatWindowVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideChatWindowVariables = true
@@ -586,14 +603,10 @@ end
 					AccWideUI_AccountData.accountWideChatChannelVariables = true
 				end
 				
-				
-				
-				
 				--Special
 				if (type(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites) ~= "boolean") then
 					AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
 				end
-				
 				
 				--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					if (type(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft) ~= "boolean") then
@@ -604,8 +617,6 @@ end
 						AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
 					end
 				end]]
-				
-				
 				
 				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 				
@@ -639,9 +650,6 @@ end
 					end
 				
 				end
-				
-				
-				
 				
 				
 				-- Action Bar Variables
@@ -759,12 +767,26 @@ end
 					AccWideUI_AccountData.ChatInfo = {}
 				end
 				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+
+					if ((type(AccWideUI_CharData) == "table") and (AccWideUI_CharData["accWideSpec1"] == nil)) then
+						AccWideUI_CharData = nil
+						print(AccWideUI_TextName .. " Removed Invalid Char Data.")
+					end
+
+					if (type(AccWideUI_CharData) ~= "table") then
+						AccWideUI_CharData = {
+								["accWideSpec1"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec2"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec3"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec4"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec5"] = AccWideUI_AccountData.enableAccountWide --Temp Spec for fresh chars, adding just in case
+						}
+					end
+				end
 
 
-		
-				
-				
-				
 				
 				-- Update Notices
 				if (AccWideUI_AccountData.SaveVersion < 2) then
@@ -801,7 +823,7 @@ end
 			if (event == "LOADING_SCREEN_DISABLED" and AccWideUI_Frame_HasLoadedSettings == true and AccWideUI_Frame_HasDoneInitialLoad == false) then
 				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Doing Initial Load.")
 					end
 			
@@ -936,7 +958,7 @@ end
 			
 			
 			
-			local thisPointX = 16
+			local thisPointX = 10
 			local thisPointY = -10
 
 			--Title
@@ -946,7 +968,7 @@ end
 			title:SetPoint('TOPLEFT', thisPointX, thisPointY)
 			title:SetText(L.ACCWUI_ADDONNAME)
 			
-			thisPointY = thisPointY - 20
+			thisPointY = thisPointY - 16
 			
 			--Title2
 			local title2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
@@ -958,7 +980,7 @@ end
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
-				thisPointY = thisPointY - 20
+				thisPointY = thisPointY - 16
 				
 				
 				--Enable by Default
@@ -989,9 +1011,9 @@ end
 			end
 			
 			
-			thisPointY = thisPointY - 25
+			thisPointY = thisPointY - 22
 			
-			thisPointX = 16
+			thisPointX = 10
 			
 			-- Show Text
 			local chkAWIShowText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1003,6 +1025,21 @@ end
 			chkAWIShowText:SetChecked(AccWideUI_AccountData.enableTextOutput)
 			
 			
+			thisPointX = 260
+			
+			-- Show When Last Saved
+			local chkAWIShowLastSaved = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWIShowLastSaved:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWIShowLastSaved.Text:SetText(L.ACCWUI_OPT_CHK_SHOWLASTSAVED)
+			chkAWIShowLastSaved:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.printWhenLastSaved = chkAWIShowLastSaved:GetChecked()
+			end)
+			chkAWIShowLastSaved:SetChecked(AccWideUI_AccountData.printWhenLastSaved)
+			
+			
+			
+			
+			thisPointX = 10
 			
 			thisPointY = thisPointY - 30
 			
@@ -1013,7 +1050,7 @@ end
 			acBorder1:SetTexture(AccWideUI_DividerGraphic)
 
 			
-			thisPointY = thisPointY - 20
+			thisPointY = thisPointY - 22
 			
 	
 			
@@ -1025,7 +1062,7 @@ end
 			titleSA:SetText(L.ACCWUI_OPT_MODULES_TITLE)
 			
 			
-			thisPointY = thisPointY - 20
+			thisPointY = thisPointY - 22
 			
 			
 
@@ -1044,7 +1081,7 @@ end
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
-				thisPointY = thisPointY - 25 
+				thisPointY = thisPointY - 22 
 			
 				-- Save Edit Mode Layout
 				local chkAWISaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1058,7 +1095,7 @@ end
 			end
 
 
-			thisPointY = thisPointY - 25 
+			thisPointY = thisPointY - 22 
 			
 			
 			-- Save Action Bars
@@ -1070,7 +1107,7 @@ end
 			end)
 			chkAWISaveActionBar:SetChecked(AccWideUI_AccountData.accountWideActionBars)
 			
-			thisPointY = thisPointY - 25 
+			thisPointY = thisPointY - 22 
 			
 			
 			-- Save Nameplates
@@ -1082,7 +1119,7 @@ end
 			end)
 			chkAWISaveNameplates:SetChecked(AccWideUI_AccountData.accountWideNameplates)
 			
-			thisPointY = thisPointY - 25 
+			thisPointY = thisPointY - 22 
 			
 			
 			-- Save Raid Frames
@@ -1097,7 +1134,7 @@ end
 			
 			
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-				thisPointY = thisPointY - 25 
+				thisPointY = thisPointY - 22 
 				
 				
 				-- Save Arena Frames
@@ -1111,7 +1148,7 @@ end
 			end
 			
 			
-			thisPointY = thisPointY - 25 
+			thisPointY = thisPointY - 22 
 			
 			
 			-- Save Chat Window
@@ -1129,7 +1166,7 @@ end
 			end)
 			chkAWISaveChatWindow:SetChecked(AccWideUI_AccountData.accountWideChatWindowVariables)
 			
-			thisPointY = thisPointY - 25 
+			thisPointY = thisPointY - 22 
 			
 			
 			-- Save Chat Channels
@@ -1154,7 +1191,7 @@ end
 			
 			thisPointX = 230
 			
-			thisPointY2 = thisPointY2 - 25 
+			thisPointY2 = thisPointY2 - 22 
 							
 			
 			-- Block Social Variables
@@ -1168,7 +1205,7 @@ end
 			
 			
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-				thisPointY2 = thisPointY2 - 25 
+				thisPointY2 = thisPointY2 - 22 
 				
 				
 				-- Spell Overlay Variables
@@ -1183,7 +1220,7 @@ end
 			
 			
 			
-			thisPointY2 = thisPointY2 - 25 
+			thisPointY2 = thisPointY2 - 22 
 			
 			
 			-- Auto Loot Variables
@@ -1199,7 +1236,7 @@ end
 			
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
-				thisPointY2 = thisPointY2 - 25 
+				thisPointY2 = thisPointY2 - 22 
 			
 				-- Save Loss of Control Variables
 				local chkAWISaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1214,7 +1251,7 @@ end
 			
 			
 			
-			thisPointY2 = thisPointY2 - 25 
+			thisPointY2 = thisPointY2 - 22 
 			
 			
 			-- Soft Target Variables
@@ -1228,7 +1265,7 @@ end
 			
 			
 			
-			thisPointY2 = thisPointY2 - 25 
+			thisPointY2 = thisPointY2 - 22 
 			
 			-- Tutorial Variables
 			local chkAWISaveTutorials = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1245,7 +1282,7 @@ end
 			
 			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
-				thisPointY2 = thisPointY2 - 25 
+				thisPointY2 = thisPointY2 - 22 
 			
 				-- Save Bag Sorting Variables
 				local chkAWISaveBagSorting = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1267,7 +1304,7 @@ end
 			
 			if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 				
-				thisPointX = 16
+				thisPointX = 10
 				
 				thisPointY = thisPointY - 30
 				
@@ -1282,7 +1319,7 @@ end
 				
 
 				
-				thisPointY = thisPointY - 20
+				thisPointY = thisPointY - 22
 				
 				
 				
@@ -1294,7 +1331,7 @@ end
 				titleCAA:SetText(L.ACCWUI_BLOCKBLIZZ_TITLE)
 				
 				
-				thisPointY = thisPointY - 25
+				thisPointY = thisPointY - 22
 				
 				
 				--Title for  Chat Channels2
@@ -1304,7 +1341,7 @@ end
 				titleCAA2:SetPoint('TOPLEFT', thisPointX, thisPointY)
 				titleCAA2:SetText(L.ACCWUI_BLOCKBLIZZ_DESC)
 				
-				thisPointY = thisPointY - 20
+				thisPointY = thisPointY - 22
 				
 				
 				
@@ -1353,9 +1390,9 @@ end
 				
 				
 				
-				thisPointX = 16
+				thisPointX = 10
 				
-				thisPointY = thisPointY - 24
+				thisPointY = thisPointY - 22
 				
 				
 				
@@ -1405,7 +1442,7 @@ end
 			
 			
 			
-			thisPointX = 16
+			thisPointX = 10
 
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
@@ -1425,7 +1462,7 @@ end
 				acBorder3:SetTexture(AccWideUI_DividerGraphic)
 				
 				
-				thisPointY = thisPointY - 20
+				thisPointY = thisPointY - 22
 		
 				
 				local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
@@ -1441,7 +1478,7 @@ end
 				titleCS:SetPoint('TOPLEFT', thisPointX, thisPointY)
 				titleCS:SetText(string.format(L.ACCWUI_CHARSPECIFIC_TITLE, classColorString:WrapTextInColorCode(UnitName("player"))))
 				
-				thisPointY = thisPointY - 25
+				thisPointY = thisPointY - 22
 				
 				--Title for Char Specific2
 				local titleCS2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
@@ -1462,7 +1499,7 @@ end
 					
 				end
 				
-				thisPointY = thisPointY - 20
+				thisPointY = thisPointY - 22
 					
 
 				if (AccWideUI_NumSpecializations >= 1) then
@@ -1552,10 +1589,10 @@ end
 			
 			local debugSaveBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
 				debugSaveBtn:SetSize(100 ,20)
-				debugSaveBtn:SetText("Debug Save")
+				debugSaveBtn:SetText(L.ACCWUI_DEBUG_BTN_FORCESAVE)
 				debugSaveBtn:SetPoint("BOTTOMRIGHT", -10, 10)
 				debugSaveBtn:SetScript("OnClick", function()
-					print(AccWideUI_TextName .. " Force-Saving Settings.")
+					print(AccWideUI_TextName .. " " .. L.ACCWUI_DEBUG_TXT_FORCESAVE)
 					 AccWideUI_Frame:SaveUISettings()
 					
 				end)
@@ -1563,21 +1600,21 @@ end
 				
 			local debugLoadBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
 				debugLoadBtn:SetSize(100 ,20)
-				debugLoadBtn:SetText("Debug Load")
+				debugLoadBtn:SetText(L.ACCWUI_DEBUG_BTN_FORCELOAD)
 				debugLoadBtn:SetPoint("BOTTOMRIGHT", -110, 10)
 				debugLoadBtn:SetScript("OnClick", function()
-					print(AccWideUI_TextName .. " Force-Loading Settings.")
+					print(AccWideUI_TextName .. " " .. L.ACCWUI_DEBUG_TXT_FORCELOAD)
 					 AccWideUI_Frame:LoadUISettings()
 					
 				end)
 				
 			local chkDebugText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkDebugText:SetPoint("BOTTOMRIGHT", -305, 5)
-				chkDebugText.Text:SetText("Show Debug Text")
+				chkDebugText.Text:SetText(L.ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT)
 				chkDebugText:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.enableDebug = chkDebugText:GetChecked()
+					AccWideUI_AccountData.printDebugTextToChat = chkDebugText:GetChecked()
 				end)
-				chkDebugText:SetChecked(AccWideUI_AccountData.enableDebug)
+				chkDebugText:SetChecked(AccWideUI_AccountData.printDebugTextToChat)
 
 
 			--- <3
@@ -1615,15 +1652,20 @@ end
 			doNotLoadChatSettings = doNotLoadChatSettings or false
 		
 			if (InCombatLockdown()) then
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Not loading UI Settings while in combat.")
 				end
 				
 			else
 			
+			
+			
+				if (AccWideUI_AccountData.printWhenLastSaved == true) then
+					print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_LASTUPDATED, LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(AccWideUI_AccountData.LastSaved.Character), LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(date("%Y-%m-%d %H:%M", AccWideUI_AccountData.LastSaved.UnixTime))))
+				end
 				
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Loading UI Settings.")
 				end
 				
@@ -1631,14 +1673,12 @@ end
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
 					-- Use Acc Wide Layout
-					local getLayoutsTable = C_EditMode.GetLayouts()
-					local currentActiveLayout = getLayoutsTable["activeLayout"]
 					local currentSpec = tostring(GetSpecialization())
 					
 					if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 					
 
-						if (AccWideUI_AccountData.enableDebug == true) then
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
 							print(AccWideUI_TextName .. " Loading Acc Wide UI.")
 						end
 
@@ -1653,7 +1693,7 @@ end
 				-- Use Action Bars
 				if (AccWideUI_AccountData.accountWideActionBars == true) then
 						
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 					end
 					
@@ -1688,7 +1728,7 @@ end
 				-- Use Nameplates
 				if (AccWideUI_AccountData.accountWideNameplates == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Nameplate Settings.")
 					end
 				
@@ -1704,7 +1744,7 @@ end
 				if (AccWideUI_AccountData.accountWideRaidFrames == true) then
 			
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
 					end
 				
@@ -1764,7 +1804,7 @@ end
 									if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
 										if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
 											keepThisOne = true
-											if (AccWideUI_AccountData.enableDebug == true) then
+											if (AccWideUI_AccountData.printDebugTextToChat == true) then
 												print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
 											end
 										end
@@ -1775,7 +1815,7 @@ end
 							end
 							
 							if (type(thisRaidProfileName) == "string" and keepThisOne == false) then
-								if (AccWideUI_AccountData.enableDebug == true) then
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
 									print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
 								end
 								DeleteRaidProfile(thisRaidProfileName)
@@ -1797,7 +1837,7 @@ end
 					-- Use Arena Frames
 					if (AccWideUI_AccountData.accountWideArenaFrames == true) then
 					
-						if (AccWideUI_AccountData.enableDebug == true) then
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
 							print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
 						end
 					
@@ -1812,7 +1852,7 @@ end
 				-- Block Social Variables
 				if (AccWideUI_AccountData.accountWideBlockSocialVariables == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Block Social Settings.")
 					end
 				
@@ -1831,7 +1871,7 @@ end
 					-- Spell Overlay Variables
 					if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
 					
-						if (AccWideUI_AccountData.enableDebug == true) then
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
 							print(AccWideUI_TextName .. " Loading Spell Overlay Settings.")
 						end
 					
@@ -1846,7 +1886,7 @@ end
 				-- Auto Loot Variables
 				if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Auto Loot Settings.")
 					end
 				
@@ -1862,7 +1902,7 @@ end
 					-- Loss of Control Variables
 					if (AccWideUI_AccountData.accountWideLossOfControlVariables == true) then
 					
-						if (AccWideUI_AccountData.enableDebug == true) then
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
 							print(AccWideUI_TextName .. " Loading Loss of Control Settings.")
 						end
 					
@@ -1878,7 +1918,7 @@ end
 				-- Soft Target Variables
 				if (AccWideUI_AccountData.accountWideSoftTargetVariables == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Soft Target Settings.")
 					end
 				
@@ -1893,7 +1933,7 @@ end
 				-- Tutorial Variables
 				if (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Tutorial Tooltip Settings.")
 					end
 				
@@ -1909,7 +1949,7 @@ end
 					-- Bag Sorting Variables
 					if (AccWideUI_AccountData.accountWideBagSortingSettings == true) then
 					
-						if (AccWideUI_AccountData.enableDebug == true) then
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
 							print(AccWideUI_TextName .. " Loading Bag Sorting Settings.")
 						end
 					
@@ -1925,7 +1965,7 @@ end
 				
 				if (AccWideUI_AccountData.accountWideChatWindowVariables == true and doNotLoadChatSettings == false) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Chat Window Settings.")
 					end
 					
@@ -1933,7 +1973,7 @@ end
 					if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
 					
 						C_Timer.After(10, function() 
-							if (AccWideUI_AccountData.enableDebug == true) then
+							if (AccWideUI_AccountData.printDebugTextToChat == true) then
 								print(AccWideUI_TextName .. " Joining Chat Channels.")
 							end
 							-- Chat Channels
@@ -1946,7 +1986,7 @@ end
 						
 						C_Timer.After(14, function() 
 						
-							if (AccWideUI_AccountData.enableDebug == true) then
+							if (AccWideUI_AccountData.printDebugTextToChat == true) then
 								print(AccWideUI_TextName .. " Reordering Chat Channels.")
 							end
 							--Reorder Chat Channels
@@ -1965,7 +2005,7 @@ end
 		
 						
 						C_Timer.After(16, function() 
-							if (AccWideUI_AccountData.enableDebug == true) then
+							if (AccWideUI_AccountData.printDebugTextToChat == true) then
 								print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
 							end
 							-- Chat Colours
@@ -2069,7 +2109,7 @@ end
 							for i = 1, #thisWindowChannels, 2 do
 								local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
 								
-								if (AccWideUI_AccountData.enableDebug == true) then
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
 									print(AccWideUI_TextName .. " Removing " .. chn .. " From Chat Window " .. thisChatFrame .. ".")
 								end
 								
@@ -2078,7 +2118,7 @@ end
 						
 							for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible) do
 							
-								if (AccWideUI_AccountData.enableDebug == true) then
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
 									print(AccWideUI_TextName .. " Adding " .. v .. " To Chat Window " .. thisChatFrame .. ".")
 								end
 								
@@ -2098,7 +2138,7 @@ end
 						
 							if ((AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown == true) or (AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked)) then
 						
-								if (AccWideUI_AccountData.enableDebug == true) then
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
 									print(AccWideUI_TextName .. " Setting Chat Types for Chat Window " .. thisChatFrame .. ".")
 								end
 							
@@ -2107,7 +2147,7 @@ end
 								
 								for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
 									 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
-									 if (AccWideUI_AccountData.enableDebug == true) then
+									 if (AccWideUI_AccountData.printDebugTextToChat == true) then
 										print(AccWideUI_TextName .. " Adding " .. v .. " to Chat Window " .. thisChatFrame .. ".")
 									 end
 								end
@@ -2142,23 +2182,26 @@ end
 		
 	
 		if (InCombatLockdown()) then
-			if (AccWideUI_AccountData.enableDebug == true) then
+			if (AccWideUI_AccountData.printDebugTextToChat == true) then
 				print(AccWideUI_TextName .. " Not saving UI Settings while in combat.")
 			end
 			
 		else
 		
-			if (AccWideUI_AccountData.enableDebug == true) then
+			if (AccWideUI_AccountData.printDebugTextToChat == true) then
 				print(AccWideUI_TextName .. " Saving UI Settings.")
 			end
 			
 			AccWideUI_AccountData.HasDoneFirstTimeSetup = true
 			
+			AccWideUI_AccountData.LastSaved.Character = AccWideUI_ThisPlayerName .. "-" .. AccWideUI_ThisPlayerRealm
+			AccWideUI_AccountData.LastSaved.UnixTime = GetServerTime()
+			
 		
 			--Save Shown Action Bars
 			if (AccWideUI_AccountData.accountWideActionBars == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Action Bar Settings.")
 				end
 				
@@ -2178,7 +2221,7 @@ end
 			-- Save Nameplates
 			if (AccWideUI_AccountData.accountWideNameplates == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Nameplate Settings.")
 				end
 			
@@ -2193,7 +2236,7 @@ end
 			-- Save Raid Frames
 			if (AccWideUI_AccountData.accountWideRaidFrames == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Raid Frame Settings.")
 				end
 			
@@ -2254,7 +2297,7 @@ end
 				-- Save Arena Frames
 				if (AccWideUI_AccountData.accountWideArenaFrames == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Saving Arena Frame Settings.")
 					end
 				
@@ -2269,7 +2312,7 @@ end
 			-- Save Social Variables
 			if (AccWideUI_AccountData.accountWideBlockSocialVariables == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Block Social Settings.")
 				end
 			
@@ -2285,7 +2328,7 @@ end
 				-- Save Spell Overlay Variables
 				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
 				
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Saving Spell Overlay Settings.")
 					end
 				
@@ -2300,7 +2343,7 @@ end
 			-- Save Auto Loot Variables
 			if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Auto Loot Settings.")
 				end
 			
@@ -2315,7 +2358,7 @@ end
 			-- Save Loss of Control Variables
 			if (AccWideUI_AccountData.accountWideLossOfControlVariables == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Loss of Control Settings.")
 				end
 			
@@ -2329,7 +2372,7 @@ end
 			-- Save Soft Target Variables
 			if (AccWideUI_AccountData.accountWideSoftTargetVariables == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Soft Target Settings.")
 				end
 			
@@ -2343,7 +2386,7 @@ end
 			-- Save Tutorial Variables
 			if (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Tutorial Tooltip Settings.")
 				end
 			
@@ -2360,7 +2403,7 @@ end
 				-- Save Bag Sorting Variables
 				if (AccWideUI_AccountData.accountWideBagSortingSettings == true) then
 					
-					if (AccWideUI_AccountData.enableDebug == true) then
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Saving Bag Sorting Settings.")
 					end
 				
@@ -2375,7 +2418,7 @@ end
 			-- Save Chat Window Variables
 			if (AccWideUI_AccountData.accountWideChatWindowVariables == true) then
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
 					print(AccWideUI_TextName .. " Saving Chat Window Settings.")
 				end
 			
@@ -2476,30 +2519,6 @@ end
 					end
 				end
 			
-				
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-
-					if ((type(AccWideUI_CharData) == "table") and (AccWideUI_CharData["accWideSpec1"] == nil)) then
-						AccWideUI_CharData = nil
-						print(AccWideUI_TextName .. " Removed Invalid Char Data.")
-					end
-					
-					
-					if (type(AccWideUI_CharData) ~= "table") then
-				
-						AccWideUI_CharData = {
-								["accWideSpec1"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec2"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec3"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec4"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec5"] = AccWideUI_AccountData.enableAccountWide --Temp Spec for fresh chars, adding just in case
-						}
-
-					end
-			
-			
-				end
 			
 		
 		end

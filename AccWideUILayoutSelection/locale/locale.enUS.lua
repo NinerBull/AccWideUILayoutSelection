@@ -4,12 +4,14 @@ local _, L = ...;
 	L.ACCWUI_ADDONNAME_SHORT = "Account Wide Interface"
 	
 	L.ACCWUI_LOAD_REGULAR = "Account Wide Interface Option Settings Addon Loaded! Type %s to configure."
+	L.ACCWUI_LOAD_LASTUPDATED = "Settings were last saved by %s on %s."
 	L.ACCWUI_LOAD_SAVEUPDATE_1 = "Updated! The addon can now synchronise many of your chat settings and the Pop-Up Tutorial Tooltips you have viewed. Type %s to configure."
 	
 	L.ACCWUI_OPT_TITLE_DESC = "Makes various Interface Options synchronise across all of your characters and specs."
 	L.ACCWUI_OPT_CHK_EDITMODE = "Enable Chosen Edit Mode by default for all New Characters"
 	L.ACCWUI_OPT_BTN_EDITMODE = "Open Edit Mode"
 	L.ACCWUI_OPT_CHK_TOCHAT = "Output to chat when addon is loaded"
+	L.ACCWUI_OPT_CHK_SHOWLASTSAVED = "Output to chat when settings were last saved"
 	
 	L.ACCWUI_OPT_MODULES_TITLE = "Enable Account Wide Modules"
 	L.ACCWUI_OPT_MODULES_DESC = "Which UI settings would you like to synchronise Account Wide?"
@@ -47,5 +49,13 @@ local _, L = ...;
 	L.ACCWUI_FIRSTTIME_ACCEPTED_LINE2 = "Type %s at any time to change your settings."
 	
 	L.ACCWUI_FIRSTTIME_DECLINED_LINE1 = "You will be asked again the next time you switch character, or perform a UI /reload."
+	
+	L.ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT = "Show Debug Text"
+	
+	L.ACCWUI_DEBUG_BTN_FORCELOAD = "Debug Load"
+	L.ACCWUI_DEBUG_TXT_FORCELOAD = "Force-Loading Settings."
+	L.ACCWUI_DEBUG_BTN_FORCESAVE = "Debug Save"
+	L.ACCWUI_DEBUG_TXT_FORCESAVE = "Force-Saving Settings."
+	
 	
 --end
