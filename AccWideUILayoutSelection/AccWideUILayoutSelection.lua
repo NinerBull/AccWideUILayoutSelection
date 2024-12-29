@@ -11,7 +11,6 @@ local AccWideUI_SaveVersion = 2
 
 local AccWideUI_Frame = CreateFrame("Frame")
 
-
 local AccWideUI_Frame_HasLoadedSettings = false
 local AccWideUI_Frame_HasDoneInitialLoad = false
 
@@ -98,31 +97,31 @@ end
 		
 		hooksecurefunc(C_EditMode, "OnEditModeExit", function()
 		
-			if (AccWideUI_AccountData.accountWideLayout == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Saving Acc Wide UI.")
-				end
+			if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+		
+				if (AccWideUI_AccountData.accountWideLayout == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Saving Acc Wide UI.")
+					end
+						
 					
-				
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = tostring(GetSpecialization())
-				
-				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-
-					--Set the spec
-					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
+					local getLayoutsTable = C_EditMode.GetLayouts()
+					local currentActiveLayout = getLayoutsTable["activeLayout"]
+					local currentSpec = tostring(GetSpecialization())
 					
-					AccWideUI_Frame:SaveUISettings()
+					if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 
-				end
+						--Set the spec
+						AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
+						
+						AccWideUI_Frame:SaveUISettings()
+
+					end
+					
+				end -- EO accountWideLayout
 				
-				
-				
-				
-				
-			end -- EO accountWideLayout
+			end 
 				
 		end)
 	
@@ -388,6 +387,62 @@ end
 	
 	
 	
+	StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP"] = {
+		text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L.ACCWUI_ADDONNAME .. "\n--------------------------------") .. "\n\n" .. L.ACCWUI_FIRSTTIME_LINE1 .. "\n" .. L.ACCWUI_FIRSTTIME_LINE2,
+		button1 = string.format(L.ACCWUI_FIRSTTIME_BTN1, UnitName("player")),
+		button2 = L.ACCWUI_FIRSTTIME_BTN2,
+		verticalButtonLayout = true,
+		--sound = SOUNDKIT.GS_CHARACTER_CREATION_CREATE_CHAR,
+		OnAccept  = function()
+			AccWideUI_AccountData.HasDoneFirstTimeSetup = true
+			AccWideUI_Frame:SaveUISettings()
+			AccWideUI_Frame_HasDoneInitialLoad = true
+			AccWideUI_Frame:InitializeOptionsFrame()
+			AccWideUI_Frame.InitializeOptionsSettings()
+			AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
+			AccWideUI_Frame_HasLoadedSettings = true
+			StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP_ACCEPTED")
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				local getLayoutsTable = C_EditMode.GetLayouts()
+				local currentActiveLayout = getLayoutsTable["activeLayout"]
+				local currentSpec = tostring(GetSpecialization())
+				
+				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
+					--Set the spec
+					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
+				end
+			end
+			if (AccWideUI_AccountData.enableTextOutput == true) then
+				print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))	
+			end
+		end,
+		OnCancel = function()
+			StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED")
+		end,
+		timeout = 0,
+		whileDead = true,
+		hideOnEscape = false,
+	}
+	
+	StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP_ACCEPTED"] = {
+		text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L.ACCWUI_ADDONNAME .. "\n--------------------------------") .. "\n\n" .. L.ACCWUI_FIRSTTIME_ACCEPTED_LINE1 .. "\n" .. string.format(L.ACCWUI_FIRSTTIME_ACCEPTED_LINE2, AccWideUI_TextSlash),
+		button1 = OKAY,
+		timeout = 0,
+		sound = SOUNDKIT.GS_CHARACTER_CREATION_CREATE_CHAR,
+		whileDead = true,
+		hideOnEscape = false,
+		
+	}
+	
+	StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED"] = {
+		text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L.ACCWUI_ADDONNAME .. "\n--------------------------------") .. "\n\n" .. L.ACCWUI_FIRSTTIME_DECLINED_LINE1,
+		button1 = OKAY,
+		timeout = 0,
+		sound = SOUNDKIT.LOOT_WINDOW_OPEN_EMPTY,
+		whileDead = true,
+		hideOnEscape = false,
+	}
+	
 
 	AccWideUI_Frame:SetScript("OnEvent", function(self, event, arg1, arg2)
 
@@ -414,9 +469,23 @@ end
 					AccWideUI_AccountData = {}
 				end
 				
+				if (type(AccWideUI_AccountData.HasDoneFirstTimeSetup) ~= "boolean") then
+					AccWideUI_AccountData.HasDoneFirstTimeSetup = false
+				end
+				
 				if (type(AccWideUI_AccountData.SaveVersion) ~= "number") then
 					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
+				else
+					--AccWideUI_AccountData.HasDoneFirstTimeSetup = true
 				end
+				
+				-- Upgrade from older version
+				if (type(AccWideUI_AccountData.ActionBars) == "table") then
+					if (type(AccWideUI_AccountData.ActionBars.Bar2) == "boolean") then
+						AccWideUI_AccountData.HasDoneFirstTimeSetup = true
+					end
+				end
+				
 				
 				if (type(AccWideUI_AccountData.SpecialVariables) ~= "table") then
 					AccWideUI_AccountData.SpecialVariables = {}
@@ -425,6 +494,8 @@ end
 				if (type(AccWideUI_AccountData.ChatChannels) ~= "table") then
 					AccWideUI_AccountData.ChatChannels = {}
 				end
+				
+				
 				
 				if (type(AccWideUI_AccountData.enableDebug) ~= "boolean") then
 					AccWideUI_AccountData.enableDebug = false
@@ -493,13 +564,10 @@ end
 					AccWideUI_AccountData.accountWideTutorialTooltipVariables = true
 				end
 				
-				
 				--[[if (type(AccWideUI_AccountData.accountWideBagSortingSettings) ~= "boolean") then
 					AccWideUI_AccountData.accountWideBagSortingSettings = true
 				end]]
-				
-				
-				
+
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 					
 					if (type(AccWideUI_AccountData.accountWideLossOfControlVariables) ~= "boolean") then
@@ -587,75 +655,10 @@ end
 					AccWideUI_AccountData.ActionBars.ActionBarVariables = {}
 				end
 				
-				for k, v in pairs(AccWideUI_Table_ActionBarVariables) do
-					if (type(AccWideUI_AccountData.ActionBars.ActionBarVariables[v]) == "nil") then
-						AccWideUI_AccountData.ActionBars.ActionBarVariables[v] = GetCVar(v) or nil
-					end
-				end
-				
-				
-				
-				AccWideUI_ActionBarsDefault = {}
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				
-					AccWideUI_ActionBarsDefault.Bar2, AccWideUI_ActionBarsDefault.Bar3, AccWideUI_ActionBarsDefault.Bar4, AccWideUI_ActionBarsDefault.Bar5, AccWideUI_ActionBarsDefault.Bar6, AccWideUI_ActionBarsDefault.Bar7, AccWideUI_ActionBarsDefault.Bar8 = GetActionBarToggles()
-				
-				else
-				
-					AccWideUI_ActionBarsDefault.Bar2, AccWideUI_ActionBarsDefault.Bar3, AccWideUI_ActionBarsDefault.Bar4, AccWideUI_ActionBarsDefault.Bar5 = GetActionBarToggles()
-				
-				end
-				
-
-			
-				if (type(AccWideUI_AccountData.ActionBars.Bar2) ~= "boolean") then
-					AccWideUI_AccountData.ActionBars.Bar2 = AccWideUI_ActionBarsDefault.Bar2
-				end
-				
-				if (type(AccWideUI_AccountData.ActionBars.Bar3) ~= "boolean") then
-					AccWideUI_AccountData.ActionBars.Bar3 = AccWideUI_ActionBarsDefault.Bar3
-				end
-				
-				if (type(AccWideUI_AccountData.ActionBars.Bar4) ~= "boolean") then
-					AccWideUI_AccountData.ActionBars.Bar4 = AccWideUI_ActionBarsDefault.Bar4
-				end
-				
-				if (type(AccWideUI_AccountData.ActionBars.Bar5) ~= "boolean") then
-					AccWideUI_AccountData.ActionBars.Bar5 = AccWideUI_ActionBarsDefault.Bar5
-				end
-				
-				
-				
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar6) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar6 = AccWideUI_ActionBarsDefault.Bar6
-					end
-				
-					if (type(AccWideUI_AccountData.ActionBars.Bar7) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar7 = AccWideUI_ActionBarsDefault.Bar7
-					end
-					
-					if (type(AccWideUI_AccountData.ActionBars.Bar8) ~= "boolean") then
-						AccWideUI_AccountData.ActionBars.Bar8 = AccWideUI_ActionBarsDefault.Bar8
-					end
-				
-				end
-
-
-
 				
 				-- Nameplates Variables
 				if (type(AccWideUI_AccountData.Nameplates) ~= "table") then
 					AccWideUI_AccountData.Nameplates = {}
-				end
-				
-				for k, v in pairs(AccWideUI_Table_NameplateVariables) do
-					if (type(AccWideUI_AccountData.Nameplates[v]) == "nil") then
-						AccWideUI_AccountData.Nameplates[v] = GetCVar(v) or nil
-					end
 				end
 				
 				
@@ -664,67 +667,15 @@ end
 					AccWideUI_AccountData.RaidFrames = {}
 				end
 				
-				for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-					if (type(AccWideUI_AccountData.RaidFrames[v]) == "nil") then
-						AccWideUI_AccountData.RaidFrames[v] = GetCVar(v) or nil
-					end
-				end
-				
 				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
 					-- Raid Frame Profile Settings
 					if (type(AccWideUI_AccountData.RaidFrameProfiles) ~= "table") then
 						AccWideUI_AccountData.RaidFrameProfiles = {}
-						
-						for i=1, GetMaxNumCUFProfiles() do
-													
-							local thisRaidProfileName = GetRaidProfileName(i) or nil
-						
-							if (type(thisRaidProfileName) ~= "nil") then
-								if (RaidProfileExists(thisRaidProfileName)) then
-								
-									
-									AccWideUI_AccountData.RaidFrameProfiles[i] = {}
-								
-									AccWideUI_AccountData.RaidFrameProfiles[i].name = thisRaidProfileName
-									AccWideUI_AccountData.RaidFrameProfiles[i].isActive = false
-									
-									
-									if (thisRaidProfileName == GetActiveRaidProfile()) then
-										AccWideUI_AccountData.RaidFrameProfiles[i].isActive = true
-									end
-									
-									
-									AccWideUI_AccountData.RaidFrameProfiles[i].options =  GetRaidProfileFlattenedOptions(GetRaidProfileName(i))  
-									
-									local isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = GetRaidProfileSavedPosition(GetRaidProfileName(i))
-									
-									AccWideUI_AccountData.RaidFrameProfiles[i].position = {
-										["isDynamic"] = isDynamic,
-										["topPoint"] = topPoint,
-										["topOffset"] = topOffset,
-										["bottomPoint"] = bottomPoint,
-										["bottomOffset"] = bottomOffset,
-										["leftPoint"] = leftPoint,
-										["leftOffset"] = leftOffset
-									}
-									
-								
-								else
-										
-									AccWideUI_AccountData.RaidFrameProfiles[i] = nil
-
-								end
-							end
-						
-						end
-						
+	
 					end
 				
 				end
-
-				
-				
 				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
 					-- Arena Frame Variables
@@ -732,11 +683,6 @@ end
 						AccWideUI_AccountData.ArenaFrames = {}
 					end
 					
-					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-						if (type(AccWideUI_AccountData.ArenaFrames[v]) == "nil") then
-							AccWideUI_AccountData.ArenaFrames[v] = GetCVar(v) or nil
-						end
-					end
 				end
 				
 				
@@ -744,37 +690,17 @@ end
 				if (type(AccWideUI_AccountData.BlockSocial) ~= "table") then
 					AccWideUI_AccountData.BlockSocial = {}
 				end
-				
-				for k, v in pairs(AccWideUI_Table_BlockSocialVariables) do
-					if (type(AccWideUI_AccountData.BlockSocial[v]) == "nil") then
-						AccWideUI_AccountData.BlockSocial[v] = GetCVar(v) or nil
-					end
-				end
-				
+							
 				
 				-- Spell Overlay Variables
 				if (type(AccWideUI_AccountData.SpellOverlay) ~= "table") then
 					AccWideUI_AccountData.SpellOverlay = {}
-				end
-				
-				for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
-					if (type(AccWideUI_AccountData.SpellOverlay[v]) == "nil") then
-						AccWideUI_AccountData.SpellOverlay[v] = GetCVar(v) or nil
-					end
-				end
-				
+				end				
 				
 				-- Auto Loot Variables
 				if (type(AccWideUI_AccountData.AutoLoot) ~= "table") then
 					AccWideUI_AccountData.AutoLoot = {}
-				end
-				
-				for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
-					if (type(AccWideUI_AccountData.AutoLoot[v]) == "nil") then
-						AccWideUI_AccountData.AutoLoot[v] = GetCVar(v) or nil
-					end
-				end
-				
+				end	
 				
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
@@ -782,41 +708,20 @@ end
 					if (type(AccWideUI_AccountData.LossOfControl) ~= "table") then
 						AccWideUI_AccountData.LossOfControl = {}
 					end
-					
-					for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
-						if (type(AccWideUI_AccountData.LossOfControl[v]) == "nil") then
-							AccWideUI_AccountData.LossOfControl[v] = GetCVar(v) or nil
-						end
-					end
+
 				end
 			
 			
 				-- Soft Target Variables
 				if (type(AccWideUI_AccountData.SoftTarget) ~= "table") then
 					AccWideUI_AccountData.SoftTarget = {}
-				end
-				
-				for k, v in pairs(AccWideUI_Table_SoftTargetVariables) do
-					if (type(AccWideUI_AccountData.SoftTarget[v]) == "nil") then
-						AccWideUI_AccountData.SoftTarget[v] = GetCVar(v) or nil
-					end
-				end
-				
-				
+				end	
 				
 				-- Tutorial Variables
 				if (type(AccWideUI_AccountData.TutorialTooltips) ~= "table") then
 					AccWideUI_AccountData.TutorialTooltips = {}
 				end
-				
-				for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
-					if (type(AccWideUI_AccountData.TutorialTooltips[v]) == "nil") then
-						AccWideUI_AccountData.TutorialTooltips[v] = GetCVar(v) or nil
-					end
-				end
-				
-				
-				
+								
 				
 				-- Chat Window Variables
 				if (type(AccWideUI_AccountData.ChatWindows) ~= "table") then
@@ -835,66 +740,6 @@ end
 						AccWideUI_AccountData.ChatWindows[thisChatFrame] = {}
 					end
 						
-					-- Chat Window Info
-					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo) ~= "table") then
-						local name, size, r, g, b, a, isShown, isLocked, isDocked, isUninteractable = GetChatWindowInfo(thisChatFrame);
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo = {
-							["name"] = name,
-							["size"] = size,
-							["r"] = r,
-							["g"] = g,
-							["b"] = b,
-							["a"] = a,
-							["isShown"] = isShown,
-							["isLocked"] = isLocked,
-							["isDocked"] = isDocked,
-							["isUninteractable"] = isUninteractable
-						}
-					end
-					
-					--Positions
-					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions) ~= "table") then
-						local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions = {
-							["point"] = point,
-							["xOffset"] = xOffset,
-							["yOffset"] = yOffset
-						}
-					end
-
-					
-					--Dimensions
-					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions) ~= "table") then
-						local width, height = GetChatWindowSavedDimensions(thisChatFrame);
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions = {
-							["width"] = width,
-							["height"] = height
-						}
-					end
-	
-					
-					--Message Types
-					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) ~= "table") then
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes = {GetChatWindowMessages(thisChatFrame)}
-					end
-					
-					
-					--Chat Channels
-					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible) ~= "table") then
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible = {}
-						
-						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
-						
-						for i = 1, #thisWindowChannels, 2 do
-							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
-							table.insert(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible, chn)
-						end
-						
-					end
-					
-					
-					
-
 
 				end -- eo ChatFrame
 				
@@ -906,76 +751,19 @@ end
 				-- Chat Types
 				if (type(AccWideUI_AccountData.ChatChannelsJoined) ~= "table") then
 					AccWideUI_AccountData.ChatChannelsJoined = {}
-					local channels = {GetChannelList()}
-					for i = 1, #channels, 3 do
-						local id, name, disabled = channels[i], channels[i+1], channels[i+2]
-						AccWideUI_AccountData.ChatChannelsJoined[id] = name
-					end
 				end
 				
 				
 				--Chat Colours Etc
 				if (type(AccWideUI_AccountData.ChatInfo) ~= "table") then
 					AccWideUI_AccountData.ChatInfo = {}
-					for k, v in pairs(AccWideUI_Table_ChatTypes) do
-						if (type(ChatTypeInfo[v]) == "table") then
-							
-							local thisChatTypeInfo = ChatTypeInfo[v]
-							
-							AccWideUI_AccountData.ChatInfo[v] = { ChatTypeInfo[v] }
-						end
-					end
 				end
 				
-				
-			
-			
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 
-					if ((type(AccWideUI_CharData) == "table") and (AccWideUI_CharData["accWideSpec1"] == nil)) then
-						AccWideUI_CharData = nil
-						print(AccWideUI_TextName .. " Removed Invalid Char Data.")
-					end
-					
-					
-					if (type(AccWideUI_CharData) ~= "table") then
+
+		
 				
-						AccWideUI_CharData = {
-								["accWideSpec1"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec2"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec3"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec4"] = AccWideUI_AccountData.enableAccountWide,
-								["accWideSpec5"] = AccWideUI_AccountData.enableAccountWide --Temp Spec for fresh chars, adding just in case
-						}
-					
-						if (AccWideUI_AccountData.enableTextOutput == true) then
-						
-							print(AccWideUI_TextName .. " " .. L.ACCWUI_LOAD_FIRST_TIME_CHAR)
-						
-						end
-					
-					
-					else
-					
-						if (AccWideUI_AccountData.enableTextOutput == true) then
-					
-							print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))
-							
-						
-						end
-					
-					end
-					
 				
-				else
-				
-					if (AccWideUI_AccountData.enableTextOutput == true) then
-					
-							print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))
-						
-					end
-						
-				end
 				
 				
 				-- Update Notices
@@ -986,14 +774,23 @@ end
 					end)
 				end
 				
-						
-				AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
 				
 				
-				AccWideUI_Frame:InitializeOptionsFrame()
-				AccWideUI_Frame.InitializeOptionsSettings()
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 				
-				AccWideUI_Frame_HasLoadedSettings = true
+					AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
+					AccWideUI_Frame:InitializeOptionsFrame()
+					AccWideUI_Frame.InitializeOptionsSettings()
+					AccWideUI_Frame_HasLoadedSettings = true
+					
+					if (AccWideUI_AccountData.enableTextOutput == true) then
+						print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))	
+					end
+				
+				else
+					StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+				end
+				
 			
 			end
 			
@@ -1002,26 +799,32 @@ end
 
 
 			if (event == "LOADING_SCREEN_DISABLED" and AccWideUI_Frame_HasLoadedSettings == true and AccWideUI_Frame_HasDoneInitialLoad == false) then
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Doing Initial Load.")
+					end
 			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Doing Initial Load.")
+					
+					C_Timer.After(5, function() 
+						AccWideUI_Frame:LoadUISettings()
+						AccWideUI_Frame_HasDoneInitialLoad = true
+					end)
+					
 				end
-		
-				
-				C_Timer.After(5, function() 
-					AccWideUI_Frame:LoadUISettings()
-					AccWideUI_Frame_HasDoneInitialLoad = true
-				end)
-			
-				
 	
 			end --EO Settings Loaded
 			
 			
+			
+			
+			
+			
 			if  (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
-				
-				AccWideUI_Frame:SaveUISettings()
-				AccWideUI_Frame:LoadUISettings(true)
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+					AccWideUI_Frame:SaveUISettings()
+					AccWideUI_Frame:LoadUISettings(true)
+				end
 	
 			end --EO Settings Loaded
 			
@@ -1029,22 +832,30 @@ end
 			
 			
 			-- Save all settings when logging out
-			if  (event == "PLAYER_LOGOUT") then
-				AccWideUI_Frame:SaveUISettings()
+			if (event == "PLAYER_LOGOUT") then
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+					AccWideUI_Frame:SaveUISettings()
+				end
 			end
 			
 			
 			--Save Block Guild Setting with these 2
 			if (event == "DISABLE_DECLINE_GUILD_INVITE") then
-				AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = false
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+					AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = false
+				end
 			end
 			
 			if (event == "ENABLE_DECLINE_GUILD_INVITE") then
-				AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = true
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+					AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = true
+				end
 			end
 			
 			
 			if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+			
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 
 				-- Remove player from channels if they're blocked
 				if (event == "CHANNEL_UI_UPDATE") then
@@ -1094,12 +905,15 @@ end
 			
 			end
 			
+			end
 		
 		end
 
 	end)
 
 	function AccWideUI_Frame:InitializeOptionsFrame()
+		
+		if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 	
 	
 			AccWideUI_OptionsPanelFrame = CreateFrame("Frame");
@@ -1108,6 +922,8 @@ end
 			Settings.RegisterAddOnCategory(AccWideUI_Category)
 			
 			AccWideUI_OptionsPanelFrameCategoryID = AccWideUI_Category:GetID()
+			
+		end
 	
 	
 	end
@@ -1115,7 +931,7 @@ end
 
 	function AccWideUI_Frame:InitializeOptionsSettings()
 	
-
+		if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 			
 			
 			
@@ -1724,12 +1540,52 @@ end
 			
 			
 			
+			--Debug
+			
+			
+			--[[local acBorderD = AccWideUI_OptionsPanelFrame:CreateTexture(nil, "BACKGROUND")
+			acBorderD:SetHeight(8)
+			acBorderD:SetPoint("BOTTOMRIGHT", -10, 35)
+			acBorderD:SetPoint("RIGHT", -200, 0)
+			acBorderD:SetTexture(AccWideUI_DividerGraphic)]]
+			
+			
+			local debugSaveBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
+				debugSaveBtn:SetSize(100 ,20)
+				debugSaveBtn:SetText("Debug Save")
+				debugSaveBtn:SetPoint("BOTTOMRIGHT", -10, 10)
+				debugSaveBtn:SetScript("OnClick", function()
+					print(AccWideUI_TextName .. " Force-Saving Settings.")
+					 AccWideUI_Frame:SaveUISettings()
+					
+				end)
+				
+				
+			local debugLoadBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
+				debugLoadBtn:SetSize(100 ,20)
+				debugLoadBtn:SetText("Debug Load")
+				debugLoadBtn:SetPoint("BOTTOMRIGHT", -110, 10)
+				debugLoadBtn:SetScript("OnClick", function()
+					print(AccWideUI_TextName .. " Force-Loading Settings.")
+					 AccWideUI_Frame:LoadUISettings()
+					
+				end)
+				
+			local chkDebugText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkDebugText:SetPoint("BOTTOMRIGHT", -305, 5)
+				chkDebugText.Text:SetText("Show Debug Text")
+				chkDebugText:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.enableDebug = chkDebugText:GetChecked()
+				end)
+				chkDebugText:SetChecked(AccWideUI_AccountData.enableDebug)
 
+
+			--- <3
 			local colorPet = CreateColor(0.25, 0.25, 0.25)
 			local titlePet = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlightSmall")
-			titlePet:SetJustifyV('BOTTOM')
+			titlePet:SetJustifyV('TOP')
 			titlePet:SetJustifyH('RIGHT')
-			titlePet:SetPoint('BOTTOMRIGHT', -15, 15)
+			titlePet:SetPoint('TOPRIGHT', -20, -5)
 			titlePet:SetText(colorPet:WrapTextInColorCode("Dedicated to Petrel <3"))
 		
 		
@@ -1743,7 +1599,7 @@ end
 				Settings.OpenToCategory(AccWideUI_OptionsPanelFrameCategoryID)
 			end
 			
-			
+		end
 		
 	end
 
@@ -1753,515 +1609,527 @@ end
 
 	
 	function AccWideUI_Frame:LoadUISettings(doNotLoadChatSettings)
+		
+		if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 	
-		doNotLoadChatSettings = doNotLoadChatSettings or false
-	
-		if (InCombatLockdown()) then
-			if (AccWideUI_AccountData.enableDebug == true) then
-				print(AccWideUI_TextName .. " Not loading UI Settings while in combat.")
-			end
-			
-		else
+			doNotLoadChatSettings = doNotLoadChatSettings or false
 		
-			
-		
-			if (AccWideUI_AccountData.enableDebug == true) then
-				print(AccWideUI_TextName .. " Loading UI Settings.")
-			end
-			
-			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-			
-				-- Use Acc Wide Layout
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = tostring(GetSpecialization())
-				
-				if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-				
-
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Acc Wide UI.")
-					end
-
-					--Set the spec
-					C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
-			
-				
-			end -- eo accountWideLayout
-
-			end
-			
-			-- Use Action Bars
-			if (AccWideUI_AccountData.accountWideActionBars == true) then
-					
+			if (InCombatLockdown()) then
 				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Action Bar Settings.")
+					print(AccWideUI_TextName .. " Not loading UI Settings while in combat.")
 				end
 				
-				
-				for k, v in pairs(AccWideUI_Table_ActionBarVariables) do
-					SetCVar(v, AccWideUI_AccountData.ActionBars.ActionBarVariables[v])
-				end
-					
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-						
-						SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8)
-					
-					else
-					
-						SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5)
-					
-					end
-					
-					MultiActionBar_Update()
+			else
 			
-			end -- EO accountWideActionBars
-
-
-			-- Use Nameplates
-			if (AccWideUI_AccountData.accountWideNameplates == true) then
+				
 			
 				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Nameplate Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_NameplateVariables) do
-					SetCVar(v, AccWideUI_AccountData.Nameplates[v])
-				end
-			
-			end -- EO accountWideNameplates
-			
-			
-			
-			-- Use Raid Frames
-			if (AccWideUI_AccountData.accountWideRaidFrames == true) then
-		
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-					SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
+					print(AccWideUI_TextName .. " Loading UI Settings.")
 				end
 				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					-- Use Acc Wide Layout
+					local getLayoutsTable = C_EditMode.GetLayouts()
+					local currentActiveLayout = getLayoutsTable["activeLayout"]
+					local currentSpec = tostring(GetSpecialization())
 					
-					for i=1, GetMaxNumCUFProfiles() do
+					if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 					
-						local thisRaidProfileName = GetRaidProfileName(i) or nil
-						
-						if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
-							if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
 
-								if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
-									CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
-								end
-								
-								SetRaidProfileSavedPosition(
-									AccWideUI_AccountData.RaidFrameProfiles[i].name,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
-									AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
-								)
-								
-								for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
-									SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
-								end
-										
-								if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
-									CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
-								end
-						
-							end
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Acc Wide UI.")
 						end
+
+						--Set the spec
+						C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
 				
+					
+				end -- eo accountWideLayout
+
+				end
+				
+				-- Use Action Bars
+				if (AccWideUI_AccountData.accountWideActionBars == true) then
+						
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Action Bar Settings.")
 					end
 					
 					
-					--remove old
-					for i=1, GetMaxNumCUFProfiles() do
+					for k, v in pairs(AccWideUI_Table_ActionBarVariables) do
+						SetCVar(v, AccWideUI_AccountData.ActionBars.ActionBarVariables[v])
+					end
 					
-						local keepThisOne = false
-							
-						local thisRaidProfileName = GetRaidProfileName(i) or nil
+					if (type(AccWideUI_AccountData.ActionBars) == "table") then
+					
+						if (type(AccWideUI_AccountData.ActionBars.Bar2) == "boolean") then
 						
-						if (type(thisRaidProfileName) == "string") then
-					
-							for y=1, GetMaxNumCUFProfiles() do
+							if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+								
+								SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8)
 							
-								if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
-									if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
-										keepThisOne = true
-										if (AccWideUI_AccountData.enableDebug == true) then
-											print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
+							else
+							
+								SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5)
+							
+							end
+						
+						end
+						
+					end
+						
+						MultiActionBar_Update()
+				
+				end -- EO accountWideActionBars
+
+
+				-- Use Nameplates
+				if (AccWideUI_AccountData.accountWideNameplates == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Nameplate Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_NameplateVariables) do
+						SetCVar(v, AccWideUI_AccountData.Nameplates[v])
+					end
+				
+				end -- EO accountWideNameplates
+				
+				
+				
+				-- Use Raid Frames
+				if (AccWideUI_AccountData.accountWideRaidFrames == true) then
+			
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
+						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
+					end
+					
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+						
+						for i=1, GetMaxNumCUFProfiles() do
+						
+							local thisRaidProfileName = GetRaidProfileName(i) or nil
+							
+							if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
+								if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
+
+									if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
+										CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+									end
+									
+									SetRaidProfileSavedPosition(
+										AccWideUI_AccountData.RaidFrameProfiles[i].name,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
+										AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
+									)
+									
+									for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
+										SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
+									end
+											
+									if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
+										CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+									end
+							
+								end
+							end
+					
+						end
+						
+						
+						--remove old
+						for i=1, GetMaxNumCUFProfiles() do
+						
+							local keepThisOne = false
+								
+							local thisRaidProfileName = GetRaidProfileName(i) or nil
+							
+							if (type(thisRaidProfileName) == "string") then
+						
+								for y=1, GetMaxNumCUFProfiles() do
+								
+									if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
+										if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
+											keepThisOne = true
+											if (AccWideUI_AccountData.enableDebug == true) then
+												print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
+											end
 										end
 									end
+								
 								end
 							
 							end
-						
-						end
-						
-						if (type(thisRaidProfileName) == "string" and keepThisOne == false) then
-							if (AccWideUI_AccountData.enableDebug == true) then
-								print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
+							
+							if (type(thisRaidProfileName) == "string" and keepThisOne == false) then
+								if (AccWideUI_AccountData.enableDebug == true) then
+									print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
+								end
+								DeleteRaidProfile(thisRaidProfileName)
+								AccWideUI_AccountData.RaidFrameProfiles[i] = nil
 							end
-							DeleteRaidProfile(thisRaidProfileName)
-							AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+							
 						end
 						
-					end
-					
 
-				end
-				
-	
-				
-			
-			end -- EO accountWideRaidFrames
-			
-			
-			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-				-- Use Arena Frames
-				if (AccWideUI_AccountData.accountWideArenaFrames == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
 					end
-				
-					for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
-						SetCVar(v, AccWideUI_AccountData.ArenaFrames[v])
-					end
-				
-				end -- EO accountWideArenaFrames
-			end
-			
-			
-			-- Block Social Variables
-			if (AccWideUI_AccountData.accountWideBlockSocialVariables == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Block Social Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_BlockSocialVariables) do
-					SetCVar(v, AccWideUI_AccountData.BlockSocial[v])
-				end
-				
-				
-				--Special
-				SetAutoDeclineGuildInvites(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites)
-			
-			end -- EO accountWideBlockSocialVariables
-			
-			
-			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-				-- Spell Overlay Variables
-				if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Spell Overlay Settings.")
-					end
-				
-					for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
-						SetCVar(v, AccWideUI_AccountData.SpellOverlay[v])
-					end
-				
-				end -- EO accountWideSpellOverlayVariables
-			end
-			
-			
-			-- Auto Loot Variables
-			if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Auto Loot Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
-					SetCVar(v, AccWideUI_AccountData.AutoLoot[v])
-				end
-			
-			end -- EO accountWideAutoLootVariables
-			
-			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-			
-				-- Loss of Control Variables
-				if (AccWideUI_AccountData.accountWideLossOfControlVariables == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Loss of Control Settings.")
-					end
-				
-					for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
-						SetCVar(v, AccWideUI_AccountData.LossOfControl[v])
-					end
-				
-				end -- EO accountWideLossOfControlVariables
-			
-			end
-			
-			
-			-- Soft Target Variables
-			if (AccWideUI_AccountData.accountWideSoftTargetVariables == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Soft Target Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_SoftTargetVariables) do
-					SetCVar(v, AccWideUI_AccountData.SoftTarget[v])
-				end
-			
-			end -- EO accountWideSoftTargetVariables
-			
-			
-			
-			-- Tutorial Variables
-			if (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Tutorial Tooltip Settings.")
-				end
-			
-				for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
-					SetCVar(v, AccWideUI_AccountData.TutorialTooltips[v])
-				end
-			end -- EO accountWideTutorialVariables
-			
-			
-			
-			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-			
-				-- Bag Sorting Variables
-				if (AccWideUI_AccountData.accountWideBagSortingSettings == true) then
-				
-					if (AccWideUI_AccountData.enableDebug == true) then
-						print(AccWideUI_TextName .. " Loading Bag Sorting Settings.")
-					end
-				
-					C_Container.SetSortBagsRightToLeft(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft)
-					C_Container.SetInsertItemsLeftToRight(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight)
-				
-				end -- EO accountWideBagSortingSettings
-			
-			end]]
+					
 		
-		
-			-- Chat Window Settings
-			
-			if (AccWideUI_AccountData.accountWideChatWindowVariables == true and doNotLoadChatSettings == false) then
-			
-				if (AccWideUI_AccountData.enableDebug == true) then
-					print(AccWideUI_TextName .. " Loading Chat Window Settings.")
-				end
+					
+				
+				end -- EO accountWideRaidFrames
 				
 				
-				if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
-				
-					C_Timer.After(10, function() 
-						if (AccWideUI_AccountData.enableDebug == true) then
-							print(AccWideUI_TextName .. " Joining Chat Channels.")
-						end
-						-- Chat Channels
-						for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
-							JoinChannelByName(v)
-						end
-					end)
-					
-					
-					
-					C_Timer.After(14, function() 
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Use Arena Frames
+					if (AccWideUI_AccountData.accountWideArenaFrames == true) then
 					
 						if (AccWideUI_AccountData.enableDebug == true) then
-							print(AccWideUI_TextName .. " Reordering Chat Channels.")
+							print(AccWideUI_TextName .. " Loading Arena Frame Settings.")
 						end
-						--Reorder Chat Channels
-						for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
-							
-							local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
-							
-							if (id ~= k) then
-								-- Move Channel
-								C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+					
+						for k, v in pairs(AccWideUI_Table_ArenaFrameVariables) do
+							SetCVar(v, AccWideUI_AccountData.ArenaFrames[v])
+						end
+					
+					end -- EO accountWideArenaFrames
+				end
+				
+				
+				-- Block Social Variables
+				if (AccWideUI_AccountData.accountWideBlockSocialVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Block Social Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_BlockSocialVariables) do
+						SetCVar(v, AccWideUI_AccountData.BlockSocial[v])
+					end
+					
+					
+					--Special
+					SetAutoDeclineGuildInvites(AccWideUI_AccountData.SpecialVariables.BlockGuildInvites)
+				
+				end -- EO accountWideBlockSocialVariables
+				
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Spell Overlay Variables
+					if (AccWideUI_AccountData.accountWideSpellOverlayVariables == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Spell Overlay Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_SpellOverlayVariables) do
+							SetCVar(v, AccWideUI_AccountData.SpellOverlay[v])
+						end
+					
+					end -- EO accountWideSpellOverlayVariables
+				end
+				
+				
+				-- Auto Loot Variables
+				if (AccWideUI_AccountData.accountWideAutoLootVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Auto Loot Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_AutoLootVariables) do
+						SetCVar(v, AccWideUI_AccountData.AutoLoot[v])
+					end
+				
+				end -- EO accountWideAutoLootVariables
+				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					-- Loss of Control Variables
+					if (AccWideUI_AccountData.accountWideLossOfControlVariables == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Loss of Control Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_LossOfControlVariables) do
+							SetCVar(v, AccWideUI_AccountData.LossOfControl[v])
+						end
+					
+					end -- EO accountWideLossOfControlVariables
+				
+				end
+				
+				
+				-- Soft Target Variables
+				if (AccWideUI_AccountData.accountWideSoftTargetVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Soft Target Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_SoftTargetVariables) do
+						SetCVar(v, AccWideUI_AccountData.SoftTarget[v])
+					end
+				
+				end -- EO accountWideSoftTargetVariables
+				
+				
+				
+				-- Tutorial Variables
+				if (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Tutorial Tooltip Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
+						SetCVar(v, AccWideUI_AccountData.TutorialTooltips[v])
+					end
+				end -- EO accountWideTutorialVariables
+				
+				
+				
+				--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					-- Bag Sorting Variables
+					if (AccWideUI_AccountData.accountWideBagSortingSettings == true) then
+					
+						if (AccWideUI_AccountData.enableDebug == true) then
+							print(AccWideUI_TextName .. " Loading Bag Sorting Settings.")
+						end
+					
+						C_Container.SetSortBagsRightToLeft(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft)
+						C_Container.SetInsertItemsLeftToRight(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight)
+					
+					end -- EO accountWideBagSortingSettings
+				
+				end]]
+			
+			
+				-- Chat Window Settings
+				
+				if (AccWideUI_AccountData.accountWideChatWindowVariables == true and doNotLoadChatSettings == false) then
+				
+					if (AccWideUI_AccountData.enableDebug == true) then
+						print(AccWideUI_TextName .. " Loading Chat Window Settings.")
+					end
+					
+					
+					if (AccWideUI_AccountData.accountWideChatChannelVariables == true) then
+					
+						C_Timer.After(10, function() 
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Joining Chat Channels.")
 							end
-							
-						end
-					end)
-					
-	
-					
-					C_Timer.After(16, function() 
-						if (AccWideUI_AccountData.enableDebug == true) then
-							print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
-						end
-						-- Chat Colours
-						for k, v in pairs(AccWideUI_Table_ChatTypes) do
-							if (type(ChatTypeInfo[v]) == "table") then
-								if (type(AccWideUI_AccountData.ChatInfo[v][1]) == "table") then
-									ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
-									
-									SetChatColorNameByClass(v, AccWideUI_AccountData.ChatInfo[v][1].colorNameByClass)
+							-- Chat Channels
+							for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
+								JoinChannelByName(v)
+							end
+						end)
+						
+						
+						
+						C_Timer.After(14, function() 
+						
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Reordering Chat Channels.")
+							end
+							--Reorder Chat Channels
+							for k, v in pairs(AccWideUI_AccountData.ChatChannelsJoined) do
+								
+								local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
+								
+								if (id ~= k) then
+									-- Move Channel
+									C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+								end
+								
+							end
+						end)
+						
+		
+						
+						C_Timer.After(16, function() 
+							if (AccWideUI_AccountData.enableDebug == true) then
+								print(AccWideUI_TextName .. " Setting Chat Channel Colors.")
+							end
+							-- Chat Colours
+							for k, v in pairs(AccWideUI_Table_ChatTypes) do
+								if (type(ChatTypeInfo[v]) == "table") then
+									if (type(AccWideUI_AccountData.ChatInfo[v][1]) == "table") then
+										ChangeChatColor(v, AccWideUI_AccountData.ChatInfo[v][1].r, AccWideUI_AccountData.ChatInfo[v][1].g, AccWideUI_AccountData.ChatInfo[v][1].b)
+										
+										SetChatColorNameByClass(v, AccWideUI_AccountData.ChatInfo[v][1].colorNameByClass)
+									end
 								end
 							end
-						end
-					end)
-				
-				
-				end
-				
-				
-				
-				
-				-- Individual Chat Window/Tab Settings
-				for thisChatFrame = 1, NUM_CHAT_WINDOWS do
-					
-					local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
-					
-					FCF_SetWindowAlpha(
-						thisChatFrameVar, 
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
-					)
-					
-					SetChatWindowAlpha(
-						thisChatFrame, 
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
-					)
-					
-					FCF_SetWindowColor(
-						thisChatFrameVar,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.r,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.g,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.b
-					)
-					
-					SetChatWindowColor(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.r,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.g,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.b
-					)
-					
-					SetChatWindowDocked(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked
-					)
-					
-					SetChatWindowLocked(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isLocked
-					)
-					
-					SetChatWindowShown(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown
-					)
-					
-					SetChatWindowUninteractable(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isUninteractable
-					)
-					
-					SetChatWindowName(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.name
-					)
-					
-					SetChatWindowSize(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.size
-					)
-					
-					SetChatWindowSavedDimensions(
-						thisChatFrame,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.width,
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.height
-					)
+						end)
 					
 					
-					if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset) ~= "nil") then
-						SetChatWindowSavedPosition(
-							thisChatFrame,
-							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.point,
-							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset,
-							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.yOffset
+					end
+					
+					
+					
+					
+					-- Individual Chat Window/Tab Settings
+					for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+						
+						local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+						
+						FCF_SetWindowAlpha(
+							thisChatFrameVar, 
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
 						)
-					end
-					
-					--Visible Chat Channels
-					C_Timer.After((18 + (thisChatFrame * 2)), function() 
-					
-						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
-					
-						for i = 1, #thisWindowChannels, 2 do
-							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
-							
-							if (AccWideUI_AccountData.enableDebug == true) then
-								print(AccWideUI_TextName .. " Removing " .. chn .. " From Chat Window " .. thisChatFrame .. ".")
-							end
-							
-							ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+						
+						SetChatWindowAlpha(
+							thisChatFrame, 
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.a
+						)
+						
+						FCF_SetWindowColor(
+							thisChatFrameVar,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.r,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.g,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.b
+						)
+						
+						SetChatWindowColor(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.r,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.g,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.b
+						)
+						
+						SetChatWindowDocked(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked
+						)
+						
+						SetChatWindowLocked(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isLocked
+						)
+						
+						SetChatWindowShown(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown
+						)
+						
+						SetChatWindowUninteractable(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isUninteractable
+						)
+						
+						SetChatWindowName(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.name
+						)
+						
+						SetChatWindowSize(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.size
+						)
+						
+						SetChatWindowSavedDimensions(
+							thisChatFrame,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.width,
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.height
+						)
+						
+						
+						if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset) ~= "nil") then
+							SetChatWindowSavedPosition(
+								thisChatFrame,
+								AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.point,
+								AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset,
+								AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.yOffset
+							)
 						end
-					
-						for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible) do
 						
-							if (AccWideUI_AccountData.enableDebug == true) then
-								print(AccWideUI_TextName .. " Adding " .. v .. " To Chat Window " .. thisChatFrame .. ".")
-							end
-							
-							ChatFrame_AddChannel(thisChatFrameVar, v)
-							
-						end
+						--Visible Chat Channels
+						C_Timer.After((18 + (thisChatFrame * 2)), function() 
 						
-					
-					
+							local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
 						
-					
-					end)
-					
-					
-					-- Types of Chat
-					C_Timer.After((20 + (thisChatFrame * 2)), function() 
-					
-						if ((AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown == true) or (AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked)) then
-					
-							if (AccWideUI_AccountData.enableDebug == true) then
-								print(AccWideUI_TextName .. " Setting Chat Types for Chat Window " .. thisChatFrame .. ".")
+							for i = 1, #thisWindowChannels, 2 do
+								local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+								
+								if (AccWideUI_AccountData.enableDebug == true) then
+									print(AccWideUI_TextName .. " Removing " .. chn .. " From Chat Window " .. thisChatFrame .. ".")
+								end
+								
+								ChatFrame_RemoveChannel(thisChatFrameVar, chn)
 							end
 						
-						
-							ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+							for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatChannelsVisible) do
 							
-							for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
-								 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
-								 if (AccWideUI_AccountData.enableDebug == true) then
-									print(AccWideUI_TextName .. " Adding " .. v .. " to Chat Window " .. thisChatFrame .. ".")
-								 end
+								if (AccWideUI_AccountData.enableDebug == true) then
+									print(AccWideUI_TextName .. " Adding " .. v .. " To Chat Window " .. thisChatFrame .. ".")
+								end
+								
+								ChatFrame_AddChannel(thisChatFrameVar, v)
+								
 							end
+							
 						
-						end
 						
-					end)
-					
-					
-					
-					
-					
-					FloatingChatFrame_Update(thisChatFrame)
+							
+						
+						end)
+						
+						
+						-- Types of Chat
+						C_Timer.After((20 + (thisChatFrame * 2)), function() 
+						
+							if ((AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isShown == true) or (AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked)) then
+						
+								if (AccWideUI_AccountData.enableDebug == true) then
+									print(AccWideUI_TextName .. " Setting Chat Types for Chat Window " .. thisChatFrame .. ".")
+								end
+							
+							
+								ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+								
+								for k,v in pairs(AccWideUI_AccountData.ChatWindows[thisChatFrame].MessageTypes) do
+									 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+									 if (AccWideUI_AccountData.enableDebug == true) then
+										print(AccWideUI_TextName .. " Adding " .. v .. " to Chat Window " .. thisChatFrame .. ".")
+									 end
+								end
+							
+							end
+							
+						end)
+						
+						
+						
+						
+						
+						FloatingChatFrame_Update(thisChatFrame)
 
+					end
+				
+					FCF_DockUpdate()
+				
 				end
 			
-				FCF_DockUpdate()
-			
 			end
-		
+	
 		end
 	
 	end
@@ -2271,6 +2139,7 @@ end
 
 	function AccWideUI_Frame:SaveUISettings()
 	
+		
 	
 		if (InCombatLockdown()) then
 			if (AccWideUI_AccountData.enableDebug == true) then
@@ -2282,6 +2151,8 @@ end
 			if (AccWideUI_AccountData.enableDebug == true) then
 				print(AccWideUI_TextName .. " Saving UI Settings.")
 			end
+			
+			AccWideUI_AccountData.HasDoneFirstTimeSetup = true
 			
 		
 			--Save Shown Action Bars
@@ -2607,18 +2478,37 @@ end
 			
 				
 				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+
+					if ((type(AccWideUI_CharData) == "table") and (AccWideUI_CharData["accWideSpec1"] == nil)) then
+						AccWideUI_CharData = nil
+						print(AccWideUI_TextName .. " Removed Invalid Char Data.")
+					end
+					
+					
+					if (type(AccWideUI_CharData) ~= "table") then
+				
+						AccWideUI_CharData = {
+								["accWideSpec1"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec2"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec3"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec4"] = AccWideUI_AccountData.enableAccountWide,
+								["accWideSpec5"] = AccWideUI_AccountData.enableAccountWide --Temp Spec for fresh chars, adding just in case
+						}
+
+					end
 			
 			
-			
-			
-			end
+				end
 			
 		
 		end
+
 	
 	end
 
 
+	end
 
 
 
@@ -2645,10 +2535,14 @@ end
 	local AccWideUI_Tooltip
 
 	function AccWideUI_CompartmentClick(addonName, buttonName)
-		Settings.OpenToCategory(AccWideUI_OptionsPanelFrameCategoryID)
+		if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+			Settings.OpenToCategory(AccWideUI_OptionsPanelFrameCategoryID)
+		end
 	end
 
 	function AccWideUI_CompartmentHover(addonName, buttonName)
+	
+		if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 	
 			if (not AccWideUI_Tooltip) then
 				AccWideUI_Tooltip = CreateFrame("GameTooltip", "AccWideUI_Tooltip_Compartment", UIParent, "GameTooltipTemplate")
@@ -2700,10 +2594,14 @@ end
 			
 			AccWideUI_Tooltip:Show()
 		
+		end
+		
 	end
 
 	function AccWideUI_CompartmentLeave(buttonName)
+		if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 			AccWideUI_Tooltip:Hide()
+		end
 	end
 
 
