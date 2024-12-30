@@ -50,11 +50,13 @@ local _, L = ...;
 	
 	L.ACCWUI_FIRSTTIME_DECLINED_LINE1 = "You will be asked again the next time you switch character, or perform a UI /reload."
 	
-	L.ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT = "Show Debug Text"
+	L.ACCWUI_DEBUG_CHK_SHOWDEBUGOPTIONS = "Show Debug Settings"
 	
-	L.ACCWUI_DEBUG_BTN_FORCELOAD = "Debug Load"
+	L.ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT = "Output Debug Text"
+	
+	L.ACCWUI_DEBUG_BTN_FORCELOAD = "Force Load"
 	L.ACCWUI_DEBUG_TXT_FORCELOAD = "Force-Loading Settings."
-	L.ACCWUI_DEBUG_BTN_FORCESAVE = "Debug Save"
+	L.ACCWUI_DEBUG_BTN_FORCESAVE = "Force Save"
 	L.ACCWUI_DEBUG_TXT_FORCESAVE = "Force-Saving Settings."
 	
 	

@@ -17,6 +17,12 @@ local AccWideUI_Frame_HasDoneInitialLoad = false
 local AccWideUI_OptionsPanelFrame
 local AccWideUI_Category
 
+-- Checkboxes
+local chkAWISaveChatChannels
+local debugSaveBtn
+local debugLoadBtn
+local chkDebugText
+
 local function AccWideUI_ToBoolean(str)
 	local bool = false
 	if str == "true" then
@@ -473,6 +479,10 @@ end
 	
 				if (type(AccWideUI_AccountData) ~= "table") then
 					AccWideUI_AccountData = {}
+				end
+				
+				if (type(AccWideUI_AccountData.ShowDebugSettings) ~= "boolean") then
+					AccWideUI_AccountData.ShowDebugSettings = false
 				end
 				
 				if (type(AccWideUI_AccountData.printDebugTextToChat) ~= "boolean") then
@@ -1587,7 +1597,19 @@ end
 			acBorderD:SetTexture(AccWideUI_DividerGraphic)]]
 			
 			
-			local debugSaveBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
+			local chkShowDebugSettings = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkShowDebugSettings:SetPoint("BOTTOMLEFT", 10, 5)
+				chkShowDebugSettings.Text:SetText(DARKGRAY_COLOR:WrapTextInColorCode(L.ACCWUI_DEBUG_CHK_SHOWDEBUGOPTIONS))
+				chkShowDebugSettings:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.ShowDebugSettings	= chkShowDebugSettings:GetChecked()
+					
+					AccWideUI_Frame:ToggleShowDebugSettings()
+					
+				end)
+				chkShowDebugSettings:SetChecked(AccWideUI_AccountData.ShowDebugSettings)
+			
+			
+			debugSaveBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
 				debugSaveBtn:SetSize(100 ,20)
 				debugSaveBtn:SetText(L.ACCWUI_DEBUG_BTN_FORCESAVE)
 				debugSaveBtn:SetPoint("BOTTOMRIGHT", -10, 10)
@@ -1598,7 +1620,7 @@ end
 				end)
 				
 				
-			local debugLoadBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
+			debugLoadBtn = CreateFrame("Button", nil, AccWideUI_OptionsPanelFrame, "UIPanelButtonTemplate")
 				debugLoadBtn:SetSize(100 ,20)
 				debugLoadBtn:SetText(L.ACCWUI_DEBUG_BTN_FORCELOAD)
 				debugLoadBtn:SetPoint("BOTTOMRIGHT", -110, 10)
@@ -1608,8 +1630,8 @@ end
 					
 				end)
 				
-			local chkDebugText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkDebugText:SetPoint("BOTTOMRIGHT", -305, 5)
+			chkDebugText = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkDebugText:SetPoint("BOTTOMRIGHT", -310, 5)
 				chkDebugText.Text:SetText(L.ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT)
 				chkDebugText:HookScript("OnClick", function(_, btn, down)
 					AccWideUI_AccountData.printDebugTextToChat = chkDebugText:GetChecked()
@@ -1626,6 +1648,9 @@ end
 			titlePet:SetText(colorPet:WrapTextInColorCode("Dedicated to Petrel <3"))
 		
 		
+		
+		
+			AccWideUI_Frame:ToggleShowDebugSettings()
 			
 			SLASH_ACCWIDEUI1 = "/accwideui"
 			SLASH_ACCWIDEUI2 = "/accwideeditmode"
@@ -2545,7 +2570,17 @@ end
 	end
 	
 	
-
+	function AccWideUI_Frame:ToggleShowDebugSettings()
+		if (AccWideUI_AccountData.ShowDebugSettings == true) then
+			debugSaveBtn:Show()
+			debugLoadBtn:Show()
+			chkDebugText:Show()
+		 else 
+			debugSaveBtn:Hide()
+			debugLoadBtn:Hide()
+			chkDebugText:Hide()
+		end
+	end
 	
 	
 	

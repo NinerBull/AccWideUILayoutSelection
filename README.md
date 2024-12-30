@@ -25,7 +25,7 @@ By default, all of the settings below are synchronized, and you can disable any 
 ## Compatibility
 * **The War Within** - 11.0.7
 * **Cataclysm Classic** - 4.4.1
-* **Classic Era** - 1.15.5
+* **Classic Era** - 1.15.5 & 1.15.6
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
@@ -38,6 +38,6 @@ Download the latest version from one of the places below, and unzip it in your `
 
 
 ## Configuration
-NOTE: After installing for the first time, you should log into the character whose UI you have customized to your liking, so that the settings from that character are saved and will synchronize Account Wide!
+NOTE: After installing for the first time, you should log into the character whose UI you have customized to your liking. You'll be prompted to save the settings from that character to begin with, and its settings and any changes you make on any character will synchronize Account Wide!
 
 You can configure the addon by typing `/awi` into chat.
