@@ -107,18 +107,17 @@ end
 		hooksecurefunc(C_EditMode, "OnEditModeExit", function()
 		
 			if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+			
+				local getLayoutsTable = C_EditMode.GetLayouts()
+				local currentActiveLayout = getLayoutsTable["activeLayout"]
+				local currentSpec = tostring(GetSpecialization())
 		
 				if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 				
 					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Saving Acc Wide UI.")
 					end
-						
-					
-					local getLayoutsTable = C_EditMode.GetLayouts()
-					local currentActiveLayout = getLayoutsTable["activeLayout"]
-					local currentSpec = tostring(GetSpecialization())
-					
+
 					if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
 
 						--Set the spec
