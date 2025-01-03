@@ -229,7 +229,7 @@ end
 		"raidOptionDisplayMainTankAndAssist",
 		"raidFramesDisplayOnlyHealerPowerBars",
 		"useCompactPartyFrames",
-		--"activeCUFProfile",
+		"activeCUFProfile",
 		"showDispelDebuffs",
 		"threatWarning"
 	}
@@ -685,7 +685,7 @@ end
 				end
 				
 				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 					-- Raid Frame Profile Settings
 					if (type(AccWideUI_AccountData.RaidFrameProfiles) ~= "table") then
 						AccWideUI_AccountData.RaidFrameProfiles = {}
@@ -1772,83 +1772,94 @@ end
 						print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
 					end
 				
-					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
+					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+					
+						if (GetNumRaidProfiles() > 1) then --Errors out if less than 2
+						
+							for i=1, GetMaxNumCUFProfiles() do
+								
+								if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
+									if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
+
+										if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
+											CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+											
+											if (AccWideUI_AccountData.printDebugTextToChat == true) then
+												print(AccWideUI_TextName .. " Creating Raid Profile with Name " .. AccWideUI_AccountData.RaidFrameProfiles[i].name)
+											end
+											
+										end
+										
+										SetRaidProfileSavedPosition(
+											AccWideUI_AccountData.RaidFrameProfiles[i].name,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
+											AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
+										)
+										
+										for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
+											SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
+										end
+												
+										if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
+											CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+										end
+								
+									end
+								end
+						
+							
+							
+								
+								--remove old
+								for i=1, GetMaxNumCUFProfiles() do
+								
+									local keepThisOne = false
+										
+									local thisRaidProfileName = GetRaidProfileName(i) or nil
+									
+									if (type(thisRaidProfileName) == "string") then
+								
+										for y=1, GetNumRaidProfiles() do
+										
+											if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
+												if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
+													keepThisOne = true
+													if (AccWideUI_AccountData.printDebugTextToChat == true) then
+														print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
+													end
+												end
+											end
+										
+										end
+									
+									end
+									
+									if ((type(thisRaidProfileName) == "string" and keepThisOne == false) or (i > GetNumRaidProfiles())) then
+										if (AccWideUI_AccountData.printDebugTextToChat == true) then
+											thisRaidProfileName = thisRaidProfileName or "Unknown"
+											print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
+										end
+										DeleteRaidProfile(thisRaidProfileName)
+										AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+									end
+									
+								end
+								
+							end
+							
+						end
+						
+
 					end
 					
-					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-						
-						for i=1, GetMaxNumCUFProfiles() do
-						
-							local thisRaidProfileName = GetRaidProfileName(i) or nil
-							
-							if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
-								if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
-
-									if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
-										CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
-									end
-									
-									SetRaidProfileSavedPosition(
-										AccWideUI_AccountData.RaidFrameProfiles[i].name,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
-										AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
-									)
-									
-									for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
-										SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
-									end
-											
-									if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
-										CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
-									end
-							
-								end
-							end
 					
-						end
-						
-						
-						--remove old
-						for i=1, GetMaxNumCUFProfiles() do
-						
-							local keepThisOne = false
-								
-							local thisRaidProfileName = GetRaidProfileName(i) or nil
-							
-							if (type(thisRaidProfileName) == "string") then
-						
-								for y=1, GetMaxNumCUFProfiles() do
-								
-									if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
-										if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
-											keepThisOne = true
-											if (AccWideUI_AccountData.printDebugTextToChat == true) then
-												print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
-											end
-										end
-									end
-								
-								end
-							
-							end
-							
-							if (type(thisRaidProfileName) == "string" and keepThisOne == false) then
-								if (AccWideUI_AccountData.printDebugTextToChat == true) then
-									print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
-								end
-								DeleteRaidProfile(thisRaidProfileName)
-								AccWideUI_AccountData.RaidFrameProfiles[i] = nil
-							end
-							
-						end
-						
-
+					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
+						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
 					end
 					
 		
@@ -2269,46 +2280,56 @@ end
 				end
 				
 				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-					for i=1, GetMaxNumCUFProfiles() do
-														
-						local thisRaidProfileName = GetRaidProfileName(i) or nil
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+				
+					if (GetNumRaidProfiles() > 1) then
 					
-						if (type(thisRaidProfileName) ~= "nil") then
-							if (RaidProfileExists(thisRaidProfileName)) then
-							
+					
+						for i=1, GetNumRaidProfiles() do
+															
+							local thisRaidProfileName = GetRaidProfileName(i) or nil
+						
+							if (type(thisRaidProfileName) ~= "nil") then
+								if (RaidProfileExists(thisRaidProfileName)) then
 								
-								AccWideUI_AccountData.RaidFrameProfiles[i] = {}
-							
-								AccWideUI_AccountData.RaidFrameProfiles[i].name = thisRaidProfileName
-								AccWideUI_AccountData.RaidFrameProfiles[i].isActive = false
+									if (AccWideUI_AccountData.printDebugTextToChat == true) then
+										print(AccWideUI_TextName .. " Saving Raid Frame For " .. thisRaidProfileName)
+									end
 								
-								
-								if (thisRaidProfileName == GetActiveRaidProfile()) then
-									AccWideUI_AccountData.RaidFrameProfiles[i].isActive = true
-								end
-								
-								
-								AccWideUI_AccountData.RaidFrameProfiles[i].options =  GetRaidProfileFlattenedOptions(GetRaidProfileName(i))  
-								
-								local isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = GetRaidProfileSavedPosition(GetRaidProfileName(i))
-								
-								AccWideUI_AccountData.RaidFrameProfiles[i].position = {
-									["isDynamic"] = isDynamic,
-									["topPoint"] = topPoint,
-									["topOffset"] = topOffset,
-									["bottomPoint"] = bottomPoint,
-									["bottomOffset"] = bottomOffset,
-									["leftPoint"] = leftPoint,
-									["leftOffset"] = leftOffset
-								}
-								
-							
-							else
 									
-								AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+									AccWideUI_AccountData.RaidFrameProfiles[i] = {}
+								
+									AccWideUI_AccountData.RaidFrameProfiles[i].name = thisRaidProfileName
+									AccWideUI_AccountData.RaidFrameProfiles[i].isActive = false
+									
+									
+									if (thisRaidProfileName == GetActiveRaidProfile()) then
+										AccWideUI_AccountData.RaidFrameProfiles[i].isActive = true
+									end
+									
+									
+									AccWideUI_AccountData.RaidFrameProfiles[i].options =  GetRaidProfileFlattenedOptions(GetRaidProfileName(i))  
+									
+									local isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = GetRaidProfileSavedPosition(GetRaidProfileName(i))
+									
+									AccWideUI_AccountData.RaidFrameProfiles[i].position = {
+										["isDynamic"] = isDynamic,
+										["topPoint"] = topPoint,
+										["topOffset"] = topOffset,
+										["bottomPoint"] = bottomPoint,
+										["bottomOffset"] = bottomOffset,
+										["leftPoint"] = leftPoint,
+										["leftOffset"] = leftOffset
+									}
+									
+								
+								else
+										
+									AccWideUI_AccountData.RaidFrameProfiles[i] = nil
 
+								end
 							end
+							
 						end
 					end
 			end
