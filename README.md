@@ -9,7 +9,7 @@ This addon synchronizes various Interface Settings that are normally character s
 It eliminates the need to configure the same settings on all of your characters, including any fresh characters you make, helping you to keep a consistent UI Account Wide.
 Ideal for altoholics or Hardcore players!
 
-By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific:
+By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific.
 
 * Chosen Edit Mode Layout (Can also be disabled per spec)
 * Visible Action Bars
@@ -23,6 +23,8 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Viewed Tutorial Tooltips
 * Block Guild/Trade/Channel Invite Settings
 * Block General/Trade/Services/LocalDefense Chat Channels
+
+Settings are automatically saved upon log out, and automatically loaded upon logging in to a character. Set it and forget it!
 
 ## Compatibility
 * **The War Within** - 11.0.7 & 11.1.0
