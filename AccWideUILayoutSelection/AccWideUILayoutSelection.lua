@@ -1771,6 +1771,10 @@ end
 					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " Loading Raid Frame Settings.")
 					end
+					
+					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
+						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
+					end
 				
 					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 					
@@ -1858,9 +1862,7 @@ end
 					end
 					
 					
-					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
-					end
+					
 					
 		
 					
