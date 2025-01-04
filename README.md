@@ -24,7 +24,6 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Block Guild/Trade/Channel Invite Settings
 * Block General/Trade/Services/LocalDefense Chat Channels
 
-Settings are automatically saved upon log out, and automatically loaded upon logging in to a character. Set it and forget it!
 
 ## Compatibility
 * **The War Within** - 11.0.7 & 11.1.0
@@ -43,5 +42,7 @@ Download the latest version from one of the places below, and unzip it in your `
 
 ## Configuration
 NOTE: After installing for the first time, you should log into the character whose UI you have customized to your liking. You'll be prompted to save the settings from that character to begin with, and its settings and any changes you make on any character will synchronize Account Wide!
+
+Settings are automatically saved upon log out, and automatically loaded upon logging in to a character.
 
 You can configure the addon by typing `/awi` into chat.
