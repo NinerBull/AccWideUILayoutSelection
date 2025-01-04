@@ -7,7 +7,7 @@ https://github.com/NinerBull/AccWideUILayoutSelection
 
 local _, L = ...;
 
-local AccWideUI_SaveVersion = 2
+local AccWideUI_SaveVersion = 3
 
 local AccWideUI_Frame = CreateFrame("Frame")
 
