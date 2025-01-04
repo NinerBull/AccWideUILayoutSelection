@@ -229,7 +229,7 @@ end
 		"raidOptionDisplayMainTankAndAssist",
 		"raidFramesDisplayOnlyHealerPowerBars",
 		"useCompactPartyFrames",
-		"activeCUFProfile",
+		-- "activeCUFProfile",
 		"showDispelDebuffs",
 		"threatWarning"
 	}
