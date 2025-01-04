@@ -9,7 +9,7 @@ This addon synchronizes various Interface Settings that are normally character s
 It eliminates the need to configure the same settings on all of your characters, including any fresh characters you make, helping you to keep a consistent UI Account Wide.
 Ideal for altoholics or Hardcore players!
 
-By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific.
+By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific:
 
 * Chosen Edit Mode Layout (Can also be disabled per spec)
 * Visible Action Bars
