@@ -5,7 +5,9 @@ An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic E
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw76793.jpg)
 
 ## About
-This addon synchronizes various Interface Settings that are normally character specific across all of your characters on your account, including any fresh characters you create, helping you to keep a consistent UI Account Wide.
+This addon synchronizes various Interface Settings that are normally character specific across all of your characters on your account. 
+It eliminates the need to configure the same settings on all of your characters, including any fresh characters you make, helping you to keep a consistent UI Account Wide.
+Ideal for altoholics or Hardcore players!
 
 By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific:
 
