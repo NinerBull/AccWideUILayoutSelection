@@ -1778,7 +1778,17 @@ end
 				
 					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 					
-						if (GetNumRaidProfiles() > 1) then --Errors out if less than 2
+						--How many Raid Profiles?
+						
+						local ThisNumRaidProfilesSaved = 0
+						
+						for n in pairs(AccWideUI_AccountData.RaidFrameProfiles) do 
+							ThisNumRaidProfilesSaved = ThisNumRaidProfilesSaved + 1 
+						end
+						
+						
+					
+						if (ThisNumRaidProfilesSaved > 1) then --Errors out if less than 2
 						
 							for i=1, GetMaxNumCUFProfiles() do
 								
@@ -1815,47 +1825,69 @@ end
 								
 									end
 								end
-						
-							
-							
+			
 								
-								--remove old
-								for i=1, GetMaxNumCUFProfiles() do
-								
-									local keepThisOne = false
-										
-									local thisRaidProfileName = GetRaidProfileName(i) or nil
-									
-									if (type(thisRaidProfileName) == "string") then
-								
-										for y=1, GetNumRaidProfiles() do
-										
-											if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
-												if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
-													keepThisOne = true
-													if (AccWideUI_AccountData.printDebugTextToChat == true) then
-														print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
-													end
-												end
-											end
-										
-										end
-									
-									end
-									
-									if ((type(thisRaidProfileName) == "string" and keepThisOne == false) or (i > GetNumRaidProfiles())) then
-										if (AccWideUI_AccountData.printDebugTextToChat == true) then
-											thisRaidProfileName = thisRaidProfileName or "Unknown"
-											print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
-										end
-										DeleteRaidProfile(thisRaidProfileName)
-										AccWideUI_AccountData.RaidFrameProfiles[i] = nil
-									end
-									
-								end
 								
 							end
 							
+						end
+						
+						
+						if (GetNumRaidProfiles() > 1) then --Errors out if less than 2
+						
+						--remove old
+							for i=1, GetMaxNumCUFProfiles() do
+							
+								local keepThisOne = false
+									
+								local thisRaidProfileName = GetRaidProfileName(i) or nil
+								
+								if (type(thisRaidProfileName) == "string") then
+							
+									for y=1, GetNumRaidProfiles() do
+									
+										if (type(AccWideUI_AccountData.RaidFrameProfiles[y]) == "table") then
+											if (thisRaidProfileName == (AccWideUI_AccountData.RaidFrameProfiles[y].name)) then
+												keepThisOne = true
+												if (AccWideUI_AccountData.printDebugTextToChat == true) then
+													print(AccWideUI_TextName .. " Keep " .. thisRaidProfileName)
+												end
+											end
+										end
+									
+									end
+								
+								end
+								
+								if ((type(thisRaidProfileName) == "string" and keepThisOne == false) or (i > GetNumRaidProfiles())) then
+									if (AccWideUI_AccountData.printDebugTextToChat == true) then
+										thisRaidProfileName = thisRaidProfileName or ("Raid Profile " .. i)
+										print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
+									end
+									DeleteRaidProfile(thisRaidProfileName)
+									AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+								end
+								
+							end
+						else
+							
+							--Remove all but first
+							for i=2, GetMaxNumCUFProfiles() do
+						
+								local thisRaidProfileName = GetRaidProfileName(i) or nil
+								
+								if (type(thisRaidProfileName) == "string") then
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
+									thisRaidProfileName = thisRaidProfileName or ("Raid Profile " .. i)
+									print(AccWideUI_TextName .. " Delete " .. thisRaidProfileName)
+								end
+									DeleteRaidProfile(thisRaidProfileName)
+									AccWideUI_AccountData.RaidFrameProfiles[i] = nil
+								end
+								
+						
+							end
+						
 						end
 						
 
@@ -2284,10 +2316,12 @@ end
 				
 				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 				
-					if (GetNumRaidProfiles() > 1) then
+					--if (GetNumRaidProfiles() > 1) then
 					
 					
 						for i=1, GetNumRaidProfiles() do
+						
+							AccWideUI_AccountData.RaidFrameProfiles[i] = {}
 															
 							local thisRaidProfileName = GetRaidProfileName(i) or nil
 						
@@ -2299,7 +2333,7 @@ end
 									end
 								
 									
-									AccWideUI_AccountData.RaidFrameProfiles[i] = {}
+									
 								
 									AccWideUI_AccountData.RaidFrameProfiles[i].name = thisRaidProfileName
 									AccWideUI_AccountData.RaidFrameProfiles[i].isActive = false
@@ -2333,7 +2367,10 @@ end
 							end
 							
 						end
-					end
+					--else
+					
+					
+					--end
 			end
 				
 			
