@@ -2310,7 +2310,7 @@ end
 								if (RaidProfileExists(thisRaidProfileName)) then
 								
 									if (AccWideUI_AccountData.printDebugTextToChat == true) then
-										print(AccWideUI_TextName .. " Saving Raid Frame For " .. thisRaidProfileName)
+										print(AccWideUI_TextName .. " Saving Raid Frame Profile with Name " .. thisRaidProfileName .. ".")
 									end
 								
 									
