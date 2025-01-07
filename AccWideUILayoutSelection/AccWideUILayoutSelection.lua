@@ -1765,12 +1765,48 @@ end
 						local HasSetRaidFramesActive = false
 						local NamesOfSavedRaidProfiles = {}
 						
-						for n in pairs(AccWideUI_AccountData.RaidFrameProfiles) do 
-							ThisNumRaidProfilesSaved = ThisNumRaidProfilesSaved + 1 
+						
+						if (type(AccWideUI_AccountData.RaidFrameProfiles) == "table") then
+							for key, value in pairs(AccWideUI_AccountData.RaidFrameProfiles) do 
+								ThisNumRaidProfilesSaved = ThisNumRaidProfilesSaved + 1 
+								
+								if (type(value.name) == "string") then
+									table.insert(NamesOfSavedRaidProfiles, value.name)
+								end
+							end
 						end
 						
 						
+						
+						
 						if (ThisNumRaidProfilesSaved > 0) then
+						
+						
+							--Remove Raid Frame Profiles that we do not have saved.
+							for i=GetMaxNumCUFProfiles(), 1, -1 do
+								
+								local KeepThisProfile = false
+								
+								local thisProfileName = GetRaidProfileName(i) or nil
+								
+								for key, value in pairs(NamesOfSavedRaidProfiles) do
+									
+									if (type(thisProfileName) == "string") then
+										if (value == thisProfileName) then
+											KeepThisProfile = true
+										end
+									end
+								 
+								end
+									
+								if ((KeepThisProfile == false) and (type(thisProfileName) == "string")) then
+									if (AccWideUI_AccountData.printDebugTextToChat == true) then
+										print(AccWideUI_TextName .. " Deleting Old Raid Profile with Name " .. thisProfileName .. ".")
+									end
+									DeleteRaidProfile(thisProfileName)
+								end
+							
+							end
 						
 							--Create/Update Raid Profiles
 							for i=1, GetMaxNumCUFProfiles() do
@@ -1778,7 +1814,7 @@ end
 								if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
 									if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
 									
-										table.insert(NamesOfSavedRaidProfiles, AccWideUI_AccountData.RaidFrameProfiles[i].name)
+										--table.insert(NamesOfSavedRaidProfiles, AccWideUI_AccountData.RaidFrameProfiles[i].name)
 
 										if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
 											CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
@@ -1825,33 +1861,7 @@ end
 						
 						
 						
-						--Remove Raid Frame Profiles that we do not have saved.
-						for i=GetMaxNumCUFProfiles(), 1, -1 do
-							
-							local KeepThisProfile = false
-							
-							local thisProfileName = GetRaidProfileName(i) or nil
-							
-							for key, value in pairs(NamesOfSavedRaidProfiles) do
-								
-								if (type(thisProfileName) == "string") then
-									if (value == thisProfileName) then
-										KeepThisProfile = true
-									end
-								end
-							 
-							end
-								
 						
-							
-							if ((KeepThisProfile == false) and (type(thisProfileName) == "string")) then
-								if (AccWideUI_AccountData.printDebugTextToChat == true) then
-									print(AccWideUI_TextName .. " Deleting Old Raid Profile with Name " .. thisProfileName .. ".")
-								end
-								DeleteRaidProfile(thisProfileName)
-							end
-						
-						end
 						
 						
 						
