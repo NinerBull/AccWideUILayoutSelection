@@ -19,6 +19,7 @@ local AccWideUI_Category
 
 -- Checkboxes
 local chkAWISaveChatChannels
+local chkAWISaveChatPosition
 local debugSaveBtn
 local debugLoadBtn
 local chkDebugText
@@ -63,6 +64,9 @@ AccWideUI_ChatName_Services = "Services"
 AccWideUI_ChatName_LocalDefense = "LocalDefense"
 AccWideUI_ChatName_WorldDefense = "WorldDefense"
 AccWideUI_ChatName_LookingForGroup = "LookingForGroup"
+AccWideUI_ChatName_HardcoreDeaths = "HardcoreDeaths"
+AccWideUI_ChatName_GuildRecruitment = "GuildRecruitment"
+AccWideUI_ChatName_ChromieTime = "ChromieTime"
 
 
 -- https://wago.tools/db2/ChatChannels
@@ -74,6 +78,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_ChatName_Services = C_ChatInfo.GetChannelShortcutForChannelID(42)
 	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
+	AccWideUI_ChatName_ChromieTime = C_ChatInfo.GetChannelShortcutForChannelID(38)
 
 end
 
@@ -97,6 +102,8 @@ if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUI_ChatName_WorldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(24)
+	AccWideUI_ChatName_HardcoreDeaths = C_ChatInfo.GetChannelShortcutForChannelID(44)
+	AccWideUI_ChatName_GuildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 
 end
 
@@ -602,6 +609,10 @@ end
 					AccWideUI_AccountData.accountWideChatWindowVariables = true
 				end
 				
+				if (type(AccWideUI_AccountData.accountWideChatWindowPosition) ~= "boolean") then
+					AccWideUI_AccountData.accountWideChatWindowPosition = true
+				end
+				
 				if (type(AccWideUI_AccountData.accountWideChatChannelVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideChatChannelVariables = true
 				end
@@ -649,6 +660,22 @@ end
 					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 						if (type(AccWideUI_AccountData.ChatChannels.BlockWorldDefense) ~= "boolean") then
 							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = false
+						end
+					end
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+						if (type(AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment) ~= "boolean") then
+							AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment = false
+						end
+						
+						if (type(AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths) ~= "boolean") then
+							AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths = false
+						end
+					end
+					
+					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						if (type(AccWideUI_AccountData.ChatChannels.BlockChromieTime) ~= "boolean") then
+							AccWideUI_AccountData.ChatChannels.BlockChromieTime = false
 						end
 					end
 				
@@ -878,53 +905,78 @@ end
 			end
 			
 			
-			if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 			
-				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
-
-				-- Remove player from channels if they're blocked
-				if (event == "CHANNEL_UI_UPDATE") then
-		
-					if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
-						if (GetChannelName((GetChannelName(AccWideUI_ChatName_General))) > 0) then
-							LeaveChannelByName(AccWideUI_ChatName_General)
-						end
-					end
-					
-					if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
-						if (GetChannelName((GetChannelName(AccWideUI_ChatName_LocalDefense))) > 0) then
-							LeaveChannelByName(AccWideUI_ChatName_LocalDefense)
-						end
-					end
-					
-					if (AccWideUI_AccountData.ChatChannels.BlockTrade == true) then
-						if (GetChannelName((GetChannelName(AccWideUI_ChatName_Trade))) > 0) then
-							LeaveChannelByName(AccWideUI_ChatName_Trade)
-						end
-					end
-					
-					if (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true) then
-						if (GetChannelName((GetChannelName(AccWideUI_ChatName_LookingForGroup))) > 0) then
-							LeaveChannelByName(AccWideUI_ChatName_LookingForGroup)
-						end
-					end
-					
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
-						if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
-							if (GetChannelName((GetChannelName(AccWideUI_ChatName_Services))) > 0) then
-								LeaveChannelByName(AccWideUI_ChatName_Services)
-							end
-						end
-					end
-					
-					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
-						if (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true) then
-							if (GetChannelName((GetChannelName(AccWideUI_ChatName_WorldDefense))) > 0) then
-								LeaveChannelByName(AccWideUI_ChatName_WorldDefense)
-							end
-						end
-					end
+			if (event == "CHANNEL_UI_UPDATE" and AccWideUI_Frame_HasLoadedSettings == true) then
+				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 				
+					if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+
+						-- Remove player from channels if they're blocked
+						
+						if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
+							if (GetChannelName((GetChannelName(AccWideUI_ChatName_General))) > 0) then
+								LeaveChannelByName(AccWideUI_ChatName_General)
+							end
+						end
+						
+						if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
+							if (GetChannelName((GetChannelName(AccWideUI_ChatName_LocalDefense))) > 0) then
+								LeaveChannelByName(AccWideUI_ChatName_LocalDefense)
+							end
+						end
+						
+						if (AccWideUI_AccountData.ChatChannels.BlockTrade == true) then
+							if (GetChannelName((GetChannelName(AccWideUI_ChatName_Trade))) > 0) then
+								LeaveChannelByName(AccWideUI_ChatName_Trade)
+							end
+						end
+						
+						if (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true) then
+							if (GetChannelName((GetChannelName(AccWideUI_ChatName_LookingForGroup))) > 0) then
+								LeaveChannelByName(AccWideUI_ChatName_LookingForGroup)
+							end
+						end
+						
+						if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+							if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
+								if (GetChannelName((GetChannelName(AccWideUI_ChatName_Services))) > 0) then
+									LeaveChannelByName(AccWideUI_ChatName_Services)
+								end
+							end
+						end
+						
+						if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+							if (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true) then
+								if (GetChannelName((GetChannelName(AccWideUI_ChatName_WorldDefense))) > 0) then
+									LeaveChannelByName(AccWideUI_ChatName_WorldDefense)
+								end
+							end
+						end
+						
+						
+						if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+							if (AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment == true) then
+								if (GetChannelName((GetChannelName(AccWideUI_ChatName_GuildRecruitment))) > 0) then
+									LeaveChannelByName(AccWideUI_ChatName_GuildRecruitment)
+								end
+							end
+							
+							if (AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths == true) then
+								if (GetChannelName((GetChannelName(AccWideUI_ChatName_HardcoreDeaths))) > 0) then
+									LeaveChannelByName(AccWideUI_ChatName_HardcoreDeaths)
+								end
+							end
+						end
+						
+						
+						if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+							if (AccWideUI_AccountData.ChatChannels.BlockChromieTime == true) then
+								if (GetChannelName((GetChannelName(AccWideUI_ChatName_ChromieTime))) > 0) then
+									LeaveChannelByName(AccWideUI_ChatName_ChromieTime)
+								end
+							end
+						end
+					
 				
 				end
 			
@@ -1026,6 +1078,7 @@ end
 			
 			thisPointX = 260
 			
+			
 			-- Show When Last Saved
 			local chkAWIShowLastSaved = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWIShowLastSaved:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1108,19 +1161,7 @@ end
 			
 			thisPointY = thisPointY - 22 
 			
-			
-			-- Save Nameplates
-			local chkAWISaveNameplates = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkAWISaveNameplates:SetPoint("TOPLEFT", thisPointX, thisPointY)
-			chkAWISaveNameplates.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_NAMEPLATES)
-			chkAWISaveNameplates:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideNameplates = chkAWISaveNameplates:GetChecked()
-			end)
-			chkAWISaveNameplates:SetChecked(AccWideUI_AccountData.accountWideNameplates)
-			
-			thisPointY = thisPointY - 22 
-			
-			
+	
 			-- Save Raid Frames
 			local chkAWISaveRaidFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 			chkAWISaveRaidFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1159,11 +1200,25 @@ end
 					
 					if (chkAWISaveChatWindow:GetChecked() == true) then
 						chkAWISaveChatChannels:Enable()
+						chkAWISaveChatPosition:Enable()
 					else
 						chkAWISaveChatChannels:Disable()
+						chkAWISaveChatPosition:Disable()
 					end
 			end)
 			chkAWISaveChatWindow:SetChecked(AccWideUI_AccountData.accountWideChatWindowVariables)
+			
+			thisPointY = thisPointY - 22 
+			
+			
+			-- Save Chat Position
+			chkAWISaveChatPosition = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveChatPosition:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveChatPosition.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_CHATPOSITION)
+			chkAWISaveChatPosition:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideChatWindowPosition = chkAWISaveChatPosition:GetChecked()
+			end)
+			chkAWISaveChatPosition:SetChecked(AccWideUI_AccountData.accountWideChatWindowPosition)
 			
 			thisPointY = thisPointY - 22 
 			
@@ -1177,10 +1232,14 @@ end
 			end)
 			chkAWISaveChatChannels:SetChecked(AccWideUI_AccountData.accountWideChatChannelVariables)
 			
+			
+			
 			if (AccWideUI_AccountData.accountWideChatWindowVariables == true) then
 				chkAWISaveChatChannels:Enable()
+				chkAWISaveChatPosition:Enable()
 			else
 				chkAWISaveChatChannels:Disable()
+				chkAWISaveChatPosition:Enable()
 			end
 			
 			
@@ -1189,6 +1248,18 @@ end
 			-- 2nd Column
 			
 			thisPointX = 230
+			
+			thisPointY2 = thisPointY2 - 22 
+			
+			
+			-- Save Nameplates
+			local chkAWISaveNameplates = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveNameplates:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveNameplates.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_NAMEPLATES)
+			chkAWISaveNameplates:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideNameplates = chkAWISaveNameplates:GetChecked()
+			end)
+			chkAWISaveNameplates:SetChecked(AccWideUI_AccountData.accountWideNameplates)
 			
 			thisPointY2 = thisPointY2 - 22 
 							
@@ -1418,6 +1489,31 @@ end
 							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = chkAWIBlockWorldDefenseChat:GetChecked()
 					end)
 					chkAWIBlockWorldDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockWorldDefense)
+					
+					thisPointX = thisPointX + thisPointYPlus
+				end
+				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+					-- GuildRecruitment Chat
+					local chkAWIBlockGuildRecruitmentChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIBlockGuildRecruitmentChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIBlockGuildRecruitmentChat.Text:SetText(AccWideUI_ChatName_GuildRecruitment)
+					chkAWIBlockGuildRecruitmentChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment = chkAWIBlockGuildRecruitmentChat:GetChecked()
+					end)
+					chkAWIBlockGuildRecruitmentChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment)
+					
+					thisPointX = thisPointX + thisPointYPlus
+					
+					-- HardcoreDeaths Chat
+					local chkAWIBlockHardcoreDeathsChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIBlockHardcoreDeathsChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIBlockHardcoreDeathsChat.Text:SetText(AccWideUI_ChatName_HardcoreDeaths)
+					chkAWIBlockHardcoreDeathsChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths = chkAWIBlockHardcoreDeathsChat:GetChecked()
+					end)
+					chkAWIBlockHardcoreDeathsChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths)
 					
 					thisPointX = thisPointX + thisPointYPlus
 				end
@@ -2152,14 +2248,15 @@ end
 							AccWideUI_AccountData.ChatWindows[thisChatFrame].Dimensions.height
 						)
 						
-						
-						if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset) ~= "nil") then
-							SetChatWindowSavedPosition(
-								thisChatFrame,
-								AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.point,
-								AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset,
-								AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.yOffset
-							)
+						if (AccWideUI_AccountData.accountWideChatWindowPosition == true) then
+							if (type(AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset) ~= "nil") then
+								SetChatWindowSavedPosition(
+									thisChatFrame,
+									AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.point,
+									AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.xOffset,
+									AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions.yOffset
+								)
+							end
 						end
 						
 						--Visible Chat Channels
@@ -2521,13 +2618,15 @@ end
 					end
 					
 					--Positions
-					do
-						local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
-						AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions = {
-							["point"] = point,
-							["xOffset"] = xOffset,
-							["yOffset"] = yOffset
-						}
+					if (AccWideUI_AccountData.accountWideChatWindowPosition == true) then
+						do
+							local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
+							AccWideUI_AccountData.ChatWindows[thisChatFrame].Positions = {
+								["point"] = point,
+								["xOffset"] = xOffset,
+								["yOffset"] = yOffset
+							}
+						end
 					end
 
 					

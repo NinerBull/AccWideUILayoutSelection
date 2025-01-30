@@ -22,6 +22,7 @@ local _, L = ...;
 	L.ACCWUI_OPT_MODULES_CHK_PARTYRAID = "Party/Raid Frame Settings"
 	L.ACCWUI_OPT_MODULES_CHK_ARENA = "Arena Frame Settings"
 	L.ACCWUI_OPT_MODULES_CHK_CHATWINDOW = "Chat Window Settings"
+	L.ACCWUI_OPT_MODULES_CHK_CHATPOSITION = "+ Chat Position Settings"
 	L.ACCWUI_OPT_MODULES_CHK_CHATCHANNELS = "+ Custom Chat Channels"
 	L.ACCWUI_OPT_MODULES_CHK_TRADEGUILD = "Block Guild/Trade/Channel Invite Settings"
 	L.ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY = "Spell Overlay Settings"
