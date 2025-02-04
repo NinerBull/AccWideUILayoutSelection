@@ -66,7 +66,7 @@ AccWideUI_ChatName_WorldDefense = "WorldDefense"
 AccWideUI_ChatName_LookingForGroup = "LookingForGroup"
 AccWideUI_ChatName_HardcoreDeaths = "HardcoreDeaths"
 AccWideUI_ChatName_GuildRecruitment = "GuildRecruitment"
-AccWideUI_ChatName_ChromieTime = "ChromieTime"
+--AccWideUI_ChatName_ChromieTime = "ChromieTime"
 
 
 -- https://wago.tools/db2/ChatChannels
@@ -78,7 +78,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_ChatName_Services = C_ChatInfo.GetChannelShortcutForChannelID(42)
 	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
-	AccWideUI_ChatName_ChromieTime = C_ChatInfo.GetChannelShortcutForChannelID(38)
+	--AccWideUI_ChatName_ChromieTime = C_ChatInfo.GetChannelShortcutForChannelID(38)
 
 end
 
@@ -673,11 +673,11 @@ end
 						end
 					end
 					
-					if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 						if (type(AccWideUI_AccountData.ChatChannels.BlockChromieTime) ~= "boolean") then
 							AccWideUI_AccountData.ChatChannels.BlockChromieTime = false
 						end
-					end
+					end]]
 				
 				end
 				
@@ -969,13 +969,13 @@ end
 						end
 						
 						
-						if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+						--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 							if (AccWideUI_AccountData.ChatChannels.BlockChromieTime == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_ChromieTime))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_ChromieTime)
 								end
 							end
-						end
+						end]]
 					
 				
 				end
@@ -1489,6 +1489,20 @@ end
 							AccWideUI_AccountData.ChatChannels.BlockWorldDefense = chkAWIBlockWorldDefenseChat:GetChecked()
 					end)
 					chkAWIBlockWorldDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockWorldDefense)
+					
+					thisPointX = thisPointX + thisPointYPlus
+				end
+				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					-- ChromieTime Chat
+					local chkAWIBlockChromieTimeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+					chkAWIBlockChromieTimeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
+					chkAWIBlockChromieTimeChat.Text:SetText(AccWideUI_ChatName_WorldDefense)
+					chkAWIBlockChromieTimeChat:HookScript("OnClick", function(_, btn, down)
+							AccWideUI_AccountData.ChatChannels.BlockChromieTime = chkAWIBlockChromieTimeChat:GetChecked()
+					end)
+					chkAWIBlockChromieTimeChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockChromieTime)
 					
 					thisPointX = thisPointX + thisPointYPlus
 				end

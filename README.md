@@ -27,7 +27,7 @@ By default, all of the settings below are synchronized, and you can disable any 
 ## Compatibility
 * **The War Within** - 11.0.7 & 11.1.0
 * **Cataclysm Classic** - 4.4.1 & 4.4.2
-* **Classic Era** - 1.15.5 & 1.15.6
+* **Classic Era** - 1.15.6
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
