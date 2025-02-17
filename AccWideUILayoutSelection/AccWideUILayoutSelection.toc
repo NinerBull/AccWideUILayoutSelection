@@ -1,6 +1,6 @@
-## Interface: 110007, 110100, 40401, 40402, 11506
+## Interface: 110007, 110100, 40402, 11506
 ## Title: Account Wide Interface Option Settings
-## Version: 1.3.1
+## Version: 1.3.2
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUI_AccountData
@@ -41,7 +41,7 @@ locale/locale.enUS.lua
 # locale/locale.esES.lua
 # locale/locale.zhTW.lua
 # locale/locale.esMX.lua
-# locale/locale.ruRU.lua
+locale/locale.ruRU.lua
 # locale/locale.ptBR.lua
 # locale/locale.itIT.lua
 AccWideUILayoutSelection.lua
