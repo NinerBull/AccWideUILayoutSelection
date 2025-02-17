@@ -5,7 +5,7 @@ An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic E
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw76793.jpg)
 
 ## About
-This QOL addon synchronizes various Interface Settings that are normally character specific across all of your characters on your account. 
+This QOL addon synchronizes various Interface Settings that are **normally character specific**, across **all** of your characters on your account. 
 It eliminates the need to reconfigure these same settings on all of your characters, including any fresh characters you make.
 
 By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific:
@@ -45,3 +45,6 @@ NOTE: After installing for the first time, you should log into the character who
 Settings are automatically saved upon log out, and automatically loaded upon logging in to a character.
 
 You can configure the addon by typing `/awi` into chat.
+
+## Translations
+* **Russian** by [ZamestoTV](https://github.com/Hubbotu)
