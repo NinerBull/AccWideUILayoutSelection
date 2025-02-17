@@ -25,7 +25,7 @@ By default, all of the settings below are synchronized, and you can disable any 
 
 
 ## Compatibility
-* **The War Within** - 11.0.7 & 11.1.0
+* **The War Within** - 11.1.0
 * **Cataclysm Classic** - 4.4.2
 * **Classic Era** - 1.15.6
 
