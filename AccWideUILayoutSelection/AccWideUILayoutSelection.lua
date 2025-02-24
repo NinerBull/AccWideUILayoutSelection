@@ -1239,7 +1239,7 @@ end
 				chkAWISaveChatPosition:Enable()
 			else
 				chkAWISaveChatChannels:Disable()
-				chkAWISaveChatPosition:Enable()
+				chkAWISaveChatPosition:Disable()
 			end
 			
 			
