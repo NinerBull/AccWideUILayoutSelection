@@ -83,12 +83,24 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 end
 
 
-if (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) then
+if (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC) then
 
 	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
 	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUI_ChatName_WorldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
+	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
+
+end
+
+
+if (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then --China Wrath
+
+	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
+	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
+	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
+	AccWideUI_ChatName_WorldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
+	AccWideUI_ChatName_GuildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 
 end
@@ -302,6 +314,10 @@ end
 		"soulbindsViewedTutorial"]]
 	}
 	
+	AccWideUI_Table_BattlefieldMapVariables = {
+		"showBattlefieldMinimap"
+	}
+		
 	
 	AccWideUI_Table_ActionBarVariables = {
 		"multiBarRightVerticalLayout"
@@ -595,6 +611,10 @@ end
 					AccWideUI_AccountData.accountWideTutorialTooltipVariables = true
 				end
 				
+				if (type(AccWideUI_AccountData.accountWideBattlefieldMapVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideBattlefieldMapVariables = true
+				end
+				
 				--[[if (type(AccWideUI_AccountData.accountWideBagSortingSettings) ~= "boolean") then
 					AccWideUI_AccountData.accountWideBagSortingSettings = true
 				end]]
@@ -663,11 +683,13 @@ end
 						end
 					end
 					
-					if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+					if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then
 						if (type(AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment) ~= "boolean") then
 							AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment = false
 						end
+					end
 						
+					if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 						if (type(AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths) ~= "boolean") then
 							AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths = false
 						end
@@ -710,7 +732,6 @@ end
 					-- Raid Frame Profile Settings
 					if (type(AccWideUI_AccountData.RaidFrameProfiles) ~= "table") then
 						AccWideUI_AccountData.RaidFrameProfiles = {}
-	
 					end
 				
 				end
@@ -758,6 +779,15 @@ end
 				-- Tutorial Variables
 				if (type(AccWideUI_AccountData.TutorialTooltips) ~= "table") then
 					AccWideUI_AccountData.TutorialTooltips = {}
+				end
+				
+				-- Battlefield Map Variables
+				if (type(AccWideUI_AccountData.BattlefieldMap) ~= "table") then
+					AccWideUI_AccountData.BattlefieldMap = {}
+				end
+				
+				if (type(AccWideUI_AccountData.BattlefieldMapOptions) ~= "table") then
+					AccWideUI_AccountData.BattlefieldMapOptions = {}
 				end
 								
 				
@@ -878,7 +908,7 @@ end
 					AccWideUI_Frame:LoadUISettings(true)
 				end
 	
-			end --EO Settings Loaded
+			end --EO Player Specialisation Changed
 			
 			
 			
@@ -954,13 +984,15 @@ end
 						end
 						
 						
-						if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+						if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then
 							if (AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_GuildRecruitment))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_GuildRecruitment)
 								end
 							end
+						end
 							
+						if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 							if (AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_HardcoreDeaths))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_HardcoreDeaths)
@@ -982,7 +1014,7 @@ end
 			
 			end
 			
-			end
+		end
 		
 
 	end)
@@ -1347,6 +1379,18 @@ end
 			chkAWISaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariables)
 			
 			
+			thisPointY2 = thisPointY2 - 22 
+			
+			-- Zone Map Variables
+			local chiAWISaveBattlefieldMap = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chiAWISaveBattlefieldMap:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chiAWISaveBattlefieldMap.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_BTLMAP)
+			chiAWISaveBattlefieldMap:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideBattlefieldMapVariables = chiAWISaveBattlefieldMap:GetChecked()
+			end)
+			chiAWISaveBattlefieldMap:SetChecked(AccWideUI_AccountData.accountWideBattlefieldMapVariables)
+			
+			
 			
 			
 			
@@ -1508,7 +1552,7 @@ end
 				end
 				
 				
-				if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+				if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then
 					-- GuildRecruitment Chat
 					local chkAWIBlockGuildRecruitmentChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 					chkAWIBlockGuildRecruitmentChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1519,7 +1563,10 @@ end
 					chkAWIBlockGuildRecruitmentChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment)
 					
 					thisPointX = thisPointX + thisPointYPlus
+				end
+				
 					
+				if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 					-- HardcoreDeaths Chat
 					local chkAWIBlockHardcoreDeathsChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 					chkAWIBlockHardcoreDeathsChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -2114,6 +2161,79 @@ end
 				end -- EO accountWideTutorialVariables
 				
 				
+				-- Battlefield Map Variables
+				if (AccWideUI_AccountData.accountWideBattlefieldMapVariables == true) then
+				
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
+						print(AccWideUI_TextName .. " Loading Zone Map Settings.")
+					end
+					
+					C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
+				
+					for k, v in pairs(AccWideUI_Table_BattlefieldMapVariables) do
+						SetCVar(v, AccWideUI_AccountData.BattlefieldMap[v])
+					end
+					
+					
+					
+					
+					if (AccWideUI_AccountData.BattlefieldMapOptions) then
+					
+						BattlefieldMapOptions = {}
+						
+						if (AccWideUI_AccountData.BattlefieldMapOptions.locked) then
+							BattlefieldMapOptions.locked = AccWideUI_AccountData.BattlefieldMapOptions.locked
+						end
+						
+						if (AccWideUI_AccountData.BattlefieldMapOptions.opacity) then
+							BattlefieldMapOptions.opacity = AccWideUI_AccountData.BattlefieldMapOptions.opacity
+						end
+						
+						if (AccWideUI_AccountData.BattlefieldMapOptions.showPlayers) then
+							BattlefieldMapOptions.showPlayers = AccWideUI_AccountData.BattlefieldMapOptions.showPlayers
+						end
+						
+						if (AccWideUI_AccountData.BattlefieldMapOptions.position) then
+							BattlefieldMapOptions.position = {}
+							BattlefieldMapOptions.position.x = AccWideUI_AccountData.BattlefieldMapOptions.position.x
+							BattlefieldMapOptions.position.y = AccWideUI_AccountData.BattlefieldMapOptions.position.y
+						end
+						
+					end
+					
+					
+					C_Timer.After(7, function() 
+					
+						if (AccWideUI_AccountData.BattlefieldMap["showBattlefieldMinimap"] == "1") then
+							BattlefieldMapFrame:Show()
+						else
+							BattlefieldMapFrame:Hide()
+						end
+						
+						BattlefieldMapTab:ClearAllPoints();
+						
+						if (AccWideUI_AccountData.BattlefieldMapOptions.position) then
+							BattlefieldMapTab:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", AccWideUI_AccountData.BattlefieldMapOptions.position.x,AccWideUI_AccountData.BattlefieldMapOptions.position.y);
+							BattlefieldMapTab:SetUserPlaced(true);
+						end
+						
+						--ValidateFramePosition(BattlefieldMapTab)
+						
+						if (AccWideUI_AccountData.BattlefieldMapOptions.opacity) then
+							BattlefieldMapFrame:RefreshAlpha()
+						end
+						
+						BattlefieldMapFrame:UpdateUnitsVisibility();
+						BattlefieldMapFrame:StopMovingOrSizing();
+						
+						BattlefieldMapFrame:OnEvent("PLAYER_ENTERING_WORLD")
+					
+					end)
+					
+					
+				end -- EO accountWideBattlefieldMapVariables
+				
+				
 				
 				--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
@@ -2579,6 +2699,44 @@ end
 				for k, v in pairs(AccWideUI_Table_TutorialTooltipVariables) do
 					AccWideUI_AccountData.TutorialTooltips[v] = GetCVar(v) or nil
 				end
+			
+			end -- EO accountWideTutorialVariables
+			
+			
+			-- Save Battlefield Map Variables
+			if (AccWideUI_AccountData.accountWideBattlefieldMapVariables == true) then
+			
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
+					print(AccWideUI_TextName .. " Saving Zone Map Settings.")
+				end
+			
+				for k, v in pairs(AccWideUI_Table_BattlefieldMapVariables) do
+					AccWideUI_AccountData.BattlefieldMap[v] = GetCVar(v) or nil
+				end
+				
+				AccWideUI_AccountData.BattlefieldMapOptions = {}
+				
+				if (type(BattlefieldMapOptions.locked) == "boolean") then
+					AccWideUI_AccountData.BattlefieldMapOptions.locked = BattlefieldMapOptions.locked 
+				end
+				
+				if (type(BattlefieldMapOptions.opacity) == "number") then
+					AccWideUI_AccountData.BattlefieldMapOptions.opacity = BattlefieldMapOptions.opacity 
+				end
+				
+				if (type(BattlefieldMapOptions.showPlayers) == "boolean") then
+					AccWideUI_AccountData.BattlefieldMapOptions.showPlayers = BattlefieldMapOptions.showPlayers 
+				end
+				
+				--if (BattlefieldMapTab:IsUserPlaced() == true) then
+					--print("lasd")
+					AccWideUI_AccountData.BattlefieldMapOptions.position = {}
+					
+					AccWideUI_AccountData.BattlefieldMapOptions.position.x, AccWideUI_AccountData.BattlefieldMapOptions.position.y = BattlefieldMapTab:GetCenter();
+					
+				--end
+				
+				
 			
 			end -- EO accountWideTutorialVariables
 			

@@ -30,6 +30,8 @@ local _, L = ...;
 	L.ACCWUI_OPT_MODULES_CHK_LOC = "Loss of Control Settings"
 	L.ACCWUI_OPT_MODULES_CHK_TARGETING = "Action Targeting Settings"
 	L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP = "Viewed Tutorial Tooltips"
+	L.ACCWUI_OPT_MODULES_CHK_BTLMAP = "Zone Map Settings"
+	
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Block Blizzard Chat Channels Account Wide"
 	L.ACCWUI_BLOCKBLIZZ_DESC = "Check the channels below that you do not want any of your characters on this account to join."
