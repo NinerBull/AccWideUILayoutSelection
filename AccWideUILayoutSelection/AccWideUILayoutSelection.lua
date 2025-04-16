@@ -1134,7 +1134,7 @@ end
 			acBorder1:SetTexture(AccWideUI_DividerGraphic)
 
 			
-			thisPointY = thisPointY - 22
+			thisPointY = thisPointY - 16
 			
 	
 			
@@ -1433,7 +1433,7 @@ end
 				
 
 				
-				thisPointY = thisPointY - 22
+				thisPointY = thisPointY - 16
 				
 				
 				
@@ -1618,14 +1618,11 @@ end
 				acBorder3:SetTexture(AccWideUI_DividerGraphic)
 				
 				
-				thisPointY = thisPointY - 22
+				thisPointY = thisPointY - 16
 		
 				
 				local classColorString = C_ClassColor.GetClassColor(UnitClass("player")) or NORMAL_FONT_COLOR
 				
-
-				
-
 				
 				--Title for Char Specific
 				local titleCS = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontNormalLarge")
@@ -2179,21 +2176,26 @@ end
 					
 					if (AccWideUI_AccountData.BattlefieldMapOptions) then
 					
-						BattlefieldMapOptions = {}
-						
-						if (AccWideUI_AccountData.BattlefieldMapOptions.locked) then
-							BattlefieldMapOptions.locked = AccWideUI_AccountData.BattlefieldMapOptions.locked
-						end
-						
-						if (AccWideUI_AccountData.BattlefieldMapOptions.opacity) then
+						-- Defaults from https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_BattlefieldMap/Blizzard_BattlefieldMap.lua#L11
+						BattlefieldMapOptions = {
+							opacity = 0.7,
+							locked = true,
+							showPlayers = true
+						}
+
+						if (type(AccWideUI_AccountData.BattlefieldMapOptions.opacity) == "number") then
 							BattlefieldMapOptions.opacity = AccWideUI_AccountData.BattlefieldMapOptions.opacity
 						end
 						
-						if (AccWideUI_AccountData.BattlefieldMapOptions.showPlayers) then
+						if (type(AccWideUI_AccountData.BattlefieldMapOptions.locked) == "boolean") then
+							BattlefieldMapOptions.locked = AccWideUI_AccountData.BattlefieldMapOptions.locked
+						end
+						
+						if (type(AccWideUI_AccountData.BattlefieldMapOptions.showPlayers) == "number") then
 							BattlefieldMapOptions.showPlayers = AccWideUI_AccountData.BattlefieldMapOptions.showPlayers
 						end
 						
-						if (AccWideUI_AccountData.BattlefieldMapOptions.position) then
+						if (type(AccWideUI_AccountData.BattlefieldMapOptions.position) == "table") then
 							BattlefieldMapOptions.position = {}
 							BattlefieldMapOptions.position.x = AccWideUI_AccountData.BattlefieldMapOptions.position.x
 							BattlefieldMapOptions.position.y = AccWideUI_AccountData.BattlefieldMapOptions.position.y
@@ -2202,7 +2204,7 @@ end
 					end
 					
 					
-					C_Timer.After(7, function() 
+					C_Timer.After(5, function() 
 					
 						if (AccWideUI_AccountData.BattlefieldMap["showBattlefieldMinimap"] == "1") then
 							BattlefieldMapFrame:Show()
@@ -2728,13 +2730,9 @@ end
 					AccWideUI_AccountData.BattlefieldMapOptions.showPlayers = BattlefieldMapOptions.showPlayers 
 				end
 				
-				--if (BattlefieldMapTab:IsUserPlaced() == true) then
-					--print("lasd")
-					AccWideUI_AccountData.BattlefieldMapOptions.position = {}
+				AccWideUI_AccountData.BattlefieldMapOptions.position = {}
+				AccWideUI_AccountData.BattlefieldMapOptions.position.x, AccWideUI_AccountData.BattlefieldMapOptions.position.y = BattlefieldMapTab:GetCenter();
 					
-					AccWideUI_AccountData.BattlefieldMapOptions.position.x, AccWideUI_AccountData.BattlefieldMapOptions.position.y = BattlefieldMapTab:GetCenter();
-					
-				--end
 				
 				
 			
