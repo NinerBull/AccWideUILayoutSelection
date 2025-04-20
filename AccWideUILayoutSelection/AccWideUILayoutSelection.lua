@@ -2206,6 +2206,10 @@ end
 					
 					C_Timer.After(5, function() 
 					
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
+							print(AccWideUI_TextName .. " Setting Zone Map Placement etc.")
+						end
+						
 						if (AccWideUI_AccountData.BattlefieldMap["showBattlefieldMinimap"] == "1") then
 							BattlefieldMapFrame:Show()
 						else
@@ -2214,12 +2218,13 @@ end
 						
 						BattlefieldMapTab:ClearAllPoints();
 						
-						if (AccWideUI_AccountData.BattlefieldMapOptions.position) then
+						if ((AccWideUI_AccountData.BattlefieldMapOptions.position) and
+						(AccWideUI_AccountData.BattlefieldMapOptions.position.x ~= 0) and (AccWideUI_AccountData.BattlefieldMapOptions.position.y ~= 0))then
 							BattlefieldMapTab:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", AccWideUI_AccountData.BattlefieldMapOptions.position.x,AccWideUI_AccountData.BattlefieldMapOptions.position.y);
 							BattlefieldMapTab:SetUserPlaced(true);
 						end
 						
-						--ValidateFramePosition(BattlefieldMapTab)
+						ValidateFramePosition(BattlefieldMapTab)
 						
 						if (AccWideUI_AccountData.BattlefieldMapOptions.opacity) then
 							BattlefieldMapFrame:RefreshAlpha()
