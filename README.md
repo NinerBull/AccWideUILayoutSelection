@@ -20,9 +20,9 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Action Targeting Settings
 * Chat Window/Channel Settings
 * Viewed Tutorial Tooltips
+* Zone Map (Shift-M) Settings
 * Block Guild/Trade/Channel Invite Settings
 * Block General/Trade/Services/LocalDefense Chat Channels
-* Zone Map (Shift-M) Settings
 
 ## Compatibility
 * **The War Within** - 11.1.5
