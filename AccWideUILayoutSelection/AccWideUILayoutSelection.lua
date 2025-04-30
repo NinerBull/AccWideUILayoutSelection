@@ -323,6 +323,10 @@ end
 		"multiBarRightVerticalLayout"
 	}
 	
+	AccWideUI_Table_CooldownViewerVariables = {
+		"cooldownViewerEnabled"
+	}
+	
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	AccWideUI_Table_ChatTypes = {
 		"SYSTEM",
@@ -615,6 +619,12 @@ end
 					AccWideUI_AccountData.accountWideBattlefieldMapVariables = true
 				end
 				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					if (type(AccWideUI_AccountData.accountWideCooldownViewerVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideCooldownViewerVariables = true
+					end
+				end
+				
 				--[[if (type(AccWideUI_AccountData.accountWideBagSortingSettings) ~= "boolean") then
 					AccWideUI_AccountData.accountWideBagSortingSettings = true
 				end]]
@@ -788,6 +798,15 @@ end
 				
 				if (type(AccWideUI_AccountData.BattlefieldMapOptions) ~= "table") then
 					AccWideUI_AccountData.BattlefieldMapOptions = {}
+				end
+				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					-- Cooldown Viewer Variables
+					if (type(AccWideUI_AccountData.CooldownViewer) ~= "table") then
+						AccWideUI_AccountData.CooldownViewer = {}
+					end
+
 				end
 								
 				
@@ -1204,7 +1223,6 @@ end
 			chkAWISaveRaidFrames:SetChecked(AccWideUI_AccountData.accountWideRaidFrames)
 			
 			
-			
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
 				thisPointY = thisPointY - 22 
 				
@@ -1217,6 +1235,23 @@ end
 						AccWideUI_AccountData.accountWideArenaFrames = chkAWISaveArenaFrames:GetChecked()
 				end)
 				chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideArenaFrames)
+			end
+			
+
+			
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
+				thisPointY = thisPointY - 22 
+			
+				-- Save Cooldown Viewer Setting
+				local chkAWISaveCooldownViewer = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveCooldownViewer:SetPoint("TOPLEFT", thisPointX, thisPointY)
+				chkAWISaveCooldownViewer.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_COOLDOWN)
+				chkAWISaveCooldownViewer:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideRaidFrames = chkAWISaveCooldownViewer:GetChecked()
+				end)
+				chkAWISaveCooldownViewer:SetChecked(AccWideUI_AccountData.accountWideCooldownViewerVariables)
+			
 			end
 			
 			
@@ -2241,6 +2276,24 @@ end
 				end -- EO accountWideBattlefieldMapVariables
 				
 				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					-- Cooldown Viewer Variables
+					if (AccWideUI_AccountData.accountWideCooldownViewerVariables == true) then
+					
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
+							print(AccWideUI_TextName .. " Loading Cooldown Viewer Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_CooldownViewerVariables) do
+							SetCVar(v, AccWideUI_AccountData.CooldownViewer[v])
+						end
+					
+					end -- EO accountWideCooldownViewerVariables
+				
+				end
+				
+				
 				
 				--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
@@ -2742,6 +2795,22 @@ end
 				
 			
 			end -- EO accountWideTutorialVariables
+			
+			
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				-- Save Cooldown Manager Setting
+				if (AccWideUI_AccountData.accountWideCooldownViewerVariables == true) then
+				
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
+						print(AccWideUI_TextName .. " Saving Cooldown Manager Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_CooldownViewerVariables) do
+						AccWideUI_AccountData.CooldownViewer[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideCooldownViewerVariables
+			end
 			
 			
 			

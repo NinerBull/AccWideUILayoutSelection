@@ -31,6 +31,8 @@ if (GetLocale() == "ruRU") then
 	L.ACCWUI_OPT_MODULES_CHK_TARGETING = "Настройки таргетинга действий"
 	L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP = "Просмотренные подсказки к учебнику"
 	L.ACCWUI_OPT_MODULES_CHK_BTLMAP = "Настройки карта игровой зоны"
+	L.ACCWUI_OPT_MODULES_CHK_COOLDOWN = "Настройки трекер восстановления"
+	
 	
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Блокировка каналов чата Blizzard на уровне учетной записи"

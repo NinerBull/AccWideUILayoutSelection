@@ -1,6 +1,6 @@
 ## Interface: 110105, 40402, 30404, 11507
 ## Title: Account Wide Interface Option Settings
-## Version: 1.3.3
+## Version: 1.3.4
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUI_AccountData

@@ -31,6 +31,7 @@ local _, L = ...;
 	L.ACCWUI_OPT_MODULES_CHK_TARGETING = "Action Targeting Settings"
 	L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP = "Viewed Tutorial Tooltips"
 	L.ACCWUI_OPT_MODULES_CHK_BTLMAP = "Zone Map Settings"
+	L.ACCWUI_OPT_MODULES_CHK_COOLDOWN = "Cooldown Manager Setting"
 	
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Block Blizzard Chat Channels Account Wide"

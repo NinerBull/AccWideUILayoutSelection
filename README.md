@@ -21,6 +21,7 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Chat Window/Channel Settings
 * Viewed Tutorial Tooltips
 * Zone Map (Shift-M) Settings
+* Cooldown Manager Visibilty Setting
 * Block Guild/Trade/Channel Invite Settings
 * Block General/Trade/Services/LocalDefense Chat Channels
 
