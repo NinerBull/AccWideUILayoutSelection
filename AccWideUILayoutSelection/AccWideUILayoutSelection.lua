@@ -7,7 +7,7 @@ https://github.com/NinerBull/AccWideUILayoutSelection
 
 local _, L = ...;
 
-local AccWideUI_SaveVersion = 3
+local AccWideUI_SaveVersion = 4
 
 local AccWideUI_Frame = CreateFrame("Frame")
 
@@ -66,7 +66,6 @@ AccWideUI_ChatName_WorldDefense = "WorldDefense"
 AccWideUI_ChatName_LookingForGroup = "LookingForGroup"
 AccWideUI_ChatName_HardcoreDeaths = "HardcoreDeaths"
 AccWideUI_ChatName_GuildRecruitment = "GuildRecruitment"
---AccWideUI_ChatName_ChromieTime = "ChromieTime"
 
 
 -- https://wago.tools/db2/ChatChannels
@@ -78,7 +77,6 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_ChatName_Services = C_ChatInfo.GetChannelShortcutForChannelID(42)
 	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
-	--AccWideUI_ChatName_ChromieTime = C_ChatInfo.GetChannelShortcutForChannelID(38)
 
 end
 
@@ -327,6 +325,15 @@ end
 		"cooldownViewerEnabled"
 	}
 	
+	AccWideUI_Table_MouseoverCastVariables = {
+		"enableMouseoverCast",
+		"autoSelfCast"
+	}
+	
+	AccWideUI_Table_EmpowerTapVariables = {
+		"empowerTapControls"
+	}
+	
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	AccWideUI_Table_ChatTypes = {
 		"SYSTEM",
@@ -419,6 +426,8 @@ end
 		"VOICE_TEXT",
 		"PING"
 	}
+	
+	
 	
 	
 	-- Popups for first time set up
@@ -587,20 +596,9 @@ end
 					AccWideUI_AccountData.accountWideRaidFrames = true
 				end
 				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-					if (type(AccWideUI_AccountData.accountWideArenaFrames) ~= "boolean") then
-						AccWideUI_AccountData.accountWideArenaFrames = true
-					end
-				end
 				
 				if (type(AccWideUI_AccountData.accountWideBlockSocialVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideBlockSocialVariables = true
-				end
-				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-					if (type(AccWideUI_AccountData.accountWideSpellOverlayVariables) ~= "boolean") then
-						AccWideUI_AccountData.accountWideSpellOverlayVariables = true
-					end
 				end
 				
 				if (type(AccWideUI_AccountData.accountWideAutoLootVariables) ~= "boolean") then
@@ -619,21 +617,17 @@ end
 					AccWideUI_AccountData.accountWideBattlefieldMapVariables = true
 				end
 				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					if (type(AccWideUI_AccountData.accountWideCooldownViewerVariables) ~= "boolean") then
-						AccWideUI_AccountData.accountWideCooldownViewerVariables = true
-					end
+				if (type(AccWideUI_AccountData.accountWideMouseoverCastVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideMouseoverCastVariables = true
+				end
+				
+				if (type(AccWideUI_AccountData.accountWideEmpowerTapVariables) ~= "boolean") then
+					AccWideUI_AccountData.accountWideEmpowerTapVariables = true
 				end
 				
 				--[[if (type(AccWideUI_AccountData.accountWideBagSortingSettings) ~= "boolean") then
 					AccWideUI_AccountData.accountWideBagSortingSettings = true
 				end]]
-
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					if (type(AccWideUI_AccountData.accountWideLossOfControlVariables) ~= "boolean") then
-						AccWideUI_AccountData.accountWideLossOfControlVariables = true
-					end
-				end
 				
 				if (type(AccWideUI_AccountData.accountWideChatWindowVariables) ~= "boolean") then
 					AccWideUI_AccountData.accountWideChatWindowVariables = true
@@ -652,15 +646,45 @@ end
 					AccWideUI_AccountData.SpecialVariables.BlockGuildInvites = GetAutoDeclineGuildInvites()
 				end
 				
-				--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					if (type(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft) ~= "boolean") then
-						AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
-					end
-					
+				--[[C_Timer.After(5, function() 
+									
 					if (type(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight) ~= "boolean") then
 						AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
 					end
-				end]]
+					
+				end)]]
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				
+					if (type(AccWideUI_AccountData.accountWideCooldownViewerVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideCooldownViewerVariables = true
+					end
+					
+					if (type(AccWideUI_AccountData.accountWideLossOfControlVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideLossOfControlVariables = true
+					end
+				
+					--[[C_Timer.After(5, function() 
+				
+						if (type(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft) ~= "boolean") then
+							AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
+						end
+		
+					end)]]
+										
+				end
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					if (type(AccWideUI_AccountData.accountWideArenaFrames) ~= "boolean") then
+						AccWideUI_AccountData.accountWideArenaFrames = true
+					end
+					
+					if (type(AccWideUI_AccountData.accountWideSpellOverlayVariables) ~= "boolean") then
+						AccWideUI_AccountData.accountWideSpellOverlayVariables = true
+					end
+				end
+				
+				
 				
 				if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 				
@@ -704,13 +728,7 @@ end
 							AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths = false
 						end
 					end
-					
-					--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-						if (type(AccWideUI_AccountData.ChatChannels.BlockChromieTime) ~= "boolean") then
-							AccWideUI_AccountData.ChatChannels.BlockChromieTime = false
-						end
-					end]]
-				
+									
 				end
 				
 				
@@ -736,24 +754,7 @@ end
 				if (type(AccWideUI_AccountData.RaidFrames) ~= "table") then
 					AccWideUI_AccountData.RaidFrames = {}
 				end
-				
-				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
-					-- Raid Frame Profile Settings
-					if (type(AccWideUI_AccountData.RaidFrameProfiles) ~= "table") then
-						AccWideUI_AccountData.RaidFrameProfiles = {}
-					end
-				
-				end
-				
-				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
-					-- Arena Frame Variables
-					if (type(AccWideUI_AccountData.ArenaFrames) ~= "table") then
-						AccWideUI_AccountData.ArenaFrames = {}
-					end
-					
-				end
-				
+	
 				
 				-- Block Social Variables
 				if (type(AccWideUI_AccountData.BlockSocial) ~= "table") then
@@ -770,17 +771,7 @@ end
 				if (type(AccWideUI_AccountData.AutoLoot) ~= "table") then
 					AccWideUI_AccountData.AutoLoot = {}
 				end	
-				
-				
-				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-					-- Loss Of Control Variables
-					if (type(AccWideUI_AccountData.LossOfControl) ~= "table") then
-						AccWideUI_AccountData.LossOfControl = {}
-					end
 
-				end
-			
-			
 				-- Soft Target Variables
 				if (type(AccWideUI_AccountData.SoftTarget) ~= "table") then
 					AccWideUI_AccountData.SoftTarget = {}
@@ -800,19 +791,47 @@ end
 					AccWideUI_AccountData.BattlefieldMapOptions = {}
 				end
 				
+				-- Mouseover Cast Variables
+				if (type(AccWideUI_AccountData.MouseoverCast) ~= "table") then
+					AccWideUI_AccountData.MouseoverCast = {}
+				end
+				
+					
+				-- Chat Window Variables
+				if (type(AccWideUI_AccountData.ChatWindows) ~= "table") then
+					AccWideUI_AccountData.ChatWindows = {}
+				end
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+					-- Loss Of Control Variables
+					if (type(AccWideUI_AccountData.LossOfControl) ~= "table") then
+						AccWideUI_AccountData.LossOfControl = {}
+					end
+					
 					-- Cooldown Viewer Variables
 					if (type(AccWideUI_AccountData.CooldownViewer) ~= "table") then
 						AccWideUI_AccountData.CooldownViewer = {}
 					end
+					
+					-- Empower Tap Variables
+					if (type(AccWideUI_AccountData.EmpowerTap) ~= "table") then
+						AccWideUI_AccountData.EmpowerTap = {}
+					end
 
 				end
-								
 				
-				-- Chat Window Variables
-				if (type(AccWideUI_AccountData.ChatWindows) ~= "table") then
-					AccWideUI_AccountData.ChatWindows = {}
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
+					-- Raid Frame Profile Settings
+					if (type(AccWideUI_AccountData.RaidFrameProfiles) ~= "table") then
+						AccWideUI_AccountData.RaidFrameProfiles = {}
+					end
+				end
+				
+				if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
+					-- Arena Frame Variables
+					if (type(AccWideUI_AccountData.ArenaFrames) ~= "table") then
+						AccWideUI_AccountData.ArenaFrames = {}
+					end
 				end
 				
 				
@@ -1017,17 +1036,7 @@ end
 									LeaveChannelByName(AccWideUI_ChatName_HardcoreDeaths)
 								end
 							end
-						end
-						
-						
-						--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-							if (AccWideUI_AccountData.ChatChannels.BlockChromieTime == true) then
-								if (GetChannelName((GetChannelName(AccWideUI_ChatName_ChromieTime))) > 0) then
-									LeaveChannelByName(AccWideUI_ChatName_ChromieTime)
-								end
-							end
-						end]]
-					
+						end	
 				
 				end
 			
@@ -1167,9 +1176,7 @@ end
 			
 			thisPointY = thisPointY - 22
 			
-			
 
-			
 			
 			--Title for  Which Save Options 2
 			local titleSA2 = AccWideUI_OptionsPanelFrame:CreateFontString("ARTWORK", nil, "GameFontHighlight")
@@ -1179,24 +1186,13 @@ end
 			titleSA2:SetText(L.ACCWUI_OPT_MODULES_DESC)
 			
 			local thisPointY2 = thisPointY
+			local thisPointY3 = thisPointY
 			
 			
 			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				
-				thisPointY = thisPointY - 22 
 			
-				-- Save Edit Mode Layout
-				local chkAWISaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkAWISaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkAWISaveEditModeLayout.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_EDITMODE)
-				chkAWISaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideLayout = chkAWISaveEditModeLayout:GetChecked()
-				end)
-				chkAWISaveEditModeLayout:SetChecked(AccWideUI_AccountData.accountWideLayout)
 			
-			end
-
+			-- 1st Column
 
 			thisPointY = thisPointY - 22 
 			
@@ -1226,7 +1222,6 @@ end
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
 				thisPointY = thisPointY - 22 
 				
-				
 				-- Save Arena Frames
 				local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1237,22 +1232,18 @@ end
 				chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideArenaFrames)
 			end
 			
-
+					
 			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			thisPointY = thisPointY - 22 
 			
-				thisPointY = thisPointY - 22 
-			
-				-- Save Cooldown Viewer Setting
-				local chkAWISaveCooldownViewer = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkAWISaveCooldownViewer:SetPoint("TOPLEFT", thisPointX, thisPointY)
-				chkAWISaveCooldownViewer.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_COOLDOWN)
-				chkAWISaveCooldownViewer:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideRaidFrames = chkAWISaveCooldownViewer:GetChecked()
-				end)
-				chkAWISaveCooldownViewer:SetChecked(AccWideUI_AccountData.accountWideCooldownViewerVariables)
-			
-			end
+			-- Auto Loot Variables
+			local chkAWISaveAutoLoot = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveAutoLoot:SetPoint("TOPLEFT", thisPointX, thisPointY)
+			chkAWISaveAutoLoot.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_AUTOLOOT)
+			chkAWISaveAutoLoot:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideAutoLootVariables = chkAWISaveAutoLoot:GetChecked()
+			end)
+			chkAWISaveAutoLoot:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
 			
 			
 			thisPointY = thisPointY - 22 
@@ -1312,12 +1303,20 @@ end
 			
 			
 			
+			
+			
+			
+			
+			
+			
+			
+			
 			-- 2nd Column
 			
-			thisPointX = 230
+			thisPointX = 220
+			
 			
 			thisPointY2 = thisPointY2 - 22 
-			
 			
 			-- Save Nameplates
 			local chkAWISaveNameplates = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1328,22 +1327,11 @@ end
 			end)
 			chkAWISaveNameplates:SetChecked(AccWideUI_AccountData.accountWideNameplates)
 			
-			thisPointY2 = thisPointY2 - 22 
-							
-			
-			-- Block Social Variables
-			local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkAWISaveArenaFrames.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_TRADEGUILD)
-			chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideBlockSocialVariables = chkAWISaveArenaFrames:GetChecked()
-			end)
-			chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideBlockSocialVariables)
+
 			
 			
 			if (WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC) then
 				thisPointY2 = thisPointY2 - 22 
-				
 				
 				-- Spell Overlay Variables
 				local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1356,40 +1344,11 @@ end
 			end
 			
 			
+	
 			
+
+
 			thisPointY2 = thisPointY2 - 22 
-			
-			
-			-- Auto Loot Variables
-			local chkAWISaveAutoLoot = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-			chkAWISaveAutoLoot:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-			chkAWISaveAutoLoot.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_AUTOLOOT)
-			chkAWISaveAutoLoot:HookScript("OnClick", function(_, btn, down)
-					AccWideUI_AccountData.accountWideAutoLootVariables = chkAWISaveAutoLoot:GetChecked()
-			end)
-			chkAWISaveAutoLoot:SetChecked(AccWideUI_AccountData.accountWideAutoLootVariables)
-			
-			
-			
-			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				
-				thisPointY2 = thisPointY2 - 22 
-			
-				-- Save Loss of Control Variables
-				local chkAWISaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkAWISaveLossOfControl:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkAWISaveLossOfControl.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_LOC)
-				chkAWISaveLossOfControl:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideLossOfControlVariables = chkAWISaveLossOfControl:GetChecked()
-				end)
-				chkAWISaveLossOfControl:SetChecked(AccWideUI_AccountData.accountWideLossOfControlVariables)
-			
-			end
-			
-			
-			
-			thisPointY2 = thisPointY2 - 22 
-			
 			
 			-- Soft Target Variables
 			local chkAWISaveSoftTarget = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1414,6 +1373,7 @@ end
 			chkAWISaveTutorials:SetChecked(AccWideUI_AccountData.accountWideTutorialTooltipVariables)
 			
 			
+			
 			thisPointY2 = thisPointY2 - 22 
 			
 			-- Zone Map Variables
@@ -1428,15 +1388,117 @@ end
 			
 			
 			
+			thisPointY2 = thisPointY2 - 22 
+		
+			-- Save Mouseover/Self Cast Variables
+			local chkAWISaveMouseoverCast = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveMouseoverCast:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveMouseoverCast.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_MOUSEOVER)
+			chkAWISaveMouseoverCast:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideMouseoverCastVariables = chkAWISaveMouseoverCast:GetChecked()
+			end)
+			chkAWISaveMouseoverCast:SetChecked(AccWideUI_AccountData.accountWideMouseoverCastVariables)
 			
+
+			
+			
+			thisPointY2 = thisPointY2 - 22 
+							
+			-- Block Social Variables
+			local chkAWISaveArenaFrames = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+			chkAWISaveArenaFrames:SetPoint("TOPLEFT", thisPointX, thisPointY2)
+			chkAWISaveArenaFrames.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_TRADEGUILD)
+			chkAWISaveArenaFrames:HookScript("OnClick", function(_, btn, down)
+					AccWideUI_AccountData.accountWideBlockSocialVariables = chkAWISaveArenaFrames:GetChecked()
+			end)
+			chkAWISaveArenaFrames:SetChecked(AccWideUI_AccountData.accountWideBlockSocialVariables)
+			
+						
+						
+			
+			
+			
+			
+			
+			
+			if (thisPointY2 < thisPointY) then
+				thisPointY = thisPointY2
+			end
+			
+			
+			
+			
+			-- 3rd Column
+			
+			thisPointX = 440
+			
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
+				thisPointY3 = thisPointY3 - 22 
+			
+				-- Save Edit Mode Layout
+				local chkAWISaveEditModeLayout = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveEditModeLayout:SetPoint("TOPLEFT", thisPointX, thisPointY3)
+				chkAWISaveEditModeLayout.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_EDITMODE)
+				chkAWISaveEditModeLayout:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideLayout = chkAWISaveEditModeLayout:GetChecked()
+				end)
+				chkAWISaveEditModeLayout:SetChecked(AccWideUI_AccountData.accountWideLayout)
+		
+		
+				thisPointY3 = thisPointY3 - 22 
+			
+				-- Save Cooldown Viewer Setting
+				local chkAWISaveCooldownViewer = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveCooldownViewer:SetPoint("TOPLEFT", thisPointX, thisPointY3)
+				chkAWISaveCooldownViewer.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_COOLDOWN)
+				chkAWISaveCooldownViewer:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideRaidFrames = chkAWISaveCooldownViewer:GetChecked()
+				end)
+				chkAWISaveCooldownViewer:SetChecked(AccWideUI_AccountData.accountWideCooldownViewerVariables)
+		
+				
+				thisPointY3 = thisPointY3 - 22 
+			
+				-- Save Loss of Control Variables
+				local chkAWISaveLossOfControl = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveLossOfControl:SetPoint("TOPLEFT", thisPointX, thisPointY3)
+				chkAWISaveLossOfControl.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_LOC)
+				chkAWISaveLossOfControl:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideLossOfControlVariables = chkAWISaveLossOfControl:GetChecked()
+				end)
+				chkAWISaveLossOfControl:SetChecked(AccWideUI_AccountData.accountWideLossOfControlVariables)
+				
+				
+				thisPointY3 = thisPointY3 - 22 
+			
+				-- Save Empowered Tap/Hold Variables
+				local chkAWISaveEmpoweredTap = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
+				chkAWISaveEmpoweredTap:SetPoint("TOPLEFT", thisPointX, thisPointY3)
+				chkAWISaveEmpoweredTap.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_EMPOWERED)
+				chkAWISaveEmpoweredTap:HookScript("OnClick", function(_, btn, down)
+						AccWideUI_AccountData.accountWideEmpowerTapVariables = chkAWISaveEmpoweredTap:GetChecked()
+				end)
+				chkAWISaveEmpoweredTap:SetChecked(AccWideUI_AccountData.accountWideEmpowerTapVariables)
+				
+
+			
+			end
+			
+			
+			
+			
+			--thisPointY3 = thisPointY3 - 22 
+			
+				
 			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
-				thisPointY2 = thisPointY2 - 22 
+				thisPointY3 = thisPointY3 - 22 
 			
 				-- Save Bag Sorting Variables
 				local chkAWISaveBagSorting = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
-				chkAWISaveBagSorting:SetPoint("TOPLEFT", thisPointX, thisPointY2)
-				chkAWISaveBagSorting.Text:SetText("Bag/Bank Sorting Settings")
+				chkAWISaveBagSorting:SetPoint("TOPLEFT", thisPointX, thisPointY3)
+				chkAWISaveBagSorting.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_BAGS)
 				chkAWISaveBagSorting:HookScript("OnClick", function(_, btn, down)
 						AccWideUI_AccountData.accountWideBagSortingSettings = chkAWISaveBagSorting:GetChecked()
 				end)
@@ -1445,9 +1507,15 @@ end
 			end]]
 			
 			
-			if (thisPointY2 < thisPointY) then
-				thisPointY = thisPointY2
+			
+			if (thisPointY3 < thisPointY) then
+				thisPointY = thisPointY3
 			end
+			
+			
+			
+			
+			
 			
 			--Chat Channels
 			
@@ -1505,6 +1573,8 @@ end
 				
 				thisPointX = thisPointX + thisPointYPlus
 				
+				
+				
 				-- Trade Chat
 				local chkAWIBlockTradeChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWIBlockTradeChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1517,6 +1587,7 @@ end
 				thisPointX = thisPointX + thisPointYPlus
 				
 			
+			
 				-- LocalDefense Chat
 				local chkAWIBlockLocalDefenseChat = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
 				chkAWIBlockLocalDefenseChat:SetPoint("TOPLEFT", thisPointX, thisPointY)
@@ -1527,6 +1598,8 @@ end
 				chkAWIBlockLocalDefenseChat:SetChecked(AccWideUI_AccountData.ChatChannels.BlockLocalDefense)
 				
 				thisPointX = thisPointX + thisPointYPlus
+				
+				
 				
 				-- LookingForGroup Chat
 				local chkAWIBlockLookingForGroup = CreateFrame("CheckButton", nil, AccWideUI_OptionsPanelFrame, "InterfaceOptionsCheckButtonTemplate")
@@ -1542,7 +1615,6 @@ end
 				thisPointX = 10
 				
 				thisPointY = thisPointY - 22
-				
 				
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE or WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
@@ -2303,13 +2375,52 @@ end
 						if (AccWideUI_AccountData.printDebugTextToChat == true) then
 							print(AccWideUI_TextName .. " Loading Bag Sorting Settings.")
 						end
+						
+						C_Timer.After(5, function() 
 					
-						C_Container.SetSortBagsRightToLeft(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft)
-						C_Container.SetInsertItemsLeftToRight(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight)
+							C_Container.SetSortBagsRightToLeft(AccWideUI_AccountData.SpecialVariables.SortBagsRightToLeft)
+							C_Container.SetInsertItemsLeftToRight(AccWideUI_AccountData.SpecialVariables.InsertItemsLeftToRight)
+						
+						end)
 					
 					end -- EO accountWideBagSortingSettings
 				
 				end]]
+				
+				
+				
+				-- Mouseover/Self Cast Variables
+				if (AccWideUI_AccountData.accountWideMouseoverCastVariables == true) then
+				
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
+						print(AccWideUI_TextName .. " Loading Mouseover/Self Cast Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_MouseoverCastVariables) do
+						SetCVar(v, AccWideUI_AccountData.MouseoverCast[v])
+					end
+				
+				end -- EO accountWideMouseoverCastVariables
+				
+				
+				
+				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+			
+					-- Empowered Tap/Hold Variables
+					if (AccWideUI_AccountData.accountWideEmpowerTapVariables == true) then
+					
+						if (AccWideUI_AccountData.printDebugTextToChat == true) then
+							print(AccWideUI_TextName .. " Loading Empowered Tap/Hold Settings.")
+						end
+					
+						for k, v in pairs(AccWideUI_Table_EmpowerTapVariables) do
+							SetCVar(v, AccWideUI_AccountData.EmpowerTap[v])
+						end
+					
+					end -- EO accountWideEmpowerTapVariables
+				
+				end
+			
 			
 			
 				-- Chat Window Settings
@@ -2814,6 +2925,37 @@ end
 			
 			
 			
+			-- Save Mouseover/Self Cast Settings
+			if (AccWideUI_AccountData.accountWideMouseoverCastVariables == true) then
+			
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
+					print(AccWideUI_TextName .. " Saving Mouseover/Self Cast Settings.")
+				end
+			
+				for k, v in pairs(AccWideUI_Table_MouseoverCastVariables) do
+					AccWideUI_AccountData.MouseoverCast[v] = GetCVar(v) or nil
+				end
+			
+			end -- EO accountWideMouseoverCastVariables
+			
+			
+			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+				-- Save Empowered Tap/Hold Settings
+				if (AccWideUI_AccountData.accountWideEmpowerTapVariables == true) then
+				
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
+						print(AccWideUI_TextName .. " Saving Empowered Tap/Hold Settings.")
+					end
+				
+					for k, v in pairs(AccWideUI_Table_EmpowerTapVariables) do
+						AccWideUI_AccountData.EmpowerTap[v] = GetCVar(v) or nil
+					end
+				
+				end -- EO accountWideEmpowerTapVariables
+			end
+			
+			
+			
 			--[[if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 			
 				-- Save Bag Sorting Variables
@@ -2829,6 +2971,8 @@ end
 				end -- EO accountWideBagSortingSettings
 			
 			end]]
+			
+
 			
 			
 			-- Save Chat Window Variables
