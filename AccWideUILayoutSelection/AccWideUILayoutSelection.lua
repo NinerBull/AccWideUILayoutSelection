@@ -26,7 +26,7 @@ local chkDebugText
 
 local function AccWideUI_ToBoolean(str)
 	local bool = false
-	if str == "true" then
+	if (str == "true" or str == true) then
 		bool = true
 	end
 	return bool
@@ -78,10 +78,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_ChatName_LocalDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 
-end
-
-
-if (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC) then
+elseif (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC or WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC) then
 
 	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
@@ -89,10 +86,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC) then
 	AccWideUI_ChatName_WorldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 
-end
-
-
-if (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then --China Wrath
+elseif (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then --China Wrath
 
 	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
@@ -101,10 +95,7 @@ if (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) then --China Wrath
 	AccWideUI_ChatName_GuildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 	AccWideUI_ChatName_LookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 
-end
-
-
-if (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
+elseif (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) then
 
 	AccWideUI_ChatName_General = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUI_ChatName_Trade = C_ChatInfo.GetChannelShortcutForChannelID(2)

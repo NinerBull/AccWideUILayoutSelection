@@ -32,6 +32,9 @@ local _, L = ...;
 	L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP = "Viewed Tutorial Tooltips"
 	L.ACCWUI_OPT_MODULES_CHK_BTLMAP = "Zone Map Settings"
 	L.ACCWUI_OPT_MODULES_CHK_COOLDOWN = "Cooldown Manager Setting"
+	L.ACCWUI_OPT_MODULES_CHK_BAGS = "Bag Sorting Setting"
+	L.ACCWUI_OPT_MODULES_CHK_MOUSEOVER = "Mouseover/Self Cast Settings"
+	L.ACCWUI_OPT_MODULES_CHK_EMPOWERED = "Empowered Tap/Hold Setting"
 	
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Block Blizzard Chat Channels Account Wide"

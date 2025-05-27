@@ -32,6 +32,9 @@ if (GetLocale() == "ruRU") then
 	L.ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP = "Просмотренные подсказки к учебнику"
 	L.ACCWUI_OPT_MODULES_CHK_BTLMAP = "Настройки карта игровой зоны"
 	L.ACCWUI_OPT_MODULES_CHK_COOLDOWN = "Настройки трекер восстановления"
+	L.ACCWUI_OPT_MODULES_CHK_BAGS = "Настройки oрганизация сумки"
+	L.ACCWUI_OPT_MODULES_CHK_MOUSEOVER = "Настройки наведения мыши/самовывода"
+	L.ACCWUI_OPT_MODULES_CHK_EMPOWERED = "Расширенная настройка касания/удержания"
 	
 	
 	
