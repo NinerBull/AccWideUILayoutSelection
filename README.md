@@ -26,8 +26,8 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Block General/Trade/Services/LocalDefense Chat Channels
 
 ## Compatibility
-* **The War Within** - 11.1.5
-* **Cataclysm Classic** - 4.4.2
+* **The War Within** - 11.1.7
+* **MoP Classic** - 5.5.0
 * **Classic Era** - 1.15.7
 
 ## Installation
