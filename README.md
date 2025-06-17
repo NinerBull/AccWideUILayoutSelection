@@ -22,6 +22,8 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Viewed Tutorial Tooltips
 * Zone Map (Shift-M) Settings
 * Cooldown Manager Visibility Setting
+* Empower Tap/Hold Setting
+* Mouseover Cast/Self Cast Settings
 * Block Guild/Trade/Channel Invite Settings
 * Block General/Trade/Services/LocalDefense Chat Channels
 
