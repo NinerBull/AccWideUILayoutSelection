@@ -211,7 +211,10 @@ end
 		"ShowClassColorInFriendlyNameplate",
 		"ShowClassColorInNameplate",
 		"ShowNamePlateLoseAggroFlash",
-		"nameplateShowOnlyNames"
+		"nameplateShowOnlyNames",
+		"nameplateNotSelectedAlpha",
+		"nameplateRemovalAnimation",
+		"nameplateCommentatorMaxDistance"
 	}
 	
 	
@@ -238,7 +241,7 @@ end
 		"raidOptionDisplayMainTankAndAssist",
 		"raidFramesDisplayOnlyHealerPowerBars",
 		"useCompactPartyFrames",
-		-- "activeCUFProfile",
+		"fullSizeFocusFrame",
 		"showDispelDebuffs",
 		"threatWarning"
 	}
