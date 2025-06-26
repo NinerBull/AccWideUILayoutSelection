@@ -979,24 +979,28 @@ end
 						if (AccWideUI_AccountData.ChatChannels.BlockGeneral == true) then
 							if (GetChannelName((GetChannelName(AccWideUI_ChatName_General))) > 0) then
 								LeaveChannelByName(AccWideUI_ChatName_General)
+								print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_General, AccWideUI_TextSlash))	
 							end
 						end
 						
 						if (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true) then
 							if (GetChannelName((GetChannelName(AccWideUI_ChatName_LocalDefense))) > 0) then
 								LeaveChannelByName(AccWideUI_ChatName_LocalDefense)
+								print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_LocalDefense, AccWideUI_TextSlash))	
 							end
 						end
 						
 						if (AccWideUI_AccountData.ChatChannels.BlockTrade == true) then
 							if (GetChannelName((GetChannelName(AccWideUI_ChatName_Trade))) > 0) then
 								LeaveChannelByName(AccWideUI_ChatName_Trade)
+								print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_Trade, AccWideUI_TextSlash))	
 							end
 						end
 						
 						if (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true) then
 							if (GetChannelName((GetChannelName(AccWideUI_ChatName_LookingForGroup))) > 0) then
 								LeaveChannelByName(AccWideUI_ChatName_LookingForGroup)
+								print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_LookingForGroup, AccWideUI_TextSlash))	
 							end
 						end
 						
@@ -1004,6 +1008,7 @@ end
 							if (AccWideUI_AccountData.ChatChannels.BlockServices == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_Services))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_Services)
+									print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_Services, AccWideUI_TextSlash))	
 								end
 							end
 						end
@@ -1012,6 +1017,7 @@ end
 							if (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_WorldDefense))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_WorldDefense)
+									print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_WorldDefense, AccWideUI_TextSlash))	
 								end
 							end
 						end
@@ -1021,6 +1027,7 @@ end
 							if (AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_GuildRecruitment))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_GuildRecruitment)
+									print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_GuildRecruitment, AccWideUI_TextSlash))	
 								end
 							end
 						end
@@ -1029,6 +1036,7 @@ end
 							if (AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths == true) then
 								if (GetChannelName((GetChannelName(AccWideUI_ChatName_HardcoreDeaths))) > 0) then
 									LeaveChannelByName(AccWideUI_ChatName_HardcoreDeaths)
+									print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LEAVING_CHANNEL, AccWideUI_ChatName_HardcoreDeaths, AccWideUI_TextSlash))	
 								end
 							end
 						end	
@@ -1448,7 +1456,7 @@ end
 				chkAWISaveCooldownViewer:SetPoint("TOPLEFT", thisPointX, thisPointY3)
 				chkAWISaveCooldownViewer.Text:SetText(L.ACCWUI_OPT_MODULES_CHK_COOLDOWN)
 				chkAWISaveCooldownViewer:HookScript("OnClick", function(_, btn, down)
-						AccWideUI_AccountData.accountWideRaidFrames = chkAWISaveCooldownViewer:GetChecked()
+						AccWideUI_AccountData.accountWideCooldownViewerVariables = chkAWISaveCooldownViewer:GetChecked()
 				end)
 				chkAWISaveCooldownViewer:SetChecked(AccWideUI_AccountData.accountWideCooldownViewerVariables)
 		

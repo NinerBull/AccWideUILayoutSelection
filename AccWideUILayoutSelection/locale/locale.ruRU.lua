@@ -67,4 +67,6 @@ if (GetLocale() == "ruRU") then
 	L.ACCWUI_DEBUG_BTN_FORCESAVE = "Принудительное сохранение"
 	L.ACCWUI_DEBUG_TXT_FORCESAVE = "Настройки принудительного сохранения."
 	
+	L.ACCWUI_LEAVING_CHANNEL = "Автоматический выход из чат-канала «%s». Введите %s для настройки."
+	
 end

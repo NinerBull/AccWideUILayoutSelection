@@ -66,5 +66,7 @@ local _, L = ...;
 	L.ACCWUI_DEBUG_BTN_FORCESAVE = "Force Save"
 	L.ACCWUI_DEBUG_TXT_FORCESAVE = "Force-Saving Settings."
 	
+	L.ACCWUI_LEAVING_CHANNEL = "Automatically leaving the %s Channel. Type %s to configure."
+	
 	
 --end
