@@ -2,7 +2,7 @@
 
 An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic Era!
 
-![Info Img](https://cdn-wow.mmoui.com/preview/pvw76793.jpg)
+![Info Img](https://cdn-wow.mmoui.com/preview/pvw76985.jpg)
 
 ## About
 This QOL addon synchronizes various Interface Settings that are **normally character specific**, across **all** of your characters on your account. 
