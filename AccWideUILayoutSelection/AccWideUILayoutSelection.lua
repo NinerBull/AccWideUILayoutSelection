@@ -1976,15 +1976,19 @@ end
 					
 						if (type(AccWideUI_AccountData.ActionBars.Bar2) == "boolean") then
 						
-							if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+							C_Timer.After(5, function() 
+						
+								if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
+									
+									SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8)
 								
-								SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5, AccWideUI_AccountData.ActionBars.Bar6, AccWideUI_AccountData.ActionBars.Bar7, AccWideUI_AccountData.ActionBars.Bar8)
+								else
+								
+									SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5)
+								
+								end
 							
-							else
-							
-								SetActionBarToggles(AccWideUI_AccountData.ActionBars.Bar2, AccWideUI_AccountData.ActionBars.Bar3, AccWideUI_AccountData.ActionBars.Bar4, AccWideUI_AccountData.ActionBars.Bar5)
-							
-							end
+							end)
 						
 						end
 						
