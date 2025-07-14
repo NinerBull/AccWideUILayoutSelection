@@ -5,7 +5,6 @@ local _, L = ...;
 	
 	L.ACCWUI_LOAD_REGULAR = "Account Wide Interface Option Settings Addon Loaded! Type %s to configure."
 	L.ACCWUI_LOAD_LASTUPDATED = "Settings were last saved by %s on %s."
-	L.ACCWUI_LOAD_SAVEUPDATE_1 = "Updated! The addon can now synchronise many of your chat settings and the Pop-Up Tutorial Tooltips you have viewed. Type %s to configure."
 	
 	L.ACCWUI_OPT_TITLE_DESC = "Makes various Interface Options synchronise across all of your characters and specs."
 	L.ACCWUI_OPT_CHK_EDITMODE = "Enable Chosen Edit Mode by default for all New Characters"
@@ -35,6 +34,7 @@ local _, L = ...;
 	L.ACCWUI_OPT_MODULES_CHK_BAGS = "Bag Sorting Setting"
 	L.ACCWUI_OPT_MODULES_CHK_MOUSEOVER = "Mouseover/Self Cast Settings"
 	L.ACCWUI_OPT_MODULES_CHK_EMPOWERED = "Empowered Tap/Hold Setting"
+	L.ACCWUI_OPT_MODULES_CHK_BAGS = "Bag Organisation Settings"
 	
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Block Blizzard Chat Channels Account Wide"

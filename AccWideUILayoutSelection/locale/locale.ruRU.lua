@@ -5,7 +5,6 @@ if (GetLocale() == "ruRU") then
 	
 	L.ACCWUI_LOAD_REGULAR = "Аддон Account Wide Interface Option Settings загружен! Введите %s для настройки."
 	L.ACCWUI_LOAD_LASTUPDATED = "Настройки были в последний раз сохранены %s на %s."
-	L.ACCWUI_LOAD_SAVEUPDATE_1 = "Обновлено! Теперь аддон может синхронизировать многие из ваших настроек чата и всплывающие подсказки руководства, которые вы просматривали. Введите %s для настройки."
 	
 	L.ACCWUI_OPT_TITLE_DESC = "Синхронизирует различные параметры интерфейса для всех ваших персонажей и специализаций."
 	L.ACCWUI_OPT_CHK_EDITMODE = "Включить выбранный режим редактирования по умолчанию для всех новых персонажей"
@@ -35,7 +34,7 @@ if (GetLocale() == "ruRU") then
 	L.ACCWUI_OPT_MODULES_CHK_BAGS = "Настройки oрганизация сумки"
 	L.ACCWUI_OPT_MODULES_CHK_MOUSEOVER = "Настройки наведения мыши/самовывода"
 	L.ACCWUI_OPT_MODULES_CHK_EMPOWERED = "Расширенная настройка касания/удержания"
-	
+	L.ACCWUI_OPT_MODULES_CHK_BAGS = "Настройки организации сумки"
 	
 	
 	L.ACCWUI_BLOCKBLIZZ_TITLE = "Блокировка каналов чата Blizzard на уровне учетной записи"
