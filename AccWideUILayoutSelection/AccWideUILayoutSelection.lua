@@ -2670,7 +2670,7 @@ end
 						end
 						
 
-						C_Timer.After((1), function()
+						C_Timer.After(1, function()
 							FloatingChatFrame_Update(thisChatFrame, true)
 							
 							--[[if (AccWideUI_AccountData.ChatWindows[thisChatFrame].ChatWindowInfo.isDocked) then
@@ -2680,7 +2680,22 @@ end
 							
 						end)
 						
-						C_Timer.After((1.5), function()
+						C_Timer.After(1.5, function()
+						
+							if (C_AddOns.IsAddOnLoaded("ElvUI") == true) then
+								-- Redock chat windows in ElvUI if panel docking is enabled
+								local E, L, V, P, G = unpack(ElvUI);
+								local CH = E:GetModule('Chat');
+								
+								if (CH.LeftChatWindow ~= nil) then
+									CH:PositionChat(CH.LeftChatWindow);
+								end
+								
+								if (CH.RightChatWindow ~= nil) then
+									CH:PositionChat(CH.RightChatWindow);
+								end
+								
+							end
 							
 						end)
 						
