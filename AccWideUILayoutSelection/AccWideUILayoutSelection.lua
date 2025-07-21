@@ -2680,7 +2680,7 @@ end
 							
 						end)
 						
-						C_Timer.After(1.5, function()
+						C_Timer.After(4, function()
 						
 							if (C_AddOns.IsAddOnLoaded("ElvUI") == true) then
 								-- Redock chat windows in ElvUI if panel docking is enabled
