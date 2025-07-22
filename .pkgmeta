@@ -1,0 +1,13 @@
+package-as: AccWideUILayoutSelection
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+	
+ignore:
+  - *.md
+  - LICENSE
+  - .pkgmeta
+  
+move-folders:
+  AccWideUILayoutSelection/AccWideUILayoutSelection: AccWideUILayoutSelection
