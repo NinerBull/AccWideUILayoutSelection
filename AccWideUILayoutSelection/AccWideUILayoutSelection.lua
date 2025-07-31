@@ -40,16 +40,11 @@ AccWideUI_Frame:RegisterEvent("CHANNEL_UI_UPDATE")
 AccWideUI_Frame:RegisterEvent("DISABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_DISABLED")
-AccWideUI_Frame:RegisterEvent("BAG_SLOT_FLAGS_UPDATED")
-AccWideUI_Frame:RegisterEvent("BANK_BAG_SLOT_FLAGS_UPDATED")
-
---AccWideUI_Frame:RegisterEvent("PLAYER_ENTERING_WORLD")
---AccWideUI_Frame:RegisterEvent("PLAYER_LEAVING_WORLD")
---AccWideUI_Frame:RegisterEvent("ADDON_LOADED")
---AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_ENABLED")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+	AccWideUI_Frame:RegisterEvent("BAG_SLOT_FLAGS_UPDATED")
+	AccWideUI_Frame:RegisterEvent("BANK_BAG_SLOT_FLAGS_UPDATED")
 end
 
 local AccWideUI_TextName = ITEM_LEGENDARY_COLOR:WrapTextInColorCode("<" .. L.ACCWUI_ADDONNAME_SHORT .. ">")
@@ -2040,139 +2035,134 @@ end
 						print(AccWideUI_TextName .. " [Raid Frames] Loading Settings.")
 					end
 					
-					for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
-						SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
-					end
-				
-					if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 					
-						--How many Raid Profiles?
+					C_Timer.After(4, function() 
+					
+						for k, v in pairs(AccWideUI_Table_RaidFrameVariables) do
+							SetCVar(v, AccWideUI_AccountData.RaidFrames[v])
+						end
+					
+						if (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) then
 						
-						local ThisNumRaidProfilesSaved = 0
-						local HasSetRaidFramesActive = false
-						local NamesOfSavedRaidProfiles = {}
-						
-						
-						if (type(AccWideUI_AccountData.RaidFrameProfiles) == "table") then
-							for key, value in pairs(AccWideUI_AccountData.RaidFrameProfiles) do 
-								ThisNumRaidProfilesSaved = ThisNumRaidProfilesSaved + 1 
-								
-								if (type(value.name) == "string") then
-									table.insert(NamesOfSavedRaidProfiles, value.name)
+							--How many Raid Profiles?
+							
+							local ThisNumRaidProfilesSaved = 0
+							local HasSetRaidFramesActive = false
+							local NamesOfSavedRaidProfiles = {}
+							
+							
+							if (type(AccWideUI_AccountData.RaidFrameProfiles) == "table") then
+								for key, value in pairs(AccWideUI_AccountData.RaidFrameProfiles) do 
+									ThisNumRaidProfilesSaved = ThisNumRaidProfilesSaved + 1 
+									
+									if (type(value.name) == "string") then
+										table.insert(NamesOfSavedRaidProfiles, value.name)
+									end
 								end
 							end
-						end
-						
-						
-						
-						
-						if (ThisNumRaidProfilesSaved > 0) then
-						
-						
-							--Remove Raid Frame Profiles that we do not have saved.
-							for i=GetMaxNumCUFProfiles(), 1, -1 do
-								
-								local KeepThisProfile = false
-								
-								local thisProfileName = GetRaidProfileName(i) or nil
-								
-								for key, value in pairs(NamesOfSavedRaidProfiles) do
+							
+							
+							
+							
+							if (ThisNumRaidProfilesSaved > 0) then
+							
+							
+								--Remove Raid Frame Profiles that we do not have saved.
+								for i=GetMaxNumCUFProfiles(), 1, -1 do
 									
-									if (type(thisProfileName) == "string") then
-										if (value == thisProfileName) then
-											KeepThisProfile = true
+									local KeepThisProfile = false
+									
+									local thisProfileName = GetRaidProfileName(i) or nil
+									
+									for key, value in pairs(NamesOfSavedRaidProfiles) do
+										
+										if (type(thisProfileName) == "string") then
+											if (value == thisProfileName) then
+												KeepThisProfile = true
+											end
 										end
+									 
 									end
-								 
-								end
-									
-								if ((KeepThisProfile == false) and (type(thisProfileName) == "string")) then
-									if (AccWideUI_AccountData.printDebugTextToChat == true) then
-										print(AccWideUI_TextName .. " [Raid Frames] Deleting Old Raid Profile with Name " .. thisProfileName .. ".")
+										
+									if ((KeepThisProfile == false) and (type(thisProfileName) == "string")) then
+										if (AccWideUI_AccountData.printDebugTextToChat == true) then
+											print(AccWideUI_TextName .. " [Raid Frames] Deleting Old Raid Profile with Name " .. thisProfileName .. ".")
+										end
+										DeleteRaidProfile(thisProfileName)
 									end
-									DeleteRaidProfile(thisProfileName)
+								
 								end
 							
-							end
-						
-							--Create/Update Raid Profiles
-							for i=1, GetMaxNumCUFProfiles() do
-									
-								if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
-									if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
-									
-										--table.insert(NamesOfSavedRaidProfiles, AccWideUI_AccountData.RaidFrameProfiles[i].name)
+								--Create/Update Raid Profiles
+								for i=1, GetMaxNumCUFProfiles() do
+										
+									if (type(AccWideUI_AccountData.RaidFrameProfiles[i]) == "table") then
+										if (type(AccWideUI_AccountData.RaidFrameProfiles[i].name) == "string") then
+										
+											--table.insert(NamesOfSavedRaidProfiles, AccWideUI_AccountData.RaidFrameProfiles[i].name)
 
-										if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
-											CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
-											
-											if (AccWideUI_AccountData.printDebugTextToChat == true) then
-												print(AccWideUI_TextName .. " [Raid Frames] Creating Raid Profile with Name " .. AccWideUI_AccountData.RaidFrameProfiles[i].name .. ".")
-											end
-											
-										else
-											if (AccWideUI_AccountData.printDebugTextToChat == true) then
-												print(AccWideUI_TextName .. " [Raid Frames] Using Existing Raid Profile with Name " .. AccWideUI_AccountData.RaidFrameProfiles[i].name .. ".")
-											end
-										
-										end
-										
-										SetRaidProfileSavedPosition(
-											AccWideUI_AccountData.RaidFrameProfiles[i].name,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
-											AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
-										)
-										
-										for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
-											SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
-										end
+											if (RaidProfileExists(AccWideUI_AccountData.RaidFrameProfiles[i].name) == false) then
+												CreateNewRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
 												
-										if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
-											CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
-											HasSetRaidFramesActive = true
+												if (AccWideUI_AccountData.printDebugTextToChat == true) then
+													print(AccWideUI_TextName .. " [Raid Frames] Creating Raid Profile with Name " .. AccWideUI_AccountData.RaidFrameProfiles[i].name .. ".")
+												end
+												
+											else
+												if (AccWideUI_AccountData.printDebugTextToChat == true) then
+													print(AccWideUI_TextName .. " [Raid Frames] Using Existing Raid Profile with Name " .. AccWideUI_AccountData.RaidFrameProfiles[i].name .. ".")
+												end
+											
+											end
+											
+											SetRaidProfileSavedPosition(
+												AccWideUI_AccountData.RaidFrameProfiles[i].name,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.isDynamic,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.topPoint,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.topOffset,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomPoint,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.bottomOffset,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.leftPoint,
+												AccWideUI_AccountData.RaidFrameProfiles[i].position.leftOffset
+											)
+											
+											for k, v in pairs(AccWideUI_AccountData.RaidFrameProfiles[i].options) do
+												SetRaidProfileOption(AccWideUI_AccountData.RaidFrameProfiles[i].name, tostring(k), v)
+											end
+													
+											if (AccWideUI_AccountData.RaidFrameProfiles[i].isActive == true) then
+												CompactUnitFrameProfiles_ActivateRaidProfile(AccWideUI_AccountData.RaidFrameProfiles[i].name)
+												HasSetRaidFramesActive = true
+											end
+									
 										end
-								
 									end
+					
 								end
-				
+								
 							end
 							
-						end
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-
-						
-						--Fallback incase no raid frames profiles are set up.
-						if (GetNumRaidProfiles() == 0) then
-							if (AccWideUI_AccountData.printDebugTextToChat == true) then
-								print(AccWideUI_TextName .. " [Raid Frames] No Raid Profiles found, resetting.")
+							
+							
+							
+							--Fallback incase no raid frames profiles are set up.
+							if (GetNumRaidProfiles() == 0) then
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
+									print(AccWideUI_TextName .. " [Raid Frames] No Raid Profiles found, resetting.")
+								end
+								CompactUnitFrameProfiles_ResetToDefaults()
 							end
-							CompactUnitFrameProfiles_ResetToDefaults()
-						end
-						
-						--Fallback in case none of the profiles are set active for some reason.
-						if (HasSetRaidFramesActive == false) then
-							CompactUnitFrameProfiles_ActivateRaidProfile(GetRaidProfileName(1))
-						end
-						
+							
+							--Fallback in case none of the profiles are set active for some reason.
+							if (HasSetRaidFramesActive == false) then
+								CompactUnitFrameProfiles_ActivateRaidProfile(GetRaidProfileName(1))
+							end
+							
 
 					end
 					
 					
+				end)
 					
 					
 		
