@@ -4,4 +4,4 @@
 - Potential fix for ElvUI users, where chat windows in the docking panels would get shifted out of place upon logging in.
   - The addon will attempt to re-dock those chat windows after loading the Chat Settings.
 - Potential fix for Lua Error with Raid Frames in Classic clients.
-- Updated TOC for 11.2.0 and 3.4.5
+- Updated TOC for 11.2.0 and 3.4.5.
