@@ -1878,6 +1878,7 @@ end
 				debugSaveBtn:SetScript("OnClick", function()
 					print(AccWideUI_TextName .. " " .. L.ACCWUI_DEBUG_TXT_FORCESAVE)
 					 AccWideUI_Frame:SaveUISettings()
+					 AccWideUI_Frame:SaveBagFlagSettings(true)
 					
 				end)
 				
@@ -2437,8 +2438,10 @@ end
 							
 							
 							for bagName, bagId in pairs(Enum.BagIndex) do
+							
+								if (string.find(string.lower(bagName), "bank") == nil) then 
 								
-								if (type(AccWideUI_AccountData.BagOrganisation.Bags[bagName]) == "table") then	
+									if (type(AccWideUI_AccountData.BagOrganisation.Bags[bagName]) == "table") then	
 
 										for k, v in pairs(Enum.BagSlotFlags) do
 											if (type(AccWideUI_AccountData.BagOrganisation.Bags[bagName][tostring(k)]) == "boolean") then
@@ -2450,7 +2453,9 @@ end
 														--print("C_Container.SetBagSlotFlag(" .. bagId .. ", " .. Enum.BagSlotFlags[tostring(k)] .. ", " .. tostring(AccWideUI_ToBoolean(AccWideUI_AccountData.BagOrganisation.Bags[bagName][tostring(k)])) .. ")")
 													end
 												
-													C_Container.SetBagSlotFlag(bagId, Enum.BagSlotFlags[tostring(k)], AccWideUI_ToBoolean(AccWideUI_AccountData.BagOrganisation.Bags[bagName][tostring(k)]))
+													C_Container.SetBagSlotFlag(bagId, Enum.BagSlotFlags[tostring(k)], AccWideUI_AccountData.BagOrganisation.Bags[bagName][tostring(k)])
+													
+													ContainerFrameSettingsManager:SetFilterFlag(bagId, Enum.BagSlotFlags[tostring(k)], AccWideUI_AccountData.BagOrganisation.Bags[bagName][tostring(k)]);
 												
 												end)
 												
@@ -2459,7 +2464,7 @@ end
 											end
 										end
 
-									
+									end
 										
 								end
 							
@@ -2757,7 +2762,7 @@ end
 				
 				
 				if (AccWideUI_AccountData.accountWideBagOrganisationVariables == true) then
-					LoadUIAllowSaveTime = 124
+					LoadUIAllowSaveTime = 50
 				end
 				
 				
@@ -3239,24 +3244,28 @@ end
 			if (saveFlags == true) then 
 				-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.
 				
-				C_Timer.After(5, function() 
+				C_Timer.After(10, function() 
 				
 					if (AccWideUI_AccountData.printDebugTextToChat == true) then
 						print(AccWideUI_TextName .. " [Bags] Saving Settings and Flags.")
 					end
 			
 					for bagName, bagId in pairs(Enum.BagIndex) do
-						
-						AccWideUI_AccountData.BagOrganisation.Bags[bagName] = {}
 					
-						for k, v in pairs(Enum.BagSlotFlags) do
+						if (string.find(string.lower(bagName), "bank") == nil) then 
 						
-							if (AccWideUI_AccountData.printDebugTextToChat == true) then
-								--print(AccWideUI_TextName .. " Saving " .. k .. " for " .. bagName .. ".")
+							AccWideUI_AccountData.BagOrganisation.Bags[bagName] = {}
+						
+							for k, v in pairs(Enum.BagSlotFlags) do
+							
+								if (AccWideUI_AccountData.printDebugTextToChat == true) then
+									--print(AccWideUI_TextName .. " Saving " .. k .. " for " .. bagName .. ".")
+								end
+							
+								AccWideUI_AccountData.BagOrganisation.Bags[bagName][k] = C_Container.GetBagSlotFlag(bagId, tonumber(v))
+								
 							end
 						
-							AccWideUI_AccountData.BagOrganisation.Bags[bagName][k] = C_Container.GetBagSlotFlag(bagId, tonumber(v))
-							
 						end
 
 					end

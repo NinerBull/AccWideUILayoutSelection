@@ -1,7 +1,2 @@
-- Added ability to sync Bag Organisation Settings.
-  - This will sync Bag Assigments (e.g. Equipment, Consumables etc) and the Loot to Leftmost Bag and Sort Right-To-Left Settings.
-  - This option is disabled by default but can be enabled anytime via the `/awi` options menu.
-- Potential fix for ElvUI users, where chat windows in the docking panels would get shifted out of place upon logging in.
-  - The addon will attempt to re-dock those chat windows after loading the Chat Settings.
-- Potential fix for Lua Error with Raid Frames in Classic clients.
-- Updated TOC for 11.2.0 and 3.4.5.
+- The Bag Organisation Setting will now no longer attempt to overwrite Bank Tab data.
+- There is a longer delay before Bag Assignments are saved to the database after changing them.
