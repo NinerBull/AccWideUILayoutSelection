@@ -1,2 +1,2 @@
-- The Bag Organisation Setting will now no longer attempt to overwrite Bank Tab data.
-- There is a longer delay before Bag Assignments are saved to the database after changing them.
+- (Retail) The addon now no longer tries to save and load all its settings immediately after switching spec.
+- (Retail) The addon now uses the ACTIVE_TALENT_GROUP_CHANGED event instead of PLAYER_SPECIALIZATION_CHANGED, which should hopefully prevent it from saving/loading upon leveling up.

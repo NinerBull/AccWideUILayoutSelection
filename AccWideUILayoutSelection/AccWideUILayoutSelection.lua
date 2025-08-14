@@ -42,7 +42,8 @@ AccWideUI_Frame:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 AccWideUI_Frame:RegisterEvent("LOADING_SCREEN_DISABLED")
 
 if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-	AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+	--AccWideUI_Frame:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED")
+	AccWideUI_Frame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 	AccWideUI_Frame:RegisterEvent("BAG_SLOT_FLAGS_UPDATED")
 	AccWideUI_Frame:RegisterEvent("BANK_BAG_SLOT_FLAGS_UPDATED")
 end
@@ -112,30 +113,7 @@ end
 		
 		hooksecurefunc(C_EditMode, "OnEditModeExit", function()
 		
-			if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
-			
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = tostring(GetSpecialization())
-		
-				if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-				
-					if (AccWideUI_AccountData.printDebugTextToChat == true) then
-						print(AccWideUI_TextName .. " [Debug] Saving Chosen Edit Mode Layout.")
-					end
-
-					if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-
-						--Set the spec
-						AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
-						
-						AccWideUI_Frame:SaveUISettings()
-
-					end
-					
-				end -- EO accountWideLayout
-				
-			end 
+			AccWideUI_Frame:SaveEditModeSettings()
 				
 		end)
 	
@@ -437,12 +415,7 @@ end
 			AccWideUI_AccountData.SaveVersion = AccWideUI_SaveVersion
 			AccWideUI_Frame_HasLoadedSettings = true
 			if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-				local currentSpec = tostring(GetSpecialization())
-				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
-				end
+				AccWideUI_Frame:SaveEditModeSettings()
 			end
 			if (AccWideUI_AccountData.enableTextOutput == true) then
 				print(AccWideUI_TextName .. " " .. string.format(L.ACCWUI_LOAD_REGULAR, AccWideUI_TextSlash))	
@@ -935,16 +908,24 @@ end
 			
 			
 			
+			if  (event == "ACTIVE_TALENT_GROUP_CHANGED" and AccWideUI_Frame_HasDoneInitialLoad == true) then
+				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+					C_Timer.After(0.5, function()
+						AccWideUI_Frame:LoadEditModeSettings()
+					end)
+				end
+			end --EO Player Active Talent Group Changed
 			
 			
 			
-			if  (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
+			
+			--[[if  (event == "PLAYER_SPECIALIZATION_CHANGED" and arg1 == "player") then
 				if (AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
 					AccWideUI_Frame:SaveUISettings()
 					AccWideUI_Frame:LoadUISettings(true)
 				end
 	
-			end --EO Player Specialisation Changed
+			end --EO Player Specialisation Changed]]
 			
 			
 			
@@ -1767,7 +1748,7 @@ end
 				AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 
 				for specx = 1, AccWideUI_NumSpecializations, 1 do
-					AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, GetSpecializationInfo(specx)))
+					AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, C_SpecializationInfo.GetSpecializationInfo(specx)))
 					
 				end
 				
@@ -1954,21 +1935,7 @@ end
 				
 				if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) then
 				
-					-- Use Acc Wide Layout
-					local currentSpec = tostring(GetSpecialization())
-					
-					if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
-					
-
-						if (AccWideUI_AccountData.printDebugTextToChat == true) then
-							print(AccWideUI_TextName .. " [Debug] Loading Chosen Edit Mode Layout.")
-						end
-
-						--Set the spec
-						C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
-				
-					
-					end -- eo accountWideLayout
+					AccWideUI_Frame:LoadEditModeSettings()
 
 				end
 				
@@ -2777,7 +2744,31 @@ end
 	
 	end
 
+	
+	function AccWideUI_Frame:LoadEditModeSettings()
+	
+		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+				
+				-- Use Acc Wide Layout
+				local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
+				
+				if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
+				
 
+					if (AccWideUI_AccountData.printDebugTextToChat == true) then
+						print(AccWideUI_TextName .. " [Debug] Loading Chosen Edit Mode Layout.")
+					end
+
+					--Set the spec
+					C_EditMode.SetActiveLayout(AccWideUI_AccountData.accountWideLayoutID)
+			
+				
+				end -- eo accountWideLayout
+
+			end
+
+	
+	end
 
 
 	function AccWideUI_Frame:SaveUISettings()
@@ -3227,6 +3218,40 @@ end
 	end
 	
 	
+	
+	
+	function AccWideUI_Frame:SaveEditModeSettings()
+	
+		if (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and AccWideUI_AccountData.HasDoneFirstTimeSetup == true) then
+			
+			local getLayoutsTable = C_EditMode.GetLayouts()
+			local currentActiveLayout = getLayoutsTable["activeLayout"]
+			local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
+	
+			if (AccWideUI_AccountData.accountWideLayout == true) and (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
+			
+				if (AccWideUI_AccountData.printDebugTextToChat == true) then
+					print(AccWideUI_TextName .. " [Debug] Saving Chosen Edit Mode Layout.")
+				end
+
+				if (AccWideUI_CharData["accWideSpec" .. currentSpec] == true) then
+
+					--Set the spec
+					AccWideUI_AccountData.accountWideLayoutID = currentActiveLayout
+
+				end
+				
+			end -- EO accountWideLayout
+			
+		end 
+	
+	end
+	
+	
+	
+	
+	
+	
 	function AccWideUI_Frame:SaveBagFlagSettings(saveFlags)
 	
 		saveFlags = saveFlags or false
@@ -3348,7 +3373,7 @@ end
 				AccWideUI_NumSpecializations = GetNumSpecializations(false, false)
 
 				for specx = 1, AccWideUI_NumSpecializations, 1 do
-					AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, GetSpecializationInfo(specx)))
+					AccWideUI_SpecName[specx] = PlayerUtil.GetSpecNameBySpecID(select(1, C_SpecializationInfo.GetSpecializationInfo(specx)))
 				end
 				
 				if (AccWideUI_NumSpecializations >= 1) then
