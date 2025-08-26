@@ -88,7 +88,7 @@ end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
-	self:Print(event)
+	--self:Print(event)
 	
 	--Set up profile data that I can't do with the regular table
 	if (event == "OnNewProfile") then

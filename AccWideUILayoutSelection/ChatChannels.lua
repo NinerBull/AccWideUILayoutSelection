@@ -7,11 +7,11 @@ AccWideUIAceAddon.chatChannelNames = {
 	localDefense = "LocalDefense",
 	worldDefense = "WorldDefense",
 	lookingForGroup = "LookingForGroup",
-	HardcoreDeaths = "HardcoreDeaths",
+	hardcoreDeaths = "HardcoreDeaths",
 	guildRecruitment = "GuildRecruitment"
 }
 
-if (AccWideUIAceAddon:IsMainline()) then
+if (AccWideUIAceAddon:IsMainline()) then --Retail
 
 	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
@@ -19,7 +19,7 @@ if (AccWideUIAceAddon:IsMainline()) then
 	AccWideUIAceAddon.chatChannelNames.localDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 
-elseif (AccWideUIAceAddon:IsClassicProgression()) then
+elseif (AccWideUIAceAddon:IsClassicProgression()) then --MoP
 
 	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
@@ -36,7 +36,7 @@ elseif (AccWideUIAceAddon:IsClassicWrath()) then --China Wrath
 	AccWideUIAceAddon.chatChannelNames.guildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 
-elseif (AccWideUIAceAddon:IsClassicEra()) then
+elseif (AccWideUIAceAddon:IsClassicEra()) then --Era
 
 	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)

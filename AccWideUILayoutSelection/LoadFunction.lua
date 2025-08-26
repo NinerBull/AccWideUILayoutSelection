@@ -786,6 +786,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 					end, 4)
 					
+					
+					
 					--Visible Chat Channels
 					self:ScheduleTimer(function() 
 					
