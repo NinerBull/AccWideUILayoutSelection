@@ -156,7 +156,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				width = "full",
 				name = L["ACCWUI_OPT_TITLE_DESC"]
 			},
-			optionsSyncSettings = {
+			settings = {
 				type = "group",
 				name = L["ACCWUI_OPT_SYNCSETTINGS_TITLE"],
 				desc = L["ACCWUI_OPT_SYNCSETTINGS_DESC"],
@@ -359,7 +359,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				}
 				
 			},
-			blockChannelToggles = {
+			channels = {
 				type = "group",
 				name = L["ACCWUI_BLOCKBLIZZ_TITLE"],
 				desc = L["ACCWUI_BLOCKBLIZZ_DESC"],
@@ -440,7 +440,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					}
 				}
 			},
-			optionsDebug = {
+			advanced = {
 				type = "group",
 				name = ADVANCED_OPTIONS,
 				--handler = AccWideUIAceAddon,
@@ -534,7 +534,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			
 			local thisSpecName = PlayerUtil.GetSpecNameBySpecID(select(1, C_SpecializationInfo.GetSpecializationInfo(ThisSpecX)))
 		
-			optionsData.args.optionsSyncSettings.args.editModeSettings.args["spec" .. ThisSpecX] = {
+			optionsData.args.settings.args.editModeSettings.args["spec" .. ThisSpecX] = {
 				type = "toggle",
 				name = thisSpecName,
 				order = (5 + ThisSpecX),
@@ -546,7 +546,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		end
 	
 	else
-		optionsData.args.optionsSyncSettings.args.editModeSettings = nil
+		optionsData.args.settings.args.editModeSettings = nil
 	end
 	
 	
@@ -557,44 +557,44 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
-		optionsData.args.optionsSyncSettings.args.blockChannelToggles = nil
+		optionsData.args.settings.args.channels = nil
 	end
 	
 	
 	-- Remove Sync options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMainline() == false) then
-		optionsData.args.optionsSyncSettings.args.editModeSettings = nil	
-		optionsData.args.optionsSyncSettings.args.headerDiv2 = nil
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.bagOrganisation = nil
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.cooldownViewer = nil
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.editModeLayout = nil
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.empowerTap = nil
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.lossOfControl = nil
+		optionsData.args.settings.args.editModeSettings = nil	
+		optionsData.args.settings.args.headerDiv2 = nil
+		optionsData.args.settings.args.syncToggles.args.bagOrganisation = nil
+		optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
+		optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
+		optionsData.args.settings.args.syncToggles.args.empowerTap = nil
+		optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
 	end
 	
 	if (AccWideUIAceAddon:IsClassicEra() == true) then
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.arenaFrames = nil
-		optionsData.args.optionsSyncSettings.args.syncToggles.args.spellOverlay = nil
+		optionsData.args.settings.args.syncToggles.args.arenaFrames = nil
+		optionsData.args.settings.args.syncToggles.args.spellOverlay = nil
 	end
 
 
 
 	-- Remove Chat options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMainline()) then
-		optionsData.args.blockChannelToggles.args.togglesGroup.args.worldDefense = nil
-		optionsData.args.blockChannelToggles.args.togglesGroup.args.HardcoreDeaths = nil
+		optionsData.args.channels.args.togglesGroup.args.worldDefense = nil
+		optionsData.args.channels.args.togglesGroup.args.HardcoreDeaths = nil
 	end
 
 	if (AccWideUIAceAddon:IsClassicWrath() == false and AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.blockChannelToggles.args.togglesGroup.args.guildRecruitment = nil
+		optionsData.args.channels.args.togglesGroup.args.guildRecruitment = nil
 	end
 
 	if (AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.blockChannelToggles.args.togglesGroup.args.hardcoreDeaths = nil
+		optionsData.args.channels.args.togglesGroup.args.hardcoreDeaths = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.blockChannelToggles.args.togglesGroup.args.services = nil
+		optionsData.args.channels.args.togglesGroup.args.services = nil
 	end
 	
 	

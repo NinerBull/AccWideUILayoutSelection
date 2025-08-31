@@ -168,7 +168,13 @@ end
 
 
 function AccWideUIAceAddon:SlashCommand(input, editbox)
-	Settings.OpenToCategory(self.optionsFrame.name)
+	
+	if not input or input:trim() == "" then
+		Settings.OpenToCategory(self.optionsFrame.name)
+	else
+		LibStub("AceConfigCmd-3.0").HandleCommand(AccWideUIAceAddon, "awi", "AccWideUIAceAddon_Options", input)
+	end
+	
 end
 
 
