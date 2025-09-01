@@ -254,9 +254,9 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			if (self:IsClassicEra() or self:IsClassicWrath()) then
 				if (self.db.profile.blizzChannels.guildRecruitment == "join") then
 					if (((GetChannelName(self.chatChannelNames.guildRecruitment))) == 0) then
-						--JoinChannelByName(self.chatChannelNames.guildRecruitment)
-						DEFAULT_CHAT_FRAME.editBox:SetText("/join " .. self.chatChannelNames.guildRecruitment) ChatEdit_SendText(DEFAULT_CHAT_FRAME.editBox, 0)
-						--self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.guildRecruitment, self.TempData.TextSlash)
+						JoinChannelByName(self.chatChannelNames.guildRecruitment)
+						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.guildRecruitment)
+						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.guildRecruitment, self.TempData.TextSlash)
 					end
 				end
 			end
@@ -264,9 +264,9 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			if (self:IsClassicEra()) then
 				if (self.db.profile.blizzChannels.hardcoreDeaths == "join") then
 					if (((GetChannelName(self.chatChannelNames.hardcoreDeaths))) == 0) then
-						--JoinChannelByName(self.chatChannelNames.hardcoreDeaths)
-						DEFAULT_CHAT_FRAME.editBox:SetText("/join " .. self.chatChannelNames.hardcoreDeaths) ChatEdit_SendText(DEFAULT_CHAT_FRAME.editBox, 0)
-						--self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.hardcoreDeaths, self.TempData.TextSlash)
+						JoinChannelByName(self.chatChannelNames.hardcoreDeaths)
+						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.hardcoreDeaths)
+						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.hardcoreDeaths, self.TempData.TextSlash)
 					end
 				end
 			end	
