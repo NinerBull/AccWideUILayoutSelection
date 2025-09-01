@@ -33,14 +33,14 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncToggles.arenaFrames = AccWideUI_AccountData.accountWideArenaFrames or true
 		self.db.profile.syncToggles.spellOverlay = AccWideUI_AccountData.accountWideSpellOverlayVariables or true
 		
-		self.db.profile.blockChannels.general = AccWideUI_AccountData.ChatChannels.BlockGeneral or false
-		self.db.profile.blockChannels.localDefense = AccWideUI_AccountData.ChatChannels.BlockLocalDefense or false
-		self.db.profile.blockChannels.trade = AccWideUI_AccountData.ChatChannels.BlockTrade or false
-		self.db.profile.blockChannels.lookingForGroup = AccWideUI_AccountData.ChatChannels.BlockLookingForGroup or false
-		self.db.profile.blockChannels.services = AccWideUI_AccountData.ChatChannels.BlockServices or false
-		self.db.profile.blockChannels.worldDefense = AccWideUI_AccountData.ChatChannels.BlockWorldDefense or false
-		self.db.profile.blockChannels.guildRecruitment = AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment or false
-		self.db.profile.blockChannels.hardcoreDeaths = AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths or false
+		self.db.profile.blizzChannels.general = (AccWideUI_AccountData.ChatChannels.BlockGeneral == true and "block" or "default")
+		self.db.profile.blizzChannels.localDefense = (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true and "block" or "default")
+		self.db.profile.blizzChannels.trade = (AccWideUI_AccountData.ChatChannels.BlockTrade == true and "block" or "default")
+		self.db.profile.blizzChannels.lookingForGroup = (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true and "block" or "default")
+		self.db.profile.blizzChannels.services = (AccWideUI_AccountData.ChatChannels.BlockServices == true and "block" or "default")
+		self.db.profile.blizzChannels.worldDefense = (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true and "block" or "default")
+		self.db.profile.blizzChannels.guildRecruitment = (AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment == true and "block" or "default")
+		self.db.profile.blizzChannels.hardcoreDeaths = (AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths == true and "block" or "default")
 		
 		self.db.profile.syncData.editModeLayoutID = AccWideUI_AccountData.accountWideLayoutID or 1
 		self.db.profile.syncData.actionBars.visible = AccWideUI_AccountData.ActionBars or {}

@@ -297,23 +297,51 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 					
 					--Positions
 					if (self.db.profile.syncToggles.chatWindowPosition == true) then
-						do
-							local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
-							self.db.profile.syncData.chat.windows[thisChatFrame].Positions = {
-								["point"] = point,
-								["xOffset"] = xOffset,
-								["yOffset"] = yOffset
-							}
+					
+						if self.db.global.useScreenSizeSpecificSettings == true then
+						
+							--Res Specific
+							do
+								local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
+								self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions = {
+									["point"] = point,
+									["xOffset"] = xOffset,
+									["yOffset"] = yOffset
+								}
+							end
+							
+							--Dimensions
+							do
+								local width, height = GetChatWindowSavedDimensions(thisChatFrame);
+								self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Dimensions = {
+									["width"] = width,
+									["height"] = height
+								}
+							end
+							
+						else
+						
+							--Global
+							do
+								local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
+								self.db.profile.syncData.chat.windows[thisChatFrame].Positions = {
+									["point"] = point,
+									["xOffset"] = xOffset,
+									["yOffset"] = yOffset
+								}
+							end
+							
+							--Dimensions
+							do
+								local width, height = GetChatWindowSavedDimensions(thisChatFrame);
+								self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions = {
+									["width"] = width,
+									["height"] = height
+								}
+							end
+							
 						end
 						
-						--Dimensions
-						do
-							local width, height = GetChatWindowSavedDimensions(thisChatFrame);
-							self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions = {
-								["width"] = width,
-								["height"] = height
-							}
-						end
 					end
 
 
@@ -350,7 +378,25 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 						local channels = {GetChannelList()}
 						for i = 1, #channels, 3 do
 							local id, name, disabled = channels[i], channels[i+1], channels[i+2]
-							self.db.profile.syncData.chat.channelsJoined[id] = name
+							
+							local saveThisChannel = true
+							
+							--[[for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
+								if v == name then
+									saveThisChannel = false
+								end
+							end
+							
+							if string.find(name, "Community:") then
+								saveThisChannel = false
+							end]]
+							
+							
+							if saveThisChannel == true then
+								self.db.profile.syncData.chat.channelsJoined[id] = name
+							end
+							
+							
 						end
 					end
 				end
@@ -468,8 +514,12 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 			if (self.db.char.useEditModeLayout["spec" .. currentSpec] == true) then
 
 				--Set the spec
-				self.db.profile.syncData.editModeLayoutID = currentActiveLayout
-
+				if self.db.global.useScreenSizeSpecificSettings == true then
+					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID = currentActiveLayout
+				else
+					self.db.profile.syncData.editModeLayoutID = currentActiveLayout
+				end
+			
 			end
 			
 		end

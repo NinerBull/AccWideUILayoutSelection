@@ -7,7 +7,8 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			hasDoneFirstTimeSetup = false,
 			printDebugTextToChat = false,
 			printWhenLastSaved = false,
-			enableTextOutput = false
+			enableTextOutput = false,
+			useScreenSizeSpecificSettings = false
 		},
 		profile = {
 			lastSaved = {
@@ -111,17 +112,18 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						BackpackSellJunkDisabled = nil,
 						BankAutosortDisabled = nil,
 					}
-				}
+				},
+				screenResolutionSpecific = {}
 			},
-			blockChannels = {
-				general = false,
-				localDefense = false,
-				trade = false,
-				lookingForGroup = false,
-				services = false,
-				worldDefense = false,
-				guildRecruitment = false,
-				hardcoreDeaths = false
+			blizzChannels = {
+				general = "default",
+				localDefense = "default",
+				trade = "default",
+				lookingForGroup = "default",
+				services = "default",
+				worldDefense = "default",
+				guildRecruitment = "default",
+				hardcoreDeaths = "default"
 			}
 		},
 		char = {
@@ -364,6 +366,8 @@ function AccWideUIAceAddon:GenerateOptions()
 				name = L["ACCWUI_BLOCKBLIZZ_TITLE"],
 				desc = L["ACCWUI_BLOCKBLIZZ_DESC"],
 				order = 4,
+				get = "GetBlizzChannelToggle",
+				set = "SetBlizzChannelToggle",
 				args = {
 					desc = {
 						type = "description",
@@ -372,72 +376,118 @@ function AccWideUIAceAddon:GenerateOptions()
 						width = "full",
 						name = L["ACCWUI_BLOCKBLIZZ_TEXT_DESC"]
 					},
-					togglesGroup = {
-						type = "group",
-						name = L["ACCWUI_BLOCKBLIZZ_TITLE"],
-						inline = true,
-						order = 1,
-						get = "GetBlockChannelToggle",
-						set = "SetBlockChannelToggle",
-						args = {
-							general = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.general),
-								width = "full",
-								order = 2,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.general),
-							},
-							trade = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.trade),
-								width = "full",
-								order = 3,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.trade),
-							},
-							localDefense = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.localDefense),
-								width = "full",
-								order = 4,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.localDefense),
-							},
-							lookingForGroup = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.lookingForGroup),
-								width = "full",
-								order = 5,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.lookingForGroup),
-							},
-							services = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.services),
-								width = "full",
-								order = 6,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.services),
-							},
-							guildRecruitment = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.guildRecruitment),
-								width = "full",
-								order = 7,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.guildRecruitment),
-							},
-							worldDefense = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.worldDefense),
-								width = "full",
-								order = 8,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.worldDefense),
-							},
-							hardcoreDeaths = {
-								type = "toggle",
-								name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.hardcoreDeaths),
-								width = "full",
-								order = 9,
-								desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.hardcoreDeaths),
-							},
-						}
-					}
+					general = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.general or "General"),
+						width = 0.6,
+						order = 2,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.general or "General"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					trade = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.trade or "Trade"),
+						width = 0.6,
+						order = 3,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.trade or "Trade"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					localDefense = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.localDefense or "LocalDefense"),
+						width = 0.6,
+						order = 4,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.localDefense or "LocalDefense"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					lookingForGroup = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.lookingForGroup or "LookingForGroup"),
+						width = 0.6,
+						order = 5,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.lookingForGroup or "LookingForGroup"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					services = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.services or "Services"),
+						width = 0.6,
+						order = 6,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.services or "Services"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					guildRecruitment = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.guildRecruitment or "GuildRecruitment"),
+						width = 0.6,
+						order = 7,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.guildRecruitment or "GuildRecruitment"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					worldDefense = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.worldDefense or "WorldDefense"),
+						width = 0.6,
+						order = 8,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.worldDefense or "WorldDefense"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
+					hardcoreDeaths = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.hardcoreDeaths or "HardcoreDeaths"),
+						width = 0.6,
+						order = 9,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.hardcoreDeaths or "HardcoreDeaths"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"}
+					},
 				}
 			},
 			advanced = {
@@ -453,51 +503,75 @@ function AccWideUIAceAddon:GenerateOptions()
 						fontSize = "medium",
 						order = 1,
 						width = "full",
-						name = L["ACCWUI_DEBUG_DESC"],
+						name = L["ACCWUI_ADVANCED_DESC"],
 					},
-					enableTextOutput = {
-						type = "toggle",
-						name = L["ACCWUI_OPT_CHK_TOCHAT"],
-						width = "full",
+					advanced = {
+						type = "group",
+						name = ADVANCED_OPTIONS,
+						inline = true,
+						order = 2,
+						args = {
+							useScreenSizeSpecificSettings = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_CHK_SCREENSIZE"],
+								width = "full",
+								order = 3,
+								desc = string.format(L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"], AccWideUIAceAddon.TempData.ScreenRes),
+							},
+							btnForceLoad = {
+								type = "execute",
+								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
+								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
+								order = 7,
+								func = function() 
+									self:CancelAllTimers(); 
+									self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
+									self:LoadUISettings();
+								end,
+							},
+							btnForceSave = {
+								type = "execute",
+								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
+								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
+								order = 8,
+								func = function() 
+									self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
+									self:SaveUISettings(); 
+									self:SaveBagFlagSettings(true); 
+								end,
+							},
+						}
+					},
+					debug = {
+						type = "group",
+						name = L["ACCWUI_DEBUG_TITLE"],
+						inline = true,
 						order = 3,
-						desc = L["ACCWUI_OPT_CHK_TOCHAT_DESC"],
+						args = {
+							enableTextOutput = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_CHK_TOCHAT"],
+								width = "full",
+								order = 3,
+								desc = L["ACCWUI_OPT_CHK_TOCHAT_DESC"],
+							},
+							printWhenLastSaved = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_CHK_SHOWLASTSAVED"],
+								width = "full",
+								order = 4,
+								desc = L["ACCWUI_OPT_CHK_SHOWLASTSAVED_DESC"],
+							},
+							printDebugTextToChat = {
+								type = "toggle",
+								name = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"],
+								width = "full",
+								order = 6,
+								desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
+							},
+						}
 					},
-					printWhenLastSaved = {
-						type = "toggle",
-						name = L["ACCWUI_OPT_CHK_SHOWLASTSAVED"],
-						width = "full",
-						order = 4,
-						desc = L["ACCWUI_OPT_CHK_SHOWLASTSAVED_DESC"],
-					},
-					printDebugTextToChat = {
-						type = "toggle",
-						name = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"],
-						width = "full",
-						order = 6,
-						desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
-					},
-					btnForceLoad = {
-						type = "execute",
-						name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
-						desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
-						order = 7,
-						func = function() 
-							self:CancelAllTimers(); 
-							self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
-							self:LoadUISettings();
-						end,
-					},
-					btnForceSave = {
-						type = "execute",
-						name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
-						desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
-						order = 8,
-						func = function() 
-							self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
-							self:SaveUISettings(); 
-							self:SaveBagFlagSettings(true); 
-						end,
-					},
+					
 					headerDiv1 = {
 						type = "header",
 						name = L["ACCWUI_ADDONNAME"],
@@ -581,20 +655,20 @@ function AccWideUIAceAddon:GenerateOptions()
 
 	-- Remove Chat options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMainline()) then
-		optionsData.args.channels.args.togglesGroup.args.worldDefense = nil
-		optionsData.args.channels.args.togglesGroup.args.HardcoreDeaths = nil
+		optionsData.args.channels.args.worldDefense = nil
+		optionsData.args.channels.args.HardcoreDeaths = nil
 	end
 
 	if (AccWideUIAceAddon:IsClassicWrath() == false and AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.channels.args.togglesGroup.args.guildRecruitment = nil
+		optionsData.args.channels.args.guildRecruitment = nil
 	end
 
 	if (AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.channels.args.togglesGroup.args.hardcoreDeaths = nil
+		optionsData.args.channels.args.hardcoreDeaths = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.channels.args.togglesGroup.args.services = nil
+		optionsData.args.channels.args.services = nil
 	end
 	
 	
@@ -619,12 +693,12 @@ function AccWideUIAceAddon:SetSyncToggle(info, value)
 	self.db.profile.syncToggles[info[#info]] = value
 end
 
-function AccWideUIAceAddon:GetBlockChannelToggle(info)
-	return self.db.profile.blockChannels[info[#info]]
+function AccWideUIAceAddon:GetBlizzChannelToggle(info)
+	return self.db.profile.blizzChannels[info[#info]]
 end
 
-function AccWideUIAceAddon:SetBlockChannelToggle(info, value)
-	self.db.profile.blockChannels[info[#info]] = value
+function AccWideUIAceAddon:SetBlizzChannelToggle(info, value)
+	self.db.profile.blizzChannels[info[#info]] = value
 end
 
 function AccWideUIAceAddon:GetGlobalToggle(info)

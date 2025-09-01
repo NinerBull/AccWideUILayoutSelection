@@ -1,15 +1,6 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
-AccWideUIAceAddon.chatChannelNames = {
-	general = "General",
-	trade = "Trade",
-	services = "Services",
-	localDefense = "LocalDefense",
-	worldDefense = "WorldDefense",
-	lookingForGroup = "LookingForGroup",
-	hardcoreDeaths = "HardcoreDeaths",
-	guildRecruitment = "GuildRecruitment"
-}
+AccWideUIAceAddon.chatChannelNames = {}
 
 if (AccWideUIAceAddon:IsMainline()) then --Retail
 
@@ -48,3 +39,12 @@ elseif (AccWideUIAceAddon:IsClassicEra()) then --Era
 	AccWideUIAceAddon.chatChannelNames.guildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 
 end
+
+
+--[[
+AccWideUIAceAddon.chatChannelNamesList = {}
+for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
+	table.insert(AccWideUIAceAddon.chatChannelNamesList, v)
+end
+]]
+

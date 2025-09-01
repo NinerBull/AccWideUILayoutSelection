@@ -568,6 +568,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						if (self.db.global.printDebugTextToChat == true) then
 							self:Print("[Chat Window] Joining Channels.")
 						end
+						
+						AccWideUIAceAddon:BlizzChannelManager()
+						
 						-- Chat Channels
 						for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
 							JoinChannelByName(v)
@@ -721,23 +724,61 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						if (self.db.profile.syncToggles.chatWindowPosition == true) then
 						
 							if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions) == "table") then
-						
-								if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions.xOffset) ~= "nil") then
-									SetChatWindowSavedPosition(
-										thisChatFrame,
-										self.db.profile.syncData.chat.windows[thisChatFrame].Positions.point,
-										self.db.profile.syncData.chat.windows[thisChatFrame].Positions.xOffset,
-										self.db.profile.syncData.chat.windows[thisChatFrame].Positions.yOffset
-									)
-								end
+							
+								if self.db.global.useScreenSizeSpecificSettings == true then
+									--Res Specific
+									if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions)  ~= "nil") then
+										if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions.xOffset) ~= "nil") then
+											SetChatWindowSavedPosition(
+												thisChatFrame,
+												self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions.point,
+												self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions.xOffset,
+												self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions.yOffset
+											)
+										end
+									end
+									
+									if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Dimensions) ~= "nil") then
+										if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Dimensions.width) ~= "nil") then
+											SetChatWindowSavedDimensions(
+												thisChatFrame,
+												self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Dimensions.width,
+												self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Dimensions.height
+											)
+										end
+									end
+									
+								else
+									--Global
+									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions)  ~= "nil") then
+										if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions.xOffset) ~= "nil") then
+											SetChatWindowSavedPosition(
+												thisChatFrame,
+												self.db.profile.syncData.chat.windows[thisChatFrame].Positions.point,
+												self.db.profile.syncData.chat.windows[thisChatFrame].Positions.xOffset,
+												self.db.profile.syncData.chat.windows[thisChatFrame].Positions.yOffset
+											)
+										end
+									end
+									
+									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions)  ~= "nil") then
+										if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions.width) ~= "nil") then
+											SetChatWindowSavedDimensions(
+												thisChatFrame,
+												self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions.width,
+												self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions.height
+											)
+										end
+									end
 								
-								if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions.width) ~= "nil") then
-									SetChatWindowSavedDimensions(
-										thisChatFrame,
-										self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions.width,
-										self.db.profile.syncData.chat.windows[thisChatFrame].Dimensions.height
-									)
 								end
+							
+						
+								
+								
+								
+								
+								
 							
 							end
 							
@@ -894,13 +935,26 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
 		
 		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["spec" .. currentSpec] == true) then
+		
+			local thisEditModeLayoutID = self.db.profile.syncData.editModeLayoutID or 1
+			
+			if self.db.global.useScreenSizeSpecificSettings == true then
+				
+				if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes]) then
+				
+					thisEditModeLayoutID = self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID or thisEditModeLayoutID
+					
+				end
+			
+				
+			end
 
 			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Debug] Loading Chosen Edit Mode Layout (ID: " .. self.db.profile.syncData.editModeLayoutID .. ").")
+				self:Print("[Debug] Loading Chosen Edit Mode Layout (ID: " .. thisEditModeLayoutID .. ").")
 			end
 
 			--Set the spec
-			C_EditMode.SetActiveLayout(self.db.profile.syncData.editModeLayoutID)
+			C_EditMode.SetActiveLayout(thisEditModeLayoutID)
 	
 		end
 	

@@ -11,7 +11,11 @@ AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi"
 }
 
+
 function AccWideUIAceAddon:OnInitialize()
+
+	local thisScreenWidth, thisScreenHeight = GetPhysicalScreenSize()
+	AccWideUIAceAddon.TempData.ScreenRes = thisScreenWidth .. "x" .. thisScreenHeight
 
 	self.db = LibStub("AceDB-3.0"):New("AccWideUIAceDB", AccWideUIAceAddon:GenerateDefaultDB(), true)
 	
@@ -26,24 +30,10 @@ function AccWideUIAceAddon:OnEnable()
 	local options = self:GenerateOptions()
 	local profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
 	options.args.profiles = profiles
-	options.args.profiles.name = "Sync Profiles"
-	options.args.profiles.order = 3
+	options.args.profiles.order = 4
 	AC:RegisterOptionsTable("AccWideUIAceAddon_Options", options)
 	
-	
 	self.optionsFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", "Account Wide UI")
-	
-	
-	--AC:RegisterOptionsTable("AccWideUIAceAddon_Options", self:GenerateOptionsSyncSettings())
-	--self.optionsSyncSettingsFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", "Sync Settings", "AccWideUIAceAddon")
-
-	--AC:RegisterOptionsTable("AccWideUIAceAddon_Options", profiles)
-	
-	
-	--ACD:AddToBlizOptions("AccWideUIAceAddon_Options", "Profiles", "AccWideUIAceAddon")
-	
-	--AC:RegisterOptionsTable("AccWideUIAceAddon_Options", self:GenerateOptionsDebug())
-	--self.optionsDebugFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", "Debug", "AccWideUIAceAddon")
 	
 	self.db.RegisterCallback(self, "OnNewProfile", "DoProfileInit")
     self.db.RegisterCallback(self, "OnProfileChanged", "DoProfileInit")
@@ -53,7 +43,6 @@ function AccWideUIAceAddon:OnEnable()
 	self.db.RegisterCallback(self, "OnProfileShutdown", "DoBeforeProfileShutdown")
 	self.db.RegisterCallback(self, "OnDatabaseShutdown", "DoBeforeProfileShutdown")
 	
-
 	self:RegisterChatCommand("accwideui", "SlashCommand")
 	self:RegisterChatCommand("accwideeditmode", "SlashCommand")
 	self:RegisterChatCommand("accwideinterface", "SlashCommand")
@@ -66,6 +55,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("DISABLE_DECLINE_GUILD_INVITE")
 	self:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 	self:RegisterEvent("LOADING_SCREEN_DISABLED")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	
 	if (AccWideUIAceAddon:IsMainline()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
@@ -88,8 +78,6 @@ end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
-	--self:Print(event)
-	
 	--Set up profile data that I can't do with the regular table
 	if (event == "OnNewProfile") then
 	
@@ -124,6 +112,11 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 				local currentActiveLayout = getLayoutsTable["activeLayout"]
 				
 				self.db.profile.syncData.editModeLayoutID = currentActiveLayout or 1
+				
+				if self.db.global.useScreenSizeSpecificSettings == true then
+					self.db.profile.syncData.screenResolutionSpecific[AccWideUIAceAddon.TempData.ScreenRes].editModeLayoutID = currentActiveLayout or 1
+				end
+				
 			end
 			
 
@@ -155,6 +148,22 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
 	end
 	
+	
+	-- Always
+	if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes]) ~= "table") then
+		self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] = {
+			chat = {
+				windows = {}
+			}
+		}
+	end
+	
+	for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+		if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame]) ~= "table") then
+			self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame] = {}
+		end
+	end
+	
 end
 
 
@@ -173,6 +182,168 @@ function AccWideUIAceAddon:SlashCommand(input, editbox)
 		Settings.OpenToCategory(self.optionsFrame.name)
 	else
 		LibStub("AceConfigCmd-3.0").HandleCommand(AccWideUIAceAddon, "awi", "AccWideUIAceAddon_Options", input)
+	end
+	
+end
+
+
+
+
+function AccWideUIAceAddon:BlizzChannelManager()
+	
+	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+
+		if (self.db.global.hasDoneFirstTimeSetup == true) then
+		
+			
+			
+			-- Join player to channels if they're allowed
+			if (self.db.profile.blizzChannels.general == "join") then
+				if (((GetChannelName(self.chatChannelNames.general))) == 0) then
+					JoinChannelByName(self.chatChannelNames.general)
+					ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.general)
+					self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.general, self.TempData.TextSlash)
+				end
+			end
+			
+			if (self.db.profile.blizzChannels.localDefense == "join") then
+				if (((GetChannelName(self.chatChannelNames.localDefense))) == 0) then
+					JoinChannelByName(self.chatChannelNames.localDefense)
+					ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.localDefense)
+					self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.localDefense, self.TempData.TextSlash)	
+				end
+			end
+			
+			if (self.db.profile.blizzChannels.trade == "join") then
+				if (((GetChannelName(self.chatChannelNames.trade))) == 0) then
+					JoinChannelByName(self.chatChannelNames.trade)
+					ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.trade)
+					self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.trade, self.TempData.TextSlash)	
+				end
+			end
+			
+			if (self.db.profile.blizzChannels.lookingForGroup == "join") then
+				if (((GetChannelName(self.chatChannelNames.lookingForGroup))) == 0) then
+					JoinChannelByName(self.chatChannelNames.lookingForGroup)
+					ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.lookingForGroup)
+					self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.lookingForGroup, self.TempData.TextSlash)
+				end
+			end
+			
+			if (self:IsMainline() or self:IsClassicEra()) then
+				if (self.db.profile.blizzChannels.services == "join") then
+					if (((GetChannelName(self.chatChannelNames.services))) == 0) then
+						JoinChannelByName(self.chatChannelNames.services)
+						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.services)
+						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.services, self.TempData.TextSlash)
+					end
+				end
+			end
+			
+			if (self:IsMainline() == false) then
+				if (self.db.profile.blizzChannels.worldDefense == "join") then
+					if (((GetChannelName(self.chatChannelNames.worldDefense))) == 0) then
+						JoinChannelByName(self.chatChannelNames.worldDefense)
+						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.worldDefense)
+						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.worldDefense, self.TempData.TextSlash)
+					end
+				end
+			end
+			
+			
+			if (self:IsClassicEra() or self:IsClassicWrath()) then
+				if (self.db.profile.blizzChannels.guildRecruitment == "join") then
+					if (((GetChannelName(self.chatChannelNames.guildRecruitment))) == 0) then
+						--JoinChannelByName(self.chatChannelNames.guildRecruitment)
+						DEFAULT_CHAT_FRAME.editBox:SetText("/join " .. self.chatChannelNames.guildRecruitment) ChatEdit_SendText(DEFAULT_CHAT_FRAME.editBox, 0)
+						--self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.guildRecruitment, self.TempData.TextSlash)
+					end
+				end
+			end
+				
+			if (self:IsClassicEra()) then
+				if (self.db.profile.blizzChannels.hardcoreDeaths == "join") then
+					if (((GetChannelName(self.chatChannelNames.hardcoreDeaths))) == 0) then
+						--JoinChannelByName(self.chatChannelNames.hardcoreDeaths)
+						DEFAULT_CHAT_FRAME.editBox:SetText("/join " .. self.chatChannelNames.hardcoreDeaths) ChatEdit_SendText(DEFAULT_CHAT_FRAME.editBox, 0)
+						--self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.hardcoreDeaths, self.TempData.TextSlash)
+					end
+				end
+			end	
+		
+		
+		
+			-- Remove player from channels if they're blocked
+			if (self.db.profile.blizzChannels.general == "block") then
+				if (GetChannelName((GetChannelName(self.chatChannelNames.general))) > 0) then
+					LeaveChannelByName(self.chatChannelNames.general)
+					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.general, self.TempData.TextSlash)
+				end
+			end
+			
+			if (self.db.profile.blizzChannels.localDefense == "block") then
+				if (GetChannelName((GetChannelName(self.chatChannelNames.localDefense))) > 0) then
+					LeaveChannelByName(self.chatChannelNames.localDefense)
+					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.localDefense, self.TempData.TextSlash)	
+				end
+			end
+			
+			if (self.db.profile.blizzChannels.trade == "block") then
+				if (GetChannelName((GetChannelName(self.chatChannelNames.trade))) > 0) then
+					LeaveChannelByName(self.chatChannelNames.trade)
+					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.trade, self.TempData.TextSlash)	
+				end
+			end
+			
+			if (self.db.profile.blizzChannels.lookingForGroup == "block") then
+				if (GetChannelName((GetChannelName(self.chatChannelNames.lookingForGroup))) > 0) then
+					LeaveChannelByName(self.chatChannelNames.lookingForGroup)
+					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.lookingForGroup, self.TempData.TextSlash)
+				end
+			end
+			
+			if (self:IsMainline() or self:IsClassicEra()) then
+				if (self.db.profile.blizzChannels.services == "block") then
+					if (GetChannelName((GetChannelName(self.chatChannelNames.services))) > 0) then
+						LeaveChannelByName(self.chatChannelNames.services)
+						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.services, self.TempData.TextSlash)
+					end
+				end
+			end
+			
+			if (self:IsMainline() == false) then
+				if (self.db.profile.blizzChannels.worldDefense == "block") then
+					if (GetChannelName((GetChannelName(self.chatChannelNames.worldDefense))) > 0) then
+						LeaveChannelByName(self.chatChannelNames.worldDefense)
+						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.worldDefense, self.TempData.TextSlash)
+					end
+				end
+			end
+			
+			
+			if (self:IsClassicEra() or self:IsClassicWrath()) then
+				if (self.db.profile.blizzChannels.guildRecruitment == "block") then
+					if (GetChannelName((GetChannelName(self.chatChannelNames.guildRecruitment))) > 0) then
+						LeaveChannelByName(self.chatChannelNames.guildRecruitment)
+						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.guildRecruitment, self.TempData.TextSlash)
+					end
+				end
+			end
+				
+			if (self:IsClassicEra()) then
+				if (self.db.profile.blizzChannels.hardcoreDeaths == "block") then
+					if (GetChannelName((GetChannelName(self.chatChannelNames.hardcoreDeaths))) > 0) then
+						LeaveChannelByName(self.chatChannelNames.hardcoreDeaths)
+						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.hardcoreDeaths, self.TempData.TextSlash)
+					end
+				end
+			end	
+			
+			
+			
+
+		end
+
 	end
 	
 end
@@ -215,79 +386,15 @@ end
 
 function AccWideUIAceAddon:CHANNEL_UI_UPDATE(event, arg1, arg2)
 
-	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+	self:BlizzChannelManager()
+	
+end
 
-		if (self.db.global.hasDoneFirstTimeSetup == true) then
-		
-			-- Remove player from channels if they're blocked
-			if (self.db.profile.blockChannels.general == true) then
-				if (GetChannelName((GetChannelName(self.chatChannelNames.general))) > 0) then
-					LeaveChannelByName(self.chatChannelNames.general)
-					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.general, self.TempData.TextSlash)
-				end
-			end
-			
-			if (self.db.profile.blockChannels.localDefense == true) then
-				if (GetChannelName((GetChannelName(self.chatChannelNames.localDefense))) > 0) then
-					LeaveChannelByName(self.chatChannelNames.localDefense)
-					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.localDefense, self.TempData.TextSlash)	
-				end
-			end
-			
-			if (self.db.profile.blockChannels.trade == true) then
-				if (GetChannelName((GetChannelName(self.chatChannelNames.trade))) > 0) then
-					LeaveChannelByName(self.chatChannelNames.trade)
-					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.trade, self.TempData.TextSlash)	
-				end
-			end
-			
-			if (self.db.profile.blockChannels.lookingForGroup == true) then
-				if (GetChannelName((GetChannelName(self.chatChannelNames.lookingForGroup))) > 0) then
-					LeaveChannelByName(self.chatChannelNames.lookingForGroup)
-					self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.lookingForGroup, self.TempData.TextSlash)
-				end
-			end
-			
-			if (self:IsMainline() or self:IsClassicEra()) then
-				if (self.db.profile.blockChannels.services == true) then
-					if (GetChannelName((GetChannelName(self.chatChannelNames.services))) > 0) then
-						LeaveChannelByName(self.chatChannelNames.services)
-						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.services, self.TempData.TextSlash)
-					end
-				end
-			end
-			
-			if (self:IsMainline() == false) then
-				if (self.db.profile.blockChannels.worldDefense == true) then
-					if (GetChannelName((GetChannelName(self.chatChannelNames.worldDefense))) > 0) then
-						LeaveChannelByName(self.chatChannelNames.worldDefense)
-						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.worldDefense, self.TempData.TextSlash)
-					end
-				end
-			end
-			
-			
-			if (self:IsClassicEra() or self:IsClassicWrath()) then
-				if (self.db.profile.blockChannels.guildRecruitment == true) then
-					if (GetChannelName((GetChannelName(self.chatChannelNames.guildRecruitment))) > 0) then
-						LeaveChannelByName(self.chatChannelNames.guildRecruitment)
-						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.guildRecruitment, self.TempData.TextSlash)
-					end
-				end
-			end
-				
-			if (self:IsClassicEra()) then
-				if (self.db.profile.blockChannels.hardcoreDeaths == true) then
-					if (GetChannelName((GetChannelName(self.chatChannelNames.hardcoreDeaths))) > 0) then
-						LeaveChannelByName(self.chatChannelNames.hardcoreDeaths)
-						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.hardcoreDeaths, self.TempData.TextSlash)
-					end
-				end
-			end	
-
-		end
-
-	end
+function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
+	
+	self:ScheduleTimer(function() 
+		self:BlizzChannelManager()
+	end, 5)
 
 end
 
