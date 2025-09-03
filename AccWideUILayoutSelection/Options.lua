@@ -7,7 +7,8 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			hasDoneFirstTimeSetup = false,
 			printDebugTextToChat = false,
 			printWhenLastSaved = false,
-			enableTextOutput = false,
+			printWelcomeMessage = false,
+			printBlizzChatChanges = false,
 			useScreenSizeSpecificSettings = false
 		},
 		profile = {
@@ -76,13 +77,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				},
 				battlefieldMap = { 
 					options = { -- Defaults from https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_BattlefieldMap/Blizzard_BattlefieldMap.lua#L11
-						opacity = 0.7,
+						--[[opacity = 0.7,
 						locked = true,
-						showPlayers = true,
-						position = {
-							x = nil,
-							y = nil
-						},
+						showPlayers = true,]]
 					},
 					
 					cvars = {}
@@ -548,7 +545,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						inline = true,
 						order = 3,
 						args = {
-							enableTextOutput = {
+							printWelcomeMessage = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_CHK_TOCHAT"],
 								width = "full",
@@ -562,12 +559,41 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 4,
 								desc = L["ACCWUI_OPT_CHK_SHOWLASTSAVED_DESC"],
 							},
+							printBlizzChatChanges = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS"],
+								width = "full",
+								order = 5,
+								desc = L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS_DESC"],
+							},
 							printDebugTextToChat = {
 								type = "toggle",
 								name = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"],
 								width = "full",
 								order = 6,
 								desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
+							},
+						}
+					},
+					utility = {
+						type = "group",
+						name = L["ACCWUI_UTILITY_TITLE"],
+						inline = true,
+						order = 4,
+						args = {
+							btnResetZoneMapPos = {
+								type = "execute",
+								name = L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"],
+								desc = L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"],
+								width = 2,
+								order = 1,
+								func = function() 
+									BattlefieldMapTab:ClearAllPoints()
+									BattlefieldMapTab:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+									--BattlefieldMapTab:Show()
+									BattlefieldMapFrame:RefreshAlpha()
+									BattlefieldMapFrame:UpdateUnitsVisibility()
+								end,
 							},
 						}
 					},

@@ -303,7 +303,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 				
 				C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
-			
+				
 				for k, v in pairs(self.CVars.BattlefieldMap) do
 					if (self.db.profile.syncData.battlefieldMap.cvars[v] ~= nil) then
 						SetCVar(v, self.db.profile.syncData.battlefieldMap.cvars[v])
@@ -314,11 +314,18 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				if (self.db.profile.syncData.battlefieldMap.options) then
 				
 					-- Defaults from https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_BattlefieldMap/Blizzard_BattlefieldMap.lua#L11
-					BattlefieldMapOptions = {
-						opacity = 0.7,
-						locked = true,
-						showPlayers = true
-					}
+					if not BattlefieldMapOptions then
+						BattlefieldMapOptions = {
+							opacity = 0.7,
+							locked = true,
+							showPlayers = true
+						}
+						
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Zone Map] BMOptions did not exist.")
+						end
+						
+					end
 
 					if (type(self.db.profile.syncData.battlefieldMap.options.opacity) == "number") then
 						BattlefieldMapOptions.opacity = self.db.profile.syncData.battlefieldMap.options.opacity
@@ -332,10 +339,23 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						BattlefieldMapOptions.showPlayers = self.db.profile.syncData.battlefieldMap.options.showPlayers
 					end
 					
-					if (type(self.db.profile.syncData.battlefieldMap.options.position) == "table") then
-						BattlefieldMapOptions.position = {}
-						BattlefieldMapOptions.position.x = self.db.profile.syncData.battlefieldMap.options.position.x
-						BattlefieldMapOptions.position.y = self.db.profile.syncData.battlefieldMap.options.position.y
+					
+					BattlefieldMapOptions.position = {}
+					
+					if self.db.global.useScreenSizeSpecificSettings == true then
+						
+						if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position) == "table") then
+							BattlefieldMapOptions.position.x = self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x
+							BattlefieldMapOptions.position.y = self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.y
+						end
+					
+					else
+					
+						if (type(self.db.profile.syncData.battlefieldMap.options.position) == "table") then
+							BattlefieldMapOptions.position.x = self.db.profile.syncData.battlefieldMap.options.position.x
+							BattlefieldMapOptions.position.y = self.db.profile.syncData.battlefieldMap.options.position.y
+						end
+					
 					end
 					
 				end
@@ -353,22 +373,57 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						BattlefieldMapFrame:Hide()
 					end
 					
-					BattlefieldMapTab:ClearAllPoints();
+					--BattlefieldMapTab:ClearAllPoints();
+					if self.db.global.useScreenSizeSpecificSettings == true then
 					
-					if ((self.db.profile.syncData.battlefieldMap.options.position) and
-					(self.db.profile.syncData.battlefieldMap.options.position.x ~= 0) and (self.db.profile.syncData.battlefieldMap.options.position.y ~= 0))then
-						BattlefieldMapTab:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", self.db.profile.syncData.battlefieldMap.options.position.x,self.db.profile.syncData.battlefieldMap.options.position.y);
-						BattlefieldMapTab:SetUserPlaced(true);
+						if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position) then
+							if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x and self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.y) then
+								
+								if (self.db.global.printDebugTextToChat == true) then
+									self:Print("[Zone Map] Moving Map (Screen Res).")
+								end
+							
+								BattlefieldMapTab:ClearAllPoints()
+								BattlefieldMapTab:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.y);
+								BattlefieldMapTab:SetUserPlaced(true)
+								--ValidateFramePosition(BattlefieldMapTab)
+							else
+								BattlefieldMapTab:SetUserPlaced(false)
+							end
+						else
+							BattlefieldMapTab:SetUserPlaced(false)
+						end
+					
+					else
+						
+						if (self.db.profile.syncData.battlefieldMap.options.position) then
+							if (self.db.profile.syncData.battlefieldMap.options.position.x and self.db.profile.syncData.battlefieldMap.options.position.y) then
+							
+								if (self.db.global.printDebugTextToChat == true) then
+									self:Print("[Zone Map] Moving Map (Global).")
+								end
+							
+								BattlefieldMapTab:ClearAllPoints()
+								BattlefieldMapTab:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y);
+								BattlefieldMapTab:SetUserPlaced(true)
+								--ValidateFramePosition(BattlefieldMapTab)
+							else
+								BattlefieldMapTab:SetUserPlaced(false)
+							end
+						else
+							BattlefieldMapTab:SetUserPlaced(false)
+						end
+					
 					end
 					
-					ValidateFramePosition(BattlefieldMapTab)
 					
-					if (self.db.profile.syncData.battlefieldMap.options.opacity) then
-						BattlefieldMapFrame:RefreshAlpha()
-					end
 					
-					BattlefieldMapFrame:UpdateUnitsVisibility();
-					BattlefieldMapFrame:StopMovingOrSizing();
+					
+
+					BattlefieldMapFrame:RefreshAlpha()
+					
+					BattlefieldMapFrame:UpdateUnitsVisibility()
+					--BattlefieldMapFrame:StopMovingOrSizing()
 					
 					BattlefieldMapFrame:OnEvent("PLAYER_ENTERING_WORLD")
 				
@@ -858,7 +913,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							end
 						end
 
-					end, (18 + (thisChatFrame * 2)))
+					end, (20 + (thisChatFrame * 2)))
 					
 					
 					
@@ -891,7 +946,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 						end
 						
-					end, (20 + (thisChatFrame * 2)))
+					end, (22 + (thisChatFrame * 2)))
 				
 					
 				end

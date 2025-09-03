@@ -39,12 +39,3 @@ elseif (AccWideUIAceAddon:IsClassicEra()) then --Era
 	AccWideUIAceAddon.chatChannelNames.guildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 
 end
-
-
---[[
-AccWideUIAceAddon.chatChannelNamesList = {}
-for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
-	table.insert(AccWideUIAceAddon.chatChannelNamesList, v)
-end
-]]
-

@@ -10,7 +10,7 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.global.hasDoneFirstTimeSetup = AccWideUI_AccountData.HasDoneFirstTimeSetup or false
 		self.db.global.printDebugTextToChat = AccWideUI_AccountData.printDebugTextToChat or false
 		self.db.global.printWhenLastSaved = AccWideUI_AccountData.printWhenLastSaved or false
-		self.db.global.enableTextOutput = AccWideUI_AccountData.enableTextOutput or false
+		self.db.global.printWelcomeMessage = AccWideUI_AccountData.enableTextOutput or false
 		
 		--Profile
 		self.db.profile.lastSaved.character = AccWideUI_AccountData.LastSaved.Character or UnitName("Player")

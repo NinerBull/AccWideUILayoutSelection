@@ -13,10 +13,13 @@ L["ACCWUI_OPT_BTN_EDITMODE"] = "Open Edit Mode"
 L["ACCWUI_OPT_CHK_TOCHAT"] = "Output to chat when addon is loaded"
 L["ACCWUI_OPT_CHK_TOCHAT_DESC"] = "Prints a short welcome message into chat when the addon has loaded after logging in."
 L["ACCWUI_OPT_CHK_SCREENSIZE"] = "Save Screen Resolution Specific Settings"
-L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"] = "When checked, certain settings will only be saved and loaded for your Monitor's Full Screen Resolution (%s).\n\nThis can be useful if you often play with different monitors, or you sync your addon settings across multiple computers.\n\nSupports: Chosen Edit Mode Layout, Chat Window Size & Position"
+L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"] = "When checked, certain settings will only be saved and loaded for your Monitor's Full Screen Resolution (%s).\n\nThis can be useful if you often play with different monitors, or you sync your addon settings across multiple computers.\n\nSupports: Chosen Edit Mode Layout, Chat Window Size & Position, Zone Map Position"
 
 L["ACCWUI_OPT_CHK_SHOWLASTSAVED"] = "Output to chat when settings were last saved"
 L["ACCWUI_OPT_CHK_SHOWLASTSAVED_DESC"] = "Prints the last date, time and character that the current sync profile was saved when it is loaded."
+
+L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS"] = "Output to chat when Auto Joining/Leaving Blizzard Chat Channels"
+L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS_DESC"] = "Prints into chat whenever the addon automatically makes your character join or leave a chat channel, based on the settings in the Blizzard Chat Channels section."
 
 L["ACCWUI_OPT_SYNCSETTINGS_TITLE"] = "Sync Settings"
 L["ACCWUI_OPT_SYNCSETTINGS_DESC"] = "Select which settings to sync across your account"
@@ -99,7 +102,7 @@ L["ACCWUI_ADVANCED_DESC"] = "Settings on this page will apply to all profiles on
 
 L["ACCWUI_DEBUG_TITLE"] = BINDING_HEADER_DEBUG
 
-L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"] = "Output Debug Text"
+L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"] = "Output Save/Load Debug Text"
 L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"] = "Prints a LOT of debug text into chat when the addon loads or saves settings."
 
 L["ACCWUI_DEBUG_BTN_FORCELOAD"] = "Force Load"
@@ -108,6 +111,10 @@ L["ACCWUI_DEBUG_TXT_FORCELOAD"] = "Force-Loading Settings."
 L["ACCWUI_DEBUG_BTN_FORCESAVE"] = "Force Save"
 L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"] = "Immediately saves all settings to the currently selected profile.\n\nNormally, settings are saved just before logging out, or switching profile."
 L["ACCWUI_DEBUG_TXT_FORCESAVE"] = "Force-Saving Settings."
+
+L["ACCWUI_UTILITY_TITLE"] = WOW_LABS_UTILITY_TOOLTIP
+L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"] = "Reset Zone Map Position"
+L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"] = "Moves the Zone Map to the middle of the screen. Useful if it has moved off-screen and you cannot find it."
 
 L["ACCWUI_JOINING_CHANNEL"] = "Automatically joining the %s Channel. Type %s to configure."
 L["ACCWUI_LEAVING_CHANNEL"] = "Automatically leaving the %s Channel. Type %s to configure."
