@@ -87,20 +87,17 @@ function AccWideUIAceAddon:OnEnable()
 	
 	
 		-- Save Zone Map Coords
-		if (self.db.profile.syncToggles.battlefieldMap == true) then
-		
-			
-	
+		if ((self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
 	
 			
 			if self.db.global.useScreenSizeSpecificSettings == true then
-				if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] then
+				--[[if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] then
 					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] = {}
 				end
 				
 				if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap then
 					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap = {}
-				end
+				end]]
 			
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
@@ -128,12 +125,11 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		
 		
 		-- Chat Windows
-		for thisChatFrame = 1, NUM_CHAT_WINDOWS do
-			--local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+		--[[for thisChatFrame = 1, NUM_CHAT_WINDOWS do
 			if (type(self.db.profile.syncData.chat.windows[thisChatFrame]) ~= "table") then
 				self.db.profile.syncData.chat.windows[thisChatFrame] = {}
 			end
-		end 
+		end]]
 		
 
 		if (AccWideUIAceAddon:IsMainline()) then
@@ -192,19 +188,19 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	
 	
 	-- Always
-	if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes]) ~= "table") then
+	--[[if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes]) ~= "table") then
 		self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] = {
 			chat = {
 				windows = {}
 			}
 		}
-	end
+	end]]
 	
-	for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+	--[[for thisChatFrame = 1, NUM_CHAT_WINDOWS do
 		if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame]) ~= "table") then
 			self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame] = {}
 		end
-	end
+	end]]
 	
 end
 
@@ -459,17 +455,13 @@ end
 
 
 function AccWideUIAceAddon:CHANNEL_UI_UPDATE(event, arg1, arg2)
-
 	self:BlizzChannelManager()
-	
 end
 
 function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
-	
 	self:ScheduleTimer(function() 
 		self:BlizzChannelManager()
 	end, 5)
-
 end
 
 
@@ -521,11 +513,7 @@ end
 
 
 function AccWideUIAceAddon:PLAYER_LEAVING_WORLD(event, arg1, arg2)
-
-	print("blah")
-
-	if (self.db.global.hasDoneFirstTimeSetup == true) then
+	--[[if (self.db.global.hasDoneFirstTimeSetup == true) then
 		self:SaveUISettings(true)
-	end
-
+	end]]
 end

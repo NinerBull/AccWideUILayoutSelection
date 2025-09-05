@@ -229,7 +229,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 				end
 				
 				if (type(BattlefieldMapOptions.opacity) == "number") then
-					self.db.profile.syncData.battlefieldMap.options.opacity = BattlefieldMapOptions.opacity 
+					self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity 
 				end
 				
 				if (type(BattlefieldMapOptions.showPlayers) == "boolean") then
@@ -237,14 +237,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 				end
 				
 				if self.db.global.useScreenSizeSpecificSettings == true then
-					if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] then
-						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] = {}
-					end
-					
-					if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap then
-						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap = {}
-					end
-				
 					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
 					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
 				else 

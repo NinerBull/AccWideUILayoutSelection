@@ -94,14 +94,14 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				chat = {
-					windows = {},
+					windows = {
+						['**'] = {}
+					},
 					channelsJoined = {},
 					info = {}
 				},
 				bagOrganisation = {
-					bags = {
-					
-					},
+					bags = {},
 					settings = {
 						SortBagsRightToLeft = nil,
 						InsertItemsLeftToRight = nil,
@@ -110,17 +110,21 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						BankAutosortDisabled = nil,
 					}
 				},
-				screenResolutionSpecific = {}
+				screenResolutionSpecific = {
+					['**'] = {
+						chat = {
+							windows = {
+								['**'] = {}
+							}
+						},
+						battlefieldMap = {
+							options = {}
+						}
+					},
+				}
 			},
 			blizzChannels = {
-				general = "default",
-				localDefense = "default",
-				trade = "default",
-				lookingForGroup = "default",
-				services = "default",
-				worldDefense = "default",
-				guildRecruitment = "default",
-				hardcoreDeaths = "default"
+				['**'] = "default"
 			}
 		},
 		char = {
