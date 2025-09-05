@@ -697,6 +697,7 @@ function AccWideUIAceAddon:GenerateOptions()
 	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
 		optionsData.args.channels = nil
+		optionsData.args.advanced.args.debug.args.printBlizzChatChanges = nil
 	end
 	
 	
