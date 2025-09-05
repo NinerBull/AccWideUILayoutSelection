@@ -114,7 +114,7 @@ L["ACCWUI_DEBUG_BTN_FORCESAVE"] = "Принудительное сохранен
 L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"] = "Немедленно сохраняет все настройки в текущем выбранном профиле.\n\nОбычно настройки сохраняются непосредственно перед выходом из системы или переключением профиля." -- Needs Update
 L["ACCWUI_DEBUG_TXT_FORCESAVE"] = "Настройки принудительного сохранения."
 
-L["ACCWUI_UTILITY_TITLE"] = WOW_LABS_UTILITY_TOOLTIP
+L["ACCWUI_UTILITY_TITLE"] = "Утилиты" -- Needs Update
 L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"] = "Сбросить положение карты зоны" -- Needs Update
 L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"] = "Перемещает карту зоны в центр экрана. Полезно, если она вышла за пределы экрана и вы не можете её найти." -- Needs Update
 

@@ -62,12 +62,14 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		
 		self.db.profile.syncData.blockSocial.special.blockGuildInvites = AccWideUI_AccountData.SpecialVariables.BlockGuildInvites or false
 		
-		self.db.profile.syncData.bagOrganisation.bags = AccWideUI_AccountData.BagOrganisation.Bags or {}
-		self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = AccWideUI_AccountData.BagOrganisation.SortBagsRightToLeft or C_Container.GetSortBagsRightToLeft()
-		self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = AccWideUI_AccountData.BagOrganisation.InsertItemsLeftToRight or C_Container.GetInsertItemsLeftToRight()
-		self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = AccWideUI_AccountData.BagOrganisation.BackpackAutosortDisabled or C_Container.GetBackpackAutosortDisabled()
-		self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled = AccWideUI_AccountData.BagOrganisation.BackpackSellJunkDisabled or C_Container.GetBackpackSellJunkDisabled()
-		self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled = AccWideUI_AccountData.BagOrganisation.BankAutosortDisabled or C_Container.GetBankAutosortDisabled()
+		if (AccWideUIAceAddon:IsMainline()) then
+			self.db.profile.syncData.bagOrganisation.bags = AccWideUI_AccountData.BagOrganisation.Bags or {}
+			self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = AccWideUI_AccountData.BagOrganisation.SortBagsRightToLeft or C_Container.GetSortBagsRightToLeft()
+			self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = AccWideUI_AccountData.BagOrganisation.InsertItemsLeftToRight or C_Container.GetInsertItemsLeftToRight()
+			self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = AccWideUI_AccountData.BagOrganisation.BackpackAutosortDisabled or C_Container.GetBackpackAutosortDisabled()
+			self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled = AccWideUI_AccountData.BagOrganisation.BackpackSellJunkDisabled or C_Container.GetBackpackSellJunkDisabled()
+			self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled = AccWideUI_AccountData.BagOrganisation.BankAutosortDisabled or C_Container.GetBankAutosortDisabled()
+		end
 		
 		self.db.profile.syncData.chat.windows = AccWideUI_AccountData.ChatWindows or {}
 		self.db.profile.syncData.chat.channelsJoined = AccWideUI_AccountData.ChatChannelsJoined or {}

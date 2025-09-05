@@ -112,7 +112,7 @@ L["ACCWUI_DEBUG_BTN_FORCESAVE"] = "Force Save"
 L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"] = "Immediately saves all settings to the currently selected profile.\n\nNormally, settings are saved just before logging out, or switching profile."
 L["ACCWUI_DEBUG_TXT_FORCESAVE"] = "Force-Saving Settings."
 
-L["ACCWUI_UTILITY_TITLE"] = WOW_LABS_UTILITY_TOOLTIP
+L["ACCWUI_UTILITY_TITLE"] = "Utilities"
 L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"] = "Reset Zone Map Position"
 L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"] = "Moves the Zone Map to the middle of the screen. Useful if it has moved off-screen and you cannot find it."
 

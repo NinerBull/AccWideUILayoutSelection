@@ -657,14 +657,6 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	
 	
-	
-	
-	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
-	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
-		optionsData.args.settings.args.channels = nil
-	end
-	
-	
 	-- Remove Sync options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMainline() == false) then
 		optionsData.args.settings.args.editModeSettings = nil	
@@ -699,6 +691,12 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicEra() == false) then
 		optionsData.args.channels.args.services = nil
+	end
+	
+	
+	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
+	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
+		optionsData.args.channels = nil
 	end
 	
 	

@@ -57,7 +57,6 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:RegisterEvent("PLAYER_LEAVING_WORLD")
 	
 	if (AccWideUIAceAddon:IsMainline()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
@@ -511,9 +510,3 @@ function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
 	end
 end
 
-
-function AccWideUIAceAddon:PLAYER_LEAVING_WORLD(event, arg1, arg2)
-	--[[if (self.db.global.hasDoneFirstTimeSetup == true) then
-		self:SaveUISettings(true)
-	end]]
-end
