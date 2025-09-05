@@ -89,15 +89,7 @@ function AccWideUIAceAddon:OnEnable()
 		if ((self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
 	
 			
-			if self.db.global.useScreenSizeSpecificSettings == true then
-				--[[if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] then
-					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] = {}
-				end
-				
-				if not self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap then
-					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap = {}
-				end]]
-			
+			if self.db.global.useScreenSizeSpecificSettings == true then	
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
 			else 
@@ -123,14 +115,6 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		self.db.profile.syncData.blockSocial.blockGuildInvites = self.db.profile.syncData.blockSocial.blockGuildInvites or GetAutoDeclineGuildInvites()
 		
 		
-		-- Chat Windows
-		--[[for thisChatFrame = 1, NUM_CHAT_WINDOWS do
-			if (type(self.db.profile.syncData.chat.windows[thisChatFrame]) ~= "table") then
-				self.db.profile.syncData.chat.windows[thisChatFrame] = {}
-			end
-		end]]
-		
-
 		if (AccWideUIAceAddon:IsMainline()) then
 		
 			self:ScheduleTimer(function() 
@@ -184,22 +168,6 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		self:CancelAllTimers()
 
 	end
-	
-	
-	-- Always
-	--[[if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes]) ~= "table") then
-		self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes] = {
-			chat = {
-				windows = {}
-			}
-		}
-	end]]
-	
-	--[[for thisChatFrame = 1, NUM_CHAT_WINDOWS do
-		if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame]) ~= "table") then
-			self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame] = {}
-		end
-	end]]
 	
 end
 
