@@ -1,14 +1,13 @@
 # Account Wide Interface Option Settings
 
-An addon for World of Warcraft - The War Within, Cataclysm Classic and Classic Era!
+An addon for World of Warcraft - The War Within, MoP and Classic Era!
 
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw76985.jpg)
 
 ## About
-This QOL addon synchronizes various Interface Settings that are **normally character specific**, across **all** of your characters on your account. 
-It eliminates the need to reconfigure these same settings on all of your characters, including any fresh characters you make.
+This QOL addon synchronizes various Interface Settings that are **normally character specific**, across **all** of your characters on your account, including brand new characters.
 
-By default, all of the settings below are synchronized, and you can disable any that you'd rather keep character specific:
+The addon can synchronise the following settings, and you can disable any that you'd rather keep character specific:
 
 * Chosen Edit Mode Layout (Can also be disabled per spec)
 * Visible Action Bars
@@ -26,7 +25,11 @@ By default, all of the settings below are synchronized, and you can disable any 
 * Mouseover Cast/Self Cast Settings
 * Bag Organisation Settings
 * Block Guild/Trade/Channel Invite Settings
-* Block General/Trade/Services/LocalDefense Chat Channels
+
+### Additional Settings
+* Profile Support - Save multiple sets of Interface Settings
+* Force Leave/Join General/Trade/Services/LocalDefense Chat Channels
+* Allow Saving Screen Resolution Specific Settings
 
 ## Compatibility
 * **The War Within** - 11.2.0
