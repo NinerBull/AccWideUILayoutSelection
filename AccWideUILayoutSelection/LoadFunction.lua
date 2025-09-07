@@ -931,14 +931,16 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 										self:Print("[Chat Window] Setting Chat Types for Window " .. thisChatFrame .. ".")
 									end
 								
-								
-									ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) == "table") then
+										ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+										
+										for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) do
+											 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+											 if (self.db.global.printDebugTextToChat == true) then
+												self:Print("[Chat Window] Adding " .. v .. " to Window " .. thisChatFrame .. ".")
+											 end
+										end
 									
-									for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) do
-										 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
-										 if (self.db.global.printDebugTextToChat == true) then
-											self:Print("[Chat Window] Adding " .. v .. " to Window " .. thisChatFrame .. ".")
-										 end
 									end
 								
 								end
