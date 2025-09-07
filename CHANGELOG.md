@@ -24,6 +24,7 @@ These profile commands could be useful for macros.
 
 ## Fixes
 - Fixed Zone Map settings not saving and loading correctly.
+- Creating a new profile should no longer remove visible chat channels from all chat windows.
 
 ---
 

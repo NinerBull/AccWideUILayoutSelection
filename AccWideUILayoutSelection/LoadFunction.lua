@@ -887,20 +887,21 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					--Visible Chat Channels
 					self:ScheduleTimer(function() 
 					
-						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
-					
-						for i = 1, #thisWindowChannels, 2 do
-							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
-							
-							if (self.db.global.printDebugTextToChat == true) then
-								self:Print("[Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
-							end
-							
-							ChatFrame_RemoveChannel(thisChatFrameVar, chn)
-						end
-					
 						if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
 							if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
+							
+								local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+					
+								for i = 1, #thisWindowChannels, 2 do
+									local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
+									end
+									
+									ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+								end
+							
 								for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) do
 								
 									if (self.db.global.printDebugTextToChat == true) then
