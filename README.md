@@ -5,9 +5,9 @@ An addon for World of Warcraft - The War Within, MoP and Classic Era!
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw76985.jpg)
 
 ## About
-This QOL addon synchronizes various Interface Settings that are **normally character specific**, across **all** of your characters on your account, including brand new characters.
+This QOL addon synchronizes various Blizzard Interface Settings that are **normally character specific** and apply them to **all** of your characters on your account, including brand new characters.
 
-The addon can synchronise the following settings, and you can disable any that you'd rather keep character specific:
+The addon can synchronise the following, and you can disable any that you'd rather keep character specific:
 
 * Chosen Edit Mode Layout (Can also be disabled per spec)
 * Visible Action Bars
@@ -26,10 +26,10 @@ The addon can synchronise the following settings, and you can disable any that y
 * Bag Organisation Settings
 * Block Guild/Trade/Channel Invite Settings
 
-### Additional Settings
-* Profile Support - Save multiple sets of Interface Settings
-* Force Leave/Join General/Trade/Services/LocalDefense Chat Channels
-* Allow Saving Screen Resolution Specific Settings
+### Additional Functionality
+* Profile Support - Save and switch between multiple Interface configurations
+* Force Leave/Join Blizzard Chat Channels - Never see Services spam on any character again, or perhaps always make them join Trade Chat?
+* Allow Saving Screen Resolution Specific Settings - Useful for users who sync addon settings across multiple PCs
 
 ## Compatibility
 * **The War Within** - 11.2.0
@@ -47,11 +47,11 @@ Download the latest version from one of the places below, and unzip it in your `
 
 
 ## Configuration
-NOTE: After installing for the first time, you should log into the character whose UI you have customized to your liking. You'll be prompted to save the settings from that character to begin with, and its settings and any changes you make on any character will synchronize Account Wide!
-
-Settings are automatically saved upon log out, and automatically loaded upon logging in to a character.
-
-You can configure the addon by typing `/awi` into chat.
+- `/awi` - Opens the settings window for this addon
+- `/awi profiles new PROFILENAME` - Create a new profile called PROFILENAME
+- `/awi profiles choose PROFILENAME` - Switch to the profile called PROFILENAME
+- `/awi profiles copyfrom PROFILENAME` - Copies data from PROFILENAME to the currently enabled profile
+- `/awi profiles delete PROFILENAME` - Deletes the profile called PROFILENAME
 
 ## Translations
 * **Russian** by [ZamestoTV](https://github.com/Hubbotu)

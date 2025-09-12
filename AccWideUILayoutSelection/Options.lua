@@ -9,7 +9,8 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			printWhenLastSaved = false,
 			printWelcomeMessage = false,
 			printBlizzChatChanges = false,
-			useScreenSizeSpecificSettings = false
+			useScreenSizeSpecificSettings = false,
+			allowCustomCVars = false
 		},
 		profile = {
 			lastSaved = {
@@ -121,7 +122,12 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 							options = {}
 						}
 					},
+				},
+				customCVars = {
+					cvarList = "",
+					cvarData = {},
 				}
+				
 			},
 			blizzChannels = {
 				['**'] = "default"
@@ -147,7 +153,7 @@ end
 
 function AccWideUIAceAddon:GenerateOptions()
 
-	local optionsData = {
+	AccWideUIAceAddon.optionsData = {
 		type = "group",
 		name = L["ACCWUI_ADDONNAME"],
 		handler = AccWideUIAceAddon,
@@ -358,6 +364,23 @@ function AccWideUIAceAddon:GenerateOptions()
 							},
 						}
 					},
+					headerDiv3 = {
+						type = "header",
+						name = "",
+						order = 6,
+						hidden = "ShouldCustomCVarListBeHidden"
+					},
+					cvarList = {
+						type = "input",
+						order = 7,
+						width = "full",
+						multiline = 6,
+						hidden = "ShouldCustomCVarListBeHidden",
+						get = "GetCustomCVarList",
+						set = "SetCustomCVarList",
+						name = L["ACCWUI_OPT_MODULES_CVARS"],
+						desc = L["ACCWUI_OPT_MODULES_CVARS_DESC"]
+					},
 					
 				}
 				
@@ -519,28 +542,14 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 3,
 								desc = string.format(L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"], AccWideUIAceAddon.TempData.ScreenRes),
 							},
-							btnForceLoad = {
-								type = "execute",
-								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
-								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
-								order = 7,
-								func = function() 
-									self:CancelAllTimers(); 
-									self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
-									self:LoadUISettings();
-								end,
+							allowCustomCVars = {
+								type = "toggle",
+								name = L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR"],
+								width = "full",
+								order = 4,
+								desc = L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR_DESC"],
 							},
-							btnForceSave = {
-								type = "execute",
-								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
-								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
-								order = 8,
-								func = function() 
-									self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
-									self:SaveUISettings(); 
-									self:SaveBagFlagSettings(true); 
-								end,
-							},
+							
 						}
 					},
 					debug = {
@@ -576,6 +585,28 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = "full",
 								order = 6,
 								desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
+							},
+							btnForceLoad = {
+								type = "execute",
+								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
+								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
+								order = 7,
+								func = function() 
+									self:CancelAllTimers(); 
+									self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
+									self:LoadUISettings();
+								end,
+							},
+							btnForceSave = {
+								type = "execute",
+								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
+								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
+								order = 8,
+								func = function() 
+									self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
+									self:SaveUISettings(); 
+									self:SaveBagFlagSettings(true); 
+								end,
 							},
 						}
 					},
@@ -638,7 +669,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			
 			local thisSpecName = PlayerUtil.GetSpecNameBySpecID(select(1, C_SpecializationInfo.GetSpecializationInfo(ThisSpecX)))
 		
-			optionsData.args.settings.args.editModeSettings.args["spec" .. ThisSpecX] = {
+			self.optionsData.args.settings.args.editModeSettings.args["spec" .. ThisSpecX] = {
 				type = "toggle",
 				name = thisSpecName,
 				order = (5 + ThisSpecX),
@@ -650,7 +681,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		end
 	
 	else
-		optionsData.args.settings.args.editModeSettings = nil
+		self.optionsData.args.settings.args.editModeSettings = nil
 	end
 	
 	
@@ -659,52 +690,48 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	-- Remove Sync options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMainline() == false) then
-		optionsData.args.settings.args.editModeSettings = nil	
-		optionsData.args.settings.args.headerDiv2 = nil
-		optionsData.args.settings.args.syncToggles.args.bagOrganisation = nil
-		optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
-		optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
-		optionsData.args.settings.args.syncToggles.args.empowerTap = nil
-		optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
+		self.optionsData.args.settings.args.editModeSettings = nil	
+		self.optionsData.args.settings.args.headerDiv2 = nil
+		self.optionsData.args.settings.args.syncToggles.args.bagOrganisation = nil
+		self.optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
+		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
+		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
+		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
 	end
 	
 	if (AccWideUIAceAddon:IsClassicEra() == true) then
-		optionsData.args.settings.args.syncToggles.args.arenaFrames = nil
-		optionsData.args.settings.args.syncToggles.args.spellOverlay = nil
+		self.optionsData.args.settings.args.syncToggles.args.arenaFrames = nil
+		self.optionsData.args.settings.args.syncToggles.args.spellOverlay = nil
 	end
 
 
 
 	-- Remove Chat options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMainline()) then
-		optionsData.args.channels.args.worldDefense = nil
-		optionsData.args.channels.args.HardcoreDeaths = nil
+		self.optionsData.args.channels.args.worldDefense = nil
+		self.optionsData.args.channels.args.HardcoreDeaths = nil
 	end
 
 	if (AccWideUIAceAddon:IsClassicWrath() == false and AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.channels.args.guildRecruitment = nil
+		self.optionsData.args.channels.args.guildRecruitment = nil
 	end
 
 	if (AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.channels.args.hardcoreDeaths = nil
+		self.optionsData.args.channels.args.hardcoreDeaths = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicEra() == false) then
-		optionsData.args.channels.args.services = nil
+		self.optionsData.args.channels.args.services = nil
 	end
 	
 	
 	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
-		optionsData.args.channels = nil
-		optionsData.args.advanced.args.debug.args.printBlizzChatChanges = nil
+		self.optionsData.args.channels = nil
+		self.optionsData.args.advanced.args.debug.args.printBlizzChatChanges = nil
 	end
 	
 	
-	
-
-	
-	return optionsData
 
 
 end
@@ -746,10 +773,27 @@ function AccWideUIAceAddon:SetEditModeSpec(info, value)
 	self.db.char.useEditModeLayout[info[#info]] = value
 end
 
+function AccWideUIAceAddon:GetCustomCVarList(info)
+	return self.db.profile.syncData.customCVars[info[#info]]
+end
+
+function AccWideUIAceAddon:SetCustomCVarList(info, value)
+	value = value:gsub("%s+", "\n")
+	value = value:gsub(",", "\n")
+	value = value:gsub("\n\n\n", "\n")
+	value = value:gsub("\n\n", "\n")
+	value = value:gsub("[^%w\n]+", "");
+	self.db.profile.syncData.customCVars[info[#info]] = value
+end
+
 function AccWideUIAceAddon:ShouldChatOptsDisable()
 	if (self.db.profile.syncToggles.chatWindow == true) then
 		return false
 	else
 		return true
 	end
+end
+
+function AccWideUIAceAddon:ShouldCustomCVarListBeHidden()
+	return not self.db.global.allowCustomCVars
 end

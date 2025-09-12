@@ -7,6 +7,7 @@ L["ACCWUI_LOAD_REGULAR"] = "Account Wide Interface Option Settings Addon Loaded!
 L["ACCWUI_LOAD_LASTUPDATED"] = "Settings were last saved by %s on %s. (%s)"
 
 L["ACCWUI_OPT_TITLE_DESC"] = "Makes various Interface Options synchronise across all of your characters and specs."
+L["ACCWUI_OPT_EDITMODE_TITLE"] = "Edit Mode Specific Settings"
 L["ACCWUI_OPT_CHK_EDITMODE"] = "Enable Chosen Edit Mode by default for all New Characters"
 L["ACCWUI_OPT_CHK_EDITMODE_DESC"] = "When checked, any new characters you create will automatically use your synchronised Edit Mode Layout. Otherwise, you will need to manually enable it for each spec below."
 L["ACCWUI_OPT_BTN_EDITMODE"] = "Open Edit Mode"
@@ -65,11 +66,12 @@ L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"] = "When checked, synchronises which 
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP"] = "Zone Map Settings"
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"] = "When checked, the visibility, location and other options for the Zone Map (Default: SHIFT+M) are synchronised."
 
-
+L["ACCWUI_OPT_MODULES_CVARS"] = "Custom CVar List"
+L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Enter a custom list of CVars you'd like to synchonise with this profile.\n\nEnter an exact CVar Name, one per line."
 
 L["ACCWUI_BLOCKBLIZZ_TITLE"] = "Blizzard Chat Channels"
-L["ACCWUI_BLOCKBLIZZ_DESC"] = "Allow or prevent all characters on your account from joining various default chat channels"
-L["ACCWUI_BLOCKBLIZZ_TEXT_DESC"] = "Select which Blizzard Chat Channels below all your characters should always join, or block from ever seeing again.\n\nJoin: Your characters will always try to join this channel.\nBlock: Your characters will always leave this channel.\nDo Nothing: Your characters will not be forced to join or leave this channel."
+L["ACCWUI_BLOCKBLIZZ_DESC"] = "Allow or prevent all characters using this profile from joining various default chat channels"
+L["ACCWUI_BLOCKBLIZZ_TEXT_DESC"] = "Select which Blizzard Chat Channels below your characters should always join, or block from ever seeing again.\n\nJoin: Your characters will always try to join this channel.\nBlock: Your characters will always leave this channel.\nDo Nothing: Your characters will not be forced to join or leave this channel."
 L["ACCWUI_BLOCKBLIZZ_CHANNEL"] = "%s " .. CHANNEL
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"] = "Select what you'd like to do with the %s channel."
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"] = "Join"
@@ -99,6 +101,9 @@ L["ACCWUI_FIRSTTIME_ACCEPTED_LINE2"] = "Type %s at any time to change your setti
 L["ACCWUI_FIRSTTIME_DECLINED_LINE1"] = "You will be asked again the next time you switch character, or perform a UI /reload."
 
 L["ACCWUI_ADVANCED_DESC"] = "Settings on this page will apply to all profiles on your account."
+
+L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR"] = "Allow Synchronising Custom CVars"
+L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR_DESC"] = "When checked, a new textbox will be available in the Sync Settings, where you can enter a custom list of additional CVars to synchronise."
 
 L["ACCWUI_DEBUG_TITLE"] = BINDING_HEADER_DEBUG
 

@@ -20,6 +20,12 @@ function AccWideUIAceAddon:OnInitialize()
 		AccWideUIAceAddon:MigrateFromV1()
 	end
 	
+	-- Do this in future, to prevent bloat in the addon settings file with old data, once I'm 100% sure the migration works as it should
+	--[[
+	AccWideUI_AccountData = nil
+	AccWideUI_CharData = nil
+	]]
+	
 end
 
 function AccWideUIAceAddon:OnEnable()
@@ -28,13 +34,13 @@ function AccWideUIAceAddon:OnEnable()
 	AccWideUIAceAddon.TempData.ScreenRes = thisScreenWidth .. "x" .. thisScreenHeight
 	AccWideUIAceAddon.TempData.ThisCharacter = UnitNameUnmodified("player") .. "-" .. GetNormalizedRealmName()
 
-	local options = self:GenerateOptions()
+	self:GenerateOptions()
 	local profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
-	options.args.profiles = profiles
-	options.args.profiles.order = 4
-	AC:RegisterOptionsTable("AccWideUIAceAddon_Options", options)
+	AccWideUIAceAddon.optionsData.args.profiles = profiles
+	AccWideUIAceAddon.optionsData.args.profiles.order = 4
+	AC:RegisterOptionsTable("AccWideUIAceAddon_Options", AccWideUIAceAddon.optionsData)
 	
-	self.optionsFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", "Account Wide UI")
+	self.optionsFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", L["ACCWUI_ADDONNAME_SHORT"])
 	
 	self.db.RegisterCallback(self, "OnNewProfile", "DoProfileInit")
     self.db.RegisterCallback(self, "OnProfileChanged", "DoProfileInit")
@@ -66,13 +72,9 @@ function AccWideUIAceAddon:OnEnable()
 	
 	
 	if (self:IsMainline()) then
-	
 		self:SecureHook(C_EditMode, "OnEditModeExit", function()
-			
 			self:SaveEditModeSettings()
-				
 		end)
-	
 	end
 	
 	

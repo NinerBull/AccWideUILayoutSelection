@@ -263,7 +263,24 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 			
 			
 			
-
+			-- Custom CVars
+			if (self.db.global.allowCustomCVars == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Custom CVars] Saving Settings.")
+				end
+				
+				self.db.profile.syncData.customCVars.cvarData = {}
+				
+				for line in self.db.profile.syncData.customCVars.cvarList:gmatch("([^\n]*)\n?") do
+					line = line:gsub("[^%w]+", "")
+					if line ~= "" then
+						self.db.profile.syncData.customCVars.cvarData[line] = GetCVar(line) or nil
+					end
+				end
+			
+			end
+			
 			
 			-- Save Chat Window Variables
 			if (self.db.profile.syncToggles.chatWindow == true) then

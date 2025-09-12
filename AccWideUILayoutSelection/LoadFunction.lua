@@ -451,7 +451,21 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end 
 			
 			
+			-- Custom CVars
+			if (self.db.global.allowCustomCVars == true) then
 			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Custom CVars] Loading Settings.")
+				end
+			
+				for line in self.db.profile.syncData.customCVars.cvarList:gmatch("([^\n]*)\n?") do
+					line = line:gsub("[^%w]+", "")
+					if (line ~= "" and GetCVar(line) ~= nil) then
+						SetCVar(line, self.db.profile.syncData.customCVars.cvarData[line])
+					end
+				end
+			
+			end 
 			
 			
 			
