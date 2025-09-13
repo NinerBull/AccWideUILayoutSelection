@@ -26,6 +26,8 @@ L["ACCWUI_OPT_SYNCSETTINGS_TITLE"] = "Sync Settings"
 L["ACCWUI_OPT_SYNCSETTINGS_DESC"] = "Select which settings to sync across your account"
 L["ACCWUI_OPT_MODULES_TITLE"] = "Sync Toggles"
 L["ACCWUI_OPT_MODULES_DESC"] = "Which UI settings would you like to synchronise Account Wide?"
+L["ACCWUI_OPT_MODULES_EXP_TITLE"] = "Experimental Sync Toggles"
+L["ACCWUI_OPT_MODULES_EXP_DESC"] = "These sync settings are experimental, in that they may not always work, and can be dependent on your game settings and network status."
 
 L["ACCWUI_OPT_MODULES_CHK_TARGETING"] = "Action Targeting Settings"
 L["ACCWUI_OPT_MODULES_CHK_TARGETING_DESC"] = "When checked, your Action Targeting settings are synchronised."
@@ -104,6 +106,10 @@ L["ACCWUI_ADVANCED_DESC"] = "Settings on this page will apply to all profiles on
 
 L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR"] = "Allow Synchronising Custom CVars"
 L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR_DESC"] = "When checked, a new textbox will be available in the Sync Settings, where you can enter a custom list of additional CVars to synchronise."
+L["ACCWUI_ADVANCED_ALLOW_EXP"] = "Allow Experimental Sync Settings"
+L["ACCWUI_ADVANCED_ALLOW_EXP_DESC"] = "When checked, a list of experimental sync settings will be available to use. \n\nThese sync settings may not always work depending on client and network conditions."
+L["ACCWUI_ADVANCED_DISABLE_AUTO"] = "Disable Auto Saving / Loading Settings"
+L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"] = "Normally, the addon will automatically save and load your settings when logging in, changing profile, and logging out.\n\nWhen checked, you will need to manually save and load your settings using the buttons below."
 
 L["ACCWUI_DEBUG_TITLE"] = BINDING_HEADER_DEBUG
 

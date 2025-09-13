@@ -488,65 +488,66 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 				
 				-- Bag Organisation Settings
-				if (self.db.profile.syncToggles.bagOrganisation == true and doNotLoadChatOrBagSettings == false) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Bags] Loading Settings.")
-					end
+				if (self.db.global.allowExperimentalSyncs == true) then
+					if (self.db.profile.syncToggles.bagOrganisation == true and doNotLoadChatOrBagSettings == false) then
 					
-					
-					local extraTimer = 1
-					local extraTimerAdd = 0.5
-					
-					self:ScheduleTimer(function() 
-					
-						C_Container.SetSortBagsRightToLeft(self.db.profile.syncData.bagOrganisation.settings.SortBagsRightToLeft or false)
-						C_Container.SetInsertItemsLeftToRight(self.db.profile.syncData.bagOrganisation.settings.InsertItemsLeftToRight or false)
-						
-						C_Container.SetBackpackAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.BackpackAutosortDisabled or false)
-						C_Container.SetBackpackSellJunkDisabled(self.db.profile.syncData.bagOrganisation.settings.BackpackSellJunkDisabled or false)
-						
-						C_Container.SetBankAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.BankAutosortDisabled or false)
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Bags] Loading Settings.")
+						end
 						
 						
-						for bagName, bagId in pairs(Enum.BagIndex) do
+						local extraTimer = 1
+						local extraTimerAdd = 0.7
 						
-							if (string.find(string.lower(bagName), "bank") == nil) then 
-								
-								if (type(self.db.profile.syncData.bagOrganisation.bags[bagName]) == "table") then	
+						self:ScheduleTimer(function() 
+						
+							C_Container.SetSortBagsRightToLeft(self.db.profile.syncData.bagOrganisation.settings.SortBagsRightToLeft or false)
+							C_Container.SetInsertItemsLeftToRight(self.db.profile.syncData.bagOrganisation.settings.InsertItemsLeftToRight or false)
+							
+							C_Container.SetBackpackAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.BackpackAutosortDisabled or false)
+							C_Container.SetBackpackSellJunkDisabled(self.db.profile.syncData.bagOrganisation.settings.BackpackSellJunkDisabled or false)
+							
+							C_Container.SetBankAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.BankAutosortDisabled or false)
+							
+							
+							for bagName, bagId in pairs(Enum.BagIndex) do
+							
+								if (string.find(string.lower(bagName), "bank") == nil) then 
+									
+									if (type(self.db.profile.syncData.bagOrganisation.bags[bagName]) == "table") then	
 
-									for k, v in pairs(Enum.BagSlotFlags) do
-										if (type(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) == "boolean") then
-										
-											self:ScheduleTimer(function() 
+										for k, v in pairs(Enum.BagSlotFlags) do
+											if (type(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) == "boolean") then
 											
-												if (self.db.global.printDebugTextToChat == true) then
-													self:Print("[Bags] Setting " .. k .. " to " .. tostring(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) .. " for " .. bagName .. ".")
-													--print("C_Container.SetBagSlotFlag(" .. bagId .. ", " .. Enum.BagSlotFlags[tostring(k)] .. ", " .. tostring(self:ToBoolean(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])) .. ")")
-												end
-											
-												C_Container.SetBagSlotFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])
+												self:ScheduleTimer(function() 
 												
-												ContainerFrameSettingsManager:SetFilterFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]);
-											
-											end, extraTimer)
-											
-											extraTimer = extraTimer + extraTimerAdd
-											
+													if (self.db.global.printDebugTextToChat == true) then
+														self:Print("[Bags] Setting " .. k .. " to " .. tostring(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) .. " for " .. bagName .. ".")
+														--print("C_Container.SetBagSlotFlag(" .. bagId .. ", " .. Enum.BagSlotFlags[tostring(k)] .. ", " .. tostring(self:ToBoolean(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])) .. ")")
+													end
+												
+													C_Container.SetBagSlotFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])
+													
+													ContainerFrameSettingsManager:SetFilterFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]);
+												
+												end, extraTimer)
+												
+												extraTimer = extraTimer + extraTimerAdd
+												
+											end
 										end
-									end
 
+									end
+								
 								end
 							
 							end
+							
+						end, 4)
 						
-						end
-						
-					end, 4)
 					
-				
+					end
 				end
-			
 	
 			
 				-- Loss of Control Variables
@@ -981,7 +982,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			
 			if (self.db.profile.syncToggles.bagOrganisation == true) then
-				LoadUIAllowSaveTime = 50
+				LoadUIAllowSaveTime = 65
 			end
 			
 			
@@ -1032,4 +1033,11 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 	
 	end
 
+end
+
+
+function AccWideUIAceAddon:ForceLoadSettings() 
+	self:CancelAllTimers(); 
+	self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
+	self:LoadUISettings();
 end

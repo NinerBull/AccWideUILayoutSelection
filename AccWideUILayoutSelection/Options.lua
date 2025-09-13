@@ -4,13 +4,15 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 
 	local defaults = {
 		global = {
+			disableAutoSaveLoad = false,
 			hasDoneFirstTimeSetup = false,
 			printDebugTextToChat = false,
 			printWhenLastSaved = false,
 			printWelcomeMessage = false,
 			printBlizzChatChanges = false,
 			useScreenSizeSpecificSettings = false,
-			allowCustomCVars = false
+			allowCustomCVars = false,
+			allowExperimentalSyncs = false
 		},
 		profile = {
 			lastSaved = {
@@ -77,12 +79,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				battlefieldMap = { 
-					options = { -- Defaults from https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_BattlefieldMap/Blizzard_BattlefieldMap.lua#L11
-						--[[opacity = 0.7,
-						locked = true,
-						showPlayers = true,]]
-					},
-					
+					options = {},
 					cvars = {}
 				},
 				mouseoverCast = {
@@ -157,6 +154,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		type = "group",
 		name = L["ACCWUI_ADDONNAME"],
 		handler = AccWideUIAceAddon,
+		childGroups = "tab",
 		args = {
 			desc = {
 				type = "description",
@@ -174,7 +172,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					syncToggles = {
 						type = "group",
 						name = L["ACCWUI_OPT_MODULES_TITLE"],
-						order = 3,
+						order = 2,
 						inline = true,
 						get = "GetSyncToggle",
 						set = "SetSyncToggle",
@@ -190,49 +188,42 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_TARGETING"],
 								order = 2,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TARGETING_DESC"],
 							},
 							arenaFrames = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_ARENA"],
 								order = 3,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_ARENA_DESC"],
 							},
 							autoLoot = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"],
 								order = 4,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
-							},
-							bagOrganisation = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_BAGS"],
-								order = 6,
-								width = "full",
-								desc = L["ACCWUI_OPT_MODULES_CHK_BAGS_DESC"],
 							},
 							blockSocial = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_TRADEGUILD"],
 								order = 7,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TRADEGUILD_DESC"],
 							},
 							chatWindow = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
 								order = 8,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW_DESC"],
 							},
 							chatWindowPosition = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION"],
 								order = 9,
-								width = "full",
+								width = 1.7,
 								disabled = "ShouldChatOptsDisable",
 								desc = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION_DESC"],
 							},
@@ -240,7 +231,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS"],
 								order = 10,
-								width = "full",
+								width = 1.7,
 								disabled = "ShouldChatOptsDisable",
 								desc = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS_DESC"],
 							},
@@ -248,90 +239,121 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN"],
 								order = 11,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN_DESC"],
 							},
 							editModeLayout = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_EDITMODE"],
 								order = 12,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_EDITMODE_DESC"],
 							},
 							empowerTap = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED"],
 								order = 13,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED_DESC"],
 							},
 							lossOfControl = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_LOC"],
 								order = 14,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_LOC_DESC"],
 							},
 							mouseoverCast = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER"],
 								order = 15,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER_DESC"],
 							},
 							nameplates = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES"],
 								order = 16,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES_DESC"],
 							},
 							raidFrames = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID"],
 								order = 17,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
 							},
 							spellOverlay = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY"],
 								order = 18,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY_DESC"],
 							},
 							tutorialTooltips = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP"],
 								order = 19,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"] ,
 							},
 							actionBars = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"],
 								order = 20,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
 							},
 							battlefieldMap = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
 								order = 21,
-								width = "full",
+								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
 							},						
 						},
 					},
+					headerDivExperimental = {
+						type = "header",
+						name = "",
+						order = 3,
+						hidden = "ShouldExperimentalSyncsListBeHidden"
+					},
+					experimentalSyncToggles = {
+						type = "group",
+						name = L["ACCWUI_OPT_MODULES_EXP_TITLE"],
+						order = 4,
+						inline = true,
+						hidden = "ShouldExperimentalSyncsListBeHidden",
+						get = "GetSyncToggle",
+						set = "SetSyncToggle",
+						args = {
+							desc = {
+								type = "description",
+								fontSize = "medium",
+								order = 1,
+								width = "full",
+								name = L["ACCWUI_OPT_MODULES_EXP_DESC"]
+							},
+							bagOrganisation = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_BAGS"],
+								order = 6,
+								width = 1.7,
+								desc = L["ACCWUI_OPT_MODULES_CHK_BAGS_DESC"],
+							},
+						}
+					},
 					headerDiv2 = {
 						type = "header",
 						name = "",
-						order = 4
+						order = 5
 					},
 					editModeSettings = {
 						type = "group",
 						name = "Edit Mode Specific Settings",
-						order = 5,
+						order = 6,
 						inline = true,
 						get = "GetSyncToggle",
 						set = "SetSyncToggle",
@@ -367,12 +389,12 @@ function AccWideUIAceAddon:GenerateOptions()
 					headerDiv3 = {
 						type = "header",
 						name = "",
-						order = 6,
+						order = 7,
 						hidden = "ShouldCustomCVarListBeHidden"
 					},
 					cvarList = {
 						type = "input",
-						order = 7,
+						order = 8,
 						width = "full",
 						multiline = 6,
 						hidden = "ShouldCustomCVarListBeHidden",
@@ -403,7 +425,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					general = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.general or "General"),
-						width = 0.6,
+						width = 1,
 						order = 2,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.general or "General"),
 						style = "radio",
@@ -417,7 +439,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					trade = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.trade or "Trade"),
-						width = 0.6,
+						width = 1,
 						order = 3,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.trade or "Trade"),
 						style = "radio",
@@ -431,7 +453,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					localDefense = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.localDefense or "LocalDefense"),
-						width = 0.6,
+						width = 1,
 						order = 4,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.localDefense or "LocalDefense"),
 						style = "radio",
@@ -445,7 +467,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					lookingForGroup = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.lookingForGroup or "LookingForGroup"),
-						width = 0.6,
+						width = 1,
 						order = 5,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.lookingForGroup or "LookingForGroup"),
 						style = "radio",
@@ -459,7 +481,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					services = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.services or "Services"),
-						width = 0.6,
+						width = 1,
 						order = 6,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.services or "Services"),
 						style = "radio",
@@ -473,7 +495,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					guildRecruitment = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.guildRecruitment or "GuildRecruitment"),
-						width = 0.6,
+						width = 1,
 						order = 7,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.guildRecruitment or "GuildRecruitment"),
 						style = "radio",
@@ -487,7 +509,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					worldDefense = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.worldDefense or "WorldDefense"),
-						width = 0.6,
+						width = 1,
 						order = 8,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.worldDefense or "WorldDefense"),
 						style = "radio",
@@ -501,7 +523,7 @@ function AccWideUIAceAddon:GenerateOptions()
 					hardcoreDeaths = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.hardcoreDeaths or "HardcoreDeaths"),
-						width = 0.6,
+						width = 1,
 						order = 9,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.hardcoreDeaths or "HardcoreDeaths"),
 						style = "radio",
@@ -539,15 +561,47 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "toggle",
 								name = L["ACCWUI_OPT_CHK_SCREENSIZE"],
 								width = "full",
-								order = 3,
+								order = 1,
 								desc = string.format(L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"], AccWideUIAceAddon.TempData.ScreenRes),
 							},
 							allowCustomCVars = {
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR"],
 								width = "full",
-								order = 4,
+								order = 2,
 								desc = L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR_DESC"],
+							},
+							allowExperimentalSyncs = {
+								type = "toggle",
+								name = L["ACCWUI_ADVANCED_ALLOW_EXP"],
+								width = "full",
+								order = 3,
+								desc = L["ACCWUI_ADVANCED_ALLOW_EXP_DESC"],
+							},
+							disableAutoSaveLoad = {
+								type = "toggle",
+								name = L["ACCWUI_ADVANCED_DISABLE_AUTO"],
+								width = "full",
+								order = 4,
+								desc = L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"],
+							},
+							btnForceLoad = {
+								type = "execute",
+								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
+								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
+								order = 5,
+								func = function() 
+									self:ForceLoadSettings() 
+								end,
+							},
+							btnForceSave = {
+								type = "execute",
+								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
+								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
+								order = 6,
+								func = function() 
+									self:ForceSaveSettings() 
+								end,
 							},
 							
 						}
@@ -586,28 +640,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 6,
 								desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
 							},
-							btnForceLoad = {
-								type = "execute",
-								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
-								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
-								order = 7,
-								func = function() 
-									self:CancelAllTimers(); 
-									self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
-									self:LoadUISettings();
-								end,
-							},
-							btnForceSave = {
-								type = "execute",
-								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
-								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
-								order = 8,
-								func = function() 
-									self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
-									self:SaveUISettings(); 
-									self:SaveBagFlagSettings(true); 
-								end,
-							},
+							
 						}
 					},
 					utility = {
@@ -673,7 +706,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				type = "toggle",
 				name = thisSpecName,
 				order = (5 + ThisSpecX),
-				width = "full",
+				--width = "full",
 				get = "GetEditModeSpec",
 				set = "SetEditModeSpec",
 				desc = string.format(L["ACCWUI_CHARSPECIFIC_CHECK_DESC"], UnitNameUnmodified("player"), thisSpecName),
@@ -692,11 +725,13 @@ function AccWideUIAceAddon:GenerateOptions()
 	if (AccWideUIAceAddon:IsMainline() == false) then
 		self.optionsData.args.settings.args.editModeSettings = nil	
 		self.optionsData.args.settings.args.headerDiv2 = nil
-		self.optionsData.args.settings.args.syncToggles.args.bagOrganisation = nil
 		self.optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
 		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
 		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
 		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
+		
+		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
+		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
 	end
 	
 	if (AccWideUIAceAddon:IsClassicEra() == true) then
@@ -796,4 +831,8 @@ end
 
 function AccWideUIAceAddon:ShouldCustomCVarListBeHidden()
 	return not self.db.global.allowCustomCVars
+end
+
+function AccWideUIAceAddon:ShouldExperimentalSyncsListBeHidden()
+	return not self.db.global.allowExperimentalSyncs
 end

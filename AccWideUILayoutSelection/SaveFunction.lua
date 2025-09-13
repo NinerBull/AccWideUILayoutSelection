@@ -471,8 +471,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 				
 				
 				-- Save Bag Organisation Settings
-				if (self.db.profile.syncToggles.bagOrganisation == true) then
-					self:SaveBagFlagSettings(false)
+				if (self.db.global.allowExperimentalSyncs == true) then
+					if (self.db.profile.syncToggles.bagOrganisation == true) then
+						self:SaveBagFlagSettings(false)
+					end
 				end
 	
 			end
@@ -554,61 +556,68 @@ end
 function AccWideUIAceAddon:SaveBagFlagSettings(saveFlags)
 
 	saveFlags = saveFlags or false
-
-	if (self.db.profile.syncToggles.bagOrganisation == true) then
-				
-		self.db.profile.syncData.bagOrganisation.settings.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
-		self.db.profile.syncData.bagOrganisation.settings.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
-	
-		self.db.profile.syncData.bagOrganisation.settings.BackpackAutosortDisabled = C_Container.GetBackpackAutosortDisabled()
-		self.db.profile.syncData.bagOrganisation.settings.BackpackSellJunkDisabled = C_Container.GetBackpackSellJunkDisabled() 
-		
-		self.db.profile.syncData.bagOrganisation.settings.BankAutosortDisabled = C_Container.GetBankAutosortDisabled()
-		
-		if (saveFlags == true) then 
-			-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.
-			
-			self:ScheduleTimer(function() 
-			
-				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Bags] Saving Settings and Flags.")
-				end
-				
-				self.db.profile.syncData.bagOrganisation.bags = {}
-		
-				for bagName, bagId in pairs(Enum.BagIndex) do
-				
-					if (string.find(string.lower(bagName), "bank") == nil) then 
+	if (self.db.global.allowExperimentalSyncs == true) then
+		if (self.db.profile.syncToggles.bagOrganisation == true) then
 					
-						self.db.profile.syncData.bagOrganisation.bags[bagName] = {}
+			self.db.profile.syncData.bagOrganisation.settings.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
+			self.db.profile.syncData.bagOrganisation.settings.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
+		
+			self.db.profile.syncData.bagOrganisation.settings.BackpackAutosortDisabled = C_Container.GetBackpackAutosortDisabled()
+			self.db.profile.syncData.bagOrganisation.settings.BackpackSellJunkDisabled = C_Container.GetBackpackSellJunkDisabled() 
+			
+			self.db.profile.syncData.bagOrganisation.settings.BankAutosortDisabled = C_Container.GetBankAutosortDisabled()
+			
+			if (saveFlags == true) then 
+				-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.
+				
+				self:ScheduleTimer(function() 
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Bags] Saving Settings and Flags.")
+					end
 					
-						for k, v in pairs(Enum.BagSlotFlags) do
+					self.db.profile.syncData.bagOrganisation.bags = {}
+			
+					for bagName, bagId in pairs(Enum.BagIndex) do
+					
+						if (string.find(string.lower(bagName), "bank") == nil) then 
 						
-							if (self.db.global.printDebugTextToChat == true) then
-								--self:Print("Saving " .. k .. " for " .. bagName .. ".")
+							self.db.profile.syncData.bagOrganisation.bags[bagName] = {}
+						
+							for k, v in pairs(Enum.BagSlotFlags) do
+							
+								if (self.db.global.printDebugTextToChat == true) then
+									--self:Print("Saving " .. k .. " for " .. bagName .. ".")
+								end
+							
+								self.db.profile.syncData.bagOrganisation.bags[bagName][k] = C_Container.GetBagSlotFlag(bagId, tonumber(v))
+								
 							end
 						
-							self.db.profile.syncData.bagOrganisation.bags[bagName][k] = C_Container.GetBagSlotFlag(bagId, tonumber(v))
-							
 						end
-					
-					end
 
+					end
+				
+				end, 10)
+			
+			else
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Bags] Saving Settings.")
 				end
 			
-			end, 10)
-		
-		else
-		
-			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Bags] Saving Settings.")
 			end
-		
-		end
 
-	
+		end
 	end
 
 
+end
 
+
+function AccWideUIAceAddon:ForceSaveSettings() 
+	self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
+	self:SaveUISettings(); 
+	self:SaveBagFlagSettings(true); 
+	self.db.profile.syncData.blockSocial.blockGuildInvites = GetAutoDeclineGuildInvites()
 end

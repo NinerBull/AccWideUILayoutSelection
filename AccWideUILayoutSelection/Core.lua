@@ -31,14 +31,14 @@ end
 function AccWideUIAceAddon:OnEnable()
 
 	local thisScreenWidth, thisScreenHeight = GetPhysicalScreenSize()
-	AccWideUIAceAddon.TempData.ScreenRes = thisScreenWidth .. "x" .. thisScreenHeight
-	AccWideUIAceAddon.TempData.ThisCharacter = UnitNameUnmodified("player") .. "-" .. GetNormalizedRealmName()
+	self.TempData.ScreenRes = thisScreenWidth .. "x" .. thisScreenHeight
+	self.TempData.ThisCharacter = UnitNameUnmodified("player") .. "-" .. GetNormalizedRealmName()
 
 	self:GenerateOptions()
 	local profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
-	AccWideUIAceAddon.optionsData.args.profiles = profiles
-	AccWideUIAceAddon.optionsData.args.profiles.order = 4
-	AC:RegisterOptionsTable("AccWideUIAceAddon_Options", AccWideUIAceAddon.optionsData)
+	self.optionsData.args.profiles = profiles
+	self.optionsData.args.profiles.order = 4
+	AC:RegisterOptionsTable("AccWideUIAceAddon_Options", self.optionsData)
 	
 	self.optionsFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", L["ACCWUI_ADDONNAME_SHORT"])
 	
@@ -71,7 +71,7 @@ function AccWideUIAceAddon:OnEnable()
 	end
 	
 	
-	if (self:IsMainline()) then
+	if (self:IsMainline() and self.db.global.disableAutoSaveLoad == false) then
 		self:SecureHook(C_EditMode, "OnEditModeExit", function()
 			self:SaveEditModeSettings()
 		end)
@@ -90,7 +90,6 @@ function AccWideUIAceAddon:OnEnable()
 		-- Save Zone Map Coords
 		if ((self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
 	
-			
 			if self.db.global.useScreenSizeSpecificSettings == true then	
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
@@ -156,19 +155,17 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	
 	
 	if (event == "OnProfileChanged" or event == "OnProfileCopied") then
-	
-		self:CancelAllTimers()
-	
-		self:ScheduleTimer(function() 
-			self:LoadUISettings()			
-		end, 2)
-	
+		if (self.db.global.disableAutoSaveLoad == false) then
+			self:CancelAllTimers()
+		
+			self:ScheduleTimer(function() 
+				self:LoadUISettings()			
+			end, 2)
+		end
 	end
 	
 	if (event == "OnProfileReset") then
-	
 		self:CancelAllTimers()
-
 	end
 	
 end
@@ -176,7 +173,7 @@ end
 
 
 function AccWideUIAceAddon:DoBeforeProfileShutdown(event, db, profileKey)
-	if (self.db.global.hasDoneFirstTimeSetup == true) then
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
 		self:SaveUISettings(true)
 	end
 end
@@ -187,6 +184,10 @@ function AccWideUIAceAddon:SlashCommand(input, editbox)
 	
 	if not input or input:trim() == "" then
 		Settings.OpenToCategory(self.optionsFrame.name)
+	elseif input:lower() == "save" or input:lower() == "profiles save" then
+		AccWideUIAceAddon:ForceSaveSettings() 	
+	elseif input:lower() == "load" or input:lower() == "profiles load" then
+		AccWideUIAceAddon:ForceLoadSettings() 
 	else
 		LibStub("AceConfigCmd-3.0").HandleCommand(AccWideUIAceAddon, "awi", "AccWideUIAceAddon_Options", input)
 	end
@@ -393,7 +394,7 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 
 	if (self.TempData.HasDoneInitialLoad == false) then
 	
-		if (self.db.global.hasDoneFirstTimeSetup == true) then
+		if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
 			
 			if (self.db.global.printDebugTextToChat == true) then
 				self:Print("[Debug] Doing Initial Load.")
@@ -463,9 +464,11 @@ end
 
 
 function AccWideUIAceAddon:BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
-	if (self.db.global.hasDoneFirstTimeSetup == true) then
-		if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
-			self:SaveBagFlagSettings(true)
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
+		if (self.db.global.allowExperimentalSyncs == true) then
+			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
+				self:SaveBagFlagSettings(true)
+			end
 		end
 	end
 end
@@ -473,9 +476,11 @@ end
 
 
 function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
-	if (self.db.global.hasDoneFirstTimeSetup == true) then
-		if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
-			self:SaveBagFlagSettings(true)
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
+		if (self.db.global.allowExperimentalSyncs == true) then
+			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
+				self:SaveBagFlagSettings(true)
+			end
 		end
 	end
 end

@@ -29,9 +29,13 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncToggles.mouseoverCast = AccWideUI_AccountData.accountWideMouseoverCastVariables or true
 		self.db.profile.syncToggles.empowerTap = AccWideUI_AccountData.accountWideEmpowerTapVariables or true
 		self.db.profile.syncToggles.lossOfControl = AccWideUI_AccountData.accountWideLossOfControlVariables or true
-		self.db.profile.syncToggles.bagOrganisation = AccWideUI_AccountData.accountWideBagOrganisationVariables or false
 		self.db.profile.syncToggles.arenaFrames = AccWideUI_AccountData.accountWideArenaFrames or true
 		self.db.profile.syncToggles.spellOverlay = AccWideUI_AccountData.accountWideSpellOverlayVariables or true
+		
+		self.db.profile.syncToggles.bagOrganisation = AccWideUI_AccountData.accountWideBagOrganisationVariables or false
+		if (AccWideUI_AccountData.accountWideBagOrganisationVariables == true) then
+			self.db.global.allowExperimentalSyncs = true
+		end
 		
 		self.db.profile.blizzChannels.general = (AccWideUI_AccountData.ChatChannels.BlockGeneral == true and "block" or "default")
 		self.db.profile.blizzChannels.localDefense = (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true and "block" or "default")
