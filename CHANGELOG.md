@@ -17,10 +17,14 @@ I'm aiming to make sure the addon is ready to go before Legion Remix begins, so 
 ## Other Changes
 - Reorganised the various settings into groups and tabs, so that the interface is less claustrophobic.
 - Added a button that will move the Zone Map to the centre of the screen, in case it ever moves off-screen.
+- Added ability to disable the auto saving and loading of profiles. You'll be able to manually save/load settings via the settings interface, or a chat command.
+- The "Bag Organisation" setting is now behind a "Allow Experimental Sync Settings" Flag. Tick this in the advanced settings to reveal it!
 
 
 ## New Commands
 These profile commands could be useful for macros.
+- `/awi profiles load` - Loads settings from the current profile.
+- `/awi profiles save` - Saves settings to the current profile.
 - `/awi profiles new PROFILENAME` - Create a new profile called PROFILENAME
 - `/awi profiles choose PROFILENAME` - Switch to the profile called PROFILENAME
 - `/awi profiles copyfrom PROFILENAME` - Copies data from PROFILENAME to the currently equipped profile
