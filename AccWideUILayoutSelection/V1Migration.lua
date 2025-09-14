@@ -13,7 +13,7 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.global.printWelcomeMessage = AccWideUI_AccountData.enableTextOutput or false
 		
 		--Profile
-		self.db.profile.lastSaved.character = AccWideUI_AccountData.LastSaved.Character or UnitName("Player")
+		self.db.profile.lastSaved.character = AccWideUI_AccountData.LastSaved.Character or UnitNameUnmodified("player")
 		self.db.profile.lastSaved.unixTime = AccWideUI_AccountData.LastSaved.UnixTime or GetServerTime()
 		
 		self.db.profile.syncToggles.editModeLayout = AccWideUI_AccountData.enableAccountWide or true

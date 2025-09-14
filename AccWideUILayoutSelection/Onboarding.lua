@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 -- Popups for first time set up
 StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP"] = {
 	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. L["ACCWUI_FIRSTTIME_LINE1"] .. "\n" .. L["ACCWUI_FIRSTTIME_LINE2"],
-	button1 = string.format(L["ACCWUI_FIRSTTIME_BTN1"], UnitName("player")),
+	button1 = string.format(L["ACCWUI_FIRSTTIME_BTN1"], UnitNameUnmodified("player")),
 	button2 = L["ACCWUI_FIRSTTIME_BTN2"],
 	verticalButtonLayout = true,
 	OnAccept  = function()

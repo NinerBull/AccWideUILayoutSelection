@@ -1,5 +1,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
+-- https://wago.tools/db2/ChatChannels
+
 AccWideUIAceAddon.chatChannelNames = {}
 
 if (AccWideUIAceAddon:IsMainline()) then --Retail
