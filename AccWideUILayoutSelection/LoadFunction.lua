@@ -793,7 +793,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 						if (self.db.profile.syncToggles.chatWindowPosition == true) then
 						
-							if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions) == "table") then
+							
 							
 								if self.db.global.useScreenSizeSpecificSettings == true then
 									--Res Specific
@@ -819,6 +819,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									end
 									
 								else
+								
 									--Global
 									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions)  ~= "nil") then
 										if (type(self.db.profile.syncData.chat.windows[thisChatFrame].Positions.xOffset) ~= "nil") then
@@ -846,11 +847,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 								
 								
-								
-								
-								
-							
-							end
+			
 							
 							if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo) == "table") then
 							

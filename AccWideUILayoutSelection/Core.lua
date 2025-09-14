@@ -394,23 +394,27 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 
 	if (self.TempData.HasDoneInitialLoad == false) then
 	
-		if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
-			
-			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Debug] Doing Initial Load.")
-			end
-			
-			if (self.db.global.enableTextOutput == true) then
-				self:Printf(L["ACCWUI_LOAD_REGULAR"], self.TempData.TextSlash)
-			end
-			
-			self:ScheduleTimer(function() 
-				AccWideUIAceAddon:LoadUISettings()
-			end, 5)
-			
-		else
+		if (self.db.global.disableAutoSaveLoad == false) then
 		
-			StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+			if (self.db.global.hasDoneFirstTimeSetup == true) then
+				
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Debug] Doing Initial Load.")
+				end
+				
+				if (self.db.global.enableTextOutput == true) then
+					self:Printf(L["ACCWUI_LOAD_REGULAR"], self.TempData.TextSlash)
+				end
+				
+				self:ScheduleTimer(function() 
+					AccWideUIAceAddon:LoadUISettings()
+				end, 5)
+				
+			else
+			
+				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+			
+			end
 		
 		end
 	
