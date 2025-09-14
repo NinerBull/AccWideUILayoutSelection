@@ -30,7 +30,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * Profile Support - Save and switch between multiple Interface configurations
 * Force Leave/Join Blizzard Chat Channels - Never see Services spam on any character again, or perhaps always make them join Trade Chat?
 * Allow Saving Screen Resolution Specific Settings - Useful for users who sync addon settings across multiple PCs
-* Custom CVar Support -  Enter your own additional list of CVars to synchronise across characters.
+* Custom CVar Support -  Enter your own additional list of CVars to synchronise across characters
 
 ## Compatibility
 * **The War Within** - 11.2.5 & 11.2.0
@@ -47,7 +47,7 @@ Download the latest version from one of the places below, and unzip it in your `
 * Or put `https://github.com/NinerBull/AccWideUILayoutSelection` into your favourite Addon Manager
 
 
-## Configuration
+## Commands
 - `/awi` - Opens the settings window for this addon
 - `/awi profiles load` - Loads settings from the current profile
 - `/awi profiles save` - Saves settings to the current profile
