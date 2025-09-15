@@ -110,6 +110,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				},
 				screenResolutionSpecific = {
 					['**'] = {
+						editModeLayoutID = "unset",
 						chat = {
 							windows = {
 								['**'] = {}

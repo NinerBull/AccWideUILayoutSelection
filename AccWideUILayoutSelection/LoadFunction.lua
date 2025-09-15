@@ -1010,7 +1010,7 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 			
 			if self.db.global.useScreenSizeSpecificSettings == true then
 				
-				if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes]) then
+				if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID ~= "unset") then
 				
 					thisEditModeLayoutID = self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID or thisEditModeLayoutID
 					
