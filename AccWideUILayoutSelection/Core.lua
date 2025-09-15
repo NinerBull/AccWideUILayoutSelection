@@ -22,8 +22,8 @@ function AccWideUIAceAddon:OnInitialize()
 	
 	-- Do this in future, to prevent bloat in the addon settings file with old data, once I'm 100% sure the migration works as it should
 	--[[
-	AccWideUI_AccountData = nil
-	AccWideUI_CharData = nil
+		AccWideUI_AccountData = nil
+		AccWideUI_CharData = nil
 	]]
 	
 end
@@ -101,9 +101,6 @@ function AccWideUIAceAddon:OnEnable()
 			
 		end	
 	end)
-	
-	
-	
 	
 end
 
