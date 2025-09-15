@@ -5,9 +5,10 @@ This new version of the addon has been rewritten to use the [Ace3 Library](https
 - **Profile Support** - You can now save and switch between multiple profiles, each with their own sync settings and saved variables.
   - For example, you could have a profile configured specifically for your healers, another for your hunters, and a third default profile for all others.
   - For existing users: Your settings will automatically be migrated to the "Default" profile after updating the addon.
+    If required, you can re-import your old settings again by typing `/run AccWideUIAceAddon:MigrateFromV1(true)` into chat.
 - **Updated Blizz Chat Channels** - You can now force all characters to _join_ official channels such as Trade or LocalDefense as well as force leave them.
-- **Screen Resolution Specific Settings** - Certain settings can now be saved and loaded depending on the resolution of your monitor. Useful if you sync your addon settings across multiple devices. This can be enabled in the Advanced Settings tab of the addon settings.
-- **Custom CVar Support** - As well as the default list of sync settings, you can enable a tickbox in the Advanced Settings that allows you to enter your own list of CVars to synchronise across characters.
+- **Screen Resolution Specific Settings** - Certain settings can now be synchronised based on the resolution of your monitor. Useful if you sync your addon settings across multiple devices. This can be enabled in the Advanced Settings tab of the addon settings.
+- **Custom CVar Support** - As well as the default list of sync settings, you can enter your own list of additional CVars to synchronise across characters. This can be enabled in the Advanced Settings tab of the addon settings.
 
 ## Other Changes
 - Reorganised the various settings into groups and tabs, so that the interface is less claustrophobic.
@@ -26,6 +27,7 @@ These profile commands could be useful for macros.
 
 ## Fixes
 - (Hopefully) Fixed Zone Map settings not saving and loading correctly.
+- Bag Organisation flags are sent more slowly, to try and avoid any issues with slow networks.
 
 Thank you for using the addon, I hope you find it useful.
 
