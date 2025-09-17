@@ -32,6 +32,10 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncToggles.arenaFrames = (AccWideUI_AccountData.accountWideArenaFrames == true and true or false)
 		self.db.profile.syncToggles.spellOverlay = (AccWideUI_AccountData.accountWideSpellOverlayVariables == true and true or false)
 		
+		self.db.profile.syncToggles.chatWindow = (AccWideUI_AccountData.accountWideChatWindowVariables == true and true or false)
+		self.db.profile.syncToggles.chatWindowPosition = (AccWideUI_AccountData.accountWideChatWindowPosition == true and true or false)
+		self.db.profile.syncToggles.chatChannels = (AccWideUI_AccountData.accountWideChatChannelVariables == true and true or false)
+		
 		self.db.profile.syncToggles.bagOrganisation = (AccWideUI_AccountData.accountWideBagOrganisationVariables == true and true or false)
 		if (AccWideUI_AccountData.accountWideBagOrganisationVariables == true) then
 			self.db.global.allowExperimentalSyncs = true
@@ -98,7 +102,7 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		-- Flag to show migration has been done
 		AccWideUI_AccountData.HasDoneV1Migration = true
 		
-		AccWideUIAceAddon:Print("Migrated settings over from old version of addon.")
+		self:Print("Migrated settings over from old version of addon.")
 		
 	end
 

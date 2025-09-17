@@ -96,6 +96,7 @@ AccWideUIAceAddon.CVars = {
 		"useCompactPartyFrames",
 		"fullSizeFocusFrame",
 		"showDispelDebuffs",
+		"showCastableBuffs",
 		"threatWarning"
 	},
 
