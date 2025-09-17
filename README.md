@@ -1,4 +1,4 @@
-# Account Wide Interface Option Settings
+# Account Wide Interface Settings
 
 An addon for World of Warcraft - The War Within, MoP and Classic Era!
 

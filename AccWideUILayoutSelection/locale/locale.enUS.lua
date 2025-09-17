@@ -1,9 +1,9 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "enUS", true, true)
 
-L["ACCWUI_ADDONNAME"] = "Account Wide Interface Option Settings"
+L["ACCWUI_ADDONNAME"] = "Account Wide Interface Settings"
 L["ACCWUI_ADDONNAME_SHORT"] = "Account Wide Interface"
 
-L["ACCWUI_LOAD_REGULAR"] = "Account Wide Interface Option Settings Addon Loaded! Type %s to configure."
+L["ACCWUI_LOAD_REGULAR"] = "Account Wide Interface Settings Addon Loaded! Type %s to configure."
 L["ACCWUI_LOAD_LASTUPDATED"] = "Settings were last saved by %s on %s. (%s)"
 
 L["ACCWUI_OPT_TITLE_DESC"] = "Makes various Interface Options synchronise across all of your characters and specs."

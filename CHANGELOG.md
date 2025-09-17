@@ -15,6 +15,7 @@ This new version of the addon has been rewritten to use the [Ace3 Library](https
 - Added a button that will move the Zone Map to the centre of the screen, in case it ever moves off-screen.
 - Added ability to disable the auto saving and loading of profiles. You'll be able to manually save/load settings via the settings interface, or a chat command.
 - The "Bag Organisation" setting is now behind a "Allow Experimental Sync Settings" Flag. Tick this in the advanced settings to reveal it!
+- Made the addon name slightly shorter.
 
 ## New Commands
 These profile commands could be useful for macros.

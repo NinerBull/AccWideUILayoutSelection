@@ -1,10 +1,10 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "ruRU", false)
 if not L then return end
 
-L["ACCWUI_ADDONNAME"] = "Account Wide Interface Option Settings"
+L["ACCWUI_ADDONNAME"] = "Account Wide Interface Settings"
 L["ACCWUI_ADDONNAME_SHORT"] = "Интерфейс для всего аккаунта"
 
-L["ACCWUI_LOAD_REGULAR"] = "Аддон Account Wide Interface Option Settings загружен! Введите %s для настройки."
+L["ACCWUI_LOAD_REGULAR"] = "Аддон Account Wide Interface Settings загружен! Введите %s для настройки."
 L["ACCWUI_LOAD_LASTUPDATED"] = "Настройки были в последний раз сохранены %s на %s. (%s)"
 
 L["ACCWUI_OPT_TITLE_DESC"] = "Синхронизирует различные параметры интерфейса для всех ваших персонажей и специализаций."
