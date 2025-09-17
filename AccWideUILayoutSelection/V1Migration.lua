@@ -31,6 +31,7 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncToggles.lossOfControl = (AccWideUI_AccountData.accountWideLossOfControlVariables == true and true or false)
 		self.db.profile.syncToggles.arenaFrames = (AccWideUI_AccountData.accountWideArenaFrames == true and true or false)
 		self.db.profile.syncToggles.spellOverlay = (AccWideUI_AccountData.accountWideSpellOverlayVariables == true and true or false)
+		self.db.profile.syncToggles.cooldownViewer = (AccWideUI_AccountData.accountWideCooldownViewerVariables == true and true or false)
 		
 		self.db.profile.syncToggles.chatWindow = (AccWideUI_AccountData.accountWideChatWindowVariables == true and true or false)
 		self.db.profile.syncToggles.chatWindowPosition = (AccWideUI_AccountData.accountWideChatWindowPosition == true and true or false)
