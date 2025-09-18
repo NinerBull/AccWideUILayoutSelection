@@ -1,12 +1,12 @@
-## Interface: 110200, 50500, 30405, 11507
-## Title: Account Wide Interface Option Settings
+## Interface: 110205, 110200, 50501, 50500, 30405, 11507
+## Title: Account Wide Interface Settings
 ## Version: @project-version@
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi
 ## Author: ConineSpiritwolf
-## SavedVariables: AccWideUI_AccountData
+## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
 ## SavedVariablesPerCharacter: AccWideUI_CharData
 ## DefaultState: enabled
-## OptionalDeps: BlockBlizzChatChannels, Blizzard_BattlefieldMap
+## OptionalDeps: BlockBlizzChatChannels, Blizzard_BattlefieldMap, Ace3
 
 ## X-Category: HUDs
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection
@@ -19,20 +19,8 @@
 ## AddonCompartmentFuncOnEnter: AccWideUI_CompartmentHover
 ## AddonCompartmentFuncOnLeave: AccWideUI_CompartmentLeave
 
-## Category: User Interface
-## Category-enUS: User Interface
-## Category-deDE: Benutzerinterface
-## Category-esES: Interfaz de usuario
-## Category-esMX: Interfaz de usuario
-## Category-frFR: Interface utilisateur
-## Category-itIT: Interfaccia utente
-## Category-koKR: 사용자 인터페이스
-## Category-ptBR: Interface do usuário
-## Category-ruRU: Интерфейс пользователя
-## Category-zhCN: 用户界面
-## Category-zhTW: 使用者介面
+embeds.xml
 
-locale/locale.core.lua
 locale/locale.enUS.lua
 # locale/locale.koKR.lua
 # locale/locale.frFR.lua
@@ -44,4 +32,14 @@ locale/locale.enUS.lua
 locale/locale.ruRU.lua
 # locale/locale.ptBR.lua
 # locale/locale.itIT.lua
-AccWideUILayoutSelection.lua
+
+Core.lua
+HelperFunctions.lua
+CVarLists.lua
+V1Migration.lua
+ChatChannels.lua
+SaveFunction.lua
+LoadFunction.lua
+Options.lua
+Onboarding.lua
+AddonCompartment.lua
