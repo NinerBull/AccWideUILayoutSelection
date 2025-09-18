@@ -5,7 +5,7 @@ An addon for World of Warcraft - The War Within, MoP and Classic Era!
 ![Info Img](https://cdn-wow.mmoui.com/preview/pvw77056.jpg)
 
 ## About
-This QOL addon synchronizes various Blizzard Interface Settings that are **normally character specific** and applies them to **all** of your characters on your account, including brand new characters.
+This QOL addon synchronizes various Blizzard Interface Settings that are **normally character specific** and applies them to **all** of your characters on your account automatically, including brand new characters.
 
 The addon can synchronise the following, and you can disable any that you'd rather keep character specific:
 
