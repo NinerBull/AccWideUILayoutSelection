@@ -1,3 +1,10 @@
+# v2.0.1 Hotfix
+- The addon should now correctly load all settings including Edit Mode Layout on new characters.
+- Fixed chat font size not setting correctly upon logging in.
+- Added extra logic to the Version 1 migration script to prevent errors if certain variables are missing from the existing saved data.
+
+
+# v2.0.0
 This new version of the addon has been rewritten to use the [Ace3 Library](https://www.wowace.com/projects/ace3), and has many new features!
 
 ## Major Changes

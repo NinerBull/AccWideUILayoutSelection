@@ -726,8 +726,6 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.b
 							)
 							
-							
-							
 							--[[if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked) then
 								FCF_DockFrame(
 									thisChatFrameVar,
@@ -784,6 +782,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								thisChatFrameVar,
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
 							)]]
+							
+							SetChatWindowSize(
+								thisChatFrame,
+								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
+							)
 						
 						
 						end
@@ -845,19 +848,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								end
 							
 						
-								
-								
-			
-							
-							if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo) == "table") then
-							
-								SetChatWindowSize(
-									thisChatFrame,
-									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
-								)
-							
-							end
-														
+				
 							--FCF_RestorePositionAndDimensions(thisChatFrameVar)
 						end
 						
@@ -869,6 +860,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								FCF_UnDockFrame(thisChatFrameVar)
 								FCF_DockFrame(thisChatFrameVar, self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked, thisChatFrame)
 							end]]
+							
+							local f = _G["ChatFrame" .. thisChatFrame];
+							f:GetScript("OnEvent")(f, "UPDATE_CHAT_WINDOWS");
 							
 						end, 1)
 					

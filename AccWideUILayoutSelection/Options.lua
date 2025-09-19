@@ -133,11 +133,12 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 		},
 		char = {
 			useEditModeLayout = {
-				spec1 = nil,
-				spec2 = nil,
-				spec3 = nil,
-				spec4 = nil,
-				spec5 = nil
+				hasBeenPrepared = false,
+				spec1 = true,
+				spec2 = true,
+				spec3 = true,
+				spec4 = true,
+				spec5 = true
 			}
 		
 		}

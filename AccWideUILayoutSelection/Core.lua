@@ -140,10 +140,11 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 			
 
 			-- Edit Mode Spec Settings
-			if (type(self.db.char.useEditModeLayout.spec1) ~= "boolean") then
+			if (self.db.char.useEditModeLayout.hasBeenPrepared ~= true) then
 				for SpecX = 1, 5 do
 					self.db.char.useEditModeLayout["spec" .. SpecX] = self.db.profile.syncToggles.editModeOnByDefault
 				end
+				self.db.char.useEditModeLayout.hasBeenPrepared = true
 			end
 		
 		end

@@ -13,8 +13,10 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.global.printWelcomeMessage = (AccWideUI_AccountData.enableTextOutput == true and true or false)
 		
 		--Profile
-		self.db.profile.lastSaved.character = AccWideUI_AccountData.LastSaved.Character or UnitNameUnmodified("player")
-		self.db.profile.lastSaved.unixTime = AccWideUI_AccountData.LastSaved.UnixTime or GetServerTime()
+		if (AccWideUI_AccountData.LastSaved) then
+			self.db.profile.lastSaved.character = AccWideUI_AccountData.LastSaved.Character or UnitNameUnmodified("player")
+			self.db.profile.lastSaved.unixTime = AccWideUI_AccountData.LastSaved.UnixTime or GetServerTime()
+		end
 		
 		self.db.profile.syncToggles.editModeLayout = (AccWideUI_AccountData.enableAccountWide == true and true or false)
 		self.db.profile.syncToggles.editModeOnByDefault = (AccWideUI_AccountData.accountWideLayout == true and true or false)
@@ -38,23 +40,33 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncToggles.chatChannels = (AccWideUI_AccountData.accountWideChatChannelVariables == true and true or false)
 		
 		self.db.profile.syncToggles.bagOrganisation = (AccWideUI_AccountData.accountWideBagOrganisationVariables == true and true or false)
+		
 		if (AccWideUI_AccountData.accountWideBagOrganisationVariables == true) then
 			self.db.global.allowExperimentalSyncs = true
 		end
 		
-		self.db.profile.blizzChannels.general = (AccWideUI_AccountData.ChatChannels.BlockGeneral == true and "block" or "default")
-		self.db.profile.blizzChannels.localDefense = (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true and "block" or "default")
-		self.db.profile.blizzChannels.trade = (AccWideUI_AccountData.ChatChannels.BlockTrade == true and "block" or "default")
-		self.db.profile.blizzChannels.lookingForGroup = (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true and "block" or "default")
-		self.db.profile.blizzChannels.services = (AccWideUI_AccountData.ChatChannels.BlockServices == true and "block" or "default")
-		self.db.profile.blizzChannels.worldDefense = (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true and "block" or "default")
-		self.db.profile.blizzChannels.guildRecruitment = (AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment == true and "block" or "default")
-		self.db.profile.blizzChannels.hardcoreDeaths = (AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths == true and "block" or "default")
+		if (AccWideUI_AccountData.ChatChannels) then
+			self.db.profile.blizzChannels.general = (AccWideUI_AccountData.ChatChannels.BlockGeneral == true and "block" or "default")
+			self.db.profile.blizzChannels.localDefense = (AccWideUI_AccountData.ChatChannels.BlockLocalDefense == true and "block" or "default")
+			self.db.profile.blizzChannels.trade = (AccWideUI_AccountData.ChatChannels.BlockTrade == true and "block" or "default")
+			self.db.profile.blizzChannels.lookingForGroup = (AccWideUI_AccountData.ChatChannels.BlockLookingForGroup == true and "block" or "default")
+			self.db.profile.blizzChannels.services = (AccWideUI_AccountData.ChatChannels.BlockServices == true and "block" or "default")
+			self.db.profile.blizzChannels.worldDefense = (AccWideUI_AccountData.ChatChannels.BlockWorldDefense == true and "block" or "default")
+			self.db.profile.blizzChannels.guildRecruitment = (AccWideUI_AccountData.ChatChannels.BlockGuildRecruitment == true and "block" or "default")
+			self.db.profile.blizzChannels.hardcoreDeaths = (AccWideUI_AccountData.ChatChannels.BlockHardcoreDeaths == true and "block" or "default")
+		end
+		
+		
+		
+		if (AccWideUI_AccountData.ActionBars) then
+			self.db.profile.syncData.actionBars.visible = AccWideUI_AccountData.ActionBars or {}
+			if (AccWideUI_AccountData.ActionBars.ActionBarVariables) then
+				self.db.profile.syncData.actionBars.cvars = AccWideUI_AccountData.ActionBars.ActionBarVariables or {}
+				self.db.profile.syncData.actionBars.visible.ActionBarVariables = nil
+			end
+		end
 		
 		self.db.profile.syncData.editModeLayoutID = AccWideUI_AccountData.accountWideLayoutID or 1
-		self.db.profile.syncData.actionBars.visible = AccWideUI_AccountData.ActionBars or {}
-		self.db.profile.syncData.actionBars.cvars = AccWideUI_AccountData.ActionBars.ActionBarVariables or {}
-		self.db.profile.syncData.actionBars.visible.ActionBarVariables = nil
 		self.db.profile.syncData.nameplates.cvars = AccWideUI_AccountData.Nameplates or {}
 		self.db.profile.syncData.arenaFrames.cvars = AccWideUI_AccountData.ArenaFrames or {}
 		self.db.profile.syncData.raidFrames.cvars = AccWideUI_AccountData.RaidFrames or {}
@@ -69,9 +81,11 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncData.lossOfControl.cvars = AccWideUI_AccountData.LossOfControl or {}
 		self.db.profile.syncData.cooldownViewer.cvars = AccWideUI_AccountData.CooldownViewer or {}
 		
-		self.db.profile.syncData.blockSocial.special.blockGuildInvites = (AccWideUI_AccountData.SpecialVariables.BlockGuildInvites == true and true or false)
+		if (AccWideUI_AccountData.SpecialVariables) then
+			self.db.profile.syncData.blockSocial.special.blockGuildInvites = (AccWideUI_AccountData.SpecialVariables.BlockGuildInvites == true and true or false)
+		end
 		
-		if (AccWideUIAceAddon:IsMainline()) then
+		if (AccWideUIAceAddon:IsMainline() and AccWideUI_AccountData.BagOrganisation) then
 			self.db.profile.syncData.bagOrganisation.bags = AccWideUI_AccountData.BagOrganisation.Bags or {}
 			self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = AccWideUI_AccountData.BagOrganisation.SortBagsRightToLeft or C_Container.GetSortBagsRightToLeft()
 			self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = AccWideUI_AccountData.BagOrganisation.InsertItemsLeftToRight or C_Container.GetInsertItemsLeftToRight()
