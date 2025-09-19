@@ -1,7 +1,8 @@
-# v2.0.1 Hotfix
+# v2.0.1 & v2.0.2 Hotfix
 - The addon should now correctly load all settings including Edit Mode Layout on new characters.
 - Fixed chat font size not setting correctly upon logging in.
 - Added extra logic to the Version 1 migration script to prevent errors if certain variables are missing from the existing saved data.
+- Reset the "Edit Mode for This Spec" variables.
 
 
 # v2.0.0

@@ -106,6 +106,25 @@ end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
+	--Always
+	
+	
+	-- Edit Mode Spec Settings
+	if (self.db.char.useEditModeLayout.hasBeenPrepared ~= true) then
+		if (AccWideUI_CharData ~= nil) then
+			for SpecX = 1, 5 do
+				self.db.char.useEditModeLayout["specialization" .. SpecX] = (AccWideUI_CharData["accWideSpec" .. SpecX] == true and true or false)
+			end
+			--AccWideUI_CharData = nil
+		else
+			for SpecX = 1, 5 do
+				self.db.char.useEditModeLayout["specialization" .. SpecX] = self.db.profile.syncToggles.editModeOnByDefault
+			end
+		end
+		self.db.char.useEditModeLayout.hasBeenPrepared = true
+	end
+	
+
 	--Set up profile data that I can't do with the regular table
 	if (event == "OnNewProfile") then
 	
@@ -136,15 +155,6 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 					self.db.profile.syncData.screenResolutionSpecific[AccWideUIAceAddon.TempData.ScreenRes].editModeLayoutID = currentActiveLayout or 1
 				end
 				
-			end
-			
-
-			-- Edit Mode Spec Settings
-			if (self.db.char.useEditModeLayout.hasBeenPrepared ~= true) then
-				for SpecX = 1, 5 do
-					self.db.char.useEditModeLayout["spec" .. SpecX] = self.db.profile.syncToggles.editModeOnByDefault
-				end
-				self.db.char.useEditModeLayout.hasBeenPrepared = true
 			end
 		
 		end

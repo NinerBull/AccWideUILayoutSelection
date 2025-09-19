@@ -998,7 +998,7 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
 		
-		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["spec" .. currentSpec] == true) then
+		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 		
 			local thisEditModeLayoutID = self.db.profile.syncData.editModeLayoutID or 1
 			

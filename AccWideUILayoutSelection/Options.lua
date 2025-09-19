@@ -134,13 +134,12 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 		char = {
 			useEditModeLayout = {
 				hasBeenPrepared = false,
-				spec1 = true,
-				spec2 = true,
-				spec3 = true,
-				spec4 = true,
-				spec5 = true
+				specialization1 = true,
+				specialization2 = true,
+				specialization3 = true,
+				specialization4 = true,
+				specialization5 = true
 			}
-		
 		}
 	}
 
@@ -704,7 +703,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			
 			local thisSpecName = PlayerUtil.GetSpecNameBySpecID(select(1, C_SpecializationInfo.GetSpecializationInfo(ThisSpecX)))
 		
-			self.optionsData.args.settings.args.editModeSettings.args["spec" .. ThisSpecX] = {
+			self.optionsData.args.settings.args.editModeSettings.args["specialization" .. ThisSpecX] = {
 				type = "toggle",
 				name = thisSpecName,
 				order = (5 + ThisSpecX),

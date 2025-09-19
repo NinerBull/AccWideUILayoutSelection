@@ -529,13 +529,13 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 		local currentActiveLayout = getLayoutsTable["activeLayout"]
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
 
-		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["spec" .. currentSpec] == true) then
+		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 		
 			if (self.db.global.printDebugTextToChat == true) then
 				self:Print("[Debug] Saving Chosen Edit Mode Layout.")
 			end
 
-			if (self.db.char.useEditModeLayout["spec" .. currentSpec] == true) then
+			if (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 
 				--Set the spec
 				if self.db.global.useScreenSizeSpecificSettings == true then

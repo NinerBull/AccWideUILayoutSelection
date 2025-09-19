@@ -99,20 +99,19 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncData.chat.info = AccWideUI_AccountData.ChatInfo or {}
 		
 		-- Character
-		if (AccWideUI_CharData ~= nil) then
-			self.db.char.useEditModeLayout.spec1 = (AccWideUI_CharData.accWideSpec1 == true and true or false)
-			self.db.char.useEditModeLayout.spec2 = (AccWideUI_CharData.accWideSpec2 == true and true or false)
-			self.db.char.useEditModeLayout.spec3 = (AccWideUI_CharData.accWideSpec3 == true and true or false)
-			self.db.char.useEditModeLayout.spec4 = (AccWideUI_CharData.accWideSpec4 == true and true or false)
-			self.db.char.useEditModeLayout.spec5 = (AccWideUI_CharData.accWideSpec5 == true and true or false)
+		--[[if (AccWideUI_CharData ~= nil) then
+			self.db.char.useEditModeLayout.specialization1 = (AccWideUI_CharData.accWideSpec1 == true and true or false)
+			self.db.char.useEditModeLayout.specialization2 = (AccWideUI_CharData.accWideSpec2 == true and true or false)
+			self.db.char.useEditModeLayout.specialization3 = (AccWideUI_CharData.accWideSpec3 == true and true or false)
+			self.db.char.useEditModeLayout.specialization4 = (AccWideUI_CharData.accWideSpec4 == true and true or false)
+			self.db.char.useEditModeLayout.specialization5 = (AccWideUI_CharData.accWideSpec5 == true and true or false)
 		else
-			self.db.char.useEditModeLayout.spec1 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
-			self.db.char.useEditModeLayout.spec2 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
-			self.db.char.useEditModeLayout.spec3 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
-			self.db.char.useEditModeLayout.spec4 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
-			self.db.char.useEditModeLayout.spec5 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
-		end
-		
+			self.db.char.useEditModeLayout.specialization1 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
+			self.db.char.useEditModeLayout.specialization2 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
+			self.db.char.useEditModeLayout.specialization3 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
+			self.db.char.useEditModeLayout.specialization4 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
+			self.db.char.useEditModeLayout.specialization5 = (AccWideUI_AccountData.accountWideLayout == true and true or false)
+		end]]
 		
 		-- Flag to show migration has been done
 		AccWideUI_AccountData.HasDoneV1Migration = true
