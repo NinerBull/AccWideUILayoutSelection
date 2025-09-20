@@ -43,4 +43,7 @@ StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED"] = {
 	sound = SOUNDKIT.LOOT_WINDOW_OPEN_EMPTY,
 	whileDead = true,
 	hideOnEscape = false,
+	OnAccept  = function()
+		AccWideUIAceAddon.TempData.HasDimissedFTPAlready = true
+	end,
 }

@@ -8,6 +8,8 @@ AccWideUIAceAddon.TempData = {
 	HasLoadedSettings = false,
 	HasDoneInitialLoad = false,
 	IsCurrentlyLoadingSettings = false,
+	HasShownFTPPopup = false,
+	HasDimissedFTPAlready = false,
 	TextSlash = "/awi",
 }
 
@@ -63,6 +65,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("CINEMATIC_STOP")
 	
 	if (AccWideUIAceAddon:IsMainline()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
@@ -421,6 +424,7 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 			else
 			
 				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+				--self:Print("Show First Time Popup")
 			
 			end
 		
@@ -446,6 +450,22 @@ function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
 	end, 5)
 end
 
+
+function AccWideUIAceAddon:CINEMATIC_STOP(event, arg1, arg2)
+	
+	if (self.TempData.HasShownFTPPopup ~= true) then
+		
+		C_Timer.After(5, function() 
+			if (self.db.global.hasDoneFirstTimeSetup ~= true and self.TempData.HasDimissedFTPAlready ~= true) then
+				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+			end
+		end)
+		
+		self.TempData.HasShownFTPPopup = true
+		
+	end
+	
+end
 
 
 function AccWideUIAceAddon:DISABLE_DECLINE_GUILD_INVITE(event, arg1, arg2)
