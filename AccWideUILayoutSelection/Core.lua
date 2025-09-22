@@ -74,25 +74,16 @@ function AccWideUIAceAddon:OnEnable()
 	end
 	
 	
-	if (self:IsMainline() and self.db.global.disableAutoSaveLoad == false) then
-		self:SecureHook(C_EditMode, "OnEditModeExit", function()
-			self:SaveEditModeSettings()
-		end)
-	end
-	
-	
 	C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
 	
-	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
 	
+	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
 		if (self.db.global.printDebugTextToChat == true) then
 			self:Print("[Zone Map] Saving Map Coords.")
 		end
 	
-	
 		-- Save Zone Map Coords
 		if ((self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
-	
 			if self.db.global.useScreenSizeSpecificSettings == true then	
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
 				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
@@ -100,11 +91,66 @@ function AccWideUIAceAddon:OnEnable()
 				self.db.profile.syncData.battlefieldMap.options.position = {}
 				self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
 			end
-			
-			
 		end	
 	end)
 	
+	
+	if (self:IsMainline()) then
+		self:SecureHook(C_EditMode, "OnEditModeExit", function()
+			if (self.db.global.disableAutoSaveLoad == false) then
+				self:SaveEditModeSettings()
+			end
+		end)
+		
+		self:SecureHook(C_Container, "SetSortBagsRightToLeft", function(thisResponse)
+			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
+				self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = thisResponse
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Bags] Set sortBagsRightToLeft to " .. tostring(thisResponse) .. ".")
+				end
+			end
+		end)
+		
+		self:SecureHook(C_Container, "SetInsertItemsLeftToRight", function(thisResponse)
+			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
+				self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = thisResponse
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Bags] Set insertItemsLeftToRight to " .. tostring(thisResponse) .. ".")
+				end
+			end
+		end)
+		
+		
+		self:SecureHook(C_Container, "SetBackpackAutosortDisabled", function(thisResponse)
+			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
+				self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = thisResponse
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Bags] Set backpackAutosortDisabled to " .. tostring(thisResponse) .. ".")
+				end
+			end
+		end)
+		
+		self:SecureHook(C_Container, "SetBackpackSellJunkDisabled", function(thisResponse)
+			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
+				self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled = thisResponse
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Bags] Set backpackSellJunkDisabled to " .. tostring(thisResponse) .. ".")
+				end
+			end
+		end)
+		
+		self:SecureHook(C_Container, "SetBankAutosortDisabled", function(thisResponse)
+			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
+				self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled = thisResponse
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Bags] Set bankAutosortDisabled to " .. tostring(thisResponse) .. ".")
+				end
+			end
+		end)
+
+	end
+	
+
 end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
@@ -139,11 +185,11 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		
 			self:ScheduleTimer(function() 
 				--Bag Organisation
-				self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft or C_Container.GetSortBagsRightToLeft()
-				self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight or C_Container.GetInsertItemsLeftToRight()
-				self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled or C_Container.GetBackpackAutosortDisabled()
-				self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled or C_Container.GetBackpackSellJunkDisabled()
-				self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled = self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled or C_Container.GetBankAutosortDisabled()
+				self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = C_Container.GetSortBagsRightToLeft() or false
+				self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight() or false
+				self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = C_Container.GetBackpackAutosortDisabled() or false
+				self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled =  C_Container.GetBackpackSellJunkDisabled() or false
+				self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled = C_Container.GetBankAutosortDisabled() or false
 			end, 2)
 			
 						
@@ -499,7 +545,7 @@ function AccWideUIAceAddon:BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
 	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
 		if (self.db.global.allowExperimentalSyncs == true) then
 			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
-				self:SaveBagFlagSettings(true)
+				self:SaveBagFlagSettings()
 			end
 		end
 	end
@@ -511,7 +557,7 @@ function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
 	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
 		if (self.db.global.allowExperimentalSyncs == true) then
 			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
-				self:SaveBagFlagSettings(true)
+				self:SaveBagFlagSettings()
 			end
 		end
 	end

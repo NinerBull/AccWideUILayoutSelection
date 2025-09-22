@@ -1,8 +1,10 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
-function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
+function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 
 	doNotSaveEditMode = doNotSaveEditMode or false
+	isForced = isForced or false
+	
 
 	if self.TempData.IsCurrentlyLoadingSettings == true then
 	
@@ -473,7 +475,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode)
 				-- Save Bag Organisation Settings
 				if (self.db.global.allowExperimentalSyncs == true) then
 					if (self.db.profile.syncToggles.bagOrganisation == true) then
-						self:SaveBagFlagSettings(false)
+						self:SaveBagFlagSettings()
 					end
 				end
 	
@@ -553,62 +555,45 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 end
 
 
-function AccWideUIAceAddon:SaveBagFlagSettings(saveFlags)
+function AccWideUIAceAddon:SaveBagFlagSettings()
 
-	saveFlags = saveFlags or false
 	if (self.db.global.allowExperimentalSyncs == true) then
 		if (self.db.profile.syncToggles.bagOrganisation == true) then
 					
-			self.db.profile.syncData.bagOrganisation.settings.SortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
-			self.db.profile.syncData.bagOrganisation.settings.InsertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
-		
-			self.db.profile.syncData.bagOrganisation.settings.BackpackAutosortDisabled = C_Container.GetBackpackAutosortDisabled()
-			self.db.profile.syncData.bagOrganisation.settings.BackpackSellJunkDisabled = C_Container.GetBackpackSellJunkDisabled() 
+			-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.
 			
-			self.db.profile.syncData.bagOrganisation.settings.BankAutosortDisabled = C_Container.GetBankAutosortDisabled()
-			
-			if (saveFlags == true) then 
-				-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.
-				
-				self:ScheduleTimer(function() 
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Bags] Saving Settings and Flags.")
-					end
-					
-					self.db.profile.syncData.bagOrganisation.bags = {}
-			
-					for bagName, bagId in pairs(Enum.BagIndex) do
-					
-						if (string.find(string.lower(bagName), "bank") == nil) then 
-						
-							self.db.profile.syncData.bagOrganisation.bags[bagName] = {}
-						
-							for k, v in pairs(Enum.BagSlotFlags) do
-							
-								if (self.db.global.printDebugTextToChat == true) then
-									--self:Print("Saving " .. k .. " for " .. bagName .. ".")
-								end
-							
-								self.db.profile.syncData.bagOrganisation.bags[bagName][k] = C_Container.GetBagSlotFlag(bagId, tonumber(v))
-								
-							end
-						
-						end
-
-					end
-				
-				end, 10)
-			
-			else
+			self:ScheduleTimer(function() 
 			
 				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Bags] Saving Settings.")
+					self:Print("[Bags] Saving Settings and Flags.")
+				end
+				
+				self.db.profile.syncData.bagOrganisation.bags = {}
+		
+				for bagName, bagId in pairs(Enum.BagIndex) do
+				
+					if (string.find(string.lower(bagName), "bank") == nil) then 
+					
+						self.db.profile.syncData.bagOrganisation.bags[bagName] = {}
+					
+						for k, v in pairs(Enum.BagSlotFlags) do
+						
+							if (self.db.global.printDebugTextToChat == true) then
+								--self:Print("Saving " .. k .. " for " .. bagName .. ".")
+							end
+						
+							self.db.profile.syncData.bagOrganisation.bags[bagName][k] = C_Container.GetBagSlotFlag(bagId, tonumber(v))
+							
+						end
+					
+					end
+
 				end
 			
-			end
+			end, 10)
 
 		end
+
 	end
 
 
@@ -617,7 +602,16 @@ end
 
 function AccWideUIAceAddon:ForceSaveSettings() 
 	self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
-	self:SaveUISettings(); 
-	self:SaveBagFlagSettings(true); 
+	self:SaveUISettings(false, true); 
+	self:SaveBagFlagSettings(); 
 	self.db.profile.syncData.blockSocial.blockGuildInvites = GetAutoDeclineGuildInvites()
+	
+	if (AccWideUIAceAddon:IsMainline()) then
+		self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
+		self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
+		self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = C_Container.GetBackpackAutosortDisabled()
+		self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled = C_Container.GetBackpackSellJunkDisabled() 
+		self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled = C_Container.GetBankAutosortDisabled()
+	end
+	
 end

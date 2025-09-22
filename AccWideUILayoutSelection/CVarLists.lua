@@ -97,7 +97,8 @@ AccWideUIAceAddon.CVars = {
 		"fullSizeFocusFrame",
 		"showDispelDebuffs",
 		"showCastableBuffs",
-		"threatWarning"
+		"threatWarning",
+		"noBuffDebuffFilterOnTarget"
 	},
 
 	ArenaFrames = {

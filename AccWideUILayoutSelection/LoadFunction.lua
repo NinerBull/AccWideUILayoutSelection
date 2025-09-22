@@ -501,13 +501,13 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 						self:ScheduleTimer(function() 
 						
-							C_Container.SetSortBagsRightToLeft(self.db.profile.syncData.bagOrganisation.settings.SortBagsRightToLeft or false)
-							C_Container.SetInsertItemsLeftToRight(self.db.profile.syncData.bagOrganisation.settings.InsertItemsLeftToRight or false)
+							C_Container.SetSortBagsRightToLeft(self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft)
+							C_Container.SetInsertItemsLeftToRight(self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight)
 							
-							C_Container.SetBackpackAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.BackpackAutosortDisabled or false)
-							C_Container.SetBackpackSellJunkDisabled(self.db.profile.syncData.bagOrganisation.settings.BackpackSellJunkDisabled or false)
+							C_Container.SetBackpackAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled)
+							C_Container.SetBackpackSellJunkDisabled(self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled)
 							
-							C_Container.SetBankAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.BankAutosortDisabled or false)
+							C_Container.SetBankAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled)
 							
 							
 							for bagName, bagId in pairs(Enum.BagIndex) do

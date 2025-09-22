@@ -101,11 +101,11 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				bagOrganisation = {
 					bags = {},
 					settings = {
-						SortBagsRightToLeft = nil,
-						InsertItemsLeftToRight = nil,
-						BackpackAutosortDisabled = nil,
-						BackpackSellJunkDisabled = nil,
-						BankAutosortDisabled = nil,
+						sortBagsRightToLeft = false,
+						insertItemsLeftToRight = false,
+						backpackAutosortDisabled = false,
+						backpackSellJunkDisabled = false,
+						bankAutosortDisabled = false,
 					}
 				},
 				screenResolutionSpecific = {
