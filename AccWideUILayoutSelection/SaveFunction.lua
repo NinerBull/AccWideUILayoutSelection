@@ -293,7 +293,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 			
 			
-				for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+				for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
 				
 					local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
 					

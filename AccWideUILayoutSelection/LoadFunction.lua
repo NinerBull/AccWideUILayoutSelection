@@ -692,7 +692,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 				
 				-- Individual Chat Window/Tab Settings
-				for thisChatFrame = 1, NUM_CHAT_WINDOWS do
+				for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
 					
 					--local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
 					local thisChatFrameVar = FCF_GetChatFrameByID(thisChatFrame);
@@ -905,7 +905,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 										self:Print("[Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
 									end
 									
-									ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+									ChatFrame_RemoveChannel(thisChatFrameVar, chn) -- 12.0.0 ChatFrameMixin.RemoveChannel
 								end
 							
 								for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) do
@@ -914,7 +914,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 										self:Print("[Chat Window] Adding " .. v .. " To Window " .. thisChatFrame .. ".")
 									end
 									
-									ChatFrame_AddChannel(thisChatFrameVar, v)
+									ChatFrame_AddChannel(thisChatFrameVar, v) -- 12.0.0 ChatFrameMixin.AddChannel
 									
 								end
 							end
@@ -938,10 +938,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									end
 								
 									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) == "table") then
-										ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+										ChatFrame_RemoveAllMessageGroups(thisChatFrameVar) -- 12.0.0 ChatFrameMixin.RemoveAllMessageGroups
 										
 										for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) do
-											 ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+											 ChatFrame_AddMessageGroup(thisChatFrameVar, v) -- 12.0.0 ChatFrameMixin.AddMessageGroup
 											 if (self.db.global.printDebugTextToChat == true) then
 												self:Print("[Chat Window] Adding " .. v .. " to Window " .. thisChatFrame .. ".")
 											 end

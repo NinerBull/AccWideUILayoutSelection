@@ -1,2 +1,3 @@
 - Changed how the Loot To Leftmost Bag and Sort Bags Left to Right settings are saved, when Bag Organisation is enabled.
 - Ensured the First Time Popup will appear after the intro cinematic for users who have not used the addon before, and create/log into a fresh character.
+- Updated TOC for 11.2.5 and 5.5.1.
