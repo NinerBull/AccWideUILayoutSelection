@@ -67,6 +67,8 @@ L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"] = "Visible Action Bars"
 L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"] = "When checked, synchronises which Action Bars are currently visible.\n\nIt does not synchronise what spells and abilities you have added to the bars."
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP"] = "Zone Map Settings"
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"] = "When checked, the visibility, location and other options for the Zone Map (Default: SHIFT+M) are synchronised."
+L["ACCWUI_OPT_MODULES_CHK_ASSISTED"] = "Assisted Highlight Setting"
+L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"] = "When checked, the Assisted Highlight Setting will be synchronised."
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Custom CVar List"
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Enter a custom list of CVars you'd like to synchonise with this profile.\n\nEnter an exact CVar Name, one per line."

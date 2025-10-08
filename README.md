@@ -21,6 +21,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * Viewed Tutorial Tooltips
 * Zone Map (Shift-M) Settings
 * Cooldown Manager Visibility Setting
+* Ability Highlight Setting
 * Empower Tap/Hold Setting
 * Mouseover Cast/Self Cast Settings
 * Block Guild/Trade/Channel Invite Settings

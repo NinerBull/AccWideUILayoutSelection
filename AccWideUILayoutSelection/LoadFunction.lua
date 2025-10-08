@@ -486,6 +486,51 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 				end 
 				
+				-- Assisted Highlight Variables
+				if (self.db.profile.syncToggles.assistedCombat == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Assisted Highlight] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.AssistedCombat) do
+						SetCVar(v, self.db.profile.syncData.assistedCombat.cvars[v])
+					end
+				
+				end 
+				
+				-- Loss of Control Variables
+				if (self.db.profile.syncToggles.lossOfControl == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Loss of Control] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.LossOfControl) do
+						if (self.db.profile.syncData.lossOfControl.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.lossOfControl.cvars[v])
+						end
+					end
+				
+				end
+				
+				
+			
+				-- Cooldown Viewer Variables
+				if (self.db.profile.syncToggles.cooldownViewer == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Cooldown Viewer] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.CooldownViewer) do
+						if (self.db.profile.syncData.cooldownViewer.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.cooldownViewer.cvars[v])
+						end
+					end
+				
+				end
+				
 				
 				-- Bag Organisation Settings
 				if (self.db.global.allowExperimentalSyncs == true) then
@@ -550,37 +595,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 	
 			
-				-- Loss of Control Variables
-				if (self.db.profile.syncToggles.lossOfControl == true) then
 				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Loss of Control] Loading Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.LossOfControl) do
-						if (self.db.profile.syncData.lossOfControl.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.lossOfControl.cvars[v])
-						end
-					end
-				
-				end
-				
-				
-			
-				-- Cooldown Viewer Variables
-				if (self.db.profile.syncToggles.cooldownViewer == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Cooldown Viewer] Loading Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.CooldownViewer) do
-						if (self.db.profile.syncData.cooldownViewer.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.cooldownViewer.cvars[v])
-						end
-					end
-				
-				end
 			
 			
 			end

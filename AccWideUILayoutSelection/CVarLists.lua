@@ -181,6 +181,10 @@ AccWideUIAceAddon.CVars = {
 	EmpowerTap = {
 		"empowerTapControls"
 	},
+	
+	AssistedCombat = {
+		"assistedCombatHighlight"
+	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	ChatTypes = {

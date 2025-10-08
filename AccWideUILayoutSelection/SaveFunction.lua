@@ -471,6 +471,19 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 				end
 				
+				-- Save Assisted Highlight Setting
+				if (self.db.profile.syncToggles.assistedCombat == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Assisted Highlight] Saving Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.AssistedCombat) do
+						self.db.profile.syncData.assistedCombat.cvars[v] = GetCVar(v) or nil
+					end
+				
+				end
+				
 				
 				-- Save Bag Organisation Settings
 				if (self.db.global.allowExperimentalSyncs == true) then

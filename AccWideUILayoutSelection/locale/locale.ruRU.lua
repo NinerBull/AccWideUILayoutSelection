@@ -67,6 +67,8 @@ L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"] = "Видимые панели дейст
 L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"] = "Если этот флажок установлен, синхронизируется, какие панели действий в данный момент видны.\n\nОн не синхронизирует, какие заклинания и способности вы добавили на панели." -- Needs Update
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP"] = "Настройки карта игровой зоны"
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"] = "Если этот флажок установлен, видимость, местоположение и другие параметры карты зоны (по умолчанию: SHIFT+M) синхронизируются." -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_ASSISTED"] = "Настройка подсветки с помощью" -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"] = "Если этот флажок установлен, настройка вспомогательной подсветки будет синхронизирована." -- Needs Update
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Список пользовательских CVar" -- Needs Update
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Введите пользовательский список CVar, которые вы хотите синхронизировать с этим профилем.\n\nВведите точное имя CVar, по одному в каждой строке." -- Needs Update

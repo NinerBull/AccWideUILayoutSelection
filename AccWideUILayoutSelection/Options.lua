@@ -33,6 +33,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				mouseoverCast = true,
 				empowerTap = true,
 				cooldownViewer = true,
+				assistedCombat = true,
 				lossOfControl = true,
 				bagOrganisation = false,
 				arenaFrames = true,
@@ -89,6 +90,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				cooldownViewer = {
+					cvars = {}
+				},
+				assistedCombat = {
 					cvars = {}
 				},
 				chat = {
@@ -192,38 +196,45 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TARGETING_DESC"],
 							},
+							assistedCombat = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_ASSISTED"],
+								order = 3,
+								width = 1.7,
+								desc = L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"],
+							},
 							arenaFrames = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_ARENA"],
-								order = 3,
+								order = 4,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_ARENA_DESC"],
 							},
 							autoLoot = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"],
-								order = 4,
+								order = 5,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
 							},
 							blockSocial = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_TRADEGUILD"],
-								order = 7,
+								order = 6,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TRADEGUILD_DESC"],
 							},
 							chatWindow = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
-								order = 8,
+								order = 7,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW_DESC"],
 							},
 							chatWindowPosition = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION"],
-								order = 9,
+								order = 8,
 								width = 1.7,
 								disabled = "ShouldChatOptsDisable",
 								desc = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION_DESC"],
@@ -231,7 +242,7 @@ function AccWideUIAceAddon:GenerateOptions()
 							chatChannels = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS"],
-								order = 10,
+								order = 9,
 								width = 1.7,
 								disabled = "ShouldChatOptsDisable",
 								desc = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS_DESC"],
@@ -239,77 +250,77 @@ function AccWideUIAceAddon:GenerateOptions()
 							cooldownViewer = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN"],
-								order = 11,
+								order = 10,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN_DESC"],
 							},
 							editModeLayout = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_EDITMODE"],
-								order = 12,
+								order = 11,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_EDITMODE_DESC"],
 							},
 							empowerTap = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED"],
-								order = 13,
+								order = 12,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED_DESC"],
 							},
 							lossOfControl = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_LOC"],
-								order = 14,
+								order = 13,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_LOC_DESC"],
 							},
 							mouseoverCast = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER"],
-								order = 15,
+								order = 14,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER_DESC"],
 							},
 							nameplates = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES"],
-								order = 16,
+								order = 15,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES_DESC"],
 							},
 							raidFrames = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID"],
-								order = 17,
+								order = 16,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
 							},
 							spellOverlay = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY"],
-								order = 18,
+								order = 17,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY_DESC"],
 							},
 							tutorialTooltips = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP"],
-								order = 19,
+								order = 18,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"] ,
 							},
 							actionBars = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"],
-								order = 20,
+								order = 19,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
 							},
 							battlefieldMap = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
-								order = 21,
+								order = 20,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
 							},						
@@ -730,6 +741,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
 		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
 		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
+		self.optionsData.args.settings.args.syncToggles.args.assistedCombat = nil
 		
 		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
