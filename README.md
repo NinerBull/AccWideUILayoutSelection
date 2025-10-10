@@ -9,23 +9,24 @@ This QOL addon synchronizes various Blizzard Interface Settings that are **norma
 
 The addon can synchronise the following, and you can disable any that you'd rather keep character specific:
 
-* Chosen Edit Mode Layout (Can also be disabled per spec)
-* Visible Action Bars
+* Ability Highlight Setting
+* Action Targeting Settings
+* Arena Frame Settings
+* Auto Loot Settings
+* Bag Organisation Settings (Experimental)
+* Block Guild/Trade/Channel Invite Settings
+* Chat Window/Channel Settings
+* Chosen Edit Mode Layout
+* Cooldown Manager Visibility Setting
+* Empowered Spell Input Setting
+* Loss of Control Settings
+* Mouseover Cast/Self Cast Settings
 * Nameplate Settings
 * Party/Raid Frame Settings
-* Arena Frame Settings
 * Spell Overlay Settings
-* Auto Loot Settings
-* Action Targeting Settings
-* Chat Window/Channel Settings
 * Viewed Tutorial Tooltips
+* Visible Action Bars
 * Zone Map (Shift-M) Settings
-* Cooldown Manager Visibility Setting
-* Ability Highlight Setting
-* Empower Tap/Hold Setting
-* Mouseover Cast/Self Cast Settings
-* Block Guild/Trade/Channel Invite Settings
-* Bag Organisation Settings (Experimental)
 
 ### Additional Functionality
 * Profile Support - Save and switch between multiple Interface configurations
