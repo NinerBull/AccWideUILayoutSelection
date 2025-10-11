@@ -6,6 +6,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 	
 	if (self.db.global.hasDoneFirstTimeSetup == true) then
 	
+		self.TempData.LoadSettingsAfterCombat = false
+	
 		self:CancelAllTimers()
 
 		doNotLoadChatOrBagSettings = doNotLoadChatOrBagSettings or false
