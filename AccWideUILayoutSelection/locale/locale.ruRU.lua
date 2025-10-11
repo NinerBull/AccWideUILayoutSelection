@@ -138,3 +138,5 @@ L["ACCWUI_LEAVING_CHANNEL"] = "Автоматический выход из ча
 	
 L["ACCWUI_ABOUT"] = "%s от %s - Посвящается Petrel <3" -- Needs Update
 L["ACCWUI_ISSUES"] = "Проблемы? Посетите https://github.com/NinerBull/AccWideUILayoutSelection/issues" -- Needs Update
+
+L["ACCWUI_WAIT_TILL_COMBAT"] = "Невозможно загрузить настройки во время боя, они загрузятся после его окончания." -- Needs Update

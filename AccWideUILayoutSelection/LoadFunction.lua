@@ -1043,7 +1043,12 @@ end
 
 
 function AccWideUIAceAddon:ForceLoadSettings() 
-	self:CancelAllTimers(); 
-	self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
-	self:LoadUISettings();
+	if (not InCombatLockdown()) then
+		self:CancelAllTimers(); 
+		self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
+		self:LoadUISettings();
+	else
+		self:Print(L["ACCWUI_WAIT_TILL_COMBAT"])
+		self.TempData.LoadSettingsAfterCombat = true
+	end
 end

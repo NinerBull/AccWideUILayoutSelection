@@ -134,3 +134,5 @@ L["ACCWUI_LEAVING_CHANNEL"] = "Automatically leaving the %s Channel. Type %s to 
 
 L["ACCWUI_ABOUT"] = "%s by %s - Dedicated to Petrel <3"
 L["ACCWUI_ISSUES"] = "Issues? Please visit https://github.com/NinerBull/AccWideUILayoutSelection/issues"
+
+L["ACCWUI_WAIT_TILL_COMBAT"] = "Cannot load settings during combat, will load once combat is over."

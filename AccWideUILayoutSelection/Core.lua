@@ -10,6 +10,7 @@ AccWideUIAceAddon.TempData = {
 	IsCurrentlyLoadingSettings = false,
 	HasShownFTPPopup = false,
 	HasDimissedFTPAlready = false,
+	LoadSettingsAfterCombat = false,
 	TextSlash = "/awi",
 }
 
@@ -66,6 +67,8 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("CINEMATIC_STOP")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	
 	
 	if (AccWideUIAceAddon:IsMainline()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
@@ -212,12 +215,17 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	
 	
 	if (event == "OnProfileChanged" or event == "OnProfileCopied") then
-		if (self.db.global.disableAutoSaveLoad == false) then
-			self:CancelAllTimers()
-		
-			self:ScheduleTimer(function() 
-				self:LoadUISettings()			
-			end, 2)
+		if (not InCombatLockdown()) then
+			if (self.db.global.disableAutoSaveLoad == false) then
+				self:CancelAllTimers()
+				self:ScheduleTimer(function() 
+					self:LoadUISettings()			
+				end, 2)
+			
+			end
+		else
+			self:Print(L["ACCWUI_WAIT_TILL_COMBAT"])
+			self.TempData.LoadSettingsAfterCombat = true
 		end
 	end
 	
@@ -463,9 +471,14 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 					self:Printf(L["ACCWUI_LOAD_REGULAR"], self.TempData.TextSlash)
 				end
 				
-				self:ScheduleTimer(function() 
-					AccWideUIAceAddon:LoadUISettings()
-				end, 5)
+				if (not InCombatLockdown()) then
+					self:ScheduleTimer(function() 
+						self:LoadUISettings()
+					end, 5)
+				else
+					self:Print(L["ACCWUI_WAIT_TILL_COMBAT"])
+					self.TempData.LoadSettingsAfterCombat = true
+				end
 				
 			else
 			
@@ -536,7 +549,6 @@ function AccWideUIAceAddon:ACTIVE_TALENT_GROUP_CHANGED(event, arg1, arg2)
 			self:LoadEditModeSettings()
 		end, 0.5)
 	end
-	
 end
 
 
@@ -560,6 +572,17 @@ function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
 				self:SaveBagFlagSettings()
 			end
 		end
+	end
+end
+
+
+function AccWideUIAceAddon:PLAYER_REGEN_ENABLED(event, arg1, arg2)
+	if (self.TempData.LoadSettingsAfterCombat == true) then
+		self.TempData.LoadSettingsAfterCombat = false
+		self:CancelAllTimers(); 
+		self:ScheduleTimer(function() 
+			self:LoadUISettings()
+		end, 3)
 	end
 end
 

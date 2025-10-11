@@ -1,4 +1,2 @@
-- Added Ability Highlight sync support.
-- Changed how the Loot To Leftmost Bag and Sort Bags Left to Right settings are saved, when Bag Organisation is enabled.
-- Ensured the First Time Popup will appear after the intro cinematic for users who have not used the addon before, and create/log into a fresh character.
-- Updated TOC for 11.2.5 and 5.5.1.
+- Added MoveAny to OptionalDeps, hopefully will prevent some LUA errors.
+- Addon will now wait to load settings if you are in combat upon logging in, or clicking the Force Load button, until you have left combat.
