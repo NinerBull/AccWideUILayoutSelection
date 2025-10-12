@@ -1,2 +1,3 @@
+- Fixed typo that prevented Raid Frame settings from loading.
 - Added MoveAny to OptionalDeps, hopefully will prevent some LUA errors.
 - Addon will now wait to load settings if you are in combat upon logging in, or clicking the Force Load button, until you have left combat.

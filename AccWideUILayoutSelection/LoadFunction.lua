@@ -98,8 +98,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 				
 				for k, v in pairs(self.CVars.RaidFrames) do
-					if (self.db.profile.syncData.nameplates.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.nameplates.cvars[v])
+					if (self.db.profile.syncData.raidFrames.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.raidFrames.cvars[v])
 					end
 				end
 			
