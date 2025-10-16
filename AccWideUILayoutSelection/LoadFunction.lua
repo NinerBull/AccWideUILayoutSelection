@@ -6,12 +6,15 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 	
 	if (self.db.global.hasDoneFirstTimeSetup == true) then
 	
-		self.TempData.LoadSettingsAfterCombat = false
-	
 		self:CancelAllTimers()
+		
+		if (InCombatLockdown()) then
+			self.TempData.LoadSettingsAfterCombat = true
+		else
+			self.TempData.LoadSettingsAfterCombat = false
 
-		doNotLoadChatOrBagSettings = doNotLoadChatOrBagSettings or false
-		self.TempData.IsCurrentlyLoadingSettings = true
+			doNotLoadChatOrBagSettings = doNotLoadChatOrBagSettings or false
+			self.TempData.IsCurrentlyLoadingSettings = true
 		
 			if (self.db.global.printWhenLastSaved == true) then
 				self:Printf(L["ACCWUI_LOAD_LASTUPDATED"], LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(self.db.profile.lastSaved.character), LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(date("%Y-%m-%d %H:%M", self.db.profile.lastSaved.unixTime)), self.db:GetCurrentProfile())
@@ -1037,7 +1040,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end, LoadUIAllowSaveTime)
 			
 		end
-
+	
+	end
+	
 end
 
 
