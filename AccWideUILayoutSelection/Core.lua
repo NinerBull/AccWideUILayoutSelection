@@ -68,7 +68,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("CINEMATIC_STOP")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	
 	if (AccWideUIAceAddon:IsMainline()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
@@ -586,3 +586,13 @@ function AccWideUIAceAddon:PLAYER_REGEN_ENABLED(event, arg1, arg2)
 	end
 end
 
+function AccWideUIAceAddon:PLAYER_REGEN_DISABLED(event, arg1, arg2)
+	if (self.TempData.IsCurrentlyLoadingSettings == true) then
+		self.TempData.IsCurrentlyLoadingSettings = false
+		self.TempData.LoadSettingsAfterCombat = true
+		self:CancelAllTimers(); 
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print(L["ACCWUI_WAIT_TILL_COMBAT"])
+		end
+	end
+end
