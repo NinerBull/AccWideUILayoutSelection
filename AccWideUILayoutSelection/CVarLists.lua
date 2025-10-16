@@ -185,6 +185,10 @@ AccWideUIAceAddon.CVars = {
 	AssistedCombat = {
 		"assistedCombatHighlight"
 	},
+	
+	EncounterTimeline = { -- 12.0.0
+		"encounterTimelineEnabled"
+	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	ChatTypes = {
