@@ -66,6 +66,26 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				for k, v in pairs(self.CVars.Nameplates) do
 					self.db.profile.syncData.nameplates.cvars[v] = GetCVar(v) or nil
 				end
+				
+				-- B4 12.0.0
+				self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough = C_NamePlate.GetNamePlateEnemyClickThrough()
+				self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets = {}
+				self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[1], self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[2], self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[3], self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[4] = C_NamePlate.GetNamePlateEnemyPreferredClickInsets()
+				self.db.profile.syncData.nameplates.special.NamePlateEnemySize = {}
+				self.db.profile.syncData.nameplates.special.NamePlateEnemySize[1], self.db.profile.syncData.nameplates.special.NamePlateEnemySize[2] = C_NamePlate.GetNamePlateEnemySize()
+				
+				self.db.profile.syncData.nameplates.special.NamePlateFriendlyClickThrough = C_NamePlate.GetNamePlateFriendlyClickThrough()
+				self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets = {}
+				self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[1], self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[2], self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[3], self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[4] = C_NamePlate.GetNamePlateFriendlyPreferredClickInsets()
+				self.db.profile.syncData.nameplates.special.NamePlateFriendlySize = {}
+				self.db.profile.syncData.nameplates.special.NamePlateFriendlySize[1], self.db.profile.syncData.nameplates.special.NamePlateFriendlySize[2] = C_NamePlate.GetNamePlateFriendlySize()
+				
+				self.db.profile.syncData.nameplates.special.NamePlateSelfClickThrough = C_NamePlate.GetNamePlateSelfClickThrough()
+				self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets = {}
+				self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[1], self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[2], self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[3], self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[4] = C_NamePlate.GetNamePlateSelfPreferredClickInsets()
+				self.db.profile.syncData.nameplates.special.NamePlateSelfSize = {}
+				self.db.profile.syncData.nameplates.special.NamePlateSelfSize[1], self.db.profile.syncData.nameplates.special.NamePlateSelfSize[2] = C_NamePlate.GetNamePlateSelfSize()
+				
 			
 			end -- EO accountWideNameplates
 			

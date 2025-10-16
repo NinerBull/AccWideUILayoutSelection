@@ -66,7 +66,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 				
 				self:ScheduleTimer(function() 
-					MultiActionBar_Update()
+					if (not InCombatLockdown()) then
+						securecall(MultiActionBar_Update)
+					end
 				end, 5)
 			
 			end 
@@ -85,6 +87,39 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						SetCVar(v, self.db.profile.syncData.nameplates.cvars[v])
 					end
 				end
+				
+				--B4 12.0.0
+				if (self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough) then
+					C_NamePlate.SetNamePlateEnemyClickThrough(self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough)
+				end
+				if (self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets) then
+					C_NamePlate.SetNamePlateEnemyPreferredClickInsets(self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[1], self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[2], self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[3], self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets[4])
+				end
+				if (self.db.profile.syncData.nameplates.special.NamePlateEnemySize) then
+					C_NamePlate.SetNamePlateEnemySize(self.db.profile.syncData.nameplates.special.NamePlateEnemySize[1], self.db.profile.syncData.nameplates.special.NamePlateEnemySize[2])
+				end
+				
+				if (self.db.profile.syncData.nameplates.special.NamePlateFriendlyClickThrough) then
+					C_NamePlate.SetNamePlateFriendlyClickThrough(self.db.profile.syncData.nameplates.special.NamePlateFriendlyClickThrough)
+				end
+				if (self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets) then
+					C_NamePlate.SetNamePlateFriendlyPreferredClickInsets(self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[1], self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[2], self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[3], self.db.profile.syncData.nameplates.special.NamePlateFriendlyPreferredClickInsets[4])
+				end
+				if (self.db.profile.syncData.nameplates.special.NamePlateFriendlySize) then
+					C_NamePlate.SetNamePlateFriendlySize(self.db.profile.syncData.nameplates.special.NamePlateFriendlySize[1], self.db.profile.syncData.nameplates.special.NamePlateFriendlySize[2])
+				end
+				
+				if (self.db.profile.syncData.nameplates.special.NamePlateSelfClickThrough) then
+					C_NamePlate.SetNamePlateSelfClickThrough(self.db.profile.syncData.nameplates.special.NamePlateSelfClickThrough)
+				end
+				if (self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets) then
+					C_NamePlate.SetNamePlateSelfPreferredClickInsets(self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[1], self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[2], self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[3], self.db.profile.syncData.nameplates.special.NamePlateSelfPreferredClickInsets[4])
+				end
+				if (self.db.profile.syncData.nameplates.special.NamePlateSelfSize) then
+					C_NamePlate.SetNamePlateSelfSize(self.db.profile.syncData.nameplates.special.NamePlateSelfSize[1], self.db.profile.syncData.nameplates.special.NamePlateSelfSize[2])
+				end
+				
+				
 			
 			end 
 			

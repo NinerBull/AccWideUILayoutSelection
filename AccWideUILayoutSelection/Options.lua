@@ -49,7 +49,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				nameplates = {
-					cvars = {}
+					cvars = {},
+					special = {
+					}
 				},
 				arenaFrames = {
 					cvars = {}
