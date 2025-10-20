@@ -1,2 +1,2 @@
-- If you enter combat while the addon is loading settings, it will cancel loading any further settings until you leave combat.
-- Added multiple missing Nameplate functions to be synced.
+- Added "EditModeExpanded" to OptionalDeps
+- Added Category Metadata to TOC
