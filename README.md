@@ -37,7 +37,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 ## Compatibility
 * **The War Within** - 11.2.5
 * **MoP Classic** - 5.5.1
-* **Classic Era** - 1.15.7
+* **Classic Era** - 1.15.8
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.

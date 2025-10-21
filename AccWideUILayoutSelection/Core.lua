@@ -12,6 +12,7 @@ AccWideUIAceAddon.TempData = {
 	HasDimissedFTPAlready = false,
 	LoadSettingsAfterCombat = false,
 	TextSlash = "/awi",
+	EditModeExpandedTriggered = false
 }
 
 
@@ -100,8 +101,18 @@ function AccWideUIAceAddon:OnEnable()
 	
 	if (self:IsMainline()) then
 		self:SecureHook(C_EditMode, "OnEditModeExit", function()
-			if (self.db.global.disableAutoSaveLoad == false) then
-				self:SaveEditModeSettings()
+			if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and self.TempData.EditModeExpandedTriggered == false) then
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Debug] Ignoring first 'OnEditModeExit' due to EditModeExpanded.")
+				end
+				self.TempData.EditModeExpandedTriggered = true
+			else
+				if (self.db.global.disableAutoSaveLoad == false) then
+					self:SaveEditModeSettings()
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Debug] Saving Edit Mode Layout on EditModeExit.")
+					end
+				end
 			end
 		end)
 		
@@ -207,6 +218,10 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 					self.db.profile.syncData.screenResolutionSpecific[AccWideUIAceAddon.TempData.ScreenRes].editModeLayoutID = currentActiveLayout or 1
 				end
 				
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Debug] Setting default Edit Mode.")
+				end
+					
 			end
 		
 		end

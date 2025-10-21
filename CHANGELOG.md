@@ -1,2 +1,4 @@
-- Added "EditModeExpanded" to OptionalDeps
+- Fixed issue for EditModeExpanded users where the chosen Edit Mode layout would be immediately overwritten upon logging in
+- Added EditModeExpanded to OptionalDeps
 - Added Category Metadata to TOC
+- Updated TOC for 1.15.8
