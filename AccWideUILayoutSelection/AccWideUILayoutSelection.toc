@@ -6,7 +6,7 @@
 ## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
 ## SavedVariablesPerCharacter: AccWideUI_CharData
 ## DefaultState: enabled
-## OptionalDeps: BlockBlizzChatChannels, Blizzard_BattlefieldMap, Ace3, MoveAny, EditModeExpanded
+## OptionalDeps: BlockBlizzChatChannels, Ace3, MoveAny, EditModeExpanded
 
 ## X-Category: HUDs
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection

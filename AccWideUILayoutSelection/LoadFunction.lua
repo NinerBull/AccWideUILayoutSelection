@@ -1086,6 +1086,9 @@ end
 
 function AccWideUIAceAddon:ForceLoadSettings() 
 	if (not InCombatLockdown()) then
+		if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
+			 self.TempData.EditModeExpandedTriggered = true
+		end
 		self:CancelAllTimers(); 
 		self:Print(L["ACCWUI_DEBUG_TXT_FORCELOAD"]);
 		self:LoadUISettings();

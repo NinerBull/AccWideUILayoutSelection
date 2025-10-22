@@ -187,7 +187,15 @@ AccWideUIAceAddon.CVars = {
 	},
 	
 	EncounterTimeline = { -- 12.0.0
-		"encounterTimelineEnabled"
+		"encounterTimelineEnabled",
+		"encounterWarningsEnabled",
+		"encounterWarningsHideIfNotTargetingPlayer",
+		"encounterWarningsHideMediumWarnings",
+		"encounterWarningsHideMinorWarnings"
+	},
+	
+	DamageMeter = { -- 12.0.0
+		"damageMeterEnabled"
 	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65

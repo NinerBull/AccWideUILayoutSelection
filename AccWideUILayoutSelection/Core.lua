@@ -5,14 +5,9 @@ local ACD = LibStub("AceConfigDialog-3.0")
 
 --Temporary Data
 AccWideUIAceAddon.TempData = {
-	HasLoadedSettings = false,
-	HasDoneInitialLoad = false,
-	IsCurrentlyLoadingSettings = false,
-	HasShownFTPPopup = false,
-	HasDimissedFTPAlready = false,
-	LoadSettingsAfterCombat = false,
 	TextSlash = "/awi",
-	EditModeExpandedTriggered = false
+	IsCurrentlyLoadingSettings = false,
+	LoadSettingsAfterCombat = false
 }
 
 
@@ -80,7 +75,6 @@ function AccWideUIAceAddon:OnEnable()
 	
 	C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
 	
-	
 	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
 		if (self.db.global.printDebugTextToChat == true) then
 			self:Print("[Zone Map] Saving Map Coords.")
@@ -101,7 +95,7 @@ function AccWideUIAceAddon:OnEnable()
 	
 	if (self:IsMainline()) then
 		self:SecureHook(C_EditMode, "OnEditModeExit", function()
-			if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and self.TempData.EditModeExpandedTriggered == false) then
+			if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Debug] Ignoring first 'OnEditModeExit' due to EditModeExpanded.")
 				end
@@ -191,6 +185,10 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	--Set up profile data that I can't do with the regular table
 	if (event == "OnNewProfile") then
 	
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Debug] Profile Created.")
+		end
+	
 		--Block Guild Invites
 		self.db.profile.syncData.blockSocial.blockGuildInvites = self.db.profile.syncData.blockSocial.blockGuildInvites or GetAutoDeclineGuildInvites()
 		
@@ -230,8 +228,16 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	
 	
 	if (event == "OnProfileChanged" or event == "OnProfileCopied") then
+		
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Debug] Profile Changed.")
+		end
+	
 		if (not InCombatLockdown()) then
 			if (self.db.global.disableAutoSaveLoad == false) then
+				if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
+					 self.TempData.EditModeExpandedTriggered = true
+				end
 				self:CancelAllTimers()
 				self:ScheduleTimer(function() 
 					self:LoadUISettings()			
@@ -245,6 +251,10 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	end
 	
 	if (event == "OnProfileReset") then
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Debug] Profile Reset.")
+		end
+	
 		self:CancelAllTimers()
 	end
 	
@@ -472,7 +482,7 @@ end
 
 function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 
-	if (self.TempData.HasDoneInitialLoad == false) then
+	if (not self.TempData.HasDoneInitialLoad) then
 	
 		if (self.db.global.disableAutoSaveLoad == false) then
 		
@@ -527,10 +537,10 @@ end
 
 function AccWideUIAceAddon:CINEMATIC_STOP(event, arg1, arg2)
 	
-	if (self.TempData.HasShownFTPPopup ~= true) then
+	if (not self.TempData.HasShownFTPPopup) then
 		
 		C_Timer.After(5, function() 
-			if (self.db.global.hasDoneFirstTimeSetup ~= true and self.TempData.HasDimissedFTPAlready ~= true) then
+			if (self.db.global.hasDoneFirstTimeSetup ~= true and not self.TempData.HasDimissedFTPAlready) then
 				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
 			end
 		end)
@@ -559,7 +569,7 @@ end
 
 
 function AccWideUIAceAddon:ACTIVE_TALENT_GROUP_CHANGED(event, arg1, arg2)
-	if (self.TempData.HasDoneInitialLoad == true) then
+	if (self.TempData.HasDoneInitialLoad) then
 		self:ScheduleTimer(function() 
 			self:LoadEditModeSettings()
 		end, 0.5)
