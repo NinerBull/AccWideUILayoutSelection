@@ -567,7 +567,7 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 		
 			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Debug] Saving Chosen Edit Mode Layout.")
+				self:Print("[Debug] Saving Chosen Edit Mode Layout (ID: " .. thisEditModeLayoutID .. ").")
 			end
 
 			if (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then

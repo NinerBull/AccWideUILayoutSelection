@@ -110,6 +110,7 @@ function AccWideUIAceAddon:OnEnable()
 			end
 		end)
 		
+		
 		self:SecureHook(C_Container, "SetSortBagsRightToLeft", function(thisResponse)
 			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
 				self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = thisResponse
@@ -119,6 +120,7 @@ function AccWideUIAceAddon:OnEnable()
 			end
 		end)
 		
+		
 		self:SecureHook(C_Container, "SetInsertItemsLeftToRight", function(thisResponse)
 			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
 				self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = thisResponse
@@ -127,6 +129,7 @@ function AccWideUIAceAddon:OnEnable()
 				end
 			end
 		end)
+	
 		
 		
 		self:SecureHook(C_Container, "SetBackpackAutosortDisabled", function(thisResponse)
@@ -138,6 +141,7 @@ function AccWideUIAceAddon:OnEnable()
 			end
 		end)
 		
+		
 		self:SecureHook(C_Container, "SetBackpackSellJunkDisabled", function(thisResponse)
 			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
 				self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled = thisResponse
@@ -146,6 +150,7 @@ function AccWideUIAceAddon:OnEnable()
 				end
 			end
 		end)
+		
 		
 		self:SecureHook(C_Container, "SetBankAutosortDisabled", function(thisResponse)
 			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
