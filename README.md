@@ -19,6 +19,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * Chosen Edit Mode Layout
 * Cooldown Manager Visibility Setting
 * Empowered Spell Input Setting
+* Location Visibility Setting
 * Loss of Control Settings
 * Mouseover Cast/Self Cast Settings
 * Nameplate Settings

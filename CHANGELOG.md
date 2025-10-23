@@ -1,4 +1,2 @@
-- Fixed issue for EditModeExpanded users where the chosen Edit Mode layout would be immediately overwritten upon logging in
-- Added EditModeExpanded to OptionalDeps
-- Added Category Metadata to TOC
-- Updated TOC for 1.15.8
+- Added "Location Visibility" setting sync support.
+  - This is the setting that controls whether Recent Allies can see your location or not, and can be found in the Social settings.

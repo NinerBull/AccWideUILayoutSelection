@@ -572,6 +572,22 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 				
 				
+				
+				-- Location Visibility Variables
+				if (self.db.profile.syncToggles.locationVisibility == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Location Visibility] Loading Settings.")
+					end
+
+					--Special
+					if (self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation ~= nil) then
+						SetAllowRecentAlliesSeeLocation(self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation)
+					end
+				
+				end 
+				
+				
 				-- Bag Organisation Settings
 				if (self.db.global.allowExperimentalSyncs == true) then
 					if (self.db.profile.syncToggles.bagOrganisation == true and doNotLoadChatOrBagSettings == false) then

@@ -505,6 +505,18 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
+				-- Save Location Visibility Setting
+				if (self.db.profile.syncToggles.locationVisibility == true and isForced == true) then -- Does not work on logout
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Location Visibility] Saving Settings.")
+					end
+				
+					self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation = GetAllowRecentAlliesSeeLocation()
+				
+				end
+				
+				
 				-- Save Bag Organisation Settings
 				if (self.db.global.allowExperimentalSyncs == true) then
 					if (self.db.profile.syncToggles.bagOrganisation == true) then

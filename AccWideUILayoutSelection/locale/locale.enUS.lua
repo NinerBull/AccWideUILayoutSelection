@@ -69,6 +69,8 @@ L["ACCWUI_OPT_MODULES_CHK_BTLMAP"] = "Zone Map Settings"
 L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"] = "When checked, the visibility, location and other options for the Zone Map (Default: SHIFT+M) are synchronised."
 L["ACCWUI_OPT_MODULES_CHK_ASSISTED"] = "Assisted Highlight Setting"
 L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"] = "When checked, the Assisted Highlight Setting will be synchronised."
+L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"] = "Location Visibility Setting"
+L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"] = "When checked, the Location Visibility Setting will be synchronised.\n\nThis is the setting that controls whether Recent Allies can see your location or not, and can be found in the Social settings."
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Custom CVar List"
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Enter a custom list of CVars you'd like to synchonise with this profile.\n\nEnter an exact CVar Name, one per line."

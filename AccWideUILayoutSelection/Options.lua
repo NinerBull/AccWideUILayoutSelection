@@ -26,6 +26,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				nameplates = true,
 				raidFrames = true,
 				blockSocial = true,
+				locationVisibility = true,
 				autoLoot = true,
 				softTarget = true,
 				tutorialTooltips = true,
@@ -67,6 +68,11 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {},
 					special = {
 						blockGuildInvites = nil
+					}
+				},
+				locationVisibility = {
+					special = {
+						allowRecentAlliesSeeLocation = nil
 					}
 				},
 				spellOverlay = {
@@ -270,59 +276,66 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED_DESC"],
 							},
+							locationVisibility = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"],
+								order = 13,
+								width = 1.7,
+								desc = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"],
+							},
 							lossOfControl = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_LOC"],
-								order = 13,
+								order = 14,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_LOC_DESC"],
 							},
 							mouseoverCast = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER"],
-								order = 14,
+								order = 15,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER_DESC"],
 							},
 							nameplates = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES"],
-								order = 15,
+								order = 16,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES_DESC"],
 							},
 							raidFrames = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID"],
-								order = 16,
+								order = 17,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
 							},
 							spellOverlay = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY"],
-								order = 17,
+								order = 18,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY_DESC"],
 							},
 							tutorialTooltips = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP"],
-								order = 18,
+								order = 19,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"] ,
 							},
 							actionBars = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"],
-								order = 19,
+								order = 20,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
 							},
 							battlefieldMap = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
-								order = 20,
+								order = 21,
 								width = 1.7,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
 							},						
@@ -744,6 +757,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
 		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
 		self.optionsData.args.settings.args.syncToggles.args.assistedCombat = nil
+		self.optionsData.args.settings.args.syncToggles.args.locationVisibility = nil
 		
 		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil

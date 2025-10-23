@@ -70,6 +70,7 @@ function AccWideUIAceAddon:OnEnable()
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		self:RegisterEvent("BAG_SLOT_FLAGS_UPDATED")
 		self:RegisterEvent("BANK_BAG_SLOT_FLAGS_UPDATED")
+		self:RegisterEvent("LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED")
 	end
 	
 	
@@ -601,6 +602,18 @@ function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
 			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
 				self:SaveBagFlagSettings()
 			end
+		end
+	end
+end
+
+function AccWideUIAceAddon:LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED(event, arg1, arg2)
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
+		if (self.db.profile.syncToggles.locationVisibility == true) then
+			self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation = GetAllowRecentAlliesSeeLocation()
+			if (self.db.global.printDebugTextToChat == true) then
+				self:Print("[Location Visibility] Setting Changed.")
+			end
+			
 		end
 	end
 end
