@@ -1,2 +1,3 @@
 - Added "Location Visibility" setting sync support.
   - This is the setting that controls whether Recent Allies can see your location or not, and can be found in the Social settings.
+- Fixed incompatibilty with Leatrix Plus where enabling "hide the combat log" within LTP would cause the tab's text to be visible and tiny when AccWideUI loads its settings.

@@ -859,7 +859,6 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
 							)
 						
-						
 						end
 						
 							
@@ -1030,10 +1029,25 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 					
 				end
+				
+				
 			
 				self:ScheduleTimer(function()
+				
+					--Fix for Leatrix Plus where Hide Combat Log is Enabled
+					if (C_AddOns.IsAddOnLoaded("Leatrix_Plus") == true) then
+						if (LeaPlusDB and LeaPlusDB.NoCombatLogTab == "On") then
+							if ChatFrame2.isDocked then
+								ChatFrame2Tab:SetText(" ")
+								if (self.db.global.printDebugTextToChat == true) then
+									self:Print("[Leatrix Plus] Combat Log Tab is Hidden, fixing text.")
+								end
+							end
+						end
+					end
+				
 					FCF_DockUpdate()
-				end, 2)
+				end, 3)
 				
 			
 			else
