@@ -1,4 +1,4 @@
-## Interface: 110205, 50501, 30405, 11508
+## Interface: 110207, 110205, 50502, 30405, 11508
 ## Title: Account Wide Interface Settings
 ## Version: @project-version@
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi

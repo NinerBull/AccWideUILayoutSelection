@@ -36,8 +36,8 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * Custom CVar Support - Enter your own additional list of CVars to synchronise across characters, enable in Advanced Settings
 
 ## Compatibility
-* **The War Within** - 11.2.5
-* **MoP Classic** - 5.5.1
+* **The War Within** - 11.2.7
+* **MoP Classic** - 5.5.2
 * **Classic Era** - 1.15.8
 
 ## Installation

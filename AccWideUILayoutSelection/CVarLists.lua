@@ -70,7 +70,7 @@ AccWideUIAceAddon.CVars = {
 		"nameplateNotSelectedAlpha",
 		"nameplateRemovalAnimation",
 		"nameplateCommentatorMaxDistance"
-	},
+		},
 
 	RaidFrames = {
 		"raidFramesDisplayAggroHighlight",
@@ -110,6 +110,7 @@ AccWideUIAceAddon.CVars = {
 		"pvpFramesDisplayPowerBars",
 		"pvpFramesDisplayClassColor",
 		"pvpFramesDisplayOnlyHealerPowerBars",
+		"spellDiminishPVPEnemiesEnabled" -- 12.0.0
 	},
 
 	BlockSocial = {
@@ -185,15 +186,7 @@ AccWideUIAceAddon.CVars = {
 	AssistedCombat = {
 		"assistedCombatHighlight"
 	},
-	
-	EncounterTimeline = { -- 12.0.0
-		"encounterTimelineEnabled",
-		"encounterWarningsEnabled",
-		"encounterWarningsHideIfNotTargetingPlayer",
-		"encounterWarningsHideMediumWarnings",
-		"encounterWarningsHideMinorWarnings"
-	},
-	
+		
 	DamageMeter = { -- 12.0.0
 		"damageMeterEnabled"
 	},
