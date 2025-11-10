@@ -2,7 +2,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
 function AccWideUIAceAddon:GenerateDefaultDB()
 
-	local thisCheckboxWidth = 1.7
+	local thisCheckboxWidth = "half"
 
 	local defaults = {
 		global = {
@@ -17,7 +17,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			allowExperimentalSyncs = false
 		},
 		profile = {
-			profileSaveVer = 20000, -- swap to self.TempData.ProfileSaveVer
+			profileSaveVer = self.TempData.ProfileSaveVer,
 			lastSaved = {
 				character = "Unknown",
 				unixTime = GetServerTime()
@@ -73,7 +73,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				},
 				blockChannelInvites = {
 					cvars = {},
-				}
+				},
 				blockTrades = {
 					cvars = {}
 				},
@@ -796,7 +796,7 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	-- Remove Sync options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMidnight() == true) then
-		self.optionsData.args.settings.args.nameplates = nil
+		self.optionsData.args.settings.args.syncToggles.args.nameplates = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMidnight() ~= true) then

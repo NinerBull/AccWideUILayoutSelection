@@ -260,6 +260,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end
 			
+			
 			-- Save Self Cast Settings
 			if (self.db.profile.syncToggles.selfCast == true) then
 			
@@ -267,7 +268,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self:Print("[Self Cast] Saving Settings.")
 				end
 			
-				for k, v in pairs(self.CVars.selfCast) do
+				for k, v in pairs(self.CVars.SelfCast) do
 					self.db.profile.syncData.selfCast.cvars[v] = GetCVar(v) or nil
 				end
 			
@@ -626,7 +627,7 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 		
 			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Debug] Saving Chosen Edit Mode Layout (ID: " .. thisEditModeLayoutID .. ").")
+				self:Print("[Debug] Saving Chosen Edit Mode Layout (ID: " .. currentActiveLayout .. ").")
 			end
 
 			if (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then

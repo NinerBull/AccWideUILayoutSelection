@@ -110,7 +110,7 @@ AccWideUIAceAddon.CVars = {
 		"pvpFramesDisplayPowerBars",
 		"pvpFramesDisplayClassColor",
 		"pvpFramesDisplayOnlyHealerPowerBars",
-		"spellDiminishPVPEnemiesEnabled" -- 12.0.0
+		"spellDiminishPVPEnemiesEnabled"
 	},
 	
 	BlockChannelInvites = {

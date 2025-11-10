@@ -172,7 +172,7 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
 	
 	
-	if (self.db.profile.profileSaveVer < 20100) then -- Upgrade 2.1.0
+	do --if (self.db.profile.profileSaveVer < self.TempData.ProfileSaveVer)
 
 		if (self.db.profile.syncData.mouseoverCast.cvars and self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast) then
 			self.db.profile.syncData.selfCast.cvars.autoSelfCast = self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast
@@ -182,25 +182,33 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		end
 		
 		
-		if (self.db.profile.syncData.blockSocial.cvars) then
+		if (self.db.profile.syncData.blockSocial) then
+		
+			if (self.db.profile.syncData.blockSocial.cvars) then
 			
-			if (self.db.profile.syncData.blockSocial.cvars.blockChannelInvites) then
-				self.db.profile.syncData.blockChannelInvites.cvars.blockChannelInvites = self.db.profile.syncData.blockSocial.cvars.blockChannelInvites
-			end
+				if (self.db.profile.syncData.blockSocial.cvars.blockChannelInvites) then
+					self.db.profile.syncData.blockChannelInvites.cvars.blockChannelInvites = self.db.profile.syncData.blockSocial.cvars.blockChannelInvites
+				end
+				
+				if (self.db.profile.syncData.blockSocial.cvars.blockTrades) then
+					self.db.profile.syncData.blockTrades.cvars.blockTrades = self.db.profile.syncData.blockSocial.cvars.blockTrades
+				end
+				
+				if (self.db.profile.syncData.blockSocial.special.blockGuildInvites) then
+					self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = self.db.profile.syncData.blockSocial.special.blockGuildInvites or false
+				end
 			
-			if (self.db.profile.syncData.blockSocial.cvars.blockTrades) then
-				self.db.profile.syncData.blockTrades.cvars.blockTrades = self.db.profile.syncData.blockSocial.cvars.blockTrades
-			end
-			
-			if (self.db.profile.syncData.blockSocial.special.blockGuildInvites) then
-				self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = self.db.profile.syncData.blockSocial.special.blockGuildInvites or false
 			end
 		
 			self.db.profile.syncData.blockSocial = nil
 			
-			self.db.profile.syncToggles.blockChannelInvites = self.db.profile.syncToggles.blockSocial or false
-			self.db.profile.syncToggles.blockGuildInvites = self.db.profile.syncToggles.blockSocial or false
-			self.db.profile.syncToggles.blockTrades = self.db.profile.syncToggles.blockSocial or false
+		end
+		
+		
+		if (type(self.db.profile.syncToggles.blockSocial) == "boolean") then
+			self.db.profile.syncToggles.blockChannelInvites = self.db.profile.syncToggles.blockSocial
+			self.db.profile.syncToggles.blockGuildInvites = self.db.profile.syncToggles.blockSocial
+			self.db.profile.syncToggles.blockTrades = self.db.profile.syncToggles.blockSocial
 			self.db.profile.syncToggles.blockSocial = nil
 		end
 		
