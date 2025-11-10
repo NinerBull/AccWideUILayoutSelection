@@ -169,7 +169,19 @@ end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
-	--Always
+	--Upgrade from older v2 versions
+	
+	--2.1.0
+	if (self.db.profile.syncData.mouseoverCast.cvars and self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast) then
+		self.db.profile.syncData.selfCast.cvars.autoSelfCast = self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast
+		self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast = nil
+	end
+	
+	
+	
+	
+	
+	
 	
 	
 	-- Edit Mode Spec Settings

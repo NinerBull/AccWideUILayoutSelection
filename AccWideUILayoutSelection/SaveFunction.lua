@@ -235,15 +235,28 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 
 			
-			-- Save Mouseover/Self Cast Settings
+			-- Save Mouseover Cast Settings
 			if (self.db.profile.syncToggles.mouseoverCast == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Mouseover/Self Cast] Saving Settings.")
+					self:Print("[Mouseover Cast] Saving Settings.")
 				end
 			
 				for k, v in pairs(self.CVars.MouseoverCast) do
 					self.db.profile.syncData.mouseoverCast.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			-- Save Self Cast Settings
+			if (self.db.profile.syncToggles.selfCast == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Self Cast] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.selfCast) do
+					self.db.profile.syncData.selfCast.cvars[v] = GetCVar(v) or nil
 				end
 			
 			end

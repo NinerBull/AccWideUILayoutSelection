@@ -427,15 +427,28 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 			
 			
-			-- Mouseover/Self Cast Variables
+			-- Mouseover Cast Variables
 			if (self.db.profile.syncToggles.mouseoverCast == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Mouseover/Self Cast] Loading Settings.")
+					self:Print("[Mouseover Cast] Loading Settings.")
 				end
 			
 				for k, v in pairs(self.CVars.MouseoverCast) do
 					SetCVar(v, self.db.profile.syncData.mouseoverCast.cvars[v])
+				end
+			
+			end 
+			
+			-- Self Cast Variables
+			if (self.db.profile.syncToggles.selfCast == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Self Cast] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.SelfCast) do
+					SetCVar(v, self.db.profile.syncData.selfCast.cvars[v])
 				end
 			
 			end 

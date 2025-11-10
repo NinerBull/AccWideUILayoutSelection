@@ -175,7 +175,10 @@ AccWideUIAceAddon.CVars = {
 	},
 
 	MouseoverCast = {
-		"enableMouseoverCast",
+		"enableMouseoverCast"
+	},
+	
+	SelfCast = {
 		"autoSelfCast"
 	},
 
@@ -187,7 +190,7 @@ AccWideUIAceAddon.CVars = {
 		"assistedCombatHighlight"
 	},
 		
-	DamageMeter = { -- 12.0.0
+	DamageMeter = {
 		"damageMeterEnabled"
 	},
 
