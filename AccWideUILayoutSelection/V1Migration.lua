@@ -82,6 +82,10 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncData.lossOfControl.cvars = AccWideUI_AccountData.LossOfControl or {}
 		self.db.profile.syncData.cooldownViewer.cvars = AccWideUI_AccountData.CooldownViewer or {}
 		
+		if (AccWideUI_AccountData.BlockSocial) then
+			self.db.profile.syncData.blockSocial.cvars
+		end
+		
 		if (AccWideUI_AccountData.SpecialVariables) then
 			self.db.profile.syncData.blockSocial.special.blockGuildInvites = (AccWideUI_AccountData.SpecialVariables.BlockGuildInvites == true and true or false)
 		end

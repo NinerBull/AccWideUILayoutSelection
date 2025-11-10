@@ -7,7 +7,8 @@ local ACD = LibStub("AceConfigDialog-3.0")
 AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi",
 	IsCurrentlyLoadingSettings = false,
-	LoadSettingsAfterCombat = false
+	LoadSettingsAfterCombat = false,
+	ProfileSaveVer = 20100
 }
 
 
@@ -169,17 +170,42 @@ end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
-	--Upgrade from older v2 versions
 	
-	--2.1.0
-	if (self.db.profile.syncData.mouseoverCast.cvars and self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast) then
-		self.db.profile.syncData.selfCast.cvars.autoSelfCast = self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast
-		self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast = nil
+	
+	if (self.db.profile.profileSaveVer < 20100) then -- Upgrade 2.1.0
+
+		if (self.db.profile.syncData.mouseoverCast.cvars and self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast) then
+			self.db.profile.syncData.selfCast.cvars.autoSelfCast = self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast
+			self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast = nil
+			
+			self.db.profile.syncToggles.selfCast = self.db.profile.syncToggles.mouseoverCast or false
+		end
+		
+		
+		if (self.db.profile.syncData.blockSocial.cvars) then
+			
+			if (self.db.profile.syncData.blockSocial.cvars.blockChannelInvites) then
+				self.db.profile.syncData.blockChannelInvites.cvars.blockChannelInvites = self.db.profile.syncData.blockSocial.cvars.blockChannelInvites
+			end
+			
+			if (self.db.profile.syncData.blockSocial.cvars.blockTrades) then
+				self.db.profile.syncData.blockTrades.cvars.blockTrades = self.db.profile.syncData.blockSocial.cvars.blockTrades
+			end
+			
+			if (self.db.profile.syncData.blockSocial.special.blockGuildInvites) then
+				self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = self.db.profile.syncData.blockSocial.special.blockGuildInvites or false
+			end
+		
+			self.db.profile.syncData.blockSocial = nil
+			
+			self.db.profile.syncToggles.blockChannelInvites = self.db.profile.syncToggles.blockSocial or false
+			self.db.profile.syncToggles.blockGuildInvites = self.db.profile.syncToggles.blockSocial or false
+			self.db.profile.syncToggles.blockTrades = self.db.profile.syncToggles.blockSocial or false
+			self.db.profile.syncToggles.blockSocial = nil
+		end
+		
+		
 	end
-	
-	
-	
-	
 	
 	
 	
@@ -208,10 +234,12 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		end
 	
 		--Block Guild Invites
-		self.db.profile.syncData.blockSocial.blockGuildInvites = self.db.profile.syncData.blockSocial.blockGuildInvites or GetAutoDeclineGuildInvites()
+		if (not self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites) then
+			self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = GetAutoDeclineGuildInvites()
+		end
 		
 		
-		if (AccWideUIAceAddon:IsMainline()) then
+		if (AccWideUIAceAddon:IsMainline() == true) then
 		
 			self:ScheduleTimer(function() 
 				--Bag Organisation
@@ -275,6 +303,9 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	
 		self:CancelAllTimers()
 	end
+	
+	--Update Profile Save Ver
+	self.db.profile.profileSaveVer = self.TempData.ProfileSaveVer
 	
 end
 
@@ -572,7 +603,7 @@ end
 
 function AccWideUIAceAddon:DISABLE_DECLINE_GUILD_INVITE(event, arg1, arg2)
 	if (self.db.global.hasDoneFirstTimeSetup == true) then
-		self.db.profile.syncData.blockSocial.special.blockGuildInvites = false
+		self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = false
 	end
 end
 
@@ -580,7 +611,7 @@ end
 
 function AccWideUIAceAddon:ENABLE_DECLINE_GUILD_INVITE(event, arg1, arg2)
 	if (self.db.global.hasDoneFirstTimeSetup == true) then
-		self.db.profile.syncData.blockSocial.special.blockGuildInvites = true
+		self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = true
 	end
 end
 
@@ -597,7 +628,7 @@ end
 
 
 function AccWideUIAceAddon:BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
-	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false and self:IsMainline() == true) then
 		if (self.db.global.allowExperimentalSyncs == true) then
 			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
 				self:SaveBagFlagSettings()
@@ -609,7 +640,7 @@ end
 
 
 function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
-	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false and self:IsMainline() == true) then
 		if (self.db.global.allowExperimentalSyncs == true) then
 			if (self.db.profile.syncToggles.bagOrganisation == true and self.TempData.IsCurrentlyLoadingSettings == false) then
 				self:SaveBagFlagSettings()
@@ -619,7 +650,7 @@ function AccWideUIAceAddon:BANK_BAG_SLOT_FLAGS_UPDATED(event, arg1, arg2)
 end
 
 function AccWideUIAceAddon:LET_RECENT_ALLIES_SEE_LOCATION_SETTING_UPDATED(event, arg1, arg2)
-	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false) then
+	if (self.db.global.hasDoneFirstTimeSetup == true and self.db.global.disableAutoSaveLoad == false and self:IsMainline() == true) then
 		if (self.db.profile.syncToggles.locationVisibility == true) then
 			self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation = GetAllowRecentAlliesSeeLocation()
 			if (self.db.global.printDebugTextToChat == true) then

@@ -112,9 +112,12 @@ AccWideUIAceAddon.CVars = {
 		"pvpFramesDisplayOnlyHealerPowerBars",
 		"spellDiminishPVPEnemiesEnabled" -- 12.0.0
 	},
+	
+	BlockChannelInvites = {
+		"blockChannelInvites"
+	},
 
-	BlockSocial = {
-		"blockChannelInvites",
+	BlockTrades = {
 		"blockTrades"
 	},
 

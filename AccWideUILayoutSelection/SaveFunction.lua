@@ -126,20 +126,32 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
-			-- Save Social Variables
-			if (self.db.profile.syncToggles.blockSocial == true) then
+			-- Save Block Channel Invite Variables
+			if (self.db.profile.syncToggles.blockChannelInvites == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Social] Saving Settings.")
+					self:Print("[Block Channel Invites] Saving Settings.")
 				end
 			
-				for k, v in pairs(self.CVars.BlockSocial) do
-					self.db.profile.syncData.blockSocial.cvars[v] = GetCVar(v) or nil
+				for k, v in pairs(self.CVars.BlockChannelInvites) do
+					self.db.profile.syncData.blockChannelInvites.cvars[v] = GetCVar(v) or nil
 				end
 				
 			end
 			
-
+			-- Save Block Trade Variables
+			if (self.db.profile.syncToggles.blockTrades == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Block Trade Invites] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.BlockTrades) do
+					self.db.profile.syncData.blockTrades.cvars[v] = GetCVar(v) or nil
+				end
+				
+			end
+			
 			-- Save Auto Loot Variables
 			if (self.db.profile.syncToggles.autoLoot == true) then
 			
@@ -665,7 +677,7 @@ function AccWideUIAceAddon:ForceSaveSettings()
 	self:Print(L["ACCWUI_DEBUG_TXT_FORCESAVE"]);
 	self:SaveUISettings(false, true); 
 	self:SaveBagFlagSettings(); 
-	self.db.profile.syncData.blockSocial.blockGuildInvites = GetAutoDeclineGuildInvites()
+	self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = GetAutoDeclineGuildInvites()
 	
 	if (AccWideUIAceAddon:IsMainline()) then
 		self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()

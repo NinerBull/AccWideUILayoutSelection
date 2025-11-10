@@ -210,25 +210,49 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			
 			
-			
-			
-			-- Block Social Variables
-			if (self.db.profile.syncToggles.blockSocial == true) then
+			-- Block Channel Invite Variables
+			if (self.db.profile.syncToggles.blockChannelInvites == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Social] Loading Settings.")
+					self:Print("[Block Channel Invites] Loading Settings.")
 				end
-			
-				for k, v in pairs(self.CVars.BlockSocial) do
-					if (self.db.profile.syncData.blockSocial.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.blockSocial.cvars[v])
+							
+				for k, v in pairs(self.CVars.BlockChannelInvites) do
+					if (self.db.profile.syncData.blockChannelInvites.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.blockChannelInvites.cvars[v])
 					end
 				end
 				
+			end
+			
+			
+			-- Block Trade Variables
+			if (self.db.profile.syncToggles.blockTrades == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Block Trade Invites] Loading Settings.")
+				end
+							
+				for k, v in pairs(self.CVars.BlockTrades) do
+					if (self.db.profile.syncData.blockTrades.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.blockTrades.cvars[v])
+					end
+				end
+				
+			end
+			
+	
+			
+			-- Block Guild Invite Variables
+			if (self.db.profile.syncToggles.blockGuildInvites == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Block Guild Invites] Loading Settings.")
+				end
 				
 				--Special
-				if (self.db.profile.syncData.blockSocial.special.blockGuildInvites ~= nil) then
-					SetAutoDeclineGuildInvites(self.db.profile.syncData.blockSocial.special.blockGuildInvites)
+				if (self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites ~= nil) then
+					SetAutoDeclineGuildInvites(self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites)
 				end
 			
 			end 

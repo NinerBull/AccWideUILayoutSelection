@@ -17,6 +17,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			allowExperimentalSyncs = false
 		},
 		profile = {
+			profileSaveVer = 20000, -- swap to self.TempData.ProfileSaveVer
 			lastSaved = {
 				character = "Unknown",
 				unixTime = GetServerTime()
@@ -27,7 +28,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				actionBars = true,
 				nameplates = true,
 				raidFrames = true,
-				blockSocial = true,
+				blockChannelInvites = true,
+				blockGuildInvites = true,
+				blockTrades = true,
 				locationVisibility = true,
 				autoLoot = true,
 				softTarget = true,
@@ -67,8 +70,13 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {},
 					profiles = {}
 				},
-				blockSocial = {
+				blockChannelInvites = {
 					cvars = {},
+				}
+				blockTrades = {
+					cvars = {}
+				},
+				blockGuildInvites = {
 					special = {
 						blockGuildInvites = nil
 					}
@@ -231,12 +239,26 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
 							},
-							blockSocial = {
+							blockChannelInvites = {
 								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_TRADEGUILD"],
+								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL"],
 								order = 60,
 								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_TRADEGUILD_DESC"],
+								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL_DESC"],
+							},
+							blockGuildInvites = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD"],
+								order = 61,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD_DESC"],
+							},
+							blockTrades = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE"],
+								order = 62,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE_DESC"],
 							},
 							chatWindow = {
 								type = "toggle",
