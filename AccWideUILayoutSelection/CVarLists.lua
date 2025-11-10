@@ -196,6 +196,41 @@ AccWideUIAceAddon.CVars = {
 	DamageMeter = {
 		"damageMeterEnabled"
 	},
+	
+	WorldMap = {
+		"mapFade",
+		"miniWorldMap",
+		"questLogOpen",
+		"questPOI",
+		"questPOILocalStory",
+		"questPOIWQ",
+		"scrollToLogQuest",
+		"showDelveEntrancesOnMap",
+		"showQuestObjectivesInLog",
+		"showQuestObjectivesOnMap",
+		"showDungeonEntrancesOnMap",
+		"showTamers",
+		"showTamersWQ",
+		"dragonRidingRacesFilter",
+		"dragonRidingRacesFilterWQ",
+		"worldQuestFilterAnima",
+		"worldQuestFilterArtifactPower",
+		"worldQuestFilterEquipment",
+		"worldQuestFilterGold",
+		"worldQuestFilterProfessionMaterials",
+		"worldQuestFilterReputation",
+		"worldQuestFilterResources",
+		"contentTrackingFilter"
+	},
+	
+	CalendarFilters = {
+		"calendarShowBattlegrounds",
+		"calendarShowDarkmoon",
+		"calendarShowHolidays",
+		"calendarShowLockouts",
+		"calendarShowResets",
+		"calendarShowWeeklyHolidays"
+	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	ChatTypes = {
