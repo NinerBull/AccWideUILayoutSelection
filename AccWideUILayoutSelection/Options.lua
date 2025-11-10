@@ -749,6 +749,10 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	
 	-- Remove Sync options that are not applicable to various versions
+	if (AccWideUIAceAddon:IsMidnight() == true) then
+		self.optionsData.args.settings.args.nameplates = nil
+	end
+	
 	if (AccWideUIAceAddon:IsMainline() == false) then
 		self.optionsData.args.settings.args.editModeSettings = nil	
 		self.optionsData.args.settings.args.headerDiv2 = nil
