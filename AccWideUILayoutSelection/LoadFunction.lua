@@ -643,7 +643,29 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			end
 			
-			-- NOT midnight settings
+			
+			--  Midnight only settings
+			if (self:IsMidnight() == true) then
+			
+				-- Use Damage Meter Setting
+				if (self.db.profile.syncToggles.damageMeter == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Damage Meter] Loading Settings.")
+					end
+					
+					for k, v in pairs(self.CVars.DamageMeter) do
+						if (self.db.profile.syncData.damageMeter.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.damageMeter.cvars[v])
+						end
+					end
+				
+				end
+			
+			end
+			
+			
+			-- NOT Midnight settings
 			if (self:IsMidnight() ~= true) then
 			
 				-- Use Nameplates 

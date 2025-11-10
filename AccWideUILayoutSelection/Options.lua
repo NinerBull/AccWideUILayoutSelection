@@ -45,6 +45,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				bagOrganisation = false,
 				arenaFrames = true,
 				spellOverlay = true,
+				damageMeter = true,
 				chatWindow = true,
 				chatWindowPosition = true,
 				chatChannels = true
@@ -115,6 +116,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				assistedCombat = {
+					cvars = {}
+				},
+				damageMeter = {
 					cvars = {}
 				},
 				chat = {
@@ -289,6 +293,13 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 100,
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN_DESC"],
+							},
+							damageMeter = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_DMGMETER"],
+								order = 101,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"],
 							},
 							editModeLayout = {
 								type = "toggle",
@@ -786,6 +797,10 @@ function AccWideUIAceAddon:GenerateOptions()
 	-- Remove Sync options that are not applicable to various versions
 	if (AccWideUIAceAddon:IsMidnight() == true) then
 		self.optionsData.args.settings.args.nameplates = nil
+	end
+	
+	if (AccWideUIAceAddon:IsMidnight() ~= true) then
+		self.optionsData.args.settings.args.syncToggles.args.damageMeter = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false) then

@@ -517,6 +517,25 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			--  Midnight only settings
+			if (self:IsMidnight() == true) then
+			
+				-- Save Damage Meter Setting
+				if (self.db.profile.syncToggles.damageMeter == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Damage Meter] Saving Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.DamageMeter) do
+						self.db.profile.syncData.damageMeter.cvars[v] = GetCVar(v) or nil
+					end
+				
+				end
+			
+			end
+			
+			
 			-- NOT Midnight only settings
 			if (self:IsMidnight() ~= true) then
 			
