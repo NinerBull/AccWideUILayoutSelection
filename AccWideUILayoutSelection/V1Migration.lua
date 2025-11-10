@@ -23,7 +23,9 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncToggles.actionBars = (AccWideUI_AccountData.accountWideActionBars == true and true or false)
 		self.db.profile.syncToggles.nameplates = (AccWideUI_AccountData.accountWideNameplates == true and true or false)
 		self.db.profile.syncToggles.raidFrames = (AccWideUI_AccountData.accountWideRaidFrames == true and true or false)
-		self.db.profile.syncToggles.blockSocial = (AccWideUI_AccountData.accountWideBlockSocialVariables == true and true or false)
+		self.db.profile.syncToggles.blockTrades = (AccWideUI_AccountData.accountWideBlockSocialVariables == true and true or false)
+		self.db.profile.syncToggles.blockChannelInvites = (AccWideUI_AccountData.accountWideBlockSocialVariables == true and true or false)
+		self.db.profile.syncToggles.blockGuildInvites = (AccWideUI_AccountData.accountWideBlockSocialVariables == true and true or false)
 		self.db.profile.syncToggles.autoLoot = (AccWideUI_AccountData.accountWideAutoLootVariables == true and true or false)
 		self.db.profile.syncToggles.softTarget = (AccWideUI_AccountData.accountWideSoftTargetVariables == true and true or false)
 		self.db.profile.syncToggles.tutorialTooltips = (AccWideUI_AccountData.accountWideTutorialTooltipVariables == true and true or false)
@@ -72,7 +74,6 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncData.arenaFrames.cvars = AccWideUI_AccountData.ArenaFrames or {}
 		self.db.profile.syncData.raidFrames.cvars = AccWideUI_AccountData.RaidFrames or {}
 		self.db.profile.syncData.raidFrames.profiles = AccWideUI_AccountData.RaidFrameProfiles or {}
-		self.db.profile.syncData.blockSocial.cvars = AccWideUI_AccountData.BlockSocial or {}
 		self.db.profile.syncData.spellOverlay.cvars = AccWideUI_AccountData.SpellOverlay or {}
 		self.db.profile.syncData.autoLoot.cvars = AccWideUI_AccountData.AutoLoot or {}
 		self.db.profile.syncData.softTarget.cvars = AccWideUI_AccountData.SoftTarget or {}
@@ -82,12 +83,18 @@ function AccWideUIAceAddon:MigrateFromV1(forceMigration)
 		self.db.profile.syncData.lossOfControl.cvars = AccWideUI_AccountData.LossOfControl or {}
 		self.db.profile.syncData.cooldownViewer.cvars = AccWideUI_AccountData.CooldownViewer or {}
 		
+		
 		if (AccWideUI_AccountData.BlockSocial) then
-			self.db.profile.syncData.blockSocial.cvars
+			if (AccWideUI_AccountData.BlockSocial.blockChannelInvites) then
+				self.db.profile.syncData.blockChannelInvites.cvars.blockChannelInvites = AccWideUI_AccountData.BlockSocial.blockChannelInvites
+			end
+			if (AccWideUI_AccountData.BlockSocial.blockTrades) then
+				self.db.profile.syncData.blockTrades.cvars.blockTrades = AccWideUI_AccountData.BlockSocial.blockTrades
+			end
 		end
 		
 		if (AccWideUI_AccountData.SpecialVariables) then
-			self.db.profile.syncData.blockSocial.special.blockGuildInvites = (AccWideUI_AccountData.SpecialVariables.BlockGuildInvites == true and true or false)
+			self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = (AccWideUI_AccountData.SpecialVariables.BlockGuildInvites == true and true or false)
 		end
 		
 		if (AccWideUIAceAddon:IsMainline() and AccWideUI_AccountData.BagOrganisation) then
