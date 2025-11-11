@@ -7,8 +7,7 @@ local ACD = LibStub("AceConfigDialog-3.0")
 AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi",
 	IsCurrentlyLoadingSettings = false,
-	LoadSettingsAfterCombat = false,
-	ProfileSaveVer = 20100
+	LoadSettingsAfterCombat = false
 }
 
 
@@ -169,55 +168,13 @@ function AccWideUIAceAddon:OnEnable()
 end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
-
 	
-	
-	do --if (self.db.profile.profileSaveVer < self.TempData.ProfileSaveVer)
-
-		if (self.db.profile.syncData.mouseoverCast.cvars and self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast) then
-			self.db.profile.syncData.selfCast.cvars.autoSelfCast = self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast
-			self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast = nil
-			
-			self.db.profile.syncToggles.selfCast = self.db.profile.syncToggles.mouseoverCast or false
-		end
-		
-		
-		if (self.db.profile.syncData.blockSocial) then
-		
-			if (self.db.profile.syncData.blockSocial.cvars) then
-			
-				if (self.db.profile.syncData.blockSocial.cvars.blockChannelInvites) then
-					self.db.profile.syncData.blockChannelInvites.cvars.blockChannelInvites = self.db.profile.syncData.blockSocial.cvars.blockChannelInvites
-				end
-				
-				if (self.db.profile.syncData.blockSocial.cvars.blockTrades) then
-					self.db.profile.syncData.blockTrades.cvars.blockTrades = self.db.profile.syncData.blockSocial.cvars.blockTrades
-				end
-				
-				if (self.db.profile.syncData.blockSocial.special) then
-					if (self.db.profile.syncData.blockSocial.special.blockGuildInvites) then
-						self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = self.db.profile.syncData.blockSocial.special.blockGuildInvites or false
-					end
-				end
-			
-			end
-		
-			self.db.profile.syncData.blockSocial = nil
-			
-		end
-		
-		
-		if (type(self.db.profile.syncToggles.blockSocial) == "boolean") then
-			self.db.profile.syncToggles.blockChannelInvites = self.db.profile.syncToggles.blockSocial
-			self.db.profile.syncToggles.blockGuildInvites = self.db.profile.syncToggles.blockSocial
-			self.db.profile.syncToggles.blockTrades = self.db.profile.syncToggles.blockSocial
-			self.db.profile.syncToggles.blockSocial = nil
-		end
-		
-		
+	do
+		-- Nil old variables
+		self.db.profile.syncToggles.blockSocial = nil
+		self.db.profile.syncData.blockSocial = nil
+		self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast = nil
 	end
-	
-	
 	
 	
 	-- Edit Mode Spec Settings
@@ -314,8 +271,6 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		self:CancelAllTimers()
 	end
 	
-	--Update Profile Save Ver
-	self.db.profile.profileSaveVer = self.TempData.ProfileSaveVer
 	
 end
 
