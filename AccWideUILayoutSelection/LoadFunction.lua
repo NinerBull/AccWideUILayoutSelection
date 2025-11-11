@@ -499,6 +499,22 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end 
 			
 			
+			-- Calendar Filter Variables
+			if (self.db.profile.syncToggles.calendarFilters == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Calendar Filters] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.CalendarFilters) do
+					if (self.db.profile.syncData.calendarFilters.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.calendarFilters.cvars[v])
+					end
+				end
+			
+			end 
+			
+			
 			-- Custom CVars
 			if (self.db.global.allowCustomCVars == true) then
 			

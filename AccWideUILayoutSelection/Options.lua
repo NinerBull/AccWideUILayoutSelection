@@ -45,6 +45,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				spellOverlay = true,
 				damageMeter = true,
 				worldMap = true,
+				calendarFilters = true,
 				chatWindow = true,
 				chatWindowPosition = true,
 				chatChannels = true
@@ -121,6 +122,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				worldMap = {
+					cvars = {}
+				},
+				calendarFilters = {
 					cvars = {}
 				},
 				chat = {
@@ -267,6 +271,13 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 62,
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE_DESC"],
+							},
+							calendarFilters = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_CALENDAR"],
+								order = 65,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"],
 							},
 							chatWindow = {
 								type = "toggle",

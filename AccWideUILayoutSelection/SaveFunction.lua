@@ -290,6 +290,21 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			
+			-- Save Calendar Filter Settings
+			if (self.db.profile.syncToggles.calendarFilters == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Calendar Filters] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.CalendarFilters) do
+					self.db.profile.syncData.calendarFilters.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
+			
 			-- Custom CVars
 			if (self.db.global.allowCustomCVars == true) then
 			
