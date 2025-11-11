@@ -194,8 +194,10 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 					self.db.profile.syncData.blockTrades.cvars.blockTrades = self.db.profile.syncData.blockSocial.cvars.blockTrades
 				end
 				
-				if (self.db.profile.syncData.blockSocial.special.blockGuildInvites) then
-					self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = self.db.profile.syncData.blockSocial.special.blockGuildInvites or false
+				if (self.db.profile.syncData.blockSocial.special) then
+					if (self.db.profile.syncData.blockSocial.special.blockGuildInvites) then
+						self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = self.db.profile.syncData.blockSocial.special.blockGuildInvites or false
+					end
 				end
 			
 			end
