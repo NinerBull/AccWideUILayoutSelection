@@ -1,1 +1,9 @@
-- Updated TOC for 11.2.7, 5.5.2 and 1.15.8
+- (Retail Only) Removed Nameplate Sync.
+  - The Character Specific CVars no longer exist on Retail, the replacement CVars and Settings are account wide.
+  - Classic Clients will continue to sync Nameplate settings as before.
+- (Retail Only) Added Damage Meter Visibilty Sync.
+- Added World Map Settings Sync.
+- Added Calendar Filter Settings Sync.
+- Split Block Trade/Guild/Channel Invite settings into their own toggles.
+- Split Mouseover Cast and Self Cast settings into their own toggles.
+- Updated TOC for 12.0.0
