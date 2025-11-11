@@ -79,6 +79,8 @@ L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"] = "Настройка видимости
 L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"] = "Если этот флажок установлен, настройка видимости местоположения будет синхронизирована.\n\nЭтот параметр определяет, могут ли недавние союзники видеть ваше местоположение, и его можно найти в настройках социальных сетей." -- Needs Update
 L["ACCWUI_OPT_MODULES_CHK_DMGMETER"] = "Настройка видимости счетчика повреждений" -- Needs Update
 L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"] = "Если этот флажок установлен, настройка видимости счетчика повреждений будет синхронизирована." -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_WORLDMAP"] = "Настройки карты мира" -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"] = "Если этот флажок установлен, будут синхронизированы различные настройки карты мира, такие как фильтры, видимые точки интереса и т. д." -- Needs Update
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Список пользовательских CVar" -- Needs Update
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Введите пользовательский список CVar, которые вы хотите синхронизировать с этим профилем.\n\nВведите точное имя CVar, по одному в каждой строке." -- Needs Update

@@ -2,8 +2,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
 function AccWideUIAceAddon:GenerateDefaultDB()
 
-	local thisCheckboxWidth = "half"
-
 	local defaults = {
 		global = {
 			disableAutoSaveLoad = false,
@@ -46,6 +44,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				arenaFrames = true,
 				spellOverlay = true,
 				damageMeter = true,
+				worldMap = true,
 				chatWindow = true,
 				chatWindowPosition = true,
 				chatChannels = true
@@ -121,6 +120,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				damageMeter = {
 					cvars = {}
 				},
+				worldMap = {
+					cvars = {}
+				},
 				chat = {
 					windows = {
 						['**'] = {}
@@ -180,6 +182,8 @@ end
 
 
 function AccWideUIAceAddon:GenerateOptions()
+
+	local thisCheckboxWidth = 1.7
 
 	AccWideUIAceAddon.optionsData = {
 		type = "group",
@@ -378,13 +382,20 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
 							},
+							worldMap = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP"],
+								order = 205,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"],
+							},		
 							battlefieldMap = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
 								order = 210,
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
-							},						
+							},			
 						},
 					},
 					headerDivExperimental = {

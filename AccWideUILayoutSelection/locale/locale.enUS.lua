@@ -79,6 +79,8 @@ L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"] = "Location Visibility Setting"
 L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"] = "When checked, the Location Visibility Setting will be synchronised.\n\nThis is the setting that controls whether Recent Allies can see your location or not, and can be found in the Social settings."
 L["ACCWUI_OPT_MODULES_CHK_DMGMETER"] = "Damage Meter Visibility Setting"
 L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"] = "When checked, the Damage Meter Visibility Setting will be synchronised."
+L["ACCWUI_OPT_MODULES_CHK_WORLDMAP"] = "World Map Settings"
+L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"] = "When checked, various World Map settings such as filters, visible POIs etc will be synchronised."
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Custom CVar List"
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Enter a custom list of CVars you'd like to synchonise with this profile.\n\nEnter an exact CVar Name, one per line."

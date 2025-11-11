@@ -275,6 +275,20 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Save World Map Settings
+			if (self.db.profile.syncToggles.worldMap == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[World Map] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.WorldMap) do
+					self.db.profile.syncData.worldMap.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
 			
 			-- Custom CVars
 			if (self.db.global.allowCustomCVars == true) then

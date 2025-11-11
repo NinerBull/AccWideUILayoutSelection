@@ -464,6 +464,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			end 
 			
+			
 			-- Self Cast Variables
 			if (self.db.profile.syncToggles.selfCast == true) then
 			
@@ -473,6 +474,20 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 				for k, v in pairs(self.CVars.SelfCast) do
 					SetCVar(v, self.db.profile.syncData.selfCast.cvars[v])
+				end
+			
+			end 
+			
+			
+			-- World Map Variables
+			if (self.db.profile.syncToggles.worldMap == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[World Map] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.WorldMap) do
+					SetCVar(v, self.db.profile.syncData.worldMap.cvars[v])
 				end
 			
 			end 
