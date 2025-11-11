@@ -459,7 +459,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 			
 				for k, v in pairs(self.CVars.MouseoverCast) do
-					SetCVar(v, self.db.profile.syncData.mouseoverCast.cvars[v])
+					if (self.db.profile.syncData.mouseoverCast.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.mouseoverCast.cvars[v])
+					end
 				end
 			
 			end 
@@ -473,7 +475,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 			
 				for k, v in pairs(self.CVars.SelfCast) do
-					SetCVar(v, self.db.profile.syncData.selfCast.cvars[v])
+					if (self.db.profile.syncData.selfCast.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.selfCast.cvars[v])
+					end
 				end
 			
 			end 
@@ -487,7 +491,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 			
 				for k, v in pairs(self.CVars.WorldMap) do
-					SetCVar(v, self.db.profile.syncData.worldMap.cvars[v])
+					if (self.db.profile.syncData.worldMap.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.worldMap.cvars[v])
+					end
 				end
 			
 			end 
@@ -502,7 +508,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 				for line in self.db.profile.syncData.customCVars.cvarList:gmatch("([^\n]*)\n?") do
 					line = line:gsub("[^%w]+", "")
-					if (line ~= "" and GetCVar(line) ~= nil) then
+					if (line ~= "" and GetCVar(line) ~= nil and self.db.profile.syncData.customCVars.cvarData[line] ~= nil) then
 						SetCVar(line, self.db.profile.syncData.customCVars.cvarData[line])
 					end
 				end
@@ -523,7 +529,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				
 					for k, v in pairs(self.CVars.EmpowerTap) do
-						SetCVar(v, self.db.profile.syncData.empowerTap.cvars[v])
+						if (self.db.profile.syncData.empowerTap.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.empowerTap.cvars[v])
+						end
 					end
 				
 				end 
@@ -536,7 +544,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				
 					for k, v in pairs(self.CVars.AssistedCombat) do
-						SetCVar(v, self.db.profile.syncData.assistedCombat.cvars[v])
+						if (self.db.profile.syncData.assistedCombat.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.assistedCombat.cvars[v])
+						end
 					end
 				
 				end 
