@@ -830,6 +830,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.headerDiv2 = nil
 		self.optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
 		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
+		self.optionsData.args.settings.args.syncToggles.args.mouseoverCast = nil
 		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
 		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
 		self.optionsData.args.settings.args.syncToggles.args.assistedCombat = nil

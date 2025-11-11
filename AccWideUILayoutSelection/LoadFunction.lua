@@ -445,27 +445,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 				
 			end
-			
-			
-			
-				
-			
-			
-			-- Mouseover Cast Variables
-			if (self.db.profile.syncToggles.mouseoverCast == true) then
-			
-				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Mouseover Cast] Loading Settings.")
-				end
-			
-				for k, v in pairs(self.CVars.MouseoverCast) do
-					if (self.db.profile.syncData.mouseoverCast.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.mouseoverCast.cvars[v])
-					end
-				end
-			
-			end 
-			
+						
 			
 			-- Self Cast Variables
 			if (self.db.profile.syncToggles.selfCast == true) then
@@ -536,6 +516,21 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			-- RETAIL Only settings
 			if (self:IsMainline() == true) then
+			
+				-- Mouseover Cast Variables
+				if (self.db.profile.syncToggles.mouseoverCast == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Mouseover Cast] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.MouseoverCast) do
+						if (self.db.profile.syncData.mouseoverCast.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.mouseoverCast.cvars[v])
+						end
+					end
+				
+				end 
 		
 				-- Empowered Tap/Hold Variables
 				if (self.db.profile.syncToggles.empowerTap == true) then

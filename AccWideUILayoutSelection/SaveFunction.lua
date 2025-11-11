@@ -245,22 +245,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end
 			
-
-			
-			-- Save Mouseover Cast Settings
-			if (self.db.profile.syncToggles.mouseoverCast == true) then
-			
-				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Mouseover Cast] Saving Settings.")
-				end
-			
-				for k, v in pairs(self.CVars.MouseoverCast) do
-					self.db.profile.syncData.mouseoverCast.cvars[v] = GetCVar(v) or nil
-				end
-			
-			end
-			
-			
 			-- Save Self Cast Settings
 			if (self.db.profile.syncToggles.selfCast == true) then
 			
@@ -289,7 +273,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
-			
 			-- Save Calendar Filter Settings
 			if (self.db.profile.syncToggles.calendarFilters == true) then
 			
@@ -302,7 +285,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 			
 			end
-			
 			
 			
 			-- Custom CVars
@@ -484,6 +466,20 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			-- RETAIL only variables
 			if (self:IsMainline() == true) then
+			
+				-- Save Mouseover Cast Settings
+				if (self.db.profile.syncToggles.mouseoverCast == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Mouseover Cast] Saving Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.MouseoverCast) do
+						self.db.profile.syncData.mouseoverCast.cvars[v] = GetCVar(v) or nil
+					end
+				
+				end
+			
 				-- Save Empowered Tap/Hold Settings
 				if (self.db.profile.syncToggles.empowerTap == true) then
 				
