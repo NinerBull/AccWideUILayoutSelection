@@ -19,11 +19,7 @@ function AccWideUIAceAddon:OnInitialize()
 		AccWideUIAceAddon:MigrateFromV1()
 	end
 	
-	-- Do this in future, to prevent bloat in the addon settings file with old data, once I'm 100% sure the migration works as it should
-	--[[
-		AccWideUI_AccountData = nil
-		AccWideUI_CharData = nil
-	]]
+	AccWideUI_AccountData = nil
 	
 end
 
@@ -179,15 +175,8 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	
 	-- Edit Mode Spec Settings
 	if (self.db.char.useEditModeLayout.hasBeenPrepared ~= true) then
-		if (AccWideUI_CharData ~= nil) then
-			for SpecX = 1, 5 do
-				self.db.char.useEditModeLayout["specialization" .. SpecX] = (AccWideUI_CharData["accWideSpec" .. SpecX] == true and true or false)
-			end
-			--AccWideUI_CharData = nil
-		else
-			for SpecX = 1, 5 do
-				self.db.char.useEditModeLayout["specialization" .. SpecX] = self.db.profile.syncToggles.editModeOnByDefault
-			end
+		for SpecX = 1, 5 do
+			self.db.char.useEditModeLayout["specialization" .. SpecX] = self.db.profile.syncToggles.editModeOnByDefault
 		end
 		self.db.char.useEditModeLayout.hasBeenPrepared = true
 	end

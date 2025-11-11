@@ -1,10 +1,8 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
-function AccWideUIAceAddon:MigrateFromV1(forceMigration)
+function AccWideUIAceAddon:MigrateFromV1()
 
-	forceMigration = forceMigration or false
-
-	if (AccWideUI_AccountData ~= nil and (AccWideUI_AccountData.HasDoneV1Migration ~= true or forceMigration == true)) then
+	if (AccWideUI_AccountData ~= nil and AccWideUI_AccountData.HasDoneV1Migration ~= true) then
 	
 		--Global
 		self.db.global.hasDoneFirstTimeSetup = (AccWideUI_AccountData.HasDoneFirstTimeSetup == true and true or false)
