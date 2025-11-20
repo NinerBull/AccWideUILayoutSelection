@@ -26,7 +26,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end
 			
 			
-			if self:IsMainline() then
+			if self:IsMainline() or self:IsClassicTBC() then
 				
 				self:LoadEditModeSettings()
 
@@ -53,7 +53,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 					self:ScheduleTimer(function() 
 				
-						if self:IsMainline() then
+						if self:IsMainline() or self:IsClassicTBC() then
 							
 							SetActionBarToggles(self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5, self.db.profile.syncData.actionBars.visible.Bar6, self.db.profile.syncData.actionBars.visible.Bar7, self.db.profile.syncData.actionBars.visible.Bar8)
 						
@@ -91,7 +91,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				end
 			
-				if (self:IsMainline() == false) then
+				if (self:IsMainline() == false and self:IsClassicTBC() ~= true) then
 				
 					--How many Raid Profiles?
 					
@@ -195,6 +195,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							self:Print("[Raid Frames] No Raid Profiles found, resetting.")
 						end
 						CompactUnitFrameProfiles_ResetToDefaults()
+						
 					end
 					
 					--Fallback in case none of the profiles are set active for some reason.
@@ -257,8 +258,23 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			end 
 	
-	
-	
+			
+			
+			
+			-- Tutorial Variables
+			if (self.db.profile.syncToggles.tutorialTooltips == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Tutorial Tooltip] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.TutorialTooltip) do
+					if (self.db.profile.syncData.tutorialTooltips.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.tutorialTooltips.cvars[v])
+					end
+				end
+			end 
+			
 			-- Auto Loot Variables
 			if (self.db.profile.syncToggles.autoLoot == true) then
 			
@@ -290,24 +306,6 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 			
 			end 
-			
-			
-			
-			-- Tutorial Variables
-			if (self.db.profile.syncToggles.tutorialTooltips == true) then
-			
-				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Tutorial Tooltip] Loading Settings.")
-				end
-			
-				for k, v in pairs(self.CVars.TutorialTooltip) do
-					if (self.db.profile.syncData.tutorialTooltips.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.tutorialTooltips.cvars[v])
-					end
-				end
-			end 
-			
-			
 			
 			-- Battlefield Map Variables
 			if (self.db.profile.syncToggles.battlefieldMap == true) then
@@ -512,6 +510,26 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end 
 			
 			
+			-- RETAIL and TBC Only Settings
+			if (self:IsMainline() == true or self:IsClassicTBC() == true) then
+			
+				-- Loss of Control Variables
+				if (self.db.profile.syncToggles.lossOfControl == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Loss of Control] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.LossOfControl) do
+						if (self.db.profile.syncData.lossOfControl.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.lossOfControl.cvars[v])
+						end
+					end
+				
+				end
+
+			
+			end
 			
 			
 			-- RETAIL Only settings
@@ -562,23 +580,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 				end 
 				
-				-- Loss of Control Variables
-				if (self.db.profile.syncToggles.lossOfControl == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Loss of Control] Loading Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.LossOfControl) do
-						if (self.db.profile.syncData.lossOfControl.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.lossOfControl.cvars[v])
-						end
-					end
-				
-				end
-				
-				
-			
+
 				-- Cooldown Viewer Variables
 				if (self.db.profile.syncToggles.cooldownViewer == true) then
 				
@@ -674,10 +676,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 	
 			
-				
-			
-			
 			end
+			
+			
 			
 			
 			--  Midnight only settings
@@ -754,6 +755,28 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			-- NOT CLASSIC ERA Only settings
 			if (self:IsClassicEra() == false) then
+
+				-- Spell Overlay Variables
+				if (self.db.profile.syncToggles.spellOverlay == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Spell Overlay] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.SpellOverlay) do
+						if (self.db.profile.syncData.spellOverlay.cvars ~= nil) then
+							SetCVar(v, self.db.profile.syncData.spellOverlay.cvars[v])
+						end
+					end
+					
+				end
+				
+			end
+			
+			
+			
+			-- NOT Vanilla Only settings
+			if (self:IsClassicVanilla() == false) then
 			
 				-- Use Arena Frames
 				if (self.db.profile.syncToggles.arenaFrames == true) then
@@ -769,22 +792,6 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				
 				end 
-				
-				
-				-- Spell Overlay Variables
-				if (self.db.profile.syncToggles.spellOverlay == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Spell Overlay] Loading Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.SpellOverlay) do
-						if (self.db.profile.syncData.spellOverlay.cvars ~= nil) then
-							SetCVar(v, self.db.profile.syncData.spellOverlay.cvars[v])
-						end
-					end
-					
-				end
 				
 			end
 		
@@ -1174,7 +1181,7 @@ end
 
 function AccWideUIAceAddon:LoadEditModeSettings()
 	
-	if (self:IsMainline() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
+	if ((self:IsMainline() or self:IsClassicTBC()) and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
 				
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())

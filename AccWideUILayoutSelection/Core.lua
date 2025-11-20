@@ -90,7 +90,7 @@ function AccWideUIAceAddon:OnEnable()
 	end)
 	
 	
-	if (self:IsMainline()) then
+	if (self:IsMainline() or self:IsClassicTBC()) then
 		self:SecureHook(C_EditMode, "OnEditModeExit", function()
 			if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
 				if (self.db.global.printDebugTextToChat == true) then
@@ -106,8 +106,10 @@ function AccWideUIAceAddon:OnEnable()
 				end
 			end
 		end)
-		
-		
+	end
+	
+	
+	if (self:IsMainline()) then	
 		self:SecureHook(C_Container, "SetSortBagsRightToLeft", function(thisResponse)
 			if (self.db.global.allowExperimentalSyncs == true and self.db.profile.syncToggles.bagOrganisation == true and self.db.global.disableAutoSaveLoad == false) then
 				self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = thisResponse

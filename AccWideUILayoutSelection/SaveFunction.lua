@@ -31,7 +31,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			self.db.profile.lastSaved.character = AccWideUIAceAddon.TempData.ThisCharacter
 			self.db.profile.lastSaved.unixTime = GetServerTime()
 			
-			if (self:IsMainline() and doNotSaveEditMode == false) then
+			if ((self:IsMainline() or self:IsClassicTBC()) and doNotSaveEditMode == false) then
 				self:SaveEditModeSettings()
 			end
 			
@@ -47,7 +47,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self.db.profile.syncData.actionBars.cvars[v] = GetCVar(v) or nil
 				end
 
-					if self:IsMainline() then
+					if self:IsMainline() or self:IsClassicTBC() then
 						self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5, self.db.profile.syncData.actionBars.visible.Bar6, self.db.profile.syncData.actionBars.visible.Bar7, self.db.profile.syncData.actionBars.visible.Bar8 = GetActionBarToggles()
 					else
 						self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5 = GetActionBarToggles()
@@ -68,7 +68,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
-				if (self:IsMainline() == false) then
+				if (self:IsMainline() == false and self:IsClassicTBC() ~= true) then
 				
 					--if (GetNumRaidProfiles() > 1) then
 					
@@ -164,21 +164,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 			
 			end
-			
-			
-			
-			-- Save Loss of Control Variables
-			if (self.db.profile.syncToggles.lossOfControl == true) then
-			
-				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Loss of Control] Saving Settings.")
-				end
-			
-				for k, v in pairs(self.CVars.LossOfControl) do
-					self.db.profile.syncData.lossOfControl.cvars[v] = GetCVar(v) or nil
-				end
-			
-			end 
 			
 			
 			
@@ -462,7 +447,24 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 
 			
+			-- RETAIL and TBC only variables
+			if (self:IsMainline() == true or self:IsClassicTBC()) then
 			
+				-- Save Loss of Control Variables
+				if (self.db.profile.syncToggles.lossOfControl == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Loss of Control] Saving Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.LossOfControl) do
+						self.db.profile.syncData.lossOfControl.cvars[v] = GetCVar(v) or nil
+					end
+				
+				end 
+				
+		
+			end
 			
 			-- RETAIL only variables
 			if (self:IsMainline() == true) then
@@ -615,8 +617,12 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 				end
 				
-
-
+				
+			end
+			
+			
+			-- NOT Vanilla only variables
+			if (self:IsClassicVanilla() == false) then
 				-- Save Arena Frames
 				if (self.db.profile.syncToggles.arenaFrames == true) then
 				
@@ -629,9 +635,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					end
 				
 				end
-				
 			end
-			
 			
 			
 			
@@ -643,7 +647,7 @@ end
 
 function AccWideUIAceAddon:SaveEditModeSettings()
 
-	if (self:IsMainline() and self.db.global.hasDoneFirstTimeSetup == true) then
+	if ((self:IsMainline() or self:IsClassicTBC()) and self.db.global.hasDoneFirstTimeSetup == true) then
 	
 		local getLayoutsTable = C_EditMode.GetLayouts()
 		local currentActiveLayout = getLayoutsTable["activeLayout"]
@@ -675,7 +679,7 @@ end
 
 function AccWideUIAceAddon:SaveBagFlagSettings()
 
-	if (self.db.global.allowExperimentalSyncs == true) then
+	if (self:IsMainline() and self.db.global.allowExperimentalSyncs == true) then
 		if (self.db.profile.syncToggles.bagOrganisation == true) then
 					
 			-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.

@@ -789,7 +789,7 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	
 	-- Edit Mode Specs
-	if (AccWideUIAceAddon:IsMainline()) then
+	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicEra() == true) then
 	
 		local NumOfSpecs = GetNumSpecializations(false, false)
 
@@ -829,10 +829,8 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.editModeSettings = nil	
 		self.optionsData.args.settings.args.headerDiv2 = nil
 		self.optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
-		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
 		self.optionsData.args.settings.args.syncToggles.args.mouseoverCast = nil
 		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
-		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
 		self.optionsData.args.settings.args.syncToggles.args.assistedCombat = nil
 		self.optionsData.args.settings.args.syncToggles.args.locationVisibility = nil
 		
@@ -840,8 +838,16 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
 	end
 	
-	if (AccWideUIAceAddon:IsClassicEra() == true) then
+	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicTBC() == false) then
+		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
+		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
+	end
+	
+	if (AccWideUIAceAddon:IsClassicVanilla() == true) then
 		self.optionsData.args.settings.args.syncToggles.args.arenaFrames = nil
+	end
+	
+	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicProgression() == true) then
 		self.optionsData.args.settings.args.syncToggles.args.spellOverlay = nil
 	end
 
