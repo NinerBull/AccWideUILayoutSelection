@@ -1,9 +1,14 @@
-- (Retail Only) Removed Nameplate Sync.
-  - The Character Specific CVars no longer exist on Retail, the replacement CVars and Settings are account wide.
-  - Classic Clients will continue to sync Nameplate settings as before.
-- (Retail Only) Added Damage Meter Visibilty Sync.
+- Preliminary Midnight Support:
+  - Removed Nameplate Sync.
+    - The Character Specific CVars no longer exist in Midnight, the replacement CVars and Settings are account wide.
+    - 11.2.7 and Classic Clients will continue to sync Nameplate settings as before.
+  - Added Damage Meter Visibilty Sync.
+- Preliminary TBC Anniversary Support:
+  - Added Edit Mode Sync when on a TBC Realm
+- Fixed 11.2.7 Compatibility.
+- Added Block Neighborhood Invites Sync.
 - Added World Map Settings Sync.
 - Added Calendar Filter Settings Sync.
 - Split Block Trade/Guild/Channel Invite settings into their own toggles.
 - Split Mouseover Cast and Self Cast settings into their own toggles.
-- Updated TOC for 12.0.0
+- Updated TOC for 12.0.0, 5.5.3 and 2.5.5

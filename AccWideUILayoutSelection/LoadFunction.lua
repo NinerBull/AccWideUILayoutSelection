@@ -534,6 +534,20 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			-- RETAIL Only settings
 			if (self:IsMainline() == true) then
+				
+				-- Block Neighborhood Invite
+				if (self.db.profile.syncToggles.blockNeighborhoodInvites == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Block Neighborhood Invites] Loading Settings.")
+					end
+					
+					--Special
+					if (self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites ~= nil) then
+						SetAutoDeclineNeighborhoodInvites(self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites)
+					end
+				
+				end 
 			
 				-- Mouseover Cast Variables
 				if (self.db.profile.syncToggles.mouseoverCast == true) then
@@ -1075,8 +1089,12 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									if (self.db.global.printDebugTextToChat == true) then
 										self:Print("[Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
 									end
-									
-									ChatFrame_RemoveChannel(thisChatFrameVar, chn) -- 12.0.0 ChatFrameMixin.RemoveChannel
+																		
+									if (ChatFrame_RemoveChannel) then
+										ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+									else
+										ChatFrameMixin.RemoveChannel(thisChatFrameVar, v) -- 12.0.0
+									end
 								end
 							
 								for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) do
@@ -1084,8 +1102,12 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									if (self.db.global.printDebugTextToChat == true) then
 										self:Print("[Chat Window] Adding " .. v .. " To Window " .. thisChatFrame .. ".")
 									end
-									
-									ChatFrame_AddChannel(thisChatFrameVar, v) -- 12.0.0 ChatFrameMixin.AddChannel
+																		
+									if (ChatFrame_AddChannel) then
+										ChatFrame_AddChannel(thisChatFrameVar, v)
+									else
+										ChatFrameMixin.AddChannel(thisChatFrameVar, v) -- 12.0.0
+									end
 									
 								end
 							end
@@ -1109,10 +1131,24 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									end
 								
 									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) == "table") then
-										ChatFrame_RemoveAllMessageGroups(thisChatFrameVar) -- 12.0.0 ChatFrameMixin.RemoveAllMessageGroups
+										
+										if (ChatFrame_RemoveAllMessageGroups) then
+											ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
+										else
+											ChatFrameMixin.RemoveAllMessageGroups(thisChatFrameVar) -- 12.0.0
+										end
+									
+										
 										
 										for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) do
-											 ChatFrame_AddMessageGroup(thisChatFrameVar, v) -- 12.0.0 ChatFrameMixin.AddMessageGroup
+											
+											if (ChatFrame_AddMessageGroup) then
+												ChatFrame_AddMessageGroup(thisChatFrameVar, v)
+											else
+												ChatFrameMixin.AddMessageGroup(thisChatFrameVar, v) -- 12.0.0 
+											end
+										
+											 
 											 if (self.db.global.printDebugTextToChat == true) then
 												self:Print("[Chat Window] Adding " .. v .. " to Window " .. thisChatFrame .. ".")
 											 end

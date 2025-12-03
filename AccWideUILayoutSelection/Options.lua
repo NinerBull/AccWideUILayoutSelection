@@ -29,6 +29,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				blockChannelInvites = true,
 				blockGuildInvites = true,
 				blockTrades = true,
+				blockNeighborhoodInvites = true,
 				locationVisibility = true,
 				autoLoot = true,
 				softTarget = true,
@@ -80,6 +81,11 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				blockGuildInvites = {
 					special = {
 						blockGuildInvites = nil
+					}
+				},
+				blockNeighborhoodInvites = {
+					special = {
+						blockNeighborhoodInvites = nil
 					}
 				},
 				locationVisibility = {
@@ -264,6 +270,13 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 61,
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD_DESC"],
+							},
+							blockNeighborhoodInvites = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD"],
+								order = 62,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD_DESC"],
 							},
 							blockTrades = {
 								type = "toggle",
@@ -833,6 +846,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
 		self.optionsData.args.settings.args.syncToggles.args.assistedCombat = nil
 		self.optionsData.args.settings.args.syncToggles.args.locationVisibility = nil
+		self.optionsData.args.settings.args.syncToggles.args.blockNeighborhoodInvites = nil
 		
 		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil

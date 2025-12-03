@@ -468,6 +468,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			-- RETAIL only variables
 			if (self:IsMainline() == true) then
+
 			
 				-- Save Mouseover Cast Settings
 				if (self.db.profile.syncToggles.mouseoverCast == true) then
@@ -729,6 +730,8 @@ function AccWideUIAceAddon:ForceSaveSettings()
 	self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = GetAutoDeclineGuildInvites()
 	
 	if (AccWideUIAceAddon:IsMainline()) then
+		self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites = GetAutoDeclineNeighborhoodInvites()
+	
 		self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
 		self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = C_Container.GetInsertItemsLeftToRight()
 		self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled = C_Container.GetBackpackAutosortDisabled()
