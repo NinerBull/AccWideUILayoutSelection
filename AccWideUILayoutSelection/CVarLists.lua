@@ -234,6 +234,41 @@ AccWideUIAceAddon.CVars = {
 		"calendarShowResets",
 		"calendarShowWeeklyHolidays"
 	},
+	
+	Camera = {
+		"cameraSavedDistance",
+		"cameraSavedPetBattleDistance",
+		"cameraSavedPitch",
+		"cameraSavedVehicleDistance",
+		"cameraDistanceFixedValue",
+		"cameraBobbing"
+	},
+	
+	CombatMisc = {
+		"assistAttack",
+		"autoRangedCombat",
+		"stopAutoAttackOnTargetChange",
+		"TargetAutoEnemy",
+		"TargetAutoFriend",
+		"TargetAutoLock",
+		"TargetEnemyAttacker"
+	},
+	
+	UIMisc = {
+		"characterFrameCollapsed",
+		"equipmentManager",
+		"AutoPushSpellToActionBar",
+		"friendsSmallView",
+		"friendsViewButtons",
+		"guildNewsFilter",
+		"guildRewardsCategory",
+		"guildRewardsUsable",
+		"miniCommunitiesFrame",
+		"miniDressUpFrame",
+		"consolidateBuffs",
+		"previewTalentsOption",
+		"collapseExpandBuffs"
+	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
 	ChatTypes = {

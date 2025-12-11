@@ -493,6 +493,55 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end 
 			
 			
+			-- Camera Variables
+			if (self.db.profile.syncToggles.camera == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Camera] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.Camera) do
+					if (self.db.profile.syncData.camera.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.camera.cvars[v])
+					end
+				end
+			
+			end 
+			
+			
+			-- Misc. Combat Variables
+			if (self.db.profile.syncToggles.combatMisc == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Misc. Combat] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.CombatMisc) do
+					if (self.db.profile.syncData.combatMisc.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.combatMisc.cvars[v])
+					end
+				end
+			
+			end 
+			
+			
+			-- Misc. UI Variables
+			if (self.db.profile.syncToggles.combatMisc == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Misc. UI] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.UIMisc) do
+					if (self.db.profile.syncData.uiMisc.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.uiMisc.cvars[v])
+					end
+				end
+			
+			end 
+			
+			
+			
 			-- Custom CVars
 			if (self.db.global.allowCustomCVars == true) then
 			
