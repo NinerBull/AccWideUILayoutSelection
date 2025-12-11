@@ -47,6 +47,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				damageMeter = true,
 				worldMap = true,
 				calendarFilters = true,
+				camera = true,
+				combatMisc = true,
+				uiMisc = true,
 				chatWindow = true,
 				chatWindowPosition = true,
 				chatChannels = true
@@ -131,6 +134,15 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				calendarFilters = {
+					cvars = {}
+				},
+				camera = {
+					cvars = {}
+				},
+				combatMisc = {
+					cvars = {}
+				},
+				uiMisc = {
 					cvars = {}
 				},
 				chat = {
@@ -292,6 +304,13 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"],
 							},
+							camera = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_CAMERA"],
+								order = 68,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"],
+							},
 							chatWindow = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
@@ -419,7 +438,21 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 210,
 								width = thisCheckboxWidth,
 								desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
-							},			
+							},
+							combatMisc = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"],
+								order = 1000,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"],
+							},
+							uiMisc = {
+								type = "toggle",
+								name = L["ACCWUI_OPT_MODULES_CHK_UIMISC"],
+								order = 1100,
+								width = thisCheckboxWidth,
+								desc = L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"],
+							},								
 						},
 					},
 					headerDivExperimental = {

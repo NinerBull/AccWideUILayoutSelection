@@ -85,6 +85,12 @@ L["ACCWUI_OPT_MODULES_CHK_WORLDMAP"] = "Настройки карты мира" 
 L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"] = "Если этот флажок установлен, будут синхронизированы различные настройки карты мира, такие как фильтры, видимые точки интереса и т. д." -- Needs Update
 L["ACCWUI_OPT_MODULES_CHK_CALENDAR"] = "Настройки фильтра календаря" -- Needs Update
 L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"] = "Если этот флажок установлен, выбранные фильтры в игровом календаре будут синхронизированы." -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_CAMERA"] = "Настройки камеры" -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"] = "Если этот флажок установлен, будут синхронизированы несколько настроек камеры." -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"] = "Различные боевые настройки" -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"] = "Если этот флажок установлен, будут синхронизированы несколько боевых настроек, которые не подходят ни к одной другой категории." -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_UIMISC"] = "Различные настройки пользовательского интерфейса" -- Needs Update
+L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"] = "Если этот флажок установлен, будут синхронизированы несколько настроек пользовательского интерфейса, которые не подходят ни к одной другой категории." -- Needs Update
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Список пользовательских CVar" -- Needs Update
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Введите пользовательский список CVar, которые вы хотите синхронизировать с этим профилем.\n\nВведите точное имя CVar, по одному в каждой строке." -- Needs Update

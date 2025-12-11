@@ -272,6 +272,48 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Save Camera Settings
+			if (self.db.profile.syncToggles.camera == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Camera] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.Camera) do
+					self.db.profile.syncData.camera.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
+			-- Save Misc. Combat Settings
+			if (self.db.profile.syncToggles.combatMisc == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Misc. Combat] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.CombatMisc) do
+					self.db.profile.syncData.combatMisc.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
+			-- Save Misc. UI Settings
+			if (self.db.profile.syncToggles.uiMisc == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Misc. UI] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.UIMisc) do
+					self.db.profile.syncData.uiMisc.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
 			-- Custom CVars
 			if (self.db.global.allowCustomCVars == true) then
 			
