@@ -220,7 +220,10 @@ AccWideUIAceAddon.CVars = {
 		"worldQuestFilterProfessionMaterials",
 		"worldQuestFilterReputation",
 		"worldQuestFilterResources",
-		"contentTrackingFilter"
+		"contentTrackingFilter",
+		"questHelper",
+		"showBosses",
+		"worldMapOpacity"
 	},
 	
 	CalendarFilters = {
