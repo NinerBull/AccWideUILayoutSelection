@@ -8,6 +8,12 @@ L["ACCWUI_LOAD_LASTUPDATED"] = "Settings were last saved by %s on %s. (%s)"
 
 L["ACCWUI_OPT_TITLE_DESC"] = "Makes various Interface Settings synchronise across all of your characters and specs."
 L["ACCWUI_OPT_EDITMODE_TITLE"] = "Edit Mode Specific Settings"
+
+L["ACCWUI_OPT_GROUP_COMBAT"] = COMBAT_LABEL
+L["ACCWUI_OPT_GROUP_UNITS"] = "Unit Frames & Nameplates"
+L["ACCWUI_OPT_GROUP_SOCIAL"] = SOCIAL_LABEL
+L["ACCWUI_OPT_GROUP_INTERFACE"] = "HUD & Interface"
+
 L["ACCWUI_OPT_CHK_EDITMODE"] = "Enable Chosen Edit Mode by default for all New Characters"
 L["ACCWUI_OPT_CHK_EDITMODE_DESC"] = "When checked, any new characters you create will automatically use your synchronised Edit Mode Layout. Otherwise, you will need to manually enable it for each spec below."
 L["ACCWUI_OPT_BTN_EDITMODE"] = "Open Edit Mode"

@@ -205,7 +205,7 @@ end
 
 function AccWideUIAceAddon:GenerateOptions()
 
-	local thisCheckboxWidth = 1.7
+	local thisCheckboxWidth = 1.6
 
 	AccWideUIAceAddon.optionsData = {
 		type = "group",
@@ -231,8 +231,6 @@ function AccWideUIAceAddon:GenerateOptions()
 						name = L["ACCWUI_OPT_MODULES_TITLE"],
 						order = 2,
 						inline = true,
-						get = "GetSyncToggle",
-						set = "SetSyncToggle",
 						args = {
 							desc = {
 								type = "description",
@@ -241,218 +239,263 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = "full",
 								name = L["ACCWUI_OPT_MODULES_DESC"]
 							},
-							softTarget = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_TARGETING"],
-								order = 20,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_TARGETING_DESC"],
+							groupCombat = {
+								type = "group",
+								name = L["ACCWUI_OPT_GROUP_COMBAT"],
+								order = 11,
+								inline = true,
+								get = "GetSyncToggle",
+								set = "SetSyncToggle",
+								width = "full",
+								args = {
+									softTarget = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_TARGETING"],
+										order = 20,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_TARGETING_DESC"],
+									},
+									assistedCombat = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_ASSISTED"],
+										order = 30,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"],
+									},
+									autoLoot = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"],
+										order = 50,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
+									},
+									empowerTap = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED"],
+										order = 120,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED_DESC"],
+									},
+									lossOfControl = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_LOC"],
+										order = 140,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_LOC_DESC"],
+									},
+									mouseoverCast = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER"],
+										order = 150,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER_DESC"],
+									},
+									selfCast = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_SELFCAST"],
+										order = 151,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_SELFCAST_DESC"],
+									},
+									combatMisc = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"],
+										order = 1000,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"],
+									},
+								}
 							},
-							assistedCombat = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_ASSISTED"],
-								order = 30,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"],
+							groupUnits = {
+								type = "group",
+								name = L["ACCWUI_OPT_GROUP_UNITS"],
+								order = 12,
+								inline = true,
+								get = "GetSyncToggle",
+								set = "SetSyncToggle",
+								width = "full",
+								args = {
+									arenaFrames = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_ARENA"],
+										order = 40,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_ARENA_DESC"],
+									},
+									nameplates = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES"],
+										order = 160,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES_DESC"],
+									},
+									raidFrames = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID"],
+										order = 170,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
+									},
+									
+								}
 							},
-							arenaFrames = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_ARENA"],
-								order = 40,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_ARENA_DESC"],
+							groupSocial = {
+								type = "group",
+								name = L["ACCWUI_OPT_GROUP_SOCIAL"],
+								order = 14,
+								inline = true,
+								get = "GetSyncToggle",
+								set = "SetSyncToggle",
+								width = "full",
+								args = {
+									blockChannelInvites = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL"],
+										order = 60,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL_DESC"],
+									},
+									blockGuildInvites = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD"],
+										order = 61,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD_DESC"],
+									},
+									blockNeighborhoodInvites = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD"],
+										order = 62,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD_DESC"],
+									},
+									blockTrades = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE"],
+										order = 62,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE_DESC"],
+									},
+									chatWindow = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
+										order = 70,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW_DESC"],
+									},
+									chatWindowPosition = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION"],
+										order = 80,
+										width = thisCheckboxWidth,
+										disabled = "ShouldChatOptsDisable",
+										desc = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION_DESC"],
+									},
+									chatChannels = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS"],
+										order = 90,
+										width = thisCheckboxWidth,
+										disabled = "ShouldChatOptsDisable",
+										desc = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS_DESC"],
+									},
+									locationVisibility = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"],
+										order = 130,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"],
+									},
+								}
 							},
-							autoLoot = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"],
-								order = 50,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
-							},
-							blockChannelInvites = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL"],
-								order = 60,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL_DESC"],
-							},
-							blockGuildInvites = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD"],
-								order = 61,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD_DESC"],
-							},
-							blockNeighborhoodInvites = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD"],
-								order = 62,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD_DESC"],
-							},
-							blockTrades = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE"],
-								order = 62,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE_DESC"],
-							},
-							calendarFilters = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_CALENDAR"],
-								order = 65,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"],
-							},
-							camera = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_CAMERA"],
-								order = 68,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"],
-							},
-							chatWindow = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
-								order = 70,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW_DESC"],
-							},
-							chatWindowPosition = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION"],
-								order = 80,
-								width = thisCheckboxWidth,
-								disabled = "ShouldChatOptsDisable",
-								desc = L["ACCWUI_OPT_MODULES_CHK_CHATPOSITION_DESC"],
-							},
-							chatChannels = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS"],
-								order = 90,
-								width = thisCheckboxWidth,
-								disabled = "ShouldChatOptsDisable",
-								desc = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS_DESC"],
-							},
-							cooldownViewer = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN"],
-								order = 100,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN_DESC"],
-							},
-							damageMeter = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_DMGMETER"],
-								order = 101,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"],
-							},
-							editModeLayout = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_EDITMODE"],
-								order = 110,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_EDITMODE_DESC"],
-							},
-							empowerTap = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED"],
-								order = 120,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED_DESC"],
-							},
-							locationVisibility = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"],
-								order = 130,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"],
-							},
-							lossOfControl = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_LOC"],
-								order = 140,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_LOC_DESC"],
-							},
-							mouseoverCast = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER"],
-								order = 150,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER_DESC"],
-							},
-							selfCast = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_SELFCAST"],
-								order = 151,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_SELFCAST_DESC"],
-							},
-							nameplates = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES"],
-								order = 160,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES_DESC"],
-							},
-							raidFrames = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID"],
-								order = 170,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
-							},
-							spellOverlay = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY"],
-								order = 180,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY_DESC"],
-							},
-							tutorialTooltips = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP"],
-								order = 190,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"] ,
-							},
-							actionBars = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"],
-								order = 200,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
-							},
-							worldMap = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP"],
-								order = 205,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"],
-							},		
-							battlefieldMap = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
-								order = 210,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
-							},
-							combatMisc = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"],
-								order = 1000,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"],
-							},
-							uiMisc = {
-								type = "toggle",
-								name = L["ACCWUI_OPT_MODULES_CHK_UIMISC"],
-								order = 1100,
-								width = thisCheckboxWidth,
-								desc = L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"],
-							},								
+							groupInterface = {
+								type = "group",
+								name = L["ACCWUI_OPT_GROUP_INTERFACE"],
+								order = 13,
+								inline = true,
+								get = "GetSyncToggle",
+								set = "SetSyncToggle",
+								width = "full",
+								args = {
+									calendarFilters = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_CALENDAR"],
+										order = 65,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"],
+									},
+									camera = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_CAMERA"],
+										order = 68,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"],
+									},
+									cooldownViewer = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN"],
+										order = 100,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN_DESC"],
+									},
+									damageMeter = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_DMGMETER"],
+										order = 101,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"],
+									},
+									editModeLayout = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_EDITMODE"],
+										order = 110,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_EDITMODE_DESC"],
+									},
+									spellOverlay = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY"],
+										order = 180,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY_DESC"],
+									},
+									tutorialTooltips = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP"],
+										order = 190,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"] ,
+									},
+									actionBars = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS"],
+										order = 200,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
+									},
+									worldMap = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP"],
+										order = 205,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"],
+									},		
+									battlefieldMap = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
+										order = 210,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
+									},
+									uiMisc = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_UIMISC"],
+										order = 1100,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"],
+									},	
+								}
+							},							
 						},
 					},
 					headerDivExperimental = {
@@ -863,39 +906,39 @@ function AccWideUIAceAddon:GenerateOptions()
 	
 	
 	-- Remove Sync options that are not applicable to various versions
-	if (AccWideUIAceAddon:IsMidnight() == true) then
-		self.optionsData.args.settings.args.syncToggles.args.nameplates = nil
-	end
+	--[[if (AccWideUIAceAddon:IsMidnight() == true) then
+		self.optionsData.args.settings.args.syncToggles.args.groupUnits.args.nameplates = nil
+	end]]
 	
 	if (AccWideUIAceAddon:IsMidnight() ~= true) then
-		self.optionsData.args.settings.args.syncToggles.args.damageMeter = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.damageMeter = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false) then
 		self.optionsData.args.settings.args.editModeSettings = nil	
 		self.optionsData.args.settings.args.headerDiv2 = nil
-		self.optionsData.args.settings.args.syncToggles.args.cooldownViewer = nil
-		self.optionsData.args.settings.args.syncToggles.args.mouseoverCast = nil
-		self.optionsData.args.settings.args.syncToggles.args.empowerTap = nil
-		self.optionsData.args.settings.args.syncToggles.args.assistedCombat = nil
-		self.optionsData.args.settings.args.syncToggles.args.locationVisibility = nil
-		self.optionsData.args.settings.args.syncToggles.args.blockNeighborhoodInvites = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.cooldownViewer = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupCombat.mouseoverCast = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupCombat.empowerTap = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupCombat.assistedCombat = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.locationVisibility = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.blockNeighborhoodInvites = nil
 		
 		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicTBC() == false) then
-		self.optionsData.args.settings.args.syncToggles.args.lossOfControl = nil
-		self.optionsData.args.settings.args.syncToggles.args.editModeLayout = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.lossOfControl = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupInterface.editModeLayout = nil
 	end
 	
 	if (AccWideUIAceAddon:IsClassicVanilla() == true) then
-		self.optionsData.args.settings.args.syncToggles.args.arenaFrames = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupUnits.arenaFrames = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicProgression() == true) then
-		self.optionsData.args.settings.args.syncToggles.args.spellOverlay = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupInterface.spellOverlay = nil
 	end
 
 
