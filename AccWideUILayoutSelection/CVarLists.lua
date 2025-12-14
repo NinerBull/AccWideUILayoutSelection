@@ -69,8 +69,9 @@ AccWideUIAceAddon.CVars = {
 		"nameplateShowOnlyNames",
 		"nameplateNotSelectedAlpha",
 		"nameplateRemovalAnimation",
-		"nameplateCommentatorMaxDistance"
-		},
+		"nameplateCommentatorMaxDistance",
+		"nameplateShowCastBars"
+	},
 
 	RaidFrames = {
 		"raidFramesDisplayAggroHighlight",
@@ -98,7 +99,12 @@ AccWideUIAceAddon.CVars = {
 		"showDispelDebuffs",
 		"showCastableBuffs",
 		"threatWarning",
-		"noBuffDebuffFilterOnTarget"
+		"noBuffDebuffFilterOnTarget",
+		"raidFramesCenterBigDefensive",
+		"raidFramesDispelIndicatorOverlay",
+		"raidFramesDispelIndicatorType",
+		"raidFramesDisplayLargerRoleSpecificDebuffs",
+		"raidFramesHealthBarColor"
 	},
 
 	ArenaFrames = {
@@ -110,7 +116,8 @@ AccWideUIAceAddon.CVars = {
 		"pvpFramesDisplayPowerBars",
 		"pvpFramesDisplayClassColor",
 		"pvpFramesDisplayOnlyHealerPowerBars",
-		"spellDiminishPVPEnemiesEnabled"
+		"spellDiminishPVPEnemiesEnabled",
+		"spellDiminishPVPOnlyTriggerableByMe"
 	},
 	
 	BlockChannelInvites = {
@@ -267,7 +274,9 @@ AccWideUIAceAddon.CVars = {
 		"miniDressUpFrame",
 		"consolidateBuffs",
 		"previewTalentsOption",
-		"collapseExpandBuffs"
+		"collapseExpandBuffs",
+		"auctionSortByBuyoutPrice",
+		"auctionSortByUnitPrice"
 	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65
