@@ -227,6 +227,8 @@ AccWideUIAceAddon.CVars = {
 		"worldQuestFilterProfessionMaterials",
 		"worldQuestFilterReputation",
 		"worldQuestFilterResources",
+		"primaryProfessionsFilter",
+		"secondaryProfessionsFilter",
 		"contentTrackingFilter",
 		"questHelper",
 		"showBosses",
