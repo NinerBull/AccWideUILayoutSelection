@@ -5,6 +5,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 	local defaults = {
 		global = {
 			disableAutoSaveLoad = false,
+			disableAutoSave = false,
 			hasDoneFirstTimeSetup = false,
 			printDebugTextToChat = false,
 			printWhenLastSaved = false,
@@ -108,7 +109,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				tutorialTooltips = {
 					cvars = {}
 				},
-				battlefieldMap = { 
+				battlefieldMap = {
 					options = {},
 					cvars = {}
 				},
@@ -179,7 +180,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvarList = "",
 					cvarData = {},
 				}
-				
+
 			},
 			blizzChannels = {
 				['**'] = "default"
@@ -336,7 +337,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
 									},
-									
+
 								}
 							},
 							groupSocial = {
@@ -479,7 +480,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 205,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"],
-									},		
+									},
 									battlefieldMap = {
 										type = "toggle",
 										name = L["ACCWUI_OPT_MODULES_CHK_BTLMAP"],
@@ -493,9 +494,9 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 1100,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"],
-									},	
+									},
 								}
-							},							
+							},
 						},
 					},
 					headerDivExperimental = {
@@ -587,9 +588,9 @@ function AccWideUIAceAddon:GenerateOptions()
 						name = L["ACCWUI_OPT_MODULES_CVARS"],
 						desc = L["ACCWUI_OPT_MODULES_CVARS_DESC"]
 					},
-					
+
 				}
-				
+
 			},
 			channels = {
 				type = "group",
@@ -769,25 +770,32 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 4,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"],
 							},
+							disableAutoSave = {
+								type = "toggle",
+								name = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE"],
+								width = "full",
+								order = 5,
+								desc = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE_DESC"],
+							},
 							btnForceLoad = {
 								type = "execute",
 								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
 								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
-								order = 5,
-								func = function() 
-									self:ForceLoadSettings() 
+								order = 6,
+								func = function()
+									self:ForceLoadSettings()
 								end,
 							},
 							btnForceSave = {
 								type = "execute",
 								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
 								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
-								order = 6,
-								func = function() 
-									self:ForceSaveSettings() 
+								order = 7,
+								func = function()
+									self:ForceSaveSettings()
 								end,
 							},
-							
+
 						}
 					},
 					debug = {
@@ -824,7 +832,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 6,
 								desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
 							},
-							
+
 						}
 					},
 					utility = {
@@ -839,7 +847,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								desc = L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"],
 								width = 2,
 								order = 1,
-								func = function() 
+								func = function()
 									BattlefieldMapTab:ClearAllPoints()
 									BattlefieldMapTab:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 									--BattlefieldMapTab:Show()
@@ -849,7 +857,7 @@ function AccWideUIAceAddon:GenerateOptions()
 							},
 						}
 					},
-					
+
 					headerDiv1 = {
 						type = "header",
 						name = L["ACCWUI_ADDONNAME"],
@@ -869,23 +877,23 @@ function AccWideUIAceAddon:GenerateOptions()
 						width = "full",
 						name = L["ACCWUI_ISSUES"]
 					},
-					
-					
+
+
 				}
 			}
 		}
 	}
-	
-	
+
+
 	-- Edit Mode Specs
 	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicEra() == true) then
-	
+
 		local NumOfSpecs = GetNumSpecializations(false, false)
 
 		for ThisSpecX = 1, NumOfSpecs, 1 do
-			
+
 			local thisSpecName = PlayerUtil.GetSpecNameBySpecID(select(1, C_SpecializationInfo.GetSpecializationInfo(ThisSpecX)))
-		
+
 			self.optionsData.args.settings.args.editModeSettings.args["specialization" .. ThisSpecX] = {
 				type = "toggle",
 				name = thisSpecName,
@@ -896,26 +904,26 @@ function AccWideUIAceAddon:GenerateOptions()
 				desc = string.format(L["ACCWUI_CHARSPECIFIC_CHECK_DESC"], UnitNameUnmodified("player"), thisSpecName),
 			}
 		end
-	
+
 	else
 		self.optionsData.args.settings.args.editModeSettings = nil
 	end
-	
-	
-	
-	
-	
+
+
+
+
+
 	-- Remove Sync options that are not applicable to various versions
 	--[[if (AccWideUIAceAddon:IsMidnight() == true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupUnits.args.nameplates = nil
 	end]]
-	
+
 	if (AccWideUIAceAddon:IsMidnight() ~= true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.damageMeter = nil
 	end
-	
+
 	if (AccWideUIAceAddon:IsMainline() == false) then
-		self.optionsData.args.settings.args.editModeSettings = nil	
+		self.optionsData.args.settings.args.editModeSettings = nil
 		self.optionsData.args.settings.args.headerDiv2 = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.cooldownViewer = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.mouseoverCast = nil
@@ -923,20 +931,20 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.assistedCombat = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.locationVisibility = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.blockNeighborhoodInvites = nil
-		
+
 		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
 	end
-	
+
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicTBC() == false) then
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.lossOfControl = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.editModeLayout = nil
 	end
-	
+
 	if (AccWideUIAceAddon:IsClassicVanilla() == true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupUnits.arenaFrames = nil
 	end
-	
+
 	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicProgression() == true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.spellOverlay = nil
 	end
@@ -956,19 +964,19 @@ function AccWideUIAceAddon:GenerateOptions()
 	if (AccWideUIAceAddon:IsClassicEra() == false) then
 		self.optionsData.args.channels.args.hardcoreDeaths = nil
 	end
-	
+
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicEra() == false) then
 		self.optionsData.args.channels.args.services = nil
 	end
-	
-	
+
+
 	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
 		self.optionsData.args.channels = nil
 		self.optionsData.args.advanced.args.debug.args.printBlizzChatChanges = nil
 	end
-	
-	
+
+
 
 
 end
