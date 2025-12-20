@@ -2,7 +2,7 @@
 
 An addon for World of Warcraft - The War Within, MoP and Classic Era!
 
-![Info Img](https://cdn.wago.io/gallery/0mjDwbYoR0aa7ZYSzzVXY4G5VpLqiXgNX4DnWagJ.jpg)
+![Info Img](https://cdn.wago.io/gallery/qwgAzgKbGKKBYgipPOBzJrsKv5d2mJKUqxLYZKx7.jpg)
 
 ## About
 This QOL addon synchronizes various Blizzard Interface Settings that are **normally character specific** and applies them to **all** of your characters on your account automatically, including brand new characters.
@@ -52,9 +52,9 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * Custom CVar Support - Enter your own additional list of CVars to synchronise across characters, enable in Advanced Settings
 
 ## Compatibility
-* **The War Within** - 11.2.7
-* **MoP Classic** - 5.5.2
-* **Classic Era** - 1.15.8
+* **The War Within** - 12.0.0 & 11.2.7
+* **MoP Classic** - 5.5.3
+* **Classic Era** - 2.5.5
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
