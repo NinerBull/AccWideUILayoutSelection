@@ -1,6 +1,8 @@
 - Preliminary Midnight Support:
   - Re-added Nameplate Sync.
     - A few character specific Nameplate CVars now exist.
+  - Added several new Midnight settings to sync.
 - Preliminary TBC Anniversary Support:
   - Edit Mode Sync should now apply on all realm types.
+- Added syncing of various Camera, Combat and UI settings.
 - Grouped related sync toggle checkboxes together in the interface settings to reduce the wall-of-checkboxes effect.
