@@ -30,6 +30,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 	* Spell Overlay Settings
 	* Viewed Tutorial Tooltips
 	* Visible Action Bars
+    * World Map Settings
 	* Zone Map (Shift-M) Settings
 	* Misc. UI Settings
 * Social
