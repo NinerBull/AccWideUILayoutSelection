@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 local AC = LibStub("AceConfig-3.0")
 local ACD = LibStub("AceConfigDialog-3.0")
 
+
 --Temporary Data
 AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi",
