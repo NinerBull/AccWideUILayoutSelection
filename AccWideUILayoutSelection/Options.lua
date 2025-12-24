@@ -769,6 +769,12 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = "full",
 								order = 4,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"],
+								set = function(info, value)
+									self.db.global[info[#info]] = value
+									if (value == true) then
+										self.db.global.disableAutoSave = false
+									end
+								end,
 							},
 							disableAutoSave = {
 								type = "toggle",
@@ -776,6 +782,12 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = "full",
 								order = 5,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE_DESC"],
+								set = function(info, value)
+									self.db.global[info[#info]] = value
+									if (value == true) then
+										self.db.global.disableAutoSaveLoad = false
+									end
+								end,
 							},
 							btnForceLoad = {
 								type = "execute",
@@ -940,22 +952,11 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.lossOfControl = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.editModeLayout = nil
 	end
-<<<<<<< HEAD
 	
 	if (AccWideUIAceAddon:IsClassicEra() == true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupUnits.args.arenaFrames = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.spellOverlay = nil
-=======
-
-	if (AccWideUIAceAddon:IsClassicVanilla() == true) then
-		self.optionsData.args.settings.args.syncToggles.args.groupUnits.arenaFrames = nil
 	end
-
-	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicProgression() == true) then
-		self.optionsData.args.settings.args.syncToggles.args.groupInterface.spellOverlay = nil
->>>>>>> 75736cfdcf4e55b7ec415a40bb6d24849e46a8fa
-	end
-
 
 
 	-- Remove Chat options that are not applicable to various versions
