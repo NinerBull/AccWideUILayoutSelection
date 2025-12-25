@@ -1,2 +1,3 @@
 - Added "Disable Auto Save Only" function in Advanced Settings (Thanks [LiQiuDGG](https://github.com/NinerBull/AccWideUILayoutSelection/pull/21)!)
 - Added LibDataBroker Support, so you can now add a icon for AWI to Titan Panel, etc.
+- Added Minimap Button Support, hidden by default, can be enabled in Advanced Settings.
