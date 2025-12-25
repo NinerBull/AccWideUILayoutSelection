@@ -21,7 +21,7 @@ function AccWideUIAceAddon:OnInitialize()
 	end
 
 	AccWideUI_AccountData = nil
-
+	
 end
 
 function AccWideUIAceAddon:OnEnable()
@@ -169,6 +169,9 @@ function AccWideUIAceAddon:OnEnable()
 		end)
 
 	end
+	
+	-- Minimap Button
+	self.LDBIcon:Register("AWI", self.LDB, self.db.global.minimapButton)
 
 
 end

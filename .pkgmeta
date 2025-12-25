@@ -33,12 +33,14 @@ externals:
     url: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
   Libs/LibDataBroker-1.1: 
     url: https://github.com/tekkub/libdatabroker-1-1
+  Libs/LibDBIcon-1.0: 
+    url: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
 	
 ignore:
   - *.md
   - LICENSE
   - .pkgmeta
-  - /Libs/*/*.toc
+  - Libs/*/*.toc
   - Libs/*/README.*
   
 move-folders:

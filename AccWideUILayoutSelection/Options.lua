@@ -13,7 +13,10 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			printBlizzChatChanges = false,
 			useScreenSizeSpecificSettings = false,
 			allowCustomCVars = false,
-			allowExperimentalSyncs = false
+			allowExperimentalSyncs = false,
+			minimapButton = {
+				hide = true
+			}
 		},
 		profile = {
 			profileSaveVer = self.TempData.ProfileSaveVer,
@@ -206,7 +209,8 @@ end
 
 function AccWideUIAceAddon:GenerateOptions()
 
-	local thisCheckboxWidth = 1.6
+	local thisCheckboxWidth = 1.65
+	local thisCheckboxWidth2 = 1.75
 
 	AccWideUIAceAddon.optionsData = {
 		type = "group",
@@ -745,29 +749,54 @@ function AccWideUIAceAddon:GenerateOptions()
 							useScreenSizeSpecificSettings = {
 								type = "toggle",
 								name = L["ACCWUI_OPT_CHK_SCREENSIZE"],
-								width = "full",
+								width = thisCheckboxWidth,
 								order = 1,
 								desc = string.format(L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"], AccWideUIAceAddon.TempData.ScreenRes),
 							},
 							allowCustomCVars = {
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR"],
-								width = "full",
+								width = thisCheckboxWidth,
 								order = 2,
 								desc = L["ACCWUI_ADVANCED_ALLOW_CUSTOMCVAR_DESC"],
 							},
 							allowExperimentalSyncs = {
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_ALLOW_EXP"],
-								width = "full",
+								width = thisCheckboxWidth,
 								order = 3,
 								desc = L["ACCWUI_ADVANCED_ALLOW_EXP_DESC"],
+							},
+							hideMinimapButton = {
+								type = "toggle",
+								name = L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN"],
+								desc = L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN_DESC"],
+								width = thisCheckboxWidth,
+								order = 4,
+								get = function(info)
+									return self.db.global.minimapButton.hide
+								end,
+								set = function(info, value)
+									self.db.global.minimapButton.hide = value
+									if (value == true) then
+										AccWideUIAceAddon.LDBIcon:Hide("AWI")
+									else
+										AccWideUIAceAddon.LDBIcon:Show("AWI")
+									end
+									
+								end,
+							},
+							headerDiv1 = {
+								type = "header",
+								name = "",
+								order = 5,
+								width = "full",
 							},
 							disableAutoSaveLoad = {
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_DISABLE_AUTO"],
-								width = "full",
-								order = 4,
+								width = thisCheckboxWidth,
+								order = 6,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"],
 								set = function(info, value)
 									self.db.global[info[#info]] = value
@@ -779,8 +808,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							disableAutoSave = {
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE"],
-								width = "full",
-								order = 5,
+								width = thisCheckboxWidth,
+								order = 7,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE_DESC"],
 								set = function(info, value)
 									self.db.global[info[#info]] = value
@@ -793,7 +822,8 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "execute",
 								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
 								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
-								order = 6,
+								width = thisCheckboxWidth,
+								order = 8,
 								func = function()
 									self:ForceLoadSettings()
 								end,
@@ -802,12 +832,12 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "execute",
 								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
 								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
-								order = 7,
+								width = thisCheckboxWidth,
+								order = 9,
 								func = function()
 									self:ForceSaveSettings()
 								end,
 							},
-
 						}
 					},
 					debug = {

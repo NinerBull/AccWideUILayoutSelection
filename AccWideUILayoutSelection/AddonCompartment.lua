@@ -1,11 +1,11 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
+AccWideUIAceAddon.LDBIcon = LibStub:GetLibrary("LibDBIcon-1.0")
 
 -- LDB for Titan Panel
-local ldb = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(L["ACCWUI_ADDONNAME_SHORT"], {  
+AccWideUIAceAddon.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(L["ACCWUI_ADDONNAME_SHORT"], {  
 	type = "data source",  
 	text = L["ACCWUI_ADDONNAME_SHORT"],  
 	icon = "Interface\\Icons\\inv_glyph_primewarrior.blp",  
-	--tooltipTitle = L.ACCWUI_ADDONNAME,
 	OnClick = function() AccWideUI_CompartmentClick() end,
 	OnTooltipShow = function(tooltip)
 		if (AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup == true) then
@@ -19,6 +19,8 @@ local ldb = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(L["ACCWUI_ADDO
 		end
 	end
 });
+
+
 
 --Addon Compartment
 local AccWideUI_Tooltip

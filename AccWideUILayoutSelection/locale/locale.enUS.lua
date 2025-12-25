@@ -142,6 +142,8 @@ L["ACCWUI_ADVANCED_DISABLE_AUTO"] = "Disable Auto Saving / Loading Settings"
 L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"] = "Normally, the addon will automatically save and load your settings when logging in, changing profile, and logging out.\n\nWhen checked, you will need to manually save and load your settings using the buttons below."
 L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE"] = "Disable Auto Saving Only"
 L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE_DESC"] = "When checked, the addon will NOT automatically save your settings when logging out, changing profile, or exiting Edit Mode.\n\nAutomatic loading will still occur when logging in or changing profile.\n\nUse this if you want to load settings but prevent accidental overwrites."
+L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN"] = "Hide Minimap Button"
+L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN_DESC"] = "When checked, the addon will NOT add a minimap button for AWI to the Minimap."
 
 L["ACCWUI_DEBUG_TITLE"] = BINDING_HEADER_DEBUG
 
