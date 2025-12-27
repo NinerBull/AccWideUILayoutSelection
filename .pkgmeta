@@ -42,6 +42,8 @@ ignore:
   - .pkgmeta
   - Libs/*/*.toc
   - Libs/*/README.*
+  - Libs/LibStub/tests
+  - Libs/LibDBIcon-1.0/lib.xml
   
 move-folders:
   AccWideUILayoutSelection/AccWideUILayoutSelection: AccWideUILayoutSelection
