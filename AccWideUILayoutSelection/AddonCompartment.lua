@@ -5,7 +5,7 @@ AccWideUIAceAddon.LDBIcon = LibStub:GetLibrary("LibDBIcon-1.0")
 AccWideUIAceAddon.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(L["ACCWUI_ADDONNAME_SHORT"], {  
 	type = "data source",  
 	text = L["ACCWUI_ADDONNAME_SHORT"],  
-	icon = "Interface\\Icons\\inv_glyph_primewarrior.blp",  
+	icon = "interface\\icons\\inv_misc_punchcards_yellow.blp",  
 	OnClick = function() AccWideUI_CompartmentClick() end,
 	OnTooltipShow = function(tooltip)
 		if (AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup == true) then

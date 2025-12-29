@@ -25,7 +25,7 @@
 ## Category-zhCN: 用户界面
 ## Category-zhTW: 使用者介面
 
-## IconTexture: Interface\Icons\inv_glyph_primewarrior.blp
+## IconTexture: interface\icons\inv_misc_punchcards_yellow.blp
 ## AddonCompartmentFunc: AccWideUI_CompartmentClick
 ## AddonCompartmentFuncOnEnter: AccWideUI_CompartmentHover
 ## AddonCompartmentFuncOnLeave: AccWideUI_CompartmentLeave

@@ -968,7 +968,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.locationVisibility = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.blockNeighborhoodInvites = nil
 
-		self.optionsData.args.settings.args.experimentalSyncToggles.args.bagOrganisation = nil
+		self.optionsData.args.settings.args.syncToggles.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
 	end
 
