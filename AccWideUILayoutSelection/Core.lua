@@ -62,6 +62,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("CINEMATIC_STOP")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("CHAT_MSG_CHANNEL_NOTICE_USER")
 
 	if (AccWideUIAceAddon:IsMainline()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
@@ -313,7 +314,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 
-		if (self.db.global.hasDoneFirstTimeSetup == true) then
+		if (self.db.global.hasDoneFirstTimeSetup == true and not self.TempData.ThrottleJoinLeaveChannels) then
 
 
 
@@ -686,5 +687,15 @@ function AccWideUIAceAddon:PLAYER_REGEN_DISABLED(event, arg1, arg2)
 		if (self.db.global.printDebugTextToChat == true) then
 			self:Print(L["ACCWUI_WAIT_TILL_COMBAT"])
 		end
+	end
+end
+
+function AccWideUIAceAddon:CHAT_MSG_CHANNEL_NOTICE_USER(event, arg1, arg2)
+	if (select(1, arg1) == "INVALID_NAME") then
+		-- Throttle trying to join or leave channels for a few seconds
+		self.TempData.ThrottleJoinLeaveChannels = true
+		self:ScheduleTimer(function()
+			self.TempData.ThrottleJoinLeaveChannels = nil
+		end, 5)
 	end
 end

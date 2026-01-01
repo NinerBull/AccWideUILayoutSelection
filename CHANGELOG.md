@@ -1,3 +1,3 @@
-- Added "Disable Auto Save Only" function in Advanced Settings (Thanks [LiQiuDGG](https://github.com/NinerBull/AccWideUILayoutSelection/pull/21)!)
-- Added LibDataBroker Support, so you can now add a icon for AWI to Titan Panel, etc.
-- Added Minimap Button Support, hidden by default, can be enabled in Advanced Settings.
+- Potentially fix some overlapping checkboxes in the options for some users.
+- Changed Minimap/Addon list icon to a Punchcard, that works in Classic as well as Retail.
+- Added throttling to autojoining chat channels to prevent Invalid Channel error spam on Classic characters that hadn't reached a city yet.
