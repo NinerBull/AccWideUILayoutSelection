@@ -1,4 +1,4 @@
-## Interface: 120000, 110207, 50503, 30405, 20505, 11508
+## Interface: 120001, 120000, 110207, 38000, 50503, 30405, 20505
 ## Title: Account Wide Interface Settings
 ## Version: @project-version@
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi
@@ -7,6 +7,7 @@
 ## DefaultState: enabled
 ## OptionalDeps: BlockBlizzChatChannels, Ace3, MoveAny, EditModeExpanded
 
+## IconTexture: interface\icons\inv_misc_punchcards_yellow.blp
 ## X-Category: HUDs
 ## X-Website: https://github.com/NinerBull/AccWideUILayoutSelection
 ## X-Curse-Project-ID: 700820
@@ -24,11 +25,6 @@
 ## Category-ruRU: Интерфейс пользователя
 ## Category-zhCN: 用户界面
 ## Category-zhTW: 使用者介面
-
-## IconTexture: interface\icons\inv_misc_punchcards_yellow.blp
-## AddonCompartmentFunc: AccWideUI_CompartmentClick
-## AddonCompartmentFuncOnEnter: AccWideUI_CompartmentHover
-## AddonCompartmentFuncOnLeave: AccWideUI_CompartmentLeave
 
 embeds.xml
 
