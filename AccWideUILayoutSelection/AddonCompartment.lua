@@ -7,7 +7,13 @@ AccWideUIAceAddon.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(L[
 	type = "data source",  
 	text = L["ACCWUI_ADDONNAME_SHORT"],  
 	icon = C_AddOns.GetAddOnMetadata("AccWideUILayoutSelection", "IconTexture"), 
-	OnClick = function() AccWideUI_CompartmentClick() end,
+	OnClick = function() 
+		if (AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup == true) then
+			AccWideUIAceAddon:SlashCommand()
+		else
+			StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+		end
+	end,
 	OnTooltipShow = function(tooltip)
 		if (AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup == true) then
 			tooltip:SetText(L.ACCWUI_ADDONNAME)
