@@ -347,7 +347,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				end
 			end
 
-			if (self.db.profile.blizzChannels.trade == "join") then
+			if (self.db.profile.blizzChannels.trade == "join" and IsResting()) then
 				if (((GetChannelName(self.chatChannelNames.trade))) == 0) then
 					JoinChannelByName(self.chatChannelNames.trade)
 					if (ChatFrame_AddChannel) then
@@ -377,7 +377,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			end
 
 			if (self:IsMainline() or self:IsClassicEra()) then
-				if (self.db.profile.blizzChannels.services == "join") then
+				if (self.db.profile.blizzChannels.services == "join" and IsResting()) then
 					if (((GetChannelName(self.chatChannelNames.services))) == 0) then
 						JoinChannelByName(self.chatChannelNames.services)
 						if (ChatFrame_AddChannel) then
@@ -581,7 +581,9 @@ end
 
 
 function AccWideUIAceAddon:CHANNEL_UI_UPDATE(event, arg1, arg2)
-	self:BlizzChannelManager()
+	--self:ScheduleTimer(function()
+		self:BlizzChannelManager()
+	--end, 2)
 end
 
 function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)

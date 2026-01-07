@@ -253,6 +253,10 @@ AccWideUIAceAddon.CVars = {
 		"cameraBobbing"
 	},
 	
+	ExternalDefensives = {
+		"externalDefensivesEnabled"
+	},
+	
 	CombatMisc = {
 		"assistAttack",
 		"autoRangedCombat",

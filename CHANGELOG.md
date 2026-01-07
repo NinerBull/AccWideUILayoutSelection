@@ -1,3 +1,3 @@
 - Potentially fix some overlapping checkboxes in the options for some users.
 - Changed Minimap/Addon list icon to a Punchcard, that works in Classic as well as Retail.
-- Added throttling to autojoining chat channels to prevent Invalid Channel error spam on Classic characters that hadn't reached a city yet.
+- Added safeguards against "Invalid Channel" spam for users who opt-in to force-joining chat channels that are only available in Cities (e.g. Trade).
