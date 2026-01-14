@@ -376,7 +376,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				end
 			end
 
-			if (self:IsMainline() or self:IsClassicEra()) then
+			if (self:IsMainline() or self:IsClassicTBC() or self:IsClassicEra()) then
 				if (self.db.profile.blizzChannels.services == "join" and IsResting()) then
 					if (((GetChannelName(self.chatChannelNames.services))) == 0) then
 						JoinChannelByName(self.chatChannelNames.services)
@@ -409,7 +409,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			end
 
 
-			if (self:IsClassicEra() or self:IsClassicWrath()) then
+			if (self:IsClassicEra() or self:IsClassicTBC() or self:IsClassicWrath()) then
 				if (self.db.profile.blizzChannels.guildRecruitment == "join") then
 					if (((GetChannelName(self.chatChannelNames.guildRecruitment))) == 0) then
 						JoinChannelByName(self.chatChannelNames.guildRecruitment)
@@ -480,7 +480,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				end
 			end
 
-			if (self:IsMainline() or self:IsClassicEra()) then
+			if (self:IsMainline() or self:IsClassicTBC() or self:IsClassicEra()) then
 				if (self.db.profile.blizzChannels.services == "block") then
 					if (GetChannelName((GetChannelName(self.chatChannelNames.services))) > 0) then
 						LeaveChannelByName(self.chatChannelNames.services)
@@ -503,7 +503,7 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			end
 
 
-			if (self:IsClassicEra() or self:IsClassicWrath()) then
+			if (self:IsClassicEra() or self:IsClassicTBC() or self:IsClassicWrath()) then
 				if (self.db.profile.blizzChannels.guildRecruitment == "block") then
 					if (GetChannelName((GetChannelName(self.chatChannelNames.guildRecruitment))) > 0) then
 						LeaveChannelByName(self.chatChannelNames.guildRecruitment)

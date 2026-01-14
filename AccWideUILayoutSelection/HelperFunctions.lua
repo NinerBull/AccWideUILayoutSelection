@@ -26,15 +26,15 @@ function AccWideUIAceAddon:IsClassicProgression()
 end
 
 function AccWideUIAceAddon:IsClassicWrath()
-	return (LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_WRATH_OF_THE_LICH_KING) or false
+	return (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) or false
 end
 
 function AccWideUIAceAddon:IsClassicTBC()
-	return (LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_BURNING_CRUSADE) or false
+	return (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) or false
 end
 
 function AccWideUIAceAddon:IsClassicVanilla()
-	return (LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_CLASSIC) or false
+	return (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) or false
 end
 
 function AccWideUIAceAddon:IsClassicEra()

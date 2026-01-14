@@ -922,7 +922,7 @@ function AccWideUIAceAddon:GenerateOptions()
 
 
 	-- Edit Mode Specs
-	if (AccWideUIAceAddon:IsMainline() == true or AccWideUIAceAddon:IsClassicEra() == true) then
+	if (AccWideUIAceAddon:IsMainline() == true) then
 
 		local NumOfSpecs = GetNumSpecializations(false, false)
 
@@ -957,10 +957,13 @@ function AccWideUIAceAddon:GenerateOptions()
 	if (AccWideUIAceAddon:IsMidnight() ~= true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.damageMeter = nil
 	end
-
+	
 	if (AccWideUIAceAddon:IsMainline() == false) then
 		self.optionsData.args.settings.args.editModeSettings = nil
 		self.optionsData.args.settings.args.headerDiv2 = nil
+	end
+
+	if (AccWideUIAceAddon:IsMainline() == false) then
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.cooldownViewer = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.mouseoverCast = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.empowerTap = nil
@@ -989,7 +992,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.channels.args.HardcoreDeaths = nil
 	end
 
-	if (AccWideUIAceAddon:IsClassicWrath() == false and AccWideUIAceAddon:IsClassicEra() == false) then
+	if (AccWideUIAceAddon:IsClassicWrath() == false and AccWideUIAceAddon:IsClassicTBC() == false and AccWideUIAceAddon:IsClassicEra() == false) then
 		self.optionsData.args.channels.args.guildRecruitment = nil
 	end
 
@@ -997,7 +1000,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.channels.args.hardcoreDeaths = nil
 	end
 
-	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicEra() == false) then
+	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicTBC() == false and AccWideUIAceAddon:IsClassicEra() == false) then
 		self.optionsData.args.channels.args.services = nil
 	end
 

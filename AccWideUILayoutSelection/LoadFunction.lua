@@ -91,7 +91,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				end
 			
-				if (self:IsMainline() == false and self:IsClassicTBC() ~= true) then
+				if (self:IsClassicEra() == true or self:IsClassicProgression() == true) then
 				
 					--How many Raid Profiles?
 					

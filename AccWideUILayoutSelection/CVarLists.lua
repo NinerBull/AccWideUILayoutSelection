@@ -282,7 +282,8 @@ AccWideUIAceAddon.CVars = {
 		"previewTalentsOption",
 		"collapseExpandBuffs",
 		"auctionSortByBuyoutPrice",
-		"auctionSortByUnitPrice"
+		"auctionSortByUnitPrice",
+		"showHonorAsExperience"
 	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrame.lua#L65

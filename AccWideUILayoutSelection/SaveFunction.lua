@@ -68,7 +68,8 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
-				if (self:IsMainline() == false and self:IsClassicTBC() ~= true) then
+				if (self:IsClassicEra() == true or self:IsClassicProgression() == true) then
+					-- Raid Profiles
 				
 					--if (GetNumRaidProfiles() > 1) then
 					

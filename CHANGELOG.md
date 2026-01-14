@@ -1,3 +1,1 @@
-- Potentially fix some overlapping checkboxes in the options for some users.
-- Changed Minimap/Addon list icon to a Punchcard, that works in Classic as well as Retail.
-- Added safeguards against "Invalid Channel" spam for users who opt-in to force-joining chat channels that are only available in Cities (e.g. Trade).
+- TBC Classic Anniversary Compatibility Fixes
