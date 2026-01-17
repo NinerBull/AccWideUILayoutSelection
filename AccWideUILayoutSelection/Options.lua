@@ -967,6 +967,7 @@ function AccWideUIAceAddon:GenerateOptions()
 
 	if (AccWideUIAceAddon:IsMidnight() ~= true) then
 		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.damageMeter = nil
+		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.externalDefensives = nil
 	end
 	
 	if (AccWideUIAceAddon:IsMainline() == false) then
