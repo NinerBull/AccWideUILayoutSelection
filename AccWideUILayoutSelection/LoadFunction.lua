@@ -1268,7 +1268,7 @@ end
 
 function AccWideUIAceAddon:LoadEditModeSettings()
 	
-	if ((self:IsMainline() or self:IsClassicTBC()) and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
+	if ((self:IsMainline() or self:IsClassicTBC()) and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
 				
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())

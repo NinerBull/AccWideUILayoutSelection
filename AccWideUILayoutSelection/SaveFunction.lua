@@ -694,7 +694,7 @@ end
 
 function AccWideUIAceAddon:SaveEditModeSettings()
 
-	if ((self:IsMainline() or self:IsClassicTBC()) and self.db.global.hasDoneFirstTimeSetup == true) then
+	if ((self:IsMainline() or self:IsClassicTBC()) and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
 	
 		local getLayoutsTable = C_EditMode.GetLayouts()
 		local currentActiveLayout = getLayoutsTable["activeLayout"]

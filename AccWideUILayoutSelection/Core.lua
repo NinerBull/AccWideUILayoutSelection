@@ -627,7 +627,7 @@ end
 
 
 function AccWideUIAceAddon:ACTIVE_TALENT_GROUP_CHANGED(event, arg1, arg2)
-	if (self.TempData.HasDoneInitialLoad) then
+	if (not InCombatLockdown() and self.TempData.HasDoneInitialLoad) then
 		self:ScheduleTimer(function()
 			self:LoadEditModeSettings()
 		end, 0.5)
