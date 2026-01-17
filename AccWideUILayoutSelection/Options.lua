@@ -49,6 +49,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				arenaFrames = true,
 				spellOverlay = true,
 				damageMeter = true,
+				externalDefensives = true,
 				worldMap = true,
 				calendarFilters = true,
 				camera = true,
@@ -132,6 +133,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				damageMeter = {
+					cvars = {}
+				},
+				externalDefensives = {
 					cvars = {}
 				},
 				worldMap = {
@@ -456,6 +460,13 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 110,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_EDITMODE_DESC"],
+									},
+									externalDefensives = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_EXTERNALDEF"],
+										order = 120,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_EXTERNALDEF_DESC"],
 									},
 									spellOverlay = {
 										type = "toggle",
