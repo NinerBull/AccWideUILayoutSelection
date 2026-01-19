@@ -6,6 +6,9 @@ AccWideUIAceAddon.LDBIcon = LibStub:GetLibrary("LibDBIcon-1.0")
 AccWideUIAceAddon.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject(L["ACCWUI_ADDONNAME_SHORT"], {  
 	type = "data source",  
 	text = L["ACCWUI_ADDONNAME_SHORT"],  
+	label = L["ACCWUI_ADDONNAME_SHORT"],
+	version = C_AddOns.GetAddOnMetadata("AccWideUILayoutSelection", "Version"),
+	notes = L["ACCWUI_OPT_TITLE_DESC"],
 	icon = C_AddOns.GetAddOnMetadata("AccWideUILayoutSelection", "IconTexture"), 
 	OnClick = function() 
 		if (AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup == true) then
