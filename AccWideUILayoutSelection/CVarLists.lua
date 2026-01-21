@@ -70,6 +70,8 @@ AccWideUIAceAddon.CVars = {
 		"nameplateNotSelectedAlpha",
 		"nameplateRemovalAnimation",
 		"nameplateCommentatorMaxDistance",
+		"showVKeyCastbarSpellName",
+		"showVKeyCastbarOnlyOnTarget",
 		"nameplateShowCastBars"
 	},
 
