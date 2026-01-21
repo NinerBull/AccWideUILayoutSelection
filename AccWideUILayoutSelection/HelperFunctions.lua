@@ -8,11 +8,6 @@ function AccWideUIAceAddon:ToBoolean(str)
 	return bool
 end
 
-function AccWideUIAceAddon:IsMidnight() -- Temp for Beta
-	return (LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_MIDNIGHT) or false
-	--return true
-end
-
 function AccWideUIAceAddon:IsMainline()
 	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or false
 end

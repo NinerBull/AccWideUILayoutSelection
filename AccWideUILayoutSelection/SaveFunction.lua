@@ -501,7 +501,11 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self.db.profile.syncData.nameplates.cvars[v] = GetCVar(v) or nil
 				end
 				
-				if (self:IsMidnight() ~= true) then
+				if (self:IsMainline() == true) then
+				
+					self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2] = C_NamePlate.GetNamePlateSize()
+				
+				else
 				
 					self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough = C_NamePlate.GetNamePlateEnemyClickThrough()
 					self.db.profile.syncData.nameplates.special.NamePlateEnemyPreferredClickInsets = {}
@@ -629,7 +633,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			--  Midnight only settings
-			if (self:IsMidnight() == true) then
+			if (self:IsMainline() == true) then
 			
 				-- Save Damage Meter Setting
 				if (self.db.profile.syncToggles.damageMeter == true) then

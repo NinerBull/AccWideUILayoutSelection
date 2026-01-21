@@ -279,6 +279,8 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
 		self:CancelAllTimers()
 	end
+	
+	AccWideUIAceAddon.LDB.text = AccWideUIAceAddon.db:GetCurrentProfile()
 
 
 end

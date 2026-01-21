@@ -1,1 +1,3 @@
-- TBC Classic Anniversary Compatibility Fixes
+- Midnight Compatibility Fixes.
+- Added several new CVars from Midnight.
+- Added External Defensives Toggle Sync.
