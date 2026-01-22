@@ -25,7 +25,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * HUD & Interface
 	* Calendar Filter Settings
 	* Camera Settings
-	* Cooldown Manager Settings
+	* Cooldown Manager Visibility Setting
 	* Chosen Edit Mode Layout
 	* External Defensives Visibility Setting
 	* Spell Overlay Settings
