@@ -1,3 +1,1 @@
-- Midnight Compatibility Fixes.
-- Added several new CVars from Midnight.
-- Added External Defensives Toggle Sync.
+- Quick Hotfix! Fixes lua error that occurs upon saving data for the first time.
