@@ -1,1 +1,3 @@
-- Quick Hotfix! Fixes lua error that occurs upon saving data for the first time.
+- (Retail) Temporarily prevented the addon from showing/hiding Chat Channels such as General/Trade etc in Chat Tabs, as it was causing secret related errors while in instances (WTF?)
+- (Retail) Fix External Defensives Visibilty Toggle
+- Potential Fix / Workaround for Zone Map's Opacity 
