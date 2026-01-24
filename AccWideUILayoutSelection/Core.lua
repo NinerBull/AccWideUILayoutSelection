@@ -581,11 +581,8 @@ end
 
 
 
-
 function AccWideUIAceAddon:CHANNEL_UI_UPDATE(event, arg1, arg2)
-	--self:ScheduleTimer(function()
-		self:BlizzChannelManager()
-	--end, 2)
+	self:BlizzChannelManager()
 end
 
 function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
@@ -695,6 +692,9 @@ function AccWideUIAceAddon:PLAYER_REGEN_DISABLED(event, arg1, arg2)
 end
 
 function AccWideUIAceAddon:CHAT_MSG_CHANNEL_NOTICE_USER(event, arg1, arg2)
+	if issecretvalue and issecretvalue(arg1) then
+		return
+	end
 	if (select(1, arg1) == "INVALID_NAME") then
 		-- Throttle trying to join or leave channels for a few seconds
 		self.TempData.ThrottleJoinLeaveChannels = true
