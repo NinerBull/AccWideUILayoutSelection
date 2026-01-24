@@ -1057,8 +1057,6 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 						if (self.db.profile.syncToggles.chatWindowPosition == true) then
 						
-							
-							
 								if self.db.global.useScreenSizeSpecificSettings == true then
 									--Res Specific
 									if (type(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].chat.windows[thisChatFrame].Positions)  ~= "nil") then
@@ -1122,8 +1120,12 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								FCF_DockFrame(thisChatFrameVar, self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked, thisChatFrame)
 							end]]
 							
-							local f = _G["ChatFrame" .. thisChatFrame];
-							f:GetScript("OnEvent")(f, "UPDATE_CHAT_WINDOWS");
+							if (not self:IsMainline()) then
+							
+								local f = _G["ChatFrame" .. thisChatFrame];
+								f:GetScript("OnEvent")(f, "UPDATE_CHAT_WINDOWS");
+							
+							end
 							
 						end, 1)
 					
@@ -1154,39 +1156,49 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					--Visible Chat Channels
 					self:ScheduleTimer(function() 
 					
-						if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
-							if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
-							
-								local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+						-- TEMP DISABLED FOR RETAIL DUE TO CAUSING TAINT IN INSTANCES (WTF?!)
+						if (not self:IsMainline()) then
 					
-								for i = 1, #thisWindowChannels, 2 do
-									local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
-									
-									if (self.db.global.printDebugTextToChat == true) then
-										self:Print("[Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
-									end
-																		
-									if (ChatFrame_RemoveChannel) then
-										ChatFrame_RemoveChannel(thisChatFrameVar, chn)
-									else
-										ChatFrameMixin.RemoveChannel(thisChatFrameVar, v) -- 12.0.0
-									end
-								end
-							
-								for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) do
+							if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
+								if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
 								
-									if (self.db.global.printDebugTextToChat == true) then
-										self:Print("[Chat Window] Adding " .. v .. " To Window " .. thisChatFrame .. ".")
-									end
-																		
-									if (ChatFrame_AddChannel) then
-										ChatFrame_AddChannel(thisChatFrameVar, v)
-									else
-										ChatFrameMixin.AddChannel(thisChatFrameVar, v) -- 12.0.0
-									end
+									local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
 									
+									if thisWindowChannels then
+						
+										for i = 1, #thisWindowChannels, 2 do
+											local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+											
+											if (self.db.global.printDebugTextToChat == true) then
+												self:Print("[Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
+											end
+
+											if ChatFrame_RemoveChannel then
+												ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+											else
+												thisChatFrameVar:RemoveChannel(chn) -- 12.0.0
+											end
+											
+										end
+									
+									end
+								
+									for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) do
+									
+										if (self.db.global.printDebugTextToChat == true) then
+											self:Print("[Chat Window] Adding " .. v .. " To Window " .. thisChatFrame .. ".")
+										end
+											
+										if ChatFrame_AddChannel then
+											ChatFrame_AddChannel(thisChatFrameVar, v)
+										else
+											thisChatFrameVar:AddChannel(v) -- 12.0.0
+										end
+																												
+									end
 								end
 							end
+							
 						end
 
 					end, (20 + (thisChatFrame * 2)))
@@ -1207,27 +1219,27 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									end
 								
 									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) == "table") then
-										
+									
 										if (ChatFrame_RemoveAllMessageGroups) then
 											ChatFrame_RemoveAllMessageGroups(thisChatFrameVar)
 										else
-											ChatFrameMixin.RemoveAllMessageGroups(thisChatFrameVar) -- 12.0.0
+											thisChatFrameVar:RemoveAllMessageGroups() -- 12.0.0
 										end
-									
 										
-										
+
+
 										for k,v in pairs(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) do
-											
+										
 											if (ChatFrame_AddMessageGroup) then
 												ChatFrame_AddMessageGroup(thisChatFrameVar, v)
 											else
-												ChatFrameMixin.AddMessageGroup(thisChatFrameVar, v) -- 12.0.0 
+												thisChatFrameVar:AddMessageGroup(v) -- 12.0.0 
 											end
-										
-											 
-											 if (self.db.global.printDebugTextToChat == true) then
+
+
+											if (self.db.global.printDebugTextToChat == true) then
 												self:Print("[Chat Window] Adding " .. v .. " to Window " .. thisChatFrame .. ".")
-											 end
+											end
 										end
 									
 									end
@@ -1252,6 +1264,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						if (LeaPlusDB and LeaPlusDB.NoCombatLogTab == "On") then
 							if ChatFrame2.isDocked then
 								ChatFrame2Tab:SetText(" ")
+								FCF_DockUpdate()
 								if (self.db.global.printDebugTextToChat == true) then
 									self:Print("[Leatrix Plus] Combat Log Tab is Hidden, fixing text.")
 								end
@@ -1259,7 +1272,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						end
 					end
 				
-					FCF_DockUpdate()
+					
 				end, 3)
 				
 			
