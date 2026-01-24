@@ -658,6 +658,21 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				
 				end 
+				
+				-- External Defensives Variables
+				if (self.db.profile.syncToggles.externalDefensives == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[External Defensives] Loading Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.ExternalDefensives) do
+						if (self.db.profile.syncData.externalDefensives.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.externalDefensives.cvars[v])
+						end
+					end
+				
+				end 
 			
 				-- Mouseover Cast Variables
 				if (self.db.profile.syncToggles.mouseoverCast == true) then

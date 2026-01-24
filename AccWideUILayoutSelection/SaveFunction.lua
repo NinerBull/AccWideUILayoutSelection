@@ -553,8 +553,20 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			-- RETAIL only variables
 			if (self:IsMainline() == true) then
-
 			
+				-- External Defensives Variables
+				if (self.db.profile.syncToggles.externalDefensives == true) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[External Defensives] Saving Settings.")
+					end
+				
+					for k, v in pairs(self.CVars.ExternalDefensives) do
+						self.db.profile.syncData.externalDefensives.cvars[v] = GetCVar(v) or nil
+					end
+				
+				end
+
 				-- Save Mouseover Cast Settings
 				if (self.db.profile.syncToggles.mouseoverCast == true) then
 				
