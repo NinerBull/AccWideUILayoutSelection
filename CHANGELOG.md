@@ -1,3 +1,3 @@
-- (Retail) Temporarily prevented the addon from showing/hiding Chat Channels such as General/Trade etc in Chat Tabs, as it was causing secret related errors while in instances (WTF?)
+- (Retail) Temporarily prevented the addon from showing/hiding Chat Channels such as General/Trade etc in Chat Tabs, as it was causing secret related errors while in instances
 - (Retail) Fix External Defensives Visibilty Toggle
 - Potential Fix / Workaround for Zone Map's Opacity 
