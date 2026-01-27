@@ -133,7 +133,12 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				damageMeter = {
-					cvars = {}
+					cvars = {},
+					special = {
+						settings = {},
+						position = {},
+						size = {}
+					}
 				},
 				externalDefensives = {
 					cvars = {}

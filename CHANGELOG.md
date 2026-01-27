@@ -1,3 +1,2 @@
-- (Retail) Temporarily prevented the addon from showing/hiding Chat Channels such as General/Trade etc in Chat Tabs, as it was causing secret related errors while in instances
-- (Retail) Fix External Defensives Visibilty Toggle
-- Potential Fix / Workaround for Zone Map's Opacity 
+- (Retail) First Pass at synchronsing various Damage Meter settings, such as which windows are enabled, their position and size, and what information each is showing.
+  - The actual data itself shown on the bars such as DPS and healing will not sync.

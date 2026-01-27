@@ -835,6 +835,64 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							SetCVar(v, self.db.profile.syncData.damageMeter.cvars[v])
 						end
 					end
+					
+					if (self.db.profile.syncData.damageMeter.special.settings) then
+					
+						if next(self.db.profile.syncData.damageMeter.special.settings) then
+					
+							DamageMeterPerCharacterSettings = nil
+							DamageMeterPerCharacterSettings = self:DeepCopy(self.db.profile.syncData.damageMeter.special.settings)
+							
+							DamageMeter:LoadSavedWindowDataList()
+							
+							for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
+								local thisDamageMeter = _G["DamageMeterSessionWindow" .. i]
+								
+								if (thisDamageMeter) then
+								
+									if (DamageMeterPerCharacterSettings.windowDataList[i]) then
+										thisDamageMeter:SetLocked(DamageMeterPerCharacterSettings.windowDataList[i].locked)
+										thisDamageMeter:SetDamageMeterType(DamageMeterPerCharacterSettings.windowDataList[i].damageMeterType)
+										if (DamageMeterPerCharacterSettings.windowDataList[i].shown == true) then
+											thisDamageMeter:Show()
+										else
+											thisDamageMeter:Hide()
+										end
+									end
+									
+									
+									self:ScheduleTimer(function() 
+										if (self.db.profile.syncData.damageMeter.special.size[i] and i > 1) then -- First window is set via Edit Mode
+											thisDamageMeter:SetSize(
+												self.db.profile.syncData.damageMeter.special.size[i].x,
+												self.db.profile.syncData.damageMeter.special.size[i].y
+											)
+										end
+									end, 1)
+									
+									
+									self:ScheduleTimer(function() 
+										if (self.db.profile.syncData.damageMeter.special.position[i] and i > 1) then -- First window is set via Edit Mode
+											thisDamageMeter:ClearAllPoints()
+											thisDamageMeter:SetPoint(
+												self.db.profile.syncData.damageMeter.special.position[i].point,
+												UIParent,
+												self.db.profile.syncData.damageMeter.special.position[i].relativePoint,
+												self.db.profile.syncData.damageMeter.special.position[i].offsetX,
+												self.db.profile.syncData.damageMeter.special.position[i].offsetY
+											)
+											
+											
+										end
+									end, 2)
+									
+								end
+								
+							end
+						
+						end
+						
+					end
 				
 				end
 			
