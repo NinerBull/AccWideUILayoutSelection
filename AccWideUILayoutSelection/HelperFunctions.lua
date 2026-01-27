@@ -8,21 +8,6 @@ function AccWideUIAceAddon:ToBoolean(str)
 	return bool
 end
 
-function AccWideUIAceAddon:DeepCopy(orig) -- From http://lua-users.org/wiki/CopyTable
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        copy = {}
-        for orig_key, orig_value in next, orig, nil do
-            copy[self:DeepCopy(orig_key)] = self:DeepCopy(orig_value)
-        end
-        setmetatable(copy, self:DeepCopy(getmetatable(orig)))
-    else -- number, string, boolean, etc
-        copy = orig
-    end
-    return copy
-end
-
 function AccWideUIAceAddon:IsMainline()
 	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or false
 end

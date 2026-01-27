@@ -661,14 +661,14 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					
 					if (DamageMeterPerCharacterSettings) then
 						self.db.profile.syncData.damageMeter.special.settings = {}
-						self.db.profile.syncData.damageMeter.special.settings = self:DeepCopy(DamageMeterPerCharacterSettings)
+						self.db.profile.syncData.damageMeter.special.settings = CopyTable(DamageMeterPerCharacterSettings)
 					end
 					
 					for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
 						self.db.profile.syncData.damageMeter.special.position[i] = nil
 						
 						local thisDamageMeter = _G["DamageMeterSessionWindow" .. i]
-						if (thisDamageMeter and i > 1) then -- First Window is set by Edit Mode
+						if (thisDamageMeter and DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then -- First Window is set by Edit Mode
 							
 							self.db.profile.syncData.damageMeter.special.size[i] = {}
 							self.db.profile.syncData.damageMeter.special.size[i].x = thisDamageMeter:GetWidth()

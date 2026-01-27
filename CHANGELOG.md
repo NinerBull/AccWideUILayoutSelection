@@ -1,2 +1,1 @@
-- (Retail) First Pass at synchronsing various Damage Meter settings, such as which windows are enabled, their position and size, and what information each is showing.
-  - The actual data itself shown on the bars such as DPS and healing will not sync.
+- (Retail) Better handling of Damage Meter settings, should work more consistently now.

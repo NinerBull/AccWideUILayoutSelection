@@ -841,7 +841,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						if next(self.db.profile.syncData.damageMeter.special.settings) then
 					
 							DamageMeterPerCharacterSettings = nil
-							DamageMeterPerCharacterSettings = self:DeepCopy(self.db.profile.syncData.damageMeter.special.settings)
+							DamageMeterPerCharacterSettings = CopyTable(self.db.profile.syncData.damageMeter.special.settings)
 							
 							DamageMeter:LoadSavedWindowDataList()
 							
@@ -851,40 +851,49 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								if (thisDamageMeter) then
 								
 									if (DamageMeterPerCharacterSettings.windowDataList[i]) then
-										thisDamageMeter:SetLocked(DamageMeterPerCharacterSettings.windowDataList[i].locked)
-										thisDamageMeter:SetDamageMeterType(DamageMeterPerCharacterSettings.windowDataList[i].damageMeterType)
-										if (DamageMeterPerCharacterSettings.windowDataList[i].shown == true) then
-											thisDamageMeter:Show()
-										else
-											thisDamageMeter:Hide()
+									
+										if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
+											if (DamageMeterPerCharacterSettings.windowDataList[i].shown == true) then
+												thisDamageMeter:Show()
+											else
+												DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
+											end
 										end
+										
+										--thisDamageMeter:SetDamageMeterType(DamageMeterPerCharacterSettings.windowDataList[i].damageMeterType)
+										DamageMeter:SetSessionWindowDamageMeterType(thisDamageMeter, DamageMeterPerCharacterSettings.windowDataList[i].damageMeterType)
+										
+										--thisDamageMeter:SetLocked(DamageMeterPerCharacterSettings.windowDataList[i].locked)
+										DamageMeter:SetSessionWindowLocked(thisDamageMeter, DamageMeterPerCharacterSettings.windowDataList[i].locked)
 									end
 									
 									
-									self:ScheduleTimer(function() 
-										if (self.db.profile.syncData.damageMeter.special.size[i] and i > 1) then -- First window is set via Edit Mode
-											thisDamageMeter:SetSize(
-												self.db.profile.syncData.damageMeter.special.size[i].x,
-												self.db.profile.syncData.damageMeter.special.size[i].y
-											)
-										end
-									end, 1)
+									if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then
 									
+										self:ScheduleTimer(function() 
+											if (self.db.profile.syncData.damageMeter.special.size[i]) then -- First window is set via Edit Mode
+												thisDamageMeter:SetSize(
+													self.db.profile.syncData.damageMeter.special.size[i].x,
+													self.db.profile.syncData.damageMeter.special.size[i].y
+												)
+											end
+										end, 0.3)
+										
+										
+										self:ScheduleTimer(function() 
+											if (self.db.profile.syncData.damageMeter.special.position[i]) then -- First window is set via Edit Mode
+												thisDamageMeter:ClearAllPoints()
+												thisDamageMeter:SetPoint(
+													self.db.profile.syncData.damageMeter.special.position[i].point,
+													UIParent,
+													self.db.profile.syncData.damageMeter.special.position[i].relativePoint,
+													self.db.profile.syncData.damageMeter.special.position[i].offsetX,
+													self.db.profile.syncData.damageMeter.special.position[i].offsetY
+												)
+											end
+										end, 0.6)
 									
-									self:ScheduleTimer(function() 
-										if (self.db.profile.syncData.damageMeter.special.position[i] and i > 1) then -- First window is set via Edit Mode
-											thisDamageMeter:ClearAllPoints()
-											thisDamageMeter:SetPoint(
-												self.db.profile.syncData.damageMeter.special.position[i].point,
-												UIParent,
-												self.db.profile.syncData.damageMeter.special.position[i].relativePoint,
-												self.db.profile.syncData.damageMeter.special.position[i].offsetX,
-												self.db.profile.syncData.damageMeter.special.position[i].offsetY
-											)
-											
-											
-										end
-									end, 2)
+									end
 									
 								end
 								
@@ -1234,7 +1243,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 											if ChatFrame_RemoveChannel then
 												ChatFrame_RemoveChannel(thisChatFrameVar, chn)
 											else
-												thisChatFrameVar:RemoveChannel(chn) -- 12.0.0
+												thisChatFrameVar:SetChannelEnabled(chn) --thisChatFrameVar:RemoveChannel(chn) -- 12.0.0
 											end
 											
 										end
@@ -1250,7 +1259,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 										if ChatFrame_AddChannel then
 											ChatFrame_AddChannel(thisChatFrameVar, v)
 										else
-											thisChatFrameVar:AddChannel(v) -- 12.0.0
+											thisChatFrameVar:SetChannelEnabled(v, true) --thisChatFrameVar:AddChannel(v) -- 12.0.0
 										end
 																												
 									end
