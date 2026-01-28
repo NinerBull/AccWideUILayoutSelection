@@ -27,6 +27,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 	* Camera Settings
 	* Cooldown Manager Visibility Setting
 	* Chosen Edit Mode Layout
+	* Damage Meter Settings
 	* External Defensives Visibility Setting
 	* Spell Overlay Settings
 	* Viewed Tutorial Tooltips

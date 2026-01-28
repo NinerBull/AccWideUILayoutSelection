@@ -3,4 +3,3 @@
   - Window Size
   - Window Position
   - Which Information to show (Damage, healing etc.)
-- Visible Chat Channels per Chat Tab will once again synchronise.

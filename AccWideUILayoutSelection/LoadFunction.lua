@@ -1240,7 +1240,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					self:ScheduleTimer(function() 
 					
 						-- TEMP DISABLED FOR RETAIL DUE TO CAUSING TAINT IN INSTANCES (WTF?!)
-						--if (not self:IsMainline()) then
+						if (not self:IsMainline()) then
 					
 							if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
 								if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
@@ -1282,7 +1282,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								end
 							end
 							
-						--end
+						end
 
 					end, (20 + (thisChatFrame * 2)))
 					
