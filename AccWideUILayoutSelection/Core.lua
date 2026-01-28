@@ -318,10 +318,14 @@ end
 function AccWideUIAceAddon:BlizzChannelManager()
 
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
+	
+		if (C_ChatInfo and C_ChatInfo.InChatMessagingLockdown and C_ChatInfo.InChatMessagingLockdown()) then
+			return
+		end
 
 		if (self.db.global.hasDoneFirstTimeSetup == true and not self.TempData.ThrottleJoinLeaveChannels) then
 
-
+			
 
 			-- Join player to channels if they're allowed
 			if (self.db.profile.blizzChannels.general == "join") then

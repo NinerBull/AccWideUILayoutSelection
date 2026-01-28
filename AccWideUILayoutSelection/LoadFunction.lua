@@ -1025,28 +1025,64 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					
 					--local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
 					local thisChatFrameVar = FCF_GetChatFrameByID(thisChatFrame);
+					local thisChatFrameTab =  _G["ChatFrame"..thisChatFrame.."Tab"];
 					
 					
 					if (type(self.db.profile.syncData.chat.windows[thisChatFrame]) == "table") then
 					
 						if(type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo) == "table") then
-					
-							--[[FCF_SetWindowAlpha(
-								thisChatFrameVar, 
-								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a
-							)]]
-							
-							SetChatWindowAlpha(
-								thisChatFrame, 
-								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a
-							)
-							
+												
+						
 							--[[FCF_SetWindowColor(
 								thisChatFrameVar,
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.r,
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.g,
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.b
+							)
+						
+							FCF_SetWindowAlpha(
+								thisChatFrameVar, 
+								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a
+							)
+						
+							if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked == true) then
+								FCF_DockFrame(
+									thisChatFrameVar,
+									(#FCFDock_GetChatFrames(GENERAL_CHAT_DOCK)+1),
+									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or false)
+								)
+							else
+								FCF_UnDockFrame(
+									thisChatFrameVar
+								)
+							end
+						
+							FCF_SetLocked(
+								thisChatFrameVar,
+								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked or false)
+							)
+						
+							if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown == true) then
+								thisChatFrameVar:Show()
+							else
+								thisChatFrameVar:Hide()
+							end
+						
+							FCF_SetUninteractable(
+								thisChatFrameVar,
+								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
+							)
+						
+							FCF_SetWindowName(
+								thisChatFrameVar,
+								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
 							)]]
+								
+							
+							SetChatWindowAlpha(
+								thisChatFrame, 
+								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a
+							)
 							
 							SetChatWindowColor(
 								thisChatFrame,
@@ -1055,26 +1091,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.b
 							)
 							
-							--[[if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked) then
-								FCF_DockFrame(
-									thisChatFrameVar,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or false)
-								)
-							else
-								FCF_UnDockFrame(
-									thisChatFrameVar
-								)
-							end]]
-							
 							SetChatWindowDocked(
 								thisChatFrame,
 								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or false)
 							)
-							
-							--[[FCF_SetLocked(
-								thisChatFrameVar,
-								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked or false)
-							)]]
 							
 							SetChatWindowLocked(
 								thisChatFrame,
@@ -1086,36 +1106,32 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown or false)
 							)
 							
-							--[[if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown == true) then
-								thisChatFrameVar:Show()
-							else
-								thisChatFrameVar:Hide()
-							end]]
 							
 							SetChatWindowUninteractable(
 								thisChatFrame,
 								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
 							)
 							
-							--[[FCF_SetUninteractable(
-								thisChatFrameVar,
-								(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
-							)]]
-							
 							SetChatWindowName(
 								thisChatFrame,
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
 							)
 							
-							--[[FCF_SetWindowName(
-								thisChatFrameVar,
-								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-							)]]
-							
 							SetChatWindowSize(
 								thisChatFrame,
 								self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
 							)
+							
+							
+							if (self:IsMainline()) then
+								FCF_SetChatWindowFontSize(
+									nil,
+									thisChatFrameVar,
+									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
+								)
+							end
+							
+							
 						
 						end
 						
@@ -1188,7 +1204,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							end]]
 							
 							if (not self:IsMainline()) then
-							
+								--Triggering this in Retail causes secret errors when chat lockdown is enabled
 								local f = _G["ChatFrame" .. thisChatFrame];
 								f:GetScript("OnEvent")(f, "UPDATE_CHAT_WINDOWS");
 							
@@ -1224,7 +1240,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					self:ScheduleTimer(function() 
 					
 						-- TEMP DISABLED FOR RETAIL DUE TO CAUSING TAINT IN INSTANCES (WTF?!)
-						if (not self:IsMainline()) then
+						--if (not self:IsMainline()) then
 					
 							if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
 								if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
@@ -1266,7 +1282,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 								end
 							end
 							
-						end
+						--end
 
 					end, (20 + (thisChatFrame * 2)))
 					

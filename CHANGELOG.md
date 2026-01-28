@@ -1,1 +1,6 @@
-- (Retail) Better handling of Damage Meter settings, should work more consistently now.
+- (Retail) The Damage Meter can now sync more than just visibility now. For each Damage Meter window, the following will be synchronised:
+  - Window Visibility
+  - Window Size
+  - Window Position
+  - Which Information to show (Damage, healing etc.)
+- Visible Chat Channels per Chat Tab will once again synchronise.
