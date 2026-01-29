@@ -214,7 +214,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				if (type(BattlefieldMapOptions.opacity) == "number") then
-					self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity or 0.7
+					self.db.profile.syncData.battlefieldMap.options.opacity = BattlefieldMapOptions.opacity or 0.7
 				end
 				
 				if (type(BattlefieldMapOptions.showPlayers) == "boolean") then
