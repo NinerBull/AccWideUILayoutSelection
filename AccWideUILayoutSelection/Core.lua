@@ -320,6 +320,11 @@ function AccWideUIAceAddon:BlizzChannelManager()
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 	
 		if (C_ChatInfo and C_ChatInfo.InChatMessagingLockdown and C_ChatInfo.InChatMessagingLockdown()) then
+		
+			if (self.db.global.printDebugTextToChat == true) then
+				self:Print("[Channel Manager] Chat in Lockdown.")
+			end
+		
 			return
 		end
 
