@@ -3,3 +3,5 @@
   - Window Size
   - Window Position
   - Which Information to show (Damage, healing etc.)
+- Another attempt at fixing Zone Map Opacity Saving
+- Added safeguards against trying to apply invalid values such as font size to Chat Frames
