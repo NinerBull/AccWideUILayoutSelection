@@ -50,3 +50,4 @@ LoadFunction.lua
 Options.lua
 Onboarding.lua
 AddonCompartment.lua
+ImportExport.lua
