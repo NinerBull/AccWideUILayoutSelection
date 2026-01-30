@@ -4,5 +4,6 @@
   - Window Position
   - Which Information to show (Damage, healing etc.)
 - Added basic Profile Import/Export via data strings, can be found under the Advanced Tab in Settings
+- Added Reset Damage Meter Settings button, useful if it bugs out, can be found under the Advanced Tab in Settings
 - Another attempt at fixing Zone Map Opacity Saving
 - Added safeguards against trying to apply invalid values such as font size to Chat Frames
