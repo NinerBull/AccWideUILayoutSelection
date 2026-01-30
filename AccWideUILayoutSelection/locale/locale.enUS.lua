@@ -184,6 +184,6 @@ L["ACCWUI_IE_IMPORTSTRING_DESC"] = "Allows you to import a profile using a text 
 L["ACCWUI_IE_EXPORTSTRING"] = "Export Profile String"
 L["ACCWUI_IE_EXPORTSTRING_DESC"] = "Allows you to export your current profile using a text string that can be shared with others."
 L["ACCWUI_IE_EXPORT_DESC"] = "You can copy the string below and paste it online to share your current profile with others, or import it into another WoW account that you own."
-L["ACCWUI_IE_IMPORT_DESC"] = "Paste an import string into the box below and click 'Import String'. This will import its settings into your currently chosen profile, overwriting its existing settings."
+L["ACCWUI_IE_IMPORT_DESC"] = "Paste an import string into the box below and click 'Import Profile'. This will import its settings into your currently chosen profile, overwriting its existing settings."
 L["ACCWUI_IE_IMPORT_SUCCESS"] = "Import complete!"
 L["ACCWUI_IE_IMPORT_FAIL"] = "Import failed. The string you entered is not valid."
