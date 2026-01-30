@@ -164,6 +164,8 @@ L["ACCWUI_DEBUG_TXT_FORCESAVE"] = "Force-Saving Settings."
 L["ACCWUI_UTILITY_TITLE"] = "Utilities"
 L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"] = "Reset Zone Map Position"
 L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"] = "Moves the Zone Map to the middle of the screen. Useful if it has moved off-screen and you cannot find it."
+L["ACCWUI_UTILITY_BTN_RESETDMGMETER"] = "Reset Damage Meter Settings"
+L["ACCWUI_UTILITY_TXT_RESETDMGMETER"] = "Clears all Damage Meter Settings to the default. Useful if it has become stuck in a corner of the screen and is unable to be moved.\n\nThis will /reload your UI."
 
 L["ACCWUI_JOINING_CHANNEL"] = "Automatically joining the %s Channel. Type %s to configure."
 L["ACCWUI_LEAVING_CHANNEL"] = "Automatically leaving the %s Channel. Type %s to configure."

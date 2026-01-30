@@ -168,6 +168,8 @@ L["ACCWUI_DEBUG_TXT_FORCESAVE"] = "Настройки принудительно
 L["ACCWUI_UTILITY_TITLE"] = "Утилиты" -- Needs Update
 L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"] = "Сбросить положение карты зоны" -- Needs Update
 L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"] = "Перемещает карту зоны в центр экрана. Полезно, если она вышла за пределы экрана и вы не можете её найти." -- Needs Update
+L["ACCWUI_UTILITY_BTN_RESETDMGMETER"] = "Сбросить настройки индикатора повреждений" -- Needs Update
+L["ACCWUI_UTILITY_TXT_RESETDMGMETER"] = "Сбрасывает все настройки шкалы урона до значений по умолчанию. Полезно, если она застряла в углу экрана и её невозможно переместить.\n\nЭто перезагрузит ваш пользовательский интерфейс." -- Needs Update
 
 L["ACCWUI_JOINING_CHANNEL"] = "Автоматический вход в чат-канал «%s». Введите %s для настройки."  -- Needs Update
 L["ACCWUI_LEAVING_CHANNEL"] = "Автоматический выход из чат-канала «%s». Введите %s для настройки."

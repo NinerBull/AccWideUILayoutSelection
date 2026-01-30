@@ -897,7 +897,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "execute",
 								name = L["ACCWUI_UTILITY_BTN_ZONEMAPPOS"],
 								desc = L["ACCWUI_UTILITY_TXT_ZONEMAPPOS"],
-								width = 2,
+								width = thisCheckboxWidth2,
 								order = 1,
 								func = function()
 									BattlefieldMapTab:ClearAllPoints()
@@ -905,6 +905,20 @@ function AccWideUIAceAddon:GenerateOptions()
 									--BattlefieldMapTab:Show()
 									BattlefieldMapFrame:RefreshAlpha()
 									BattlefieldMapFrame:UpdateUnitsVisibility()
+								end,
+							},
+							btnResetDamageMeter = {
+								type = "execute",
+								name = L["ACCWUI_UTILITY_BTN_RESETDMGMETER"],
+								desc = L["ACCWUI_UTILITY_TXT_RESETDMGMETER"],
+								width = thisCheckboxWidth2,
+								order = 2,
+								func = function()
+									C_CVar.SetCVar("damageMeterEnabled", 0)
+									self:ForceSaveSettings()
+									DamageMeterPerCharacterSettings = nil
+									self.db.profile.syncData.damageMeter.special = {}
+									C_UI.Reload()
 								end,
 							},
 						}
@@ -977,6 +991,7 @@ function AccWideUIAceAddon:GenerateOptions()
 		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.assistedCombat = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.locationVisibility = nil
 		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.blockNeighborhoodInvites = nil
+		self.optionsData.args.advanced.args.utility.args.btnResetDamageMeter = nil
 
 		self.optionsData.args.settings.args.syncToggles.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
