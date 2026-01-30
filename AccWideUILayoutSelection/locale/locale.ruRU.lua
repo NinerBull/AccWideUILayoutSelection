@@ -178,3 +178,16 @@ L["ACCWUI_ABOUT"] = "%s от %s - Посвящается Petrel <3" -- Needs Upd
 L["ACCWUI_ISSUES"] = "Проблемы? Посетите https://github.com/NinerBull/AccWideUILayoutSelection/issues" -- Needs Update
 
 L["ACCWUI_WAIT_TILL_COMBAT"] = "Невозможно загрузить настройки во время боя, они загрузятся после его окончания." -- Needs Update
+L["ACCWUI_WAIT_TILL_COMBAT2"] = "Это невозможно сделать во время боя." -- Needs Update
+
+L["ACCWUI_IE_IMPORT"] = "Импортировать профиль" -- Needs Update
+L["ACCWUI_IE_EXPORT"] = "Экспортировать профиль" -- Needs Update
+L["ACCWUI_IE_IMPORTEXPORT"] = "Профиль импорта/экспорта" -- Needs Update
+L["ACCWUI_IE_IMPORTSTRING"] = "Импортировать строку профиля" -- Needs Update
+L["ACCWUI_IE_IMPORTSTRING_DESC"] = "Позволяет импортировать профиль, используя текстовую строку, которая была вам предоставлена." -- Needs Update
+L["ACCWUI_IE_IMPORTSTRING"] = "Экспортировать строку профиля" -- Needs Update
+L["ACCWUI_IE_EXPORTSTRING_DESC"] = "Позволяет экспортировать ваш текущий профиль в виде текстовой строки, которой можно поделиться с другими." -- Needs Update
+L["ACCWUI_IE_EXPORT_DESC"] = "Вы можете скопировать приведенную ниже строку и вставить ее в интернет, чтобы поделиться своим текущим профилем с другими, или импортировать его в другую учетную запись WoW, которая принадлежит вам." -- Needs Update
+L["ACCWUI_IE_IMPORT_DESC"] = "Вставьте строку импорта в поле ниже и нажмите «Импорт строки». Это импортирует настройки в выбранный вами профиль, заменив существующие." -- Needs Update
+L["ACCWUI_IE_IMPORT_SUCCESS"] = "Импорт завершен!" -- Needs Update
+L["ACCWUI_IE_IMPORT_FAIL"] = "Импорт не удался. Введенная вами строка недопустима." -- Needs Update

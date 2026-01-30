@@ -850,11 +850,39 @@ function AccWideUIAceAddon:GenerateOptions()
 							},
 						}
 					},
+					profileImportExport = {
+						type = "group",
+						name = L["ACCWUI_IE_IMPORTEXPORT"],
+						inline = true,
+						order = 3,
+						args = {
+							btnImportProfile = {
+								type = "execute",
+								name = L["ACCWUI_IE_IMPORTSTRING"],
+								desc = L["ACCWUI_IE_IMPORTSTRING_DESC"],
+								width = thisCheckboxWidth2,
+								order = 1,
+								func = function()
+									self:ImportProfile()
+								end,
+							},
+							btnExportProfile = {
+								type = "execute",
+								name = L["ACCWUI_IE_EXPORTSTRING"],
+								desc = L["ACCWUI_IE_EXPORTSTRING_DESC"],
+								width = thisCheckboxWidth2,
+								order = 2,
+								func = function()
+									self:ExportProfile()
+								end,
+							},
+						}
+					},
 					debug = {
 						type = "group",
 						name = L["ACCWUI_DEBUG_TITLE"],
 						inline = true,
-						order = 3,
+						order = 4,
 						args = {
 							printWelcomeMessage = {
 								type = "toggle",
@@ -891,7 +919,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "group",
 						name = L["ACCWUI_UTILITY_TITLE"],
 						inline = true,
-						order = 4,
+						order = 5,
 						args = {
 							btnResetZoneMapPos = {
 								type = "execute",

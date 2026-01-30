@@ -1,4 +1,7 @@
 AccWideUIAceAddon = LibStub("AceAddon-3.0"):NewAddon("AccWideUIAceAddon", "AceEvent-3.0", "AceConsole-3.0", "AceHook-3.0", "AceTimer-3.0")
+AccWideUIAceAddon.AceGUI = LibStub("AceGUI-3.0")
+AccWideUIAceAddon.LibSerialize = LibStub("LibSerialize")
+AccWideUIAceAddon.LibDeflate = LibStub:GetLibrary("LibDeflate")
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 local AC = LibStub("AceConfig-3.0")
 local ACD = LibStub("AceConfigDialog-3.0")
