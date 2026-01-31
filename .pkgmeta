@@ -48,6 +48,8 @@ ignore:
   - Libs/*/README.*
   - Libs/LibStub/tests
   - Libs/LibDBIcon-1.0/lib.xml
+  - Libs/LibDeflate/docs
+  - Libs/LibDeflate/examples
   
 move-folders:
   AccWideUILayoutSelection/AccWideUILayoutSelection: AccWideUILayoutSelection
