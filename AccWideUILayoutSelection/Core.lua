@@ -11,7 +11,8 @@ local ACD = LibStub("AceConfigDialog-3.0")
 AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi",
 	IsCurrentlyLoadingSettings = false,
-	LoadSettingsAfterCombat = false
+	LoadSettingsAfterCombat = false,
+	ProfileSaveVer = 2
 }
 
 

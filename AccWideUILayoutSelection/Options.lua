@@ -882,7 +882,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "group",
 						name = L["ACCWUI_DEBUG_TITLE"],
 						inline = true,
-						order = 4,
+						order = 20,
 						args = {
 							printWelcomeMessage = {
 								type = "toggle",
