@@ -178,6 +178,7 @@ L["ACCWUI_WAIT_TILL_COMBAT2"] = "Cannot do that while in combat."
 
 L["ACCWUI_IE_IMPORT"] = "Import Profile"
 L["ACCWUI_IE_EXPORT"] = "Export Profile"
+L["ACCWUI_IE_IMPORTINTO"] = "Import into Profile '%s'"
 L["ACCWUI_IE_IMPORTEXPORT"] = "Import/Export Profile"
 L["ACCWUI_IE_IMPORTSTRING"] = "Import Profile String"
 L["ACCWUI_IE_IMPORTSTRING_DESC"] = "Allows you to import a profile using a text string that has been shared with you."

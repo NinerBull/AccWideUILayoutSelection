@@ -182,6 +182,7 @@ L["ACCWUI_WAIT_TILL_COMBAT2"] = "Это невозможно сделать во
 
 L["ACCWUI_IE_IMPORT"] = "Импортировать профиль" -- Needs Update
 L["ACCWUI_IE_EXPORT"] = "Экспортировать профиль" -- Needs Update
+L["ACCWUI_IE_IMPORTINTO"] = "Импорт в профиль '%s'" -- Needs Update
 L["ACCWUI_IE_IMPORTEXPORT"] = "Профиль импорта/экспорта" -- Needs Update
 L["ACCWUI_IE_IMPORTSTRING"] = "Импортировать строку профиля" -- Needs Update
 L["ACCWUI_IE_IMPORTSTRING_DESC"] = "Позволяет импортировать профиль, используя текстовую строку, которая была вам предоставлена." -- Needs Update

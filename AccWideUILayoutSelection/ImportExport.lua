@@ -124,7 +124,7 @@ function AccWideUIAceAddon:ImportProfile()
 		-- Add Button
 		thisImportWindow.SaveButton = self.AceGUI:Create("Button")
 		thisImportWindow.SaveButton:SetFullWidth(true)
-		thisImportWindow.SaveButton:SetText(L["ACCWUI_IE_IMPORT"])
+		thisImportWindow.SaveButton:SetText(string.format(L["ACCWUI_IE_IMPORTINTO"], self.db:GetCurrentProfile()))
 		thisImportWindow.SaveButton:SetCallback("OnClick", function() 
 		
 			if not InCombatLockdown() then
