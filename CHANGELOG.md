@@ -1,4 +1,4 @@
-- (Retail) The Damage Meter can now sync more than just visibility now. For each Damage Meter window, the following will be synchronised:
+- (Retail) The Damage Meter can now sync more than just visibility. For each Damage Meter window, the following will be synchronised:
   - Window Visibility
   - Window Size
   - Window Position

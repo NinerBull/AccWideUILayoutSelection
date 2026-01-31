@@ -92,7 +92,9 @@ function AccWideUIAceAddon:ImportProfile()
 			if not InCombatLockdown() then
 			
 				local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
-				local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT)
+				if thisImportTableExCDPT then
+					local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT)
+				end
 				
 				if thisImportTableExCD then
 					local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
