@@ -720,11 +720,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end 
 				
 
-				-- Cooldown Viewer Variables
+				-- Cooldown Manager Variables
 				if (self.db.profile.syncToggles.cooldownViewer == true) then
 				
 					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Cooldown Viewer] Loading Settings.")
+						self:Print("[Cooldown Manager] Loading Settings.")
 					end
 				
 					for k, v in pairs(self.CVars.CooldownViewer) do
@@ -732,6 +732,23 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							SetCVar(v, self.db.profile.syncData.cooldownViewer.cvars[v])
 						end
 					end
+					
+					--[[if (self:IsMainline() == true) then
+						local thisClass = UnitClassBase("player")
+						if (C_CooldownViewer.IsCooldownViewerAvailable() and self.db.profile.syncData.cooldownViewer.classes[thisClass]) then
+							if (self.db.global.printDebugTextToChat == true) then
+								self:Print("[Cooldown Manager] Loading CD Viewer String.")
+							end
+							C_CooldownViewer.SetLayoutData(self.db.profile.syncData.cooldownViewer.classes[thisClass])
+							--CooldownViewerSettings:GetSerializer():SetSerializedData(self.db.profile.syncData.cooldownViewer.classes[thisClass])
+							--CooldownViewerSettings:GetSerializer():SetSerializedData:WriteData()
+							CooldownViewerSettings:CheckSaveCurrentLayout()
+							EssentialCooldownViewer:RefreshData()
+							EssentialCooldownViewer:RefreshLayout()
+							UtilityCooldownViewer:RefreshData()
+							UtilityCooldownViewer:RefreshLayout()
+						end
+					end]]
 				
 				end
 				

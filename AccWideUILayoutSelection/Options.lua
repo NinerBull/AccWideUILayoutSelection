@@ -127,7 +127,10 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				cooldownViewer = {
-					cvars = {}
+					cvars = {}--[[,
+					classes = {
+						['**'] = nil
+					}]]
 				},
 				assistedCombat = {
 					cvars = {}

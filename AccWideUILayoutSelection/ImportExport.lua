@@ -1,5 +1,7 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
+-- C_EncodingUtil.EncodeBase64(C_EncodingUtil.CompressString(C_EncodingUtil.SerializeCBOR(TableHere)))
+-- C_EncodingUtil.DeserializeCBOR(C_EncodingUtil.DecompressString(C_EncodingUtil.DecodeBase64(Table)))
 
 function AccWideUIAceAddon:ExportProfile()
 

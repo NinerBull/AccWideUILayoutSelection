@@ -604,6 +604,14 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					for k, v in pairs(self.CVars.CooldownViewer) do
 						self.db.profile.syncData.cooldownViewer.cvars[v] = GetCVar(v) or nil
 					end
+					
+					--[[if (self:IsMainline() == true) then
+						if (C_CooldownViewer.IsCooldownViewerAvailable()) then
+							local thisClass = UnitClassBase("player")
+							self.db.profile.syncData.cooldownViewer.classes[thisClass] = C_CooldownViewer.GetLayoutData()
+							--self.db.profile.syncData.cooldownViewer.classes[thisClass] = CooldownViewerSettings:GetSerializer():GetSerializedData()
+						end
+					end]]
 				
 				end
 				
