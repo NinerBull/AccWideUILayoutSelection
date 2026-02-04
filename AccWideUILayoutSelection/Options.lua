@@ -166,7 +166,18 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						['**'] = {}
 					},
 					channelsJoined = {},
-					info = {}
+					info = {},
+					channelSpecial = {
+						['**'] = {
+							channelIndex = nil,
+							channelColor = {
+								r = nil,
+								g = nil,
+								b = nil
+							},
+							channelColorByClass = nil
+						}
+					}
 				},
 				bagOrganisation = {
 					bags = {},

@@ -1030,6 +1030,33 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							end
 						end
 					end, 16)
+					
+					
+					-- Newcomer Chat Exception
+					if (self:IsMainline() and self.chatChannelNames.newcomerChat) then
+						self:ScheduleTimer(function()
+						
+							if (self.db.global.printDebugTextToChat == true) then
+								self:Print("[Chat Window] Setting Newcomer Chat Settings.")
+							end
+							
+							if (self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex) then
+								local id, name, instanceID, isCommunitiesChannel = GetChannelName(self.chatChannelNames.newcomerChat)
+								
+								if (id ~= self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex) then
+									-- Move Channel
+									C_ChatInfo.SwapChatChannelsByChannelIndex(id, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex)
+								end
+								
+								if (self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.r) then
+									local v = "CHANNEL" .. self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex
+									ChangeChatColor(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.r, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.g, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.b)
+									SetChatColorNameByClass(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColorByClass)
+								end
+							end
+						
+						end, 20)
+					end
 				
 				
 				end

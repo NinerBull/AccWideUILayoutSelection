@@ -486,6 +486,34 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						end
 					end
 				end
+				
+				
+				-- Newcomer Chat Exception
+				if (self:IsMainline() and self.chatChannelNames.newcomerChat) then
+				
+					if (((GetChannelName(self.chatChannelNames.newcomerChat))) ~= 0) then
+					
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Chat Window] Saving Newcomer Chat Settings.")
+						end
+							
+						local thisChannelName = "CHANNEL" .. ((GetChannelName(AccWideUIAceAddon.chatChannelNames.newcomerChat)))
+						local thisChannelInfo = ChatTypeInfo[thisChannelName]
+						
+						if thisChannelInfo then
+							
+							self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex = ((GetChannelName(AccWideUIAceAddon.chatChannelNames.newcomerChat)))
+							self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor = {
+								r = thisChannelInfo.r,
+								g = thisChannelInfo.g,
+								b = thisChannelInfo.b
+							}
+							self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColorByClass = thisChannelInfo.colorNameByClass
+						
+						end					
+						
+					end
+				end
 			
 			end
 			
