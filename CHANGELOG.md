@@ -1,5 +1,5 @@
 - Changed how Damage Meter Settings are applied:
-  - Addon will no longer destory and recreate the windows, it will now always create the max number of windows, and hide the ones that do not need to be show.
+  - Addon will no longer destory and recreate the windows, it will now always create the max number of windows, and hide the ones that do not need to be shown.
   - Disabled syncing whether Damage Meters are locked and what meter type to show, due to it causing secret-related errors, somehow.
 - Chat windows now have a unique set of variables for the NewcomerChat channel, so settings should now carry over to chars in this Channel correctly.
 
