@@ -695,30 +695,40 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						self.db.profile.syncData.damageMeter.cvars[v] = GetCVar(v) or nil
 					end
 					
+					
+					self.db.profile.syncData.damageMeter.special.settings = {
+						windowDataList = {}
+					}
 					if (DamageMeterPerCharacterSettings) then
-						self.db.profile.syncData.damageMeter.special.settings = {}
 						self.db.profile.syncData.damageMeter.special.settings = CopyTable(DamageMeterPerCharacterSettings)
 					end
 					
 					for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
 						self.db.profile.syncData.damageMeter.special.position[i] = nil
 						
-						local thisDamageMeter = _G["DamageMeterSessionWindow" .. i]
-						if (thisDamageMeter and DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then -- First Window is set by Edit Mode
-							
-							self.db.profile.syncData.damageMeter.special.size[i] = {}
-							self.db.profile.syncData.damageMeter.special.size[i].x = thisDamageMeter:GetWidth()
-							self.db.profile.syncData.damageMeter.special.size[i].y = thisDamageMeter:GetHeight()
+						local thisDamageMeter = DamageMeter:GetSessionWindow(i) -- DamageMeterSessionWindow
 						
-							self.db.profile.syncData.damageMeter.special.position[i] = {}
-							self.db.profile.syncData.damageMeter.special.position[i].point = select(1, thisDamageMeter:GetPoint())
-							self.db.profile.syncData.damageMeter.special.position[i].relativePoint = select(3, thisDamageMeter:GetPoint())
-							self.db.profile.syncData.damageMeter.special.position[i].offsetX = select(4, thisDamageMeter:GetPoint())
-							self.db.profile.syncData.damageMeter.special.position[i].offsetY = select(5, thisDamageMeter:GetPoint())
-							--self.db.profile.syncData.damageMeter.special.position[i].offsetX = thisDamageMeter:GetLeft()
-							--self.db.profile.syncData.damageMeter.special.position[i].offsetY = thisDamageMeter:GetTop()
+						if (thisDamageMeter) then
+						
+							self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].damageMeterType = DamageMeter:GetSessionWindowDamageMeterType(thisDamageMeter)
 							
+							if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then -- First Window is set by Edit Mode
+								
+								self.db.profile.syncData.damageMeter.special.size[i] = {}
+								self.db.profile.syncData.damageMeter.special.size[i].x = thisDamageMeter:GetWidth()
+								self.db.profile.syncData.damageMeter.special.size[i].y = thisDamageMeter:GetHeight()
 							
+								self.db.profile.syncData.damageMeter.special.position[i] = {}
+								self.db.profile.syncData.damageMeter.special.position[i].point = select(1, thisDamageMeter:GetPoint())
+								self.db.profile.syncData.damageMeter.special.position[i].relativePoint = select(3, thisDamageMeter:GetPoint())
+								self.db.profile.syncData.damageMeter.special.position[i].offsetX = select(4, thisDamageMeter:GetPoint())
+								self.db.profile.syncData.damageMeter.special.position[i].offsetY = select(5, thisDamageMeter:GetPoint())
+								--self.db.profile.syncData.damageMeter.special.position[i].offsetX = thisDamageMeter:GetLeft()
+								--self.db.profile.syncData.damageMeter.special.position[i].offsetY = thisDamageMeter:GetTop()
+								
+								
+							end
+						
 						end
 						
 					end

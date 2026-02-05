@@ -8,7 +8,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 	
 		self:CancelAllTimers()
 		
-		if (InCombatLockdown()) then
+		if (InCombatLockdown() or IsEncounterInProgress()) then
 			self.TempData.LoadSettingsAfterCombat = true
 		else
 			self.TempData.LoadSettingsAfterCombat = false
@@ -857,62 +857,101 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					
 						if next(self.db.profile.syncData.damageMeter.special.settings) then
 					
-							DamageMeterPerCharacterSettings = nil
-							DamageMeterPerCharacterSettings = CopyTable(self.db.profile.syncData.damageMeter.special.settings)
+							--DamageMeterPerCharacterSettings = CopyTable(self.db.profile.syncData.damageMeter.special.settings)
 							
-							DamageMeter:LoadSavedWindowDataList()
+							--DamageMeter:LoadSavedWindowDataList()
+							
+							
+							-- Create Windows
+							for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
+								DamageMeter:ShowNewSessionWindow()
+							end
+							
 							
 							for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
-								local thisDamageMeter = _G["DamageMeterSessionWindow" .. i]
+								local thisDamageMeter = DamageMeter:GetSessionWindow(i) -- DamageMeterSessionWindow1 / 2 / 3
 								
 								if (thisDamageMeter) then
-								
-									if (DamageMeterPerCharacterSettings.windowDataList[i]) then
+									--Hide Windows we don't need
+									if (self.db.profile.syncData.damageMeter.special.settings.windowDataList[i]) then
 									
 										if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
-											if (DamageMeterPerCharacterSettings.windowDataList[i].shown == true) then
+											if (self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].shown == true) then
 												thisDamageMeter:Show()
 											else
 												DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
 											end
 										end
 										
-										--thisDamageMeter:SetDamageMeterType(DamageMeterPerCharacterSettings.windowDataList[i].damageMeterType)
-										DamageMeter:SetSessionWindowDamageMeterType(thisDamageMeter, DamageMeterPerCharacterSettings.windowDataList[i].damageMeterType)
-										
-										--thisDamageMeter:SetLocked(DamageMeterPerCharacterSettings.windowDataList[i].locked)
-										DamageMeter:SetSessionWindowLocked(thisDamageMeter, DamageMeterPerCharacterSettings.windowDataList[i].locked)
+									else
+										--Hide if we have no saved info
+										if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
+											DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
+										end
 									end
-									
-									
-									if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then
-									
-										self:ScheduleTimer(function() 
-											if (self.db.profile.syncData.damageMeter.special.size[i]) then -- First window is set via Edit Mode
-												thisDamageMeter:SetSize(
-													self.db.profile.syncData.damageMeter.special.size[i].x,
-													self.db.profile.syncData.damageMeter.special.size[i].y
-												)
-											end
-										end, 0.3)
-										
-										
-										self:ScheduleTimer(function() 
-											if (self.db.profile.syncData.damageMeter.special.position[i]) then -- First window is set via Edit Mode
-												thisDamageMeter:ClearAllPoints()
-												thisDamageMeter:SetPoint(
-													self.db.profile.syncData.damageMeter.special.position[i].point,
-													UIParent,
-													self.db.profile.syncData.damageMeter.special.position[i].relativePoint,
-													self.db.profile.syncData.damageMeter.special.position[i].offsetX,
-													self.db.profile.syncData.damageMeter.special.position[i].offsetY
-												)
-											end
-										end, 0.6)
-									
-									end
-									
+								
 								end
+								
+								self:ScheduleTimer(function() 
+								
+									local thisDamageMeter = DamageMeter:GetSessionWindow(i) 
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Damage Meter] Check WDL for DM " .. i)
+									end
+								
+									if (thisDamageMeter and self.db.profile.syncData.damageMeter.special.settings.windowDataList[i]) then
+									
+										if (self.db.global.printDebugTextToChat == true) then
+											self:Print("[Damage Meter] WDL for DM " .. i)
+										end
+									
+										--thisDamageMeter:SetDamageMeterType(self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].damageMeterType)
+										--DamageMeter:SetSessionWindowDamageMeterType(thisDamageMeter, self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].damageMeterType)
+										
+										--thisDamageMeter:SetLocked(self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].locked)
+										--DamageMeter:SetSessionWindowLocked(thisDamageMeter, self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].locked)
+										
+										if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then
+										
+											self:ScheduleTimer(function() 
+												if (self.db.profile.syncData.damageMeter.special.size[i]) then -- First window is set via Edit Mode
+												
+													if (self.db.global.printDebugTextToChat == true) then
+														self:Print("[Damage Meter] Set Size for DM " .. i)
+													end
+												
+													thisDamageMeter:SetSize(
+														self.db.profile.syncData.damageMeter.special.size[i].x,
+														self.db.profile.syncData.damageMeter.special.size[i].y
+													)
+												end
+											end, 0.3)
+											
+											
+											self:ScheduleTimer(function() 
+												if (self.db.profile.syncData.damageMeter.special.position[i]) then -- First window is set via Edit Mode
+												
+													if (self.db.global.printDebugTextToChat == true) then
+														self:Print("[Damage Meter] Set Position for DM " .. i)
+													end
+												
+													thisDamageMeter:ClearAllPoints()
+													thisDamageMeter:SetPoint(
+														self.db.profile.syncData.damageMeter.special.position[i].point,
+														UIParent,
+														self.db.profile.syncData.damageMeter.special.position[i].relativePoint,
+														self.db.profile.syncData.damageMeter.special.position[i].offsetX,
+														self.db.profile.syncData.damageMeter.special.position[i].offsetY
+													)
+												end
+											end, 0.6)
+										
+										end
+										
+									end
+								
+								end, 0.3)
 								
 							end
 						
@@ -1485,7 +1524,7 @@ end
 
 
 function AccWideUIAceAddon:ForceLoadSettings() 
-	if (not InCombatLockdown()) then
+	if (not InCombatLockdown() and not IsEncounterInProgress()) then
 		if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
 			 self.TempData.EditModeExpandedTriggered = true
 		end
