@@ -87,7 +87,7 @@ You can access the config by any of the following methods:
 ## Translations
 * **Russian** by [ZamestoTV](https://github.com/Hubbotu)
 
-### ⚠️ Known Issues
+## ⚠️ Known Issues
 - The following functions are disabled in Midnight due to them triggering secret-related errors:
   - Damage Meter's locked status, and what data to show.
   - Reordering Chat Channels (Syncing what number slot each channel uses, e.g. /2 for trade)

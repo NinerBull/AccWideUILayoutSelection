@@ -3,7 +3,7 @@
   - Disabled syncing whether Damage Meters are locked and what meter type to show, due to it causing secret-related errors, somehow.
 - Chat windows now have a unique set of variables for the NewcomerChat channel, so settings should now carry over to chars in this Channel correctly.
 
-### ⚠️ Known Issues
+## ⚠️ Known Issues
 - The following functions are disabled in Midnight due to them triggering secret-related errors:
   - Damage Meter's locked status, and what data to show.
   - Reordering Chat Channels (Syncing what number slot each channel uses, e.g. /2 for trade)
