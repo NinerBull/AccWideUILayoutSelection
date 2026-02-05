@@ -262,7 +262,7 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 			self:Print("[Debug] Profile Changed.")
 		end
 
-		if (not InCombatLockdown()) then
+		if (not InCombatLockdown() and not IsEncounterInProgress()) then
 			if (self.db.global.disableAutoSaveLoad == false) then
 				if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
 					 self.TempData.EditModeExpandedTriggered = true
@@ -570,7 +570,7 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 					self:Printf(L["ACCWUI_LOAD_REGULAR"], self.TempData.TextSlash)
 				end
 
-				if (not InCombatLockdown()) then
+				if (not InCombatLockdown() and not IsEncounterInProgress()) then
 					self:ScheduleTimer(function()
 						self:LoadUISettings()
 					end, 5)
@@ -642,7 +642,7 @@ end
 
 
 function AccWideUIAceAddon:ACTIVE_TALENT_GROUP_CHANGED(event, arg1, arg2)
-	if (not InCombatLockdown() and self.TempData.HasDoneInitialLoad) then
+	if (not InCombatLockdown() and not IsEncounterInProgress() and self.TempData.HasDoneInitialLoad) then
 		self:ScheduleTimer(function()
 			self:LoadEditModeSettings()
 		end, 0.5)
