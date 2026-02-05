@@ -86,3 +86,10 @@ You can access the config by any of the following methods:
 
 ## Translations
 * **Russian** by [ZamestoTV](https://github.com/Hubbotu)
+
+### ⚠️ Known Issues
+- The following functions are disabled in Midnight due to them triggering secret-related errors:
+  - Damage Meter's locked status, and what data to show.
+  - Reordering Chat Channels (Syncing what number slot each channel uses, e.g. /2 for trade)
+- Any Damage Meter windows created by this addon that did not already exist on the character you logged into (e.g. a fresh character) will cause Taint errors when clicking a character to view more info.
+  - This should not occur again after relogging into the same character, or typing `/reload` into the chat box, as long as you do not manually close and re-open the extra Damage Meter window(s).
