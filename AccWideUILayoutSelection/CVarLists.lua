@@ -179,6 +179,7 @@ AccWideUIAceAddon.CVars = {
 	},
 
 	ActionBars = {
+		--"enableMultiActionBars",
 		"multiBarRightVerticalLayout"
 	},
 
@@ -235,6 +236,14 @@ AccWideUIAceAddon.CVars = {
 		"questHelper",
 		"showBosses",
 		"worldMapOpacity"
+	},
+	
+	Minimap = {
+		"minimapInsideZoom",
+		"minimapShowArchBlobs",
+		"minimapShowQuestBlobs",
+		"minimapZoom",
+		"minimapTrackingShowAll"
 	},
 	
 	CalendarFilters = {

@@ -477,6 +477,30 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end 
 			
 			
+			-- Minimap Variables
+			if (self.db.profile.syncToggles.minimap == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Minimap] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.Minimap) do
+					if (self.db.profile.syncData.minimap.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.minimap.cvars[v])
+					end
+				end
+				
+				if Minimap then
+					if IsIndoors and IsIndoors() then
+						Minimap:SetZoom(GetCVar("minimapInsideZoom") or GetCVarDefault("minimapInsideZoom"))
+					elseif IsOutdoors and IsOutdoors() then
+						Minimap:SetZoom(GetCVar("minimapZoom") or GetCVarDefault("minimapZoom"))
+					end
+				end
+			
+			end 
+			
+			
 			-- Calendar Filter Variables
 			if (self.db.profile.syncToggles.calendarFilters == true) then
 			
