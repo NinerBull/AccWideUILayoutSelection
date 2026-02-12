@@ -72,7 +72,9 @@ AccWideUIAceAddon.CVars = {
 		"nameplateCommentatorMaxDistance",
 		"showVKeyCastbarSpellName",
 		"showVKeyCastbarOnlyOnTarget",
-		"nameplateShowCastBars"
+		"nameplateShowCastBars",
+		"nameplateSimplifiedScale",
+		"nameplateUseClassColorForFriendlyPlayerUnitNames"
 	},
 
 	RaidFrames = {
@@ -106,7 +108,8 @@ AccWideUIAceAddon.CVars = {
 		"raidFramesDispelIndicatorOverlay",
 		"raidFramesDispelIndicatorType",
 		"raidFramesDisplayLargerRoleSpecificDebuffs",
-		"raidFramesHealthBarColor"
+		"raidFramesHealthBarColor",
+		"raidFramesHealthBarColorBG"
 	},
 
 	ArenaFrames = {
@@ -204,7 +207,8 @@ AccWideUIAceAddon.CVars = {
 	},
 		
 	DamageMeter = {
-		"damageMeterEnabled"
+		"damageMeterEnabled",
+		"damageMeterResetOnNewInstance"
 	},
 	
 	WorldMap = {
