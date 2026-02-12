@@ -709,10 +709,11 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						self.db.profile.syncData.damageMeter.cvars[v] = GetCVar(v) or nil
 					end
 					
-					
+					--[[
 					self.db.profile.syncData.damageMeter.special.settings = {
 						windowDataList = {}
 					}
+					
 					if (DamageMeterPerCharacterSettings) then
 						self.db.profile.syncData.damageMeter.special.settings = CopyTable(DamageMeterPerCharacterSettings)
 					end
@@ -746,6 +747,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						end
 						
 					end
+					]]
 				
 				end
 			

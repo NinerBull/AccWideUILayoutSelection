@@ -877,7 +877,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						end
 					end
 					
-					if (self.db.profile.syncData.damageMeter.special.settings) then
+					--[[if (self.db.profile.syncData.damageMeter.special.settings) then
 					
 						if next(self.db.profile.syncData.damageMeter.special.settings) then
 					
@@ -981,7 +981,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 						end
 						
-					end
+					end]]
 				
 				end
 			
