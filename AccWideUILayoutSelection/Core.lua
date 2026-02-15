@@ -12,7 +12,7 @@ AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi",
 	IsCurrentlyLoadingSettings = false,
 	LoadSettingsAfterCombat = false,
-	ProfileSaveVer = 2
+	ProfileSaveVer = 3
 }
 
 
@@ -186,14 +186,19 @@ end
 
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
-	do
-		-- Nil old variables
-		self.db.profile.syncToggles.blockSocial = nil
-		self.db.profile.syncData.blockSocial = nil
-		self.db.profile.syncData.mouseoverCast.cvars.autoSelfCast = nil
+
+
+	-- Profile Upgrade
+	if (self.db.profile.profileSaveVer and self.db.profile.profileSaveVer < 3) then
+	
+		if (GetCVar("spellActivationOverlayOpacity") == "0") then
+			SetCVar("spellActivationOverlayOpacity", GetCVarDefault("spellActivationOverlayOpacity"))
+		end
+	
 	end
-
-
+	
+	
+	
 	-- Edit Mode Spec Settings
 	if (self.db.char.useEditModeLayout.hasBeenPrepared ~= true) then
 		for SpecX = 1, 5 do
@@ -288,7 +293,8 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 	end
 	
 	AccWideUIAceAddon.LDB.text = AccWideUIAceAddon.db:GetCurrentProfile()
-
+	
+	self.db.profile.profileSaveVer = self.TempData.ProfileSaveVer
 
 end
 

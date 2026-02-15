@@ -19,7 +19,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			}
 		},
 		profile = {
-			profileSaveVer = self.TempData.ProfileSaveVer,
+			profileSaveVer = 1,
 			lastSaved = {
 				character = "Unknown",
 				unixTime = GetServerTime()

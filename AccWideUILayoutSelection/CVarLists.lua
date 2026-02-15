@@ -134,8 +134,7 @@ AccWideUIAceAddon.CVars = {
 	},
 
 	SpellOverlay = {
-		"displaySpellActivationOverlays",
-		"spellActivationOverlayOpacity"
+		"displaySpellActivationOverlays"
 	},
 
 	AutoLoot = {

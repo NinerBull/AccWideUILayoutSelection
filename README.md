@@ -57,7 +57,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * Custom CVar Support - Enter your own additional list of CVars to synchronise across characters, enable in Advanced Settings
 
 ## Compatibility
-* **Midnight** - 12.0.0
+* **Midnight** - 12.0.1
 * **MoP Classic** - 5.5.3
 * **TBC Classic** - 2.5.5
 * **Classic Era** - 1.15.8
