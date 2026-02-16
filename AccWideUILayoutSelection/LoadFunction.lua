@@ -1330,11 +1330,16 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							if (not self:IsMainline()) then
 								--Triggering this in Retail causes secret errors when chat lockdown is enabled
 								local f = _G["ChatFrame" .. thisChatFrame];
-								f:GetScript("OnEvent")(f, "UPDATE_CHAT_WINDOWS");
+								f:GetScript("OnEvent")(f, "UPDATE_FLOATING_CHAT_WINDOWS");
 							
 							end
 							
 						end, 4)
+						
+						self:ScheduleTimer(function()
+							FCF_DockUpdate()
+						end, 5.5)
+						
 					
 					
 					end
