@@ -137,12 +137,12 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				damageMeter = {
-					cvars = {},
+					cvars = {}--[[,
 					special = {
 						settings = {},
 						position = {},
 						size = {}
-					}
+					}]]
 				},
 				externalDefensives = {
 					cvars = {}
@@ -209,8 +209,21 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				customCVars = {
 					cvarList = "",
 					cvarData = {},
+				},
+				retailTaintables = { -- Table to hold Midnight specific data that can taint the UI
+					chat = {
+						windows = {
+							['**'] = {}
+						},
+					},
+					damageMeter = {
+						special = {
+							settings = {},
+							position = {},
+							size = {}
+						}
+					}
 				}
-
 			},
 			blizzChannels = {
 				['**'] = "default"
@@ -237,7 +250,7 @@ end
 function AccWideUIAceAddon:GenerateOptions()
 
 	local thisCheckboxWidth = 1.6
-	local thisCheckboxWidth2 = 1.65
+	local thisCheckboxWidth2 = 1.68
 
 	AccWideUIAceAddon.optionsData = {
 		type = "group",
@@ -248,7 +261,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			desc = {
 				type = "description",
 				fontSize = "small",
-				order = 1,
+				order = 10,
 				width = "full",
 				name = L["ACCWUI_OPT_TITLE_DESC"]
 			},
@@ -256,7 +269,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				type = "group",
 				name = L["ACCWUI_OPT_SYNCSETTINGS_TITLE"],
 				desc = L["ACCWUI_OPT_SYNCSETTINGS_DESC"],
-				order = 2,
+				order = 20,
 				args = {
 					syncToggles = {
 						type = "group",
@@ -633,9 +646,9 @@ function AccWideUIAceAddon:GenerateOptions()
 			},
 			channels = {
 				type = "group",
-				name = L["ACCWUI_BLOCKBLIZZ_TITLE"],
+				name = CHAT_CHANNELS,
 				desc = L["ACCWUI_BLOCKBLIZZ_DESC"],
-				order = 4,
+				order = 40,
 				get = "GetBlizzChannelToggle",
 				set = "SetBlizzChannelToggle",
 				args = {
@@ -760,13 +773,113 @@ function AccWideUIAceAddon:GenerateOptions()
 					},
 				}
 			},
+			retailTaintables = {
+				type = "group",
+				name = L["ACCWUI_TAINTABLES_TITLE"],
+				desc = "ASDF",
+				order = 30,
+				args = {
+					desc = {
+						type = "description",
+						fontSize = "medium",
+						order = 1,
+						width = "full",
+						name = L["ACCWUI_TAINTABLES_DESC"]
+					},
+					retailTaintablesBtns = {
+						type = "group",
+						name = L["ACCWUI_TAINTABLES_GROUPTITLE"],
+						order = 21,
+						inline = true,
+						width = "full",
+						args = {
+							btnRTLoadAll = {
+								type = "execute",
+								name = L["ACCWUI_TAINTABLES_BTN_LOADALL"],
+								desc = L["ACCWUI_TAINTABLES_BTN_LOADALL_DESC"] ,
+								width = thisCheckboxWidth2,
+								order = 1,
+								func = function()
+									self:RetailTaintableLoadAll()
+								end,
+								disabled = function()
+									return (not self.db.profile.syncData.retailTaintables.chat.windows[1].ChatChannelsVisible and 
+										not self.db.profile.syncData.retailTaintables.damageMeter.special.settings)
+								end
+							},
+							btnRTSaveAll = {
+								type = "execute",
+								name = L["ACCWUI_TAINTABLES_BTN_SAVEALL"],
+								desc = L["ACCWUI_TAINTABLES_BTN_SAVEALL_DESC"],
+								width = thisCheckboxWidth2,
+								order = 3,
+								func = function()
+									self:RetailTaintableSaveAll()
+								end
+							},
+							rtDiv1 = {
+								type = "header",
+								name = "",
+								order = 10,
+								width = "full",
+							},
+							btnRTLoadDM = {
+								type = "execute",
+								name = L["ACCWUI_TAINTABLES_BTN_LOADDM"],
+								desc = L["ACCWUI_TAINTABLES_BTN_LOADDM_DESC"],
+								width = thisCheckboxWidth2,
+								order = 20,
+								func = function()
+									self:RetailTaintableLoadDamageMeter()
+								end,
+								disabled = function()
+									return not self.db.profile.syncData.retailTaintables.damageMeter.special.settings
+								end
+							},
+							btnRTSaveDM = {
+								type = "execute",
+								name = L["ACCWUI_TAINTABLES_BTN_SAVEDM"],
+								desc = L["ACCWUI_TAINTABLES_BTN_SAVEDM_DESC"],
+								width = thisCheckboxWidth2,
+								order = 21,
+								func = function()
+									self:RetailTaintableSaveDamageMeter()
+								end,
+							},
+							btnRTLoadChat = {
+								type = "execute",
+								name = L["ACCWUI_TAINTABLES_BTN_LOADVCT"],
+								desc = L["ACCWUI_TAINTABLES_BTN_LOADVCT_DESC"],
+								width = thisCheckboxWidth2,
+								order = 30,
+								func = function()
+									self:RetailTaintableLoadChat()
+								end,
+								disabled = function()
+									return not self.db.profile.syncData.retailTaintables.chat.windows[1].ChatChannelsVisible
+								end
+							},
+							btnRTSaveChat = {
+								type = "execute",
+								name = L["ACCWUI_TAINTABLES_BTN_SAVEVCT"],
+								desc = L["ACCWUI_TAINTABLES_BTN_SAVEVCT_DESC"],
+								width = thisCheckboxWidth2,
+								order = 31,
+								func = function()
+									self:RetailTaintableSaveChat()
+								end,
+							},
+						}
+					}
+				}
+			},
 			advanced = {
 				type = "group",
-				name = ADVANCED_OPTIONS,
+				name = ADVANCED_LABEL,
 				--handler = AccWideUIAceAddon,
 				get = "GetGlobalToggle",
 				set = "SetGlobalToggle",
-				order = 5,
+				order = 100,
 				args = {
 					desc = {
 						type = "description",
@@ -1048,6 +1161,7 @@ function AccWideUIAceAddon:GenerateOptions()
 
 		self.optionsData.args.settings.args.syncToggles.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
+		self.optionsData.args.advanced.args.retailTaintables = nil
 	end
 
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicTBC() == false) then

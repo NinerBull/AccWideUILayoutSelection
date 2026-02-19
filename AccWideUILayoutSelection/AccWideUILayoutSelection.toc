@@ -48,6 +48,6 @@ ChatChannels.lua
 SaveFunction.lua
 LoadFunction.lua
 Options.lua
-Onboarding.lua
+StaticPopUps.lua
 AddonCompartment.lua
 ImportExport.lua

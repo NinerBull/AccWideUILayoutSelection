@@ -37,7 +37,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:GenerateOptions()
 	local profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
 	self.optionsData.args.profiles = profiles
-	self.optionsData.args.profiles.order = 4
+	self.optionsData.args.profiles.order = 40
 	AC:RegisterOptionsTable("AccWideUIAceAddon_Options", self.optionsData)
 
 	self.optionsFrame = ACD:AddToBlizOptions("AccWideUIAceAddon_Options", L["ACCWUI_ADDONNAME_SHORT"])

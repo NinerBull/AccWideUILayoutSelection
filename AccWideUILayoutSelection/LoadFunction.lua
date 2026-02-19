@@ -877,111 +877,6 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						end
 					end
 					
-					--[[if (self.db.profile.syncData.damageMeter.special.settings) then
-					
-						if next(self.db.profile.syncData.damageMeter.special.settings) then
-					
-							--DamageMeterPerCharacterSettings = CopyTable(self.db.profile.syncData.damageMeter.special.settings)
-							
-							--DamageMeter:LoadSavedWindowDataList()
-							
-							
-							-- Create Windows
-							for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
-								DamageMeter:ShowNewSessionWindow()
-							end
-							
-							
-							for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
-								local thisDamageMeter = DamageMeter:GetSessionWindow(i) -- DamageMeterSessionWindow1 / 2 / 3
-								
-								if (thisDamageMeter) then
-									--Hide Windows we don't need
-									if (self.db.profile.syncData.damageMeter.special.settings.windowDataList[i]) then
-									
-										if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
-											if (self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].shown == true) then
-												thisDamageMeter:Show()
-											else
-												DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
-											end
-										end
-										
-									else
-										--Hide if we have no saved info
-										if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
-											DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
-										end
-									end
-								
-								end
-								
-								self:ScheduleTimer(function() 
-								
-									local thisDamageMeter = DamageMeter:GetSessionWindow(i) 
-									
-									if (self.db.global.printDebugTextToChat == true) then
-										self:Print("[Damage Meter] Check WDL for DM " .. i)
-									end
-								
-									if (thisDamageMeter and self.db.profile.syncData.damageMeter.special.settings.windowDataList[i]) then
-									
-										if (self.db.global.printDebugTextToChat == true) then
-											self:Print("[Damage Meter] WDL for DM " .. i)
-										end
-									
-										--thisDamageMeter:SetDamageMeterType(self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].damageMeterType)
-										--DamageMeter:SetSessionWindowDamageMeterType(thisDamageMeter, self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].damageMeterType)
-										
-										--thisDamageMeter:SetLocked(self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].locked)
-										--DamageMeter:SetSessionWindowLocked(thisDamageMeter, self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].locked)
-										
-										if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then
-										
-											self:ScheduleTimer(function() 
-												if (self.db.profile.syncData.damageMeter.special.size[i]) then -- First window is set via Edit Mode
-												
-													if (self.db.global.printDebugTextToChat == true) then
-														self:Print("[Damage Meter] Set Size for DM " .. i)
-													end
-												
-													thisDamageMeter:SetSize(
-														self.db.profile.syncData.damageMeter.special.size[i].x,
-														self.db.profile.syncData.damageMeter.special.size[i].y
-													)
-												end
-											end, 0.3)
-											
-											
-											self:ScheduleTimer(function() 
-												if (self.db.profile.syncData.damageMeter.special.position[i]) then -- First window is set via Edit Mode
-												
-													if (self.db.global.printDebugTextToChat == true) then
-														self:Print("[Damage Meter] Set Position for DM " .. i)
-													end
-												
-													thisDamageMeter:ClearAllPoints()
-													thisDamageMeter:SetPoint(
-														self.db.profile.syncData.damageMeter.special.position[i].point,
-														UIParent,
-														self.db.profile.syncData.damageMeter.special.position[i].relativePoint,
-														self.db.profile.syncData.damageMeter.special.position[i].offsetX,
-														self.db.profile.syncData.damageMeter.special.position[i].offsetY
-													)
-												end
-											end, 0.6)
-										
-										end
-										
-									end
-								
-								end, 0.3)
-								
-							end
-						
-						end
-						
-					end]]
 				
 				end
 			
@@ -1227,10 +1122,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
 								)
 								
-								--[[ FCF_SetWindowName(
+								FCF_SetWindowName(
 									thisChatFrameVar,
 									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-								) ]] 
+								)
 								
 								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size >= 10) then
 								
@@ -1368,7 +1263,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					--Visible Chat Channels
 					self:ScheduleTimer(function() 
 					
-						-- TEMP DISABLED FOR RETAIL DUE TO CAUSING TAINT IN INSTANCES (WTF?!) 12.0.0
+						-- Duplicated in Taintables below
 						if (not self:IsMainline()) then
 					
 							if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
@@ -1565,3 +1460,199 @@ function AccWideUIAceAddon:ForceLoadSettings()
 		self.TempData.LoadSettingsAfterCombat = true
 	end
 end
+
+
+function AccWideUIAceAddon:RetailTaintableLoadAll() 
+	
+	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+		self:RetailTaintableLoadDamageMeter(true) 
+		self:RetailTaintableLoadChat(true)
+		self:Print("[Midnight] Loaded all Midnight Settings.")
+		StaticPopup_Show("ACCWIDEUI_LOAD_REQUIREDRELOAD")
+	end
+
+end
+
+function AccWideUIAceAddon:RetailTaintableLoadDamageMeter(skipLoadMessage) 
+
+	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	
+		if (self.db.profile.syncData.retailTaintables.damageMeter.special.settings) then
+		
+			if next(self.db.profile.syncData.retailTaintables.damageMeter.special.settings) then
+		
+				DamageMeterPerCharacterSettings = CopyTable(self.db.profile.syncData.retailTaintables.damageMeter.special.settings)
+				
+				DamageMeter:LoadSavedWindowDataList()
+				
+				-- Create Windows
+				--[[for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
+					DamageMeter:ShowNewSessionWindow()
+				end]]
+				
+				for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
+					local thisDamageMeter = DamageMeter:GetSessionWindow(i) -- DamageMeterSessionWindow1 / 2 / 3
+					
+					if (thisDamageMeter) then
+						--Hide Windows we don't need
+						if (self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i]) then
+						
+							if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
+								if (self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i].shown == true) then
+									thisDamageMeter:Show()
+								else
+									DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
+								end
+							end
+							
+						else
+							--Hide if we have no saved info
+							if (DamageMeter:CanHideSessionWindow(thisDamageMeter)) then
+								DamageMeter:HideSessionWindow(thisDamageMeter) --thisDamageMeter:Hide()
+							end
+						end
+					
+					end
+					
+					
+					self:ScheduleTimer(function() 
+					
+						local thisDamageMeter = DamageMeter:GetSessionWindow(i) 
+						
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Midnight Damage Meter] Check WDL for DM " .. i)
+						end
+					
+						if (thisDamageMeter and self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i]) then
+						
+							if (self.db.global.printDebugTextToChat == true) then
+								self:Print("[Midnight Damage Meter] WDL for DM " .. i)
+							end
+						
+							thisDamageMeter:SetDamageMeterType(self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i].damageMeterType)
+							--DamageMeter:SetSessionWindowDamageMeterType(thisDamageMeter, self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i].damageMeterType)
+							
+							thisDamageMeter:SetLocked(self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i].locked)
+							--DamageMeter:SetSessionWindowLocked(thisDamageMeter, self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i].locked)
+							
+							if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then
+							
+								self:ScheduleTimer(function() 
+									if (self.db.profile.syncData.retailTaintables.damageMeter.special.size[i]) then -- First window is set via Edit Mode
+									
+										if (self.db.global.printDebugTextToChat == true) then
+											self:Print("[Midnight Damage Meter] Set Size for DM " .. i)
+										end
+									
+										thisDamageMeter:SetSize(
+											self.db.profile.syncData.retailTaintables.damageMeter.special.size[i].x,
+											self.db.profile.syncData.retailTaintables.damageMeter.special.size[i].y
+										)
+									end
+								end, 0.3)
+								
+								
+								self:ScheduleTimer(function() 
+									if (self.db.profile.syncData.retailTaintables.damageMeter.special.position[i]) then -- First window is set via Edit Mode
+									
+										if (self.db.global.printDebugTextToChat == true) then
+											self:Print("[Midnight Damage Meter] Set Position for DM " .. i)
+										end
+									
+										thisDamageMeter:ClearAllPoints()
+										thisDamageMeter:SetPoint(
+											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].point,
+											UIParent,
+											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].relativePoint,
+											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetX,
+											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetY
+										)
+									end
+								end, 0.6)
+							
+							end
+							
+						end
+					
+					end, 0.3)
+					
+				end
+			
+			end
+			
+			self:Print("[Midnight] Loaded Damage Meter Settings.")
+			
+			if not skipLoadMessage then
+				StaticPopup_Show("ACCWIDEUI_LOAD_REQUIREDRELOAD")
+			end
+			
+		end
+	
+		
+	end
+
+end
+
+
+function AccWideUIAceAddon:RetailTaintableLoadChat(skipLoadMessage)
+	
+	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	
+		for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
+		
+			local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+	
+			if (self.db.profile.syncData.retailTaintables.chat.windows[thisChatFrame]) then
+				if (type(self.db.profile.syncData.retailTaintables.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
+				
+					local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+					
+					if thisWindowChannels then
+		
+						for i = 1, #thisWindowChannels, 2 do
+							local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+							
+							if (self.db.global.printDebugTextToChat == true) then
+								self:Print("[Midnight Chat Window] Removing " .. chn .. " From Window " .. thisChatFrame .. ".")
+							end
+
+							if thisChatFrameVar.RemoveChannel then
+								thisChatFrameVar:RemoveChannel(chn) -- 12.0.0
+							else
+								ChatFrame_RemoveChannel(thisChatFrameVar, chn)
+							end
+							
+						end
+					
+					end
+				
+					for k,v in pairs(self.db.profile.syncData.retailTaintables.chat.windows[thisChatFrame].ChatChannelsVisible) do
+					
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Midnight Chat Window] Adding " .. v .. " To Window " .. thisChatFrame .. ".")
+						end
+							
+						if thisChatFrameVar.AddChannel then
+							thisChatFrameVar:AddChannel(v) -- 12.0.0
+						else
+							ChatFrame_AddChannel(thisChatFrameVar, v)
+						end
+																								
+					end
+				end
+				
+				
+				
+			end
+		
+		end
+		
+		self:Print("[Midnight] Loaded Chat Channels Per Tab Settings.")
+		
+		if not skipLoadMessage then
+			StaticPopup_Show("ACCWIDEUI_LOAD_REQUIREDRELOAD")
+		end
+		
+	end
+	
+end 

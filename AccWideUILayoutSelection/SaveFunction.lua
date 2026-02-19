@@ -441,7 +441,8 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					
 					
 					--Chat Channels
-					do
+					
+					if (not self:IsMainline()) then -- 12.0.0 Taints in Midnight
 						self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible = {}
 						
 						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
@@ -709,46 +710,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						self.db.profile.syncData.damageMeter.cvars[v] = GetCVar(v) or nil
 					end
 					
-					--[[
-					self.db.profile.syncData.damageMeter.special.settings = {
-						windowDataList = {}
-					}
-					
-					if (DamageMeterPerCharacterSettings) then
-						self.db.profile.syncData.damageMeter.special.settings = CopyTable(DamageMeterPerCharacterSettings)
-					end
-					
-					for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
-						self.db.profile.syncData.damageMeter.special.position[i] = nil
-						
-						local thisDamageMeter = DamageMeter:GetSessionWindow(i) -- DamageMeterSessionWindow
-						
-						if (thisDamageMeter) then
-						
-							self.db.profile.syncData.damageMeter.special.settings.windowDataList[i].damageMeterType = DamageMeter:GetSessionWindowDamageMeterType(thisDamageMeter)
-							
-							if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then -- First Window is set by Edit Mode
-								
-								self.db.profile.syncData.damageMeter.special.size[i] = {}
-								self.db.profile.syncData.damageMeter.special.size[i].x = thisDamageMeter:GetWidth()
-								self.db.profile.syncData.damageMeter.special.size[i].y = thisDamageMeter:GetHeight()
-							
-								self.db.profile.syncData.damageMeter.special.position[i] = {}
-								self.db.profile.syncData.damageMeter.special.position[i].point = select(1, thisDamageMeter:GetPoint())
-								self.db.profile.syncData.damageMeter.special.position[i].relativePoint = select(3, thisDamageMeter:GetPoint())
-								self.db.profile.syncData.damageMeter.special.position[i].offsetX = select(4, thisDamageMeter:GetPoint())
-								self.db.profile.syncData.damageMeter.special.position[i].offsetY = select(5, thisDamageMeter:GetPoint())
-								--self.db.profile.syncData.damageMeter.special.position[i].offsetX = thisDamageMeter:GetLeft()
-								--self.db.profile.syncData.damageMeter.special.position[i].offsetY = thisDamageMeter:GetTop()
-								
-								
-							end
-						
-						end
-						
-					end
-					]]
-				
 				end
 			
 			end
@@ -893,3 +854,88 @@ function AccWideUIAceAddon:ForceSaveSettings()
 	end
 	
 end
+
+
+
+function AccWideUIAceAddon:RetailTaintableSaveAll() 
+	
+	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+		self:RetailTaintableSaveDamageMeter(true) 
+		self:RetailTaintableSaveChat(true)
+		self:Print("[Midnight] Saved all Midnight Settings.")
+	end
+
+end
+
+function AccWideUIAceAddon:RetailTaintableSaveDamageMeter(skipSaveMessage) 
+
+	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	
+			
+		self.db.profile.syncData.retailTaintables.damageMeter.special.settings = {
+			windowDataList = {}
+		}
+		
+		if (DamageMeterPerCharacterSettings) then
+			self.db.profile.syncData.retailTaintables.damageMeter.special.settings = CopyTable(DamageMeterPerCharacterSettings)
+		end
+		
+		for i = 1, DamageMeter:GetMaxSessionWindowCount() do 
+			self.db.profile.syncData.retailTaintables.damageMeter.special.position[i] = nil
+			
+			local thisDamageMeter = DamageMeter:GetSessionWindow(i) -- DamageMeterSessionWindow
+			
+			if (thisDamageMeter) then
+			
+				self.db.profile.syncData.retailTaintables.damageMeter.special.settings.windowDataList[i].damageMeterType = DamageMeter:GetSessionWindowDamageMeterType(thisDamageMeter)
+				
+				if (DamageMeter:CanMoveOrResizeSessionWindow(thisDamageMeter)) then -- First Window is set by Edit Mode
+					
+					self.db.profile.syncData.retailTaintables.damageMeter.special.size[i] = {}
+					self.db.profile.syncData.retailTaintables.damageMeter.special.size[i].x = thisDamageMeter:GetWidth()
+					self.db.profile.syncData.retailTaintables.damageMeter.special.size[i].y = thisDamageMeter:GetHeight()
+				
+					self.db.profile.syncData.retailTaintables.damageMeter.special.position[i] = {}
+					self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].point = select(1, thisDamageMeter:GetPoint())
+					self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].relativePoint = select(3, thisDamageMeter:GetPoint())
+					self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetX = select(4, thisDamageMeter:GetPoint())
+					self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetY = select(5, thisDamageMeter:GetPoint())
+					--self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetX = thisDamageMeter:GetLeft()
+					--self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetY = thisDamageMeter:GetTop()
+					
+					
+				end
+			
+			end
+			
+		end		
+	
+		self:Print("[Midnight] Saved Damage Meter Settings.")
+		
+	end
+
+end
+
+function AccWideUIAceAddon:RetailTaintableSaveChat(skipSaveMessage)
+	
+	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	
+		for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
+				
+			local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
+		
+			self.db.profile.syncData.retailTaintables.chat.windows[thisChatFrame].ChatChannelsVisible = {}
+							
+			local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
+			
+			for i = 1, #thisWindowChannels, 2 do
+				local chn, idx = thisWindowChannels[i], thisWindowChannels[i+1]
+				table.insert(self.db.profile.syncData.retailTaintables.chat.windows[thisChatFrame].ChatChannelsVisible, chn)
+			end
+		
+		end
+	
+		self:Print("[Midnight] Saved Chat Channels Per Tab Settings.")
+	end
+	
+end 

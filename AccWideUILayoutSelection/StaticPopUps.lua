@@ -47,3 +47,16 @@ StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED"] = {
 		AccWideUIAceAddon.TempData.HasDimissedFTPAlready = true
 	end,
 }
+
+StaticPopupDialogs["ACCWIDEUI_LOAD_REQUIREDRELOAD"] = {
+	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. "Settings loaded. You should Reload the UI immediately to prevent any Interface Taint issues during combat.",
+	button1 = RELOADUI,
+	button2 = CLOSE,
+	timeout = 0,
+	sound = SOUNDKIT.TUTORIAL_POPUP,
+	whileDead = true,
+	hideOnEscape = false,
+	OnAccept  = function()
+		ReloadUI()
+	end,
+}
