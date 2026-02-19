@@ -194,6 +194,7 @@ L["ACCWUI_IE_IMPORT_FAIL"] = "Import failed. The string you entered is not valid
 
 L["ACCWUI_TAINTABLES_TITLE"] = "Midnight Specific"
 L["ACCWUI_TAINTABLES_DESC"] = "This tab contains various synchronisable settings specific to Midnight that can only be saved or loaded manually, as loading them irreversibly taints the UI in combat, until you /reload the interface.\nYou will need to manually load these settings for each character you wish to use them with."
+L["ACCWUI_TAINTABLES_DESC_SHORT"] = "Contains various synchronisable settings specific to Midnight that can only be saved or loaded manually"
 L["ACCWUI_TAINTABLES_GROUPTITLE"] = "Save/Load Settings"
 L["ACCWUI_TAINTABLES_BTN_LOADALL"] = "Load All Settings"
 L["ACCWUI_TAINTABLES_BTN_LOADALL_DESC"] = "Loads all of the available Settings from this tab. A reload of the interface will be required."

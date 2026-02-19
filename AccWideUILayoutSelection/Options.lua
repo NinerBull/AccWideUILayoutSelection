@@ -776,7 +776,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			retailTaintables = {
 				type = "group",
 				name = L["ACCWUI_TAINTABLES_TITLE"],
-				desc = "ASDF",
+				desc = L["ACCWUI_TAINTABLES_DESC_SHORT"],
 				order = 30,
 				args = {
 					desc = {
@@ -804,7 +804,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								end,
 								disabled = function()
 									return (not self.db.profile.syncData.retailTaintables.chat.windows[1].ChatChannelsVisible and 
-										not self.db.profile.syncData.retailTaintables.damageMeter.special.settings)
+										not next(self.db.profile.syncData.retailTaintables.damageMeter.special.settings))
 								end
 							},
 							btnRTSaveAll = {
@@ -833,7 +833,7 @@ function AccWideUIAceAddon:GenerateOptions()
 									self:RetailTaintableLoadDamageMeter()
 								end,
 								disabled = function()
-									return not self.db.profile.syncData.retailTaintables.damageMeter.special.settings
+									return not next(self.db.profile.syncData.retailTaintables.damageMeter.special.settings)
 								end
 							},
 							btnRTSaveDM = {
@@ -876,6 +876,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			advanced = {
 				type = "group",
 				name = ADVANCED_LABEL,
+				desc = ADVANCED_OPTIONS_TOOLTIP,
 				--handler = AccWideUIAceAddon,
 				get = "GetGlobalToggle",
 				set = "SetGlobalToggle",
@@ -1161,7 +1162,7 @@ function AccWideUIAceAddon:GenerateOptions()
 
 		self.optionsData.args.settings.args.syncToggles.args.experimentalSyncToggles.args.bagOrganisation = nil
 		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
-		self.optionsData.args.advanced.args.retailTaintables = nil
+		self.optionsData.args.retailTaintables = nil
 	end
 
 	if (AccWideUIAceAddon:IsMainline() == false and AccWideUIAceAddon:IsClassicTBC() == false) then
