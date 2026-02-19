@@ -49,7 +49,7 @@ StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED"] = {
 }
 
 StaticPopupDialogs["ACCWIDEUI_LOAD_REQUIREDRELOAD"] = {
-	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. "Settings loaded. You should Reload the UI immediately to prevent any Interface Taint issues during combat.",
+	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. L["ACCWUI_TAINTABLES_RELOADNOW"],
 	button1 = RELOADUI,
 	button2 = CLOSE,
 	timeout = 0,
