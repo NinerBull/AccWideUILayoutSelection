@@ -118,6 +118,8 @@ L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"] = "Do Nothing"
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW_DESC"] = "Checking this box will force all of your characters to join the %s Channel."
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK_DESC"] = "Checking this box will force all of your characters to leave the %s Channel."
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT_DESC"] = "Checking this box will make the addon do nothing in regards to the %s Channel."
+L["ACCWUI_BLOCKBLIZZ_CHATFRAME"] = "Select Chat Frame to Add Channels To"
+L["ACCWUI_BLOCKBLIZZ_CHATFRAME_DESC"] = "Select which Chat Frame/Tab channels should be added to when autojoining them using this tool.\nSet to [None] if you would rather manually add the channels to a Chat Frame yourself."
 
 L["ACCWUI_CHARSPECIFIC_TITLE"] = "%s Specific Options"
 L["ACCWUI_CHARSPECIFIC_DESC"] = "Select whether to use the chosen Edit Mode layout for this character's Specializations."

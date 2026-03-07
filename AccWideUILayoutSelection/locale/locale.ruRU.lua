@@ -121,6 +121,8 @@ L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"] = "Ничего не делать"-- Nee
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW_DESC"] = "Установка этого флажка заставит всех ваших персонажей присоединиться к каналу %s." -- Needs Update
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK_DESC"] = "Установка этого флажка заставит всех ваших персонажей покинуть канал %s." -- Needs Update
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT_DESC"] = "Если установить этот флажок, дополнение не будет выполнять никаких действий в отношении канала %s." -- Needs Update
+L["ACCWUI_BLOCKBLIZZ_CHATFRAME"] = "Выберите рамку чата, чтобы добавить каналы." -- Needs Update
+L["ACCWUI_BLOCKBLIZZ_CHATFRAME_DESC"] = "Выберите, в какие каналы чата/вкладки следует добавлять каналы при автоматическом подключении с помощью этого инструмента. Установите значение [Нет], если вы предпочитаете добавлять каналы в чат вручную." -- Needs Update
 
 L["ACCWUI_CHARSPECIFIC_TITLE"] = "%s Конкретные параметры"
 L["ACCWUI_CHARSPECIFIC_DESC"] = "Выберите, следует ли использовать выбранную раскладку режима редактирования для специализаций этого персонажа."

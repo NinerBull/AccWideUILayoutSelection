@@ -340,16 +340,21 @@ function AccWideUIAceAddon:BlizzChannelManager()
 
 		if (self.db.global.hasDoneFirstTimeSetup == true and not self.TempData.ThrottleJoinLeaveChannels) then
 
-			
+			local thisChatFrameVar
+			if (self.db.profile.syncData.chat.special.channelManagerFrame ~= 0) then
+				thisChatFrameVar = _G["ChatFrame" .. self.db.profile.syncData.chat.special.channelManagerFrame]
+			end
 
 			-- Join player to channels if they're allowed
 			if (self.db.profile.blizzChannels.general == "join") then
 				if (((GetChannelName(self.chatChannelNames.general))) == 0) then
 					JoinChannelByName(self.chatChannelNames.general)
-					if (ChatFrame_AddChannel) then
-						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.general)
-					else
-						ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.general) -- 12.0.0
+					if (thisChatFrameVar) then
+						if (ChatFrame_AddChannel) then
+							ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.general)
+						else
+							ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.general) -- 12.0.0
+						end
 					end
 					if (self.db.global.printBlizzChatChanges == true) then
 						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.general, self.TempData.TextSlash)
@@ -360,10 +365,12 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			if (self.db.profile.blizzChannels.localDefense == "join") then
 				if (((GetChannelName(self.chatChannelNames.localDefense))) == 0) then
 					JoinChannelByName(self.chatChannelNames.localDefense)
-					if (ChatFrame_AddChannel) then
-						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.localDefense)
-					else
-						ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.localDefense) -- 12.0.0
+					if (thisChatFrameVar) then
+						if (ChatFrame_AddChannel) then
+							ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.localDefense)
+						else
+							ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.localDefense) -- 12.0.0
+						end
 					end
 					if (self.db.global.printBlizzChatChanges == true) then
 						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.localDefense, self.TempData.TextSlash)
@@ -374,12 +381,13 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			if (self.db.profile.blizzChannels.trade == "join" and IsResting()) then
 				if (((GetChannelName(self.chatChannelNames.trade))) == 0) then
 					JoinChannelByName(self.chatChannelNames.trade)
-					if (ChatFrame_AddChannel) then
-						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.trade)
-					else
-						ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.trade) -- 12.0.0
+					if (thisChatFrameVar) then
+						if (ChatFrame_AddChannel) then
+							ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.trade)
+						else
+							ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.trade) -- 12.0.0
+						end
 					end
-
 					if (self.db.global.printBlizzChatChanges == true) then
 						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.trade, self.TempData.TextSlash)
 					end
@@ -389,10 +397,12 @@ function AccWideUIAceAddon:BlizzChannelManager()
 			if (self.db.profile.blizzChannels.lookingForGroup == "join") then
 				if (((GetChannelName(self.chatChannelNames.lookingForGroup))) == 0) then
 					JoinChannelByName(self.chatChannelNames.lookingForGroup)
-					if (ChatFrame_AddChannel) then
-						ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.lookingForGroup)
-					else
-						ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.lookingForGroup) -- 12.0.0
+					if (thisChatFrameVar) then
+						if (ChatFrame_AddChannel) then
+							ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.lookingForGroup)
+						else
+							ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.lookingForGroup) -- 12.0.0
+						end
 					end
 					if (self.db.global.printBlizzChatChanges == true) then
 						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.lookingForGroup, self.TempData.TextSlash)
@@ -404,10 +414,12 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				if (self.db.profile.blizzChannels.services == "join" and IsResting()) then
 					if (((GetChannelName(self.chatChannelNames.services))) == 0) then
 						JoinChannelByName(self.chatChannelNames.services)
-						if (ChatFrame_AddChannel) then
-							ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.services)
-						else
-							ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.services) -- 12.0.0
+						if (thisChatFrameVar) then
+							if (ChatFrame_AddChannel) then
+								ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.services)
+							else
+								ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.services) -- 12.0.0
+							end
 						end
 						if (self.db.global.printBlizzChatChanges == true) then
 							self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.services, self.TempData.TextSlash)
@@ -420,10 +432,12 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				if (self.db.profile.blizzChannels.worldDefense == "join") then
 					if (((GetChannelName(self.chatChannelNames.worldDefense))) == 0) then
 						JoinChannelByName(self.chatChannelNames.worldDefense)
-						if (ChatFrame_AddChannel) then
-							ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.worldDefense)
-						else
-							ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.worldDefense) -- 12.0.0
+						if (thisChatFrameVar) then
+							if (ChatFrame_AddChannel) then
+								ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.worldDefense)
+							else
+								ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.worldDefense) -- 12.0.0
+							end
 						end
 						if (self.db.global.printBlizzChatChanges == true) then
 							self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.worldDefense, self.TempData.TextSlash)
@@ -437,10 +451,12 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				if (self.db.profile.blizzChannels.guildRecruitment == "join") then
 					if (((GetChannelName(self.chatChannelNames.guildRecruitment))) == 0) then
 						JoinChannelByName(self.chatChannelNames.guildRecruitment)
-						if (ChatFrame_AddChannel) then
-							ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.guildRecruitment)
-						else
-							ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.guildRecruitment) -- 12.0.0
+						if (thisChatFrameVar) then
+							if (ChatFrame_AddChannel) then
+								ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.guildRecruitment)
+							else
+								ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.guildRecruitment) -- 12.0.0
+							end
 						end
 						if (self.db.global.printBlizzChatChanges == true) then
 							self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.guildRecruitment, self.TempData.TextSlash)
@@ -453,10 +469,12 @@ function AccWideUIAceAddon:BlizzChannelManager()
 				if (self.db.profile.blizzChannels.hardcoreDeaths == "join") then
 					if (((GetChannelName(self.chatChannelNames.hardcoreDeaths))) == 0) then
 						JoinChannelByName(self.chatChannelNames.hardcoreDeaths)
-						if (ChatFrame_AddChannel) then
-							ChatFrame_AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.hardcoreDeaths)
-						else
-							ChatFrameMixin.AddChannel(DEFAULT_CHAT_FRAME, self.chatChannelNames.hardcoreDeaths) -- 12.0.0
+						if (thisChatFrameVar) then
+							if (ChatFrame_AddChannel) then
+								ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.hardcoreDeaths)
+							else
+								ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.hardcoreDeaths) -- 12.0.0
+							end
 						end
 						if (self.db.global.printBlizzChatChanges == true) then
 							self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.hardcoreDeaths, self.TempData.TextSlash)
