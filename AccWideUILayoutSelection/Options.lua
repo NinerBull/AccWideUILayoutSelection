@@ -183,7 +183,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						}
 					},
 					special = {
-						channelManagerFrame = 0
+						channelManagerFrame = (self:IsMainline() == true and 0 or 1)
 					}
 				},
 				bagOrganisation = {

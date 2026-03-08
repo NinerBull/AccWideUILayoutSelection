@@ -1,1 +1,2 @@
 - You can now select which Chat Frame, if any, autojoined Chat Channels should be added to.
+  - Defaults to 'None' in Midnight, to avoid Taint, and the Default Chat Window (1st Window) on Classic.
