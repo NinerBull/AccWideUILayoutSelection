@@ -183,7 +183,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						}
 					},
 					special = {
-						channelManagerFrame = 1
+						channelManagerFrame = 0
 					}
 				},
 				bagOrganisation = {
