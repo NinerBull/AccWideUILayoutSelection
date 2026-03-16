@@ -87,6 +87,7 @@ You can access the config by any of the following methods:
 
 ## Translations
 * **Russian** by [ZamestoTV](https://github.com/Hubbotu)
+* **Chinese** by [nanjuekaien1](https://github.com/nanjuekaien1)
 
 ## ⚠️ Known Issues
 - The following functions are disabled in Midnight due to them triggering secret-related errors:
