@@ -5,7 +5,7 @@
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
 ## DefaultState: enabled
-## OptionalDeps: BlockBlizzChatChannels, Ace3, MoveAny, EditModeExpanded
+## OptionalDeps: Ace3, MoveAny, EditModeExpanded, ZygorGuidesViewer
 
 ## IconTexture: interface\icons\inv_misc_punchcards_yellow.blp
 ## X-Category: HUDs
