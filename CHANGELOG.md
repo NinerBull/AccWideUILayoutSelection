@@ -1,2 +1,3 @@
 - Added Chinese Translation (Thanks [@nanjuekaien1!](https://github.com/nanjuekaien1))
 - Add ZygorGuidesViewer to OptDepts so it loads first.
+- Fixed NewcomerChat settings being applied to random channel even when no longer part of the Newcomer Chat.
