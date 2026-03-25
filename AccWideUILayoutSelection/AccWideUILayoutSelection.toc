@@ -2,6 +2,7 @@
 ## Title: Account Wide Interface Settings
 ## Version: @project-version@
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi
+## Notes-zhCN: 将角色专属界面设置同步至账号内其他角色。命令 /awi
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
 ## DefaultState: enabled
