@@ -936,6 +936,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					self:Print("[Chat Window] Loading Settings.")
 				end
 				
+				
 				if (self.db.profile.syncToggles.chatChannels == true) then
 				
 					self:ScheduleTimer(function() 
@@ -951,74 +952,71 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						end
 					end, 10)
 					
+				end
+				
+				
+				self:ScheduleTimer(function() 
 					
-					
-					self:ScheduleTimer(function() 
-					
-						if (self.db.global.printDebugTextToChat == true) then
-							self:Print("[Chat Window] Reordering Channels.")
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Chat Window] Reordering Channels.")
+					end
+					--Reorder Chat Channels
+					for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
+						
+						local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
+						
+						if (id ~= k) then
+							-- Move Channel
+							C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
 						end
-						--Reorder Chat Channels
-						for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
-							
-							local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
-							
-							if (id ~= k) then
-								-- Move Channel
-								C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+						
+					end
+				end, 14)
+				
+
+				self:ScheduleTimer(function() 
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Chat Window] Setting Channel Colors.")
+					end
+					-- Chat Colours
+					for k, v in pairs(self.CVars.ChatTypes) do
+						if (type(ChatTypeInfo[v]) == "table" and type(self.db.profile.syncData.chat.info[v]) == "table") then
+							if (type(self.db.profile.syncData.chat.info[v][1]) == "table") then
+								ChangeChatColor(v, self.db.profile.syncData.chat.info[v][1].r, self.db.profile.syncData.chat.info[v][1].g, self.db.profile.syncData.chat.info[v][1].b)
+								
+								SetChatColorNameByClass(v, self.db.profile.syncData.chat.info[v][1].colorNameByClass)
+							end
+						end
+					end
+				end, 16)
+				
+				
+				-- Newcomer Chat Exception
+				if (self:IsMainline() and self.chatChannelNames.newcomerChat) then
+					local id, name, instanceID, isCommunitiesChannel = GetChannelName(self.chatChannelNames.newcomerChat)
+					if (id ~= 0) then
+						self:ScheduleTimer(function()
+						
+							if (self.db.global.printDebugTextToChat == true) then
+								self:Print("[Chat Window] Setting Newcomer Chat Settings.")
 							end
 							
-						end
-					end, 14)
-					
-	
-					
-					self:ScheduleTimer(function() 
-						if (self.db.global.printDebugTextToChat == true) then
-							self:Print("[Chat Window] Setting Channel Colors.")
-						end
-						-- Chat Colours
-						for k, v in pairs(self.CVars.ChatTypes) do
-							if (type(ChatTypeInfo[v]) == "table" and type(self.db.profile.syncData.chat.info[v]) == "table") then
-								if (type(self.db.profile.syncData.chat.info[v][1]) == "table") then
-									ChangeChatColor(v, self.db.profile.syncData.chat.info[v][1].r, self.db.profile.syncData.chat.info[v][1].g, self.db.profile.syncData.chat.info[v][1].b)
-									
-									SetChatColorNameByClass(v, self.db.profile.syncData.chat.info[v][1].colorNameByClass)
+							if (self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex) then
+								
+								
+								if (id ~= self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex) then
+									-- Move Channel
+									C_ChatInfo.SwapChatChannelsByChannelIndex(id, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex)
+								end
+								
+								if (self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.r) then
+									local v = "CHANNEL" .. self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex
+									ChangeChatColor(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.r, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.g, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.b)
+									SetChatColorNameByClass(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColorByClass)
 								end
 							end
-						end
-					end, 16)
-					
-					
-					-- Newcomer Chat Exception
-					if (self:IsMainline() and self.chatChannelNames.newcomerChat) then
-						local id, name, instanceID, isCommunitiesChannel = GetChannelName(self.chatChannelNames.newcomerChat)
-							if (id ~= 0) then
-								self:ScheduleTimer(function()
-								
-									if (self.db.global.printDebugTextToChat == true) then
-										self:Print("[Chat Window] Setting Newcomer Chat Settings.")
-									end
-									
-									if (self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex) then
-										
-										
-										if (id ~= self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex) then
-											-- Move Channel
-											C_ChatInfo.SwapChatChannelsByChannelIndex(id, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex)
-										end
-										
-										if (self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.r) then
-											local v = "CHANNEL" .. self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelIndex
-											ChangeChatColor(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.r, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.g, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColor.b)
-											SetChatColorNameByClass(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColorByClass)
-										end
-									end
-								end, 20)
-							end
+						end, 20)
 					end
-				
-				
 				end
 				
 				
