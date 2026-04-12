@@ -170,6 +170,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						['**'] = {}
 					},
 					channelsJoined = {},
+					channelOrder = {},
 					info = {},
 					channelSpecial = {
 						['**'] = {

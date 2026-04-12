@@ -468,20 +468,17 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						for i = 1, #channels, 3 do
 							local id, name, disabled = channels[i], channels[i+1], channels[i+2]
 							
-							local saveThisChannel = true
+							local isCustomChannel = true
 							
-							--[[for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
+							self.db.profile.syncData.chat.channelOrder[id] = name
+							
+							for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
 								if v == name then
-									saveThisChannel = false
+									isCustomChannel = false
 								end
 							end
 							
-							if string.find(name, "Community:") then
-								saveThisChannel = false
-							end]]
-							
-							
-							if saveThisChannel == true then
+							if isCustomChannel == true then
 								self.db.profile.syncData.chat.channelsJoined[id] = name
 							end
 							

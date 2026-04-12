@@ -961,7 +961,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						self:Print("[Chat Window] Reordering Channels.")
 					end
 					--Reorder Chat Channels
-					for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
+					for k, v in pairs(self.db.profile.syncData.chat.channelOrder) do
 						
 						local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
 						
