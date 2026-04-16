@@ -971,7 +971,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						end
 						
 					end
-				end, 14)
+				end, 17)
 				
 
 				self:ScheduleTimer(function() 
@@ -988,7 +988,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 							end
 						end
 					end
-				end, 16)
+				end, 20)
 				
 				
 				-- Newcomer Chat Exception
@@ -1015,7 +1015,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 									SetChatColorNameByClass(v, self.db.profile.syncData.chat.channelSpecial.newcomerChat.channelColorByClass)
 								end
 							end
-						end, 20)
+						end, 22)
 					end
 				end
 				
@@ -1357,7 +1357,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 						
 						end
 						
-					end, (25 + (thisChatFrame * 2)))
+					end, (30 + (thisChatFrame * 2)))
 				
 					
 				end
@@ -1391,7 +1391,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			
 			
 			if (self.db.profile.syncToggles.bagOrganisation == true) then
-				LoadUIAllowSaveTime = 65
+				LoadUIAllowSaveTime = 70
 			end
 			
 			
