@@ -1,3 +1,3 @@
-- Added Chinese Translation (Thanks [@nanjuekaien1!](https://github.com/nanjuekaien1))
-- Add ZygorGuidesViewer to OptDepts so it loads first, to prevent load issues.
-- Fixed NewcomerChat settings being applied to random channel even when no longer part of the Newcomer Chat.
+- The order of chat channels (/1, /2, /3 etc) is now saved as a seperate variable.
+- Fixed chat settings not loading if syncing "Custom Chat Channels" was disabled.
+- Updated TOC for 12.0.5.
