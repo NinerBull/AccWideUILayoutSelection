@@ -90,6 +90,6 @@ You can access the config by any of the following methods:
 * **Chinese** by [nanjuekaien1](https://github.com/nanjuekaien1)
 
 ## ⚠️ Known Issues
-- The following functions are disabled in Midnight due to them triggering secret-related errors:
+- The following functions are not automatically synced in Midnight due to them triggering secret-related errors, and must be synced manually:
   - Damage Meter Settings, other than toggling visibility.
   - Syncing Showing/Hiding Chat Channels per Chat Window.
