@@ -1603,6 +1603,7 @@ function AccWideUIAceAddon:RetailTaintableLoadChat(skipLoadMessage)
 	
 	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
 	
+		-- Visible Chat Channels
 		for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
 		
 			local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
@@ -1652,7 +1653,19 @@ function AccWideUIAceAddon:RetailTaintableLoadChat(skipLoadMessage)
 		
 		end
 		
-		self:Print("[Midnight] Loaded Chat Channels Per Tab Settings.")
+		-- Channel Order
+		for k, v in pairs(self.db.profile.syncData.chat.channelOrder) do
+			
+			local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
+			
+			if (id ~= k) then
+				-- Move Channel
+				C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+			end
+			
+		end
+
+		self:Print("[Midnight] Loaded Chat Tab Settings.")
 		
 		if not skipLoadMessage then
 			StaticPopup_Show("ACCWIDEUI_LOAD_REQUIREDRELOAD")

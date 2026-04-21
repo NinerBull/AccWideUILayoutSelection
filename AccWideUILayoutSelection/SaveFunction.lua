@@ -464,6 +464,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					-- Chat Channels
 					do
 						self.db.profile.syncData.chat.channelsJoined = {}
+						--self.db.profile.syncData.chat.channelOrder = {}
 						local channels = {GetChannelList()}
 						for i = 1, #channels, 3 do
 							local id, name, disabled = channels[i], channels[i+1], channels[i+2]
@@ -919,6 +920,7 @@ function AccWideUIAceAddon:RetailTaintableSaveChat(skipSaveMessage)
 	
 	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
 	
+		-- Visible Chat Channels
 		for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
 				
 			local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
@@ -933,8 +935,16 @@ function AccWideUIAceAddon:RetailTaintableSaveChat(skipSaveMessage)
 			end
 		
 		end
+		
+		-- Channel Order
+		local channels = {GetChannelList()}
+		for i = 1, #channels, 3 do
+			local id, name, disabled = channels[i], channels[i+1], channels[i+2
+			self.db.profile.syncData.chat.channelOrder[id] = name
+		end
+		
 	
-		self:Print("[Midnight] Saved Chat Channels Per Tab Settings.")
+		self:Print("[Midnight] Saved Chat Tab Settings.")
 	end
 	
 end 

@@ -1,3 +1,3 @@
-- Temporarily disabled saving order of chat channels, as this may be leading to Secret Taint errors during encounters.
+- Temporarily disabled saving/loading order of chat channels, as this may be leading to Secret Taint errors during encounters.
 - Fixed chat settings not loading if syncing "Custom Chat Channels" was disabled.
 - Updated TOC for 12.0.5.
