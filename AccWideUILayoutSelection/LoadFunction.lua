@@ -955,23 +955,28 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				end
 				
 				
-				self:ScheduleTimer(function() 
-					
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Chat Window] Reordering Channels.")
-					end
-					--Reorder Chat Channels
-					for k, v in pairs(self.db.profile.syncData.chat.channelOrder) do
+				
+				if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
+				
+					self:ScheduleTimer(function() 
 						
-						local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
-						
-						if (id ~= k) then
-							-- Move Channel
-							C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Chat Window] Reordering Channels.")
 						end
-						
-					end
-				end, 17)
+						--Reorder Chat Channels
+						for k, v in pairs(self.db.profile.syncData.chat.channelOrder) do
+							
+							local id, name, instanceID, isCommunitiesChannel = GetChannelName(v)
+							
+							if (id ~= k) then
+								-- Move Channel
+								C_ChatInfo.SwapChatChannelsByChannelIndex(id, k)
+							end
+							
+						end
+					end, 17)
+				
+				end
 				
 
 				self:ScheduleTimer(function() 

@@ -470,7 +470,9 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 							
 							local isCustomChannel = true
 							
-							self.db.profile.syncData.chat.channelOrder[id] = name
+							if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
+								self.db.profile.syncData.chat.channelOrder[id] = name
+							end
 							
 							for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
 								if v == name then
