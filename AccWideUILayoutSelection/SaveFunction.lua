@@ -939,7 +939,7 @@ function AccWideUIAceAddon:RetailTaintableSaveChat(skipSaveMessage)
 		-- Channel Order
 		local channels = {GetChannelList()}
 		for i = 1, #channels, 3 do
-			local id, name, disabled = channels[i], channels[i+1], channels[i+2
+			local id, name, disabled = channels[i], channels[i+1], channels[i+2]
 			self.db.profile.syncData.chat.channelOrder[id] = name
 		end
 		
