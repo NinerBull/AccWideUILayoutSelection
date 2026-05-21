@@ -2,6 +2,7 @@
 ## Title: Account Wide Interface Settings
 ## Version: @project-version@
 ## Notes: Synchronises various Character-Specific Interface Settings Account Wide. /awi
+## Notes-frFR: Synchronise divers paramètres d'interface spécifiques aux personnages pour l'ensemble du compte. /awi
 ## Notes-zhCN: 将角色专属界面设置同步至账号内其他角色。命令 /awi
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
@@ -31,7 +32,7 @@ embeds.xml
 
 locale/locale.enUS.lua
 # locale/locale.koKR.lua
-# locale/locale.frFR.lua
+locale/locale.frFR.lua
 # locale/locale.deDE.lua
 locale/locale.zhCN.lua
 # locale/locale.esES.lua
