@@ -88,6 +88,7 @@ You can access the config by any of the following methods:
 ## Translations
 * **Russian** by [ZamestoTV](https://github.com/Hubbotu)
 * **Chinese** by [nanjuekaien1](https://github.com/nanjuekaien1)
+* **French** by [Machou](https://github.com/Machou)
 
 ## ⚠️ Known Issues
 - The following functions are not automatically synced in Midnight due to them triggering secret-related errors, and must be synced manually:

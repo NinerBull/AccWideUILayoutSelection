@@ -1,3 +1,1 @@
-- Temporarily disabled saving/loading order of chat channels, as this may be leading to Secret Taint errors during encounters.
-- Fixed chat settings not loading if syncing "Custom Chat Channels" was disabled.
-- Updated TOC for 12.0.5.
+- Added French Localisation courtesy of [@Machou](https://github.com/NinerBull/AccWideUILayoutSelection/pull/37), thank you very much!
