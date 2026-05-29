@@ -52,13 +52,14 @@ The addon can synchronise the following, and you can disable any that you'd rath
 ### Additional Functionality
 * Profile Support - Save and switch between multiple Interface configurations
 * Profile Import/Export - Share your profile as a text string with others online, or import a profile string that has been shared with you
+* Graphics & Sound Settings Import/Export - Export your system settings from one WoW client and import into another
 * Force Leave/Join Blizzard Chat Channels - Never see Services spam on any character again, or perhaps always make them join Trade Chat?
 * Screen Resolution Specific Settings - Useful for users who sync addon settings across multiple PCs, enable in Advanced Settings
 * Custom CVar Support - Enter your own additional list of CVars to synchronise across characters, enable in Advanced Settings
 
 ## Compatibility
-* **Midnight** - 12.0.5
-* **MoP Classic** - 5.5.3
+* **Midnight** - 12.0.7
+* **MoP Classic** - 5.5.4
 * **TBC Classic** - 2.5.5
 * **Classic Era** - 1.15.8
 
