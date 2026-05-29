@@ -1,1 +1,2 @@
 - Added French Localisation courtesy of [@Machou](https://github.com/NinerBull/AccWideUILayoutSelection/pull/37), thank you very much!
+- Added ability to import and export Graphics and Sound settings. Useful for people who play more than one WoW client (e.g. Retail _and_ Classic) to keep settings in sync.

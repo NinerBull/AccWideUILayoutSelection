@@ -1050,6 +1050,34 @@ function AccWideUIAceAddon:GenerateOptions()
 							},
 						}
 					},
+					graphicsSoundImportExport = {
+						type = "group",
+						name = L["ACCWUI_GS_IMPORTEXPORT"],
+						inline = true,
+						order = 4,
+						args = {
+							btnImportProfile = {
+								type = "execute",
+								name = L["ACCWUI_GS_IMPORTSTRING"],
+								desc = L["ACCWUI_GS_IMPORTSTRING_DESC"],
+								width = thisCheckboxWidth2,
+								order = 1,
+								func = function()
+									self:ImportGraphicsSoundSettings()
+								end,
+							},
+							btnExportProfile = {
+								type = "execute",
+								name = L["ACCWUI_GS_EXPORTSTRING"],
+								desc = L["ACCWUI_GS_EXPORTSTRING_DESC"],
+								width = thisCheckboxWidth2,
+								order = 2,
+								func = function()
+									self:ExportGraphicsSoundSettings()
+								end,
+							},
+						}
+					},
 					debug = {
 						type = "group",
 						name = L["ACCWUI_DEBUG_TITLE"],

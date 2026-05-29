@@ -194,6 +194,18 @@ L["ACCWUI_IE_IMPORT_DESC"] = "Paste an import string into the box below and clic
 L["ACCWUI_IE_IMPORT_SUCCESS"] = "Import complete!"
 L["ACCWUI_IE_IMPORT_FAIL"] = "Import failed. The string you entered is not valid."
 
+L["ACCWUI_GS_IMPORT"] = "Import Graphics/Sound Settings"
+L["ACCWUI_GS_EXPORT"] = "Export Graphics/Sound Settings"
+L["ACCWUI_GS_IMPORTEXPORT"] = "Import/Export Graphics & Sound Settings"
+L["ACCWUI_GS_IMPORTSTRING"] = "Import Graphics/Sound String"
+L["ACCWUI_GS_IMPORTSTRING_DESC"] = "Allows you to import Graphics and Sound Settings using a text string from another WoW client such as Retail, Classic, Era etc."
+L["ACCWUI_GS_EXPORTSTRING"] = "Export Graphics/Sound String"
+L["ACCWUI_GS_EXPORTSTRING_DESC"] = "Allows you to export your current Graphics and Sound Settings using a text string that can be imported to other WoW clients, such as Retail, Classic, Era etc."
+L["ACCWUI_GS_EXPORT_DESC"] = "You can copy the string below and import it into another WoW client that you use."
+L["ACCWUI_GS_IMPORT_DESC"] = "Paste an import string into the box below and click 'Import Settings'. This will import its settings into this WoW client, overwriting any existing settings."
+L["ACCWUI_GS_IMPORT_SUCCESS"] = "Import complete!"
+L["ACCWUI_GS_IMPORT_FAIL"] = "Import failed. The string you entered is not valid."
+
 L["ACCWUI_TAINTABLES_TITLE"] = "Midnight Specific"
 L["ACCWUI_TAINTABLES_DESC"] = "This tab contains various synchronisable settings specific to Midnight that can only be saved or loaded manually, as loading them irreversibly taints the UI in combat, until you /reload the interface.\nYou will need to manually load these settings for each character you wish to use them with."
 L["ACCWUI_TAINTABLES_DESC_SHORT"] = "Contains various synchronisable settings specific to Midnight that can only be saved or loaded manually"

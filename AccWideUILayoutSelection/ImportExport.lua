@@ -140,7 +140,7 @@ function AccWideUIAceAddon:ImportProfile()
 					
 					if thisImportTableEx then
 					
-						if type(thisImportTableExData) == "table" then
+						if type(thisImportTableExData) == "table" and thisImportTableExData.profileSaveVer then
 						
 							--Import it!
 							self.db.profile = thisImportTableExData
@@ -161,6 +161,170 @@ function AccWideUIAceAddon:ImportProfile()
 					
 				else
 					self:Print(L["ACCWUI_IE_IMPORT_FAIL"] .. "[EC: 3]")
+				end
+			
+			else
+				self:Print(L["ACCWUI_WAIT_TILL_COMBAT2"])
+			end
+			
+		end)
+		
+		
+		thisImportWindow:AddChild(thisImportWindow.SaveButton)
+		
+	
+	else
+	
+		self:Print(L["ACCWUI_WAIT_TILL_COMBAT2"])
+	
+	end
+	
+
+end
+
+
+
+function AccWideUIAceAddon:ExportGraphicsSoundSettings()
+
+	if not InCombatLockdown() then
+	
+		-- Window
+		local thisExportWindow = AccWideUIAceAddon.AceGUI:Create("Frame")
+		thisExportWindow:SetCallback("OnClose", function(thisWidget) 
+			AccWideUIAceAddon.AceGUI:Release(thisWidget) 
+		end)
+		
+		
+		thisExportWindow:SetTitle(L["ACCWUI_ADDONNAME"] .. " - " .. L["ACCWUI_GS_EXPORT"])
+		thisExportWindow:SetLayout("Flow")
+		
+		
+		-- Get Graphics and Sound CVars and put them into a new table
+		local thisExportTable = {
+			AWIGSData = true,
+			values = {}
+		}
+		
+		for k, v in pairs(AccWideUIAceAddon.CVars.System_Graphics) do
+			thisExportTable.values[v] = GetCVar(v) or nil
+		end
+		
+		for k, v in pairs(AccWideUIAceAddon.CVars.System_Sound) do
+			thisExportTable.values[v] = GetCVar(v) or nil
+		end
+
+		
+		-- Serialize and compress the settings table
+		local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
+		local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
+		local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
+
+
+		-- Description Text
+		thisExportWindow.TextLine1 = AccWideUIAceAddon.AceGUI:Create("Label")
+		thisExportWindow.TextLine1:SetFontObject("GameFontWhiteLarge")
+		thisExportWindow.TextLine1:SetText(L["ACCWUI_GS_EXPORT_DESC"])
+		thisExportWindow.TextLine1:SetFullWidth(true)
+		
+		thisExportWindow:AddChild(thisExportWindow.TextLine1)
+		
+				
+		
+		-- Create Big Text Box
+		thisExportWindow.BigTextBox = AccWideUIAceAddon.AceGUI:Create("MultiLineEditBox")
+		thisExportWindow.BigTextBox:SetFullWidth(true)
+		thisExportWindow.BigTextBox:SetFullHeight(true)
+		thisExportWindow.BigTextBox:SetLabel(L["ACCWUI_GS_EXPORTSTRING"])
+		thisExportWindow.BigTextBox:DisableButton(true)
+		thisExportWindow.BigTextBox:SetText(thisExportTableExCDPT)
+		thisExportWindow.BigTextBox:SetFocus()
+		thisExportWindow.BigTextBox:HighlightText()
+		
+		thisExportWindow:AddChild(thisExportWindow.BigTextBox)
+	
+	else
+	
+		self:Print(L["ACCWUI_WAIT_TILL_COMBAT2"])
+	
+	end
+	
+
+end
+
+
+
+
+
+
+function AccWideUIAceAddon:ImportGraphicsSoundSettings()
+
+	if not InCombatLockdown() then
+	
+		-- Window
+		local thisImportWindow = self.AceGUI:Create("Frame")
+		thisImportWindow:SetCallback("OnClose", function(thisWidget) 
+			self.AceGUI:Release(thisWidget) 
+		end)
+		
+		
+		thisImportWindow:SetTitle(L["ACCWUI_ADDONNAME"] .. " - " .. L["ACCWUI_GS_IMPORT"])
+		thisImportWindow:SetLayout("Flow")
+		
+
+		-- Description Text
+		thisImportWindow.TextLine1 = self.AceGUI:Create("Label")
+		thisImportWindow.TextLine1:SetFontObject("GameFontWhiteLarge")
+		thisImportWindow.TextLine1:SetText(L["ACCWUI_GS_IMPORT_DESC"])
+		thisImportWindow.TextLine1:SetFullWidth(true)
+		
+		thisImportWindow:AddChild(thisImportWindow.TextLine1)
+		
+		
+		-- Create Big Text Box
+		thisImportWindow.BigTextBox = self.AceGUI:Create("MultiLineEditBox")
+		thisImportWindow.BigTextBox:SetFullWidth(true)
+		thisImportWindow.BigTextBox:SetNumLines(22)
+		thisImportWindow.BigTextBox:SetLabel(L["ACCWUI_GS_IMPORTSTRING"])
+		thisImportWindow.BigTextBox:DisableButton(true)
+		
+		thisImportWindow:AddChild(thisImportWindow.BigTextBox)
+		
+		
+		-- Add Button
+		thisImportWindow.SaveButton = self.AceGUI:Create("Button")
+		thisImportWindow.SaveButton:SetFullWidth(true)
+		thisImportWindow.SaveButton:SetText(L["ACCWUI_GS_IMPORTSTRING"])
+		thisImportWindow.SaveButton:SetCallback("OnClick", function() 
+		
+			if not InCombatLockdown() then
+			
+				local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
+
+				local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
+
+				if thisImportTableExCD then
+					local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
+					
+					if thisImportTableEx then
+					
+						if type(thisImportTableExData) == "table" and thisImportTableExData.AWIGSData then
+						
+							for k, v in pairs(thisImportTableExData.values) do
+								SetCVar(k, v)
+							end
+												
+							self:Print(L["ACCWUI_GS_IMPORT_SUCCESS"])
+		
+							self.AceGUI:Release(thisImportWindow) 
+						else
+							self:Print(L["ACCWUI_GS_IMPORT_FAIL"] .. "[EC: 1]")
+						end
+					else
+						self:Print(L["ACCWUI_GS_IMPORT_FAIL"] .. "[EC: 2]")
+					end
+					
+				else
+					self:Print(L["ACCWUI_GS_IMPORT_FAIL"] .. "[EC: 3]")
 				end
 			
 			else
