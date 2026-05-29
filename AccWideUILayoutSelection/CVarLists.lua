@@ -203,7 +203,8 @@ AccWideUIAceAddon.CVars = {
 	},
 	
 	AssistedCombat = {
-		"assistedCombatHighlight"
+		"assistedCombatHighlight",
+		"assistedCombatReduceHighlights"
 	},
 		
 	DamageMeter = {
