@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "frFR", false) -- by Klep-Ysondre EU
+local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "frFR", false) -- Translator(s): Klep-Ysondre
 if not L then return end
 
 L["ACCWUI_ADDONNAME"] = "Account Wide Interface Settings"
@@ -11,26 +11,26 @@ L["ACCWUI_OPT_TITLE_DESC"] = "Permet de synchroniser divers paramètres d'interf
 L["ACCWUI_OPT_EDITMODE_TITLE"] = "Paramètres spécifiques du Mode Édition"
 
 L["ACCWUI_OPT_GROUP_COMBAT"] = COMBAT_LABEL
-L["ACCWUI_OPT_GROUP_UNITS"] = "Châssis d'unité et Plaques de nom"
+L["ACCWUI_OPT_GROUP_UNITS"] = "Cadres d'unité et barres d'info"
 L["ACCWUI_OPT_GROUP_SOCIAL"] = SOCIAL_LABEL
 L["ACCWUI_OPT_GROUP_INTERFACE"] = "HUD et Interface"
 
 L["ACCWUI_OPT_CHK_EDITMODE"] = "Choisir le Mode Édition par défaut pour tous les nouveaux personnages"
 L["ACCWUI_OPT_CHK_EDITMODE_DESC"] = "Si activée, tous les nouveaux personnages que vous créerez utiliseront automatiquement votre disposition synchronisée du Mode Édition. Sinon, vous devrez l'activer manuellement pour chaque spécialisation ci-dessous."
 L["ACCWUI_OPT_BTN_EDITMODE"] = "Ouvrir le Mode Édition"
-L["ACCWUI_OPT_CHK_TOCHAT"] = "Afficher un message dans la discussion au chargement de l'addon"
-L["ACCWUI_OPT_CHK_TOCHAT_DESC"] = "Affiche un court message de bienvenue dans la discussion lorsque l'addon est chargé après votre connexion."
+L["ACCWUI_OPT_CHK_TOCHAT"] = "Afficher un message dans la fenêtre de chat au chargement de l'addon"
+L["ACCWUI_OPT_CHK_TOCHAT_DESC"] = "Affiche un court message de bienvenue dans la fenêtre de chat lorsque l'addon est chargé après votre connexion."
 L["ACCWUI_OPT_CHK_SCREENSIZE"] = "Sauvegarder les paramètres spécifiques à la résolution de l'écran"
 L["ACCWUI_OPT_CHK_SCREENSIZE_DESC"] = "Si activée, certains paramètres ne seront sauvegardés et chargés que pour la résolution plein écran de votre moniteur actuel (%s).\n\nCela peut être utile si vous jouez souvent sur des écrans différents, ou si vous synchronisez vos paramètres d'addon entre plusieurs ordinateurs.\n\nPrend en charge : la disposition choisie du Mode Édition, la taille et la position de la fenêtre de discussion, la position de la carte de zone."
 
-L["ACCWUI_OPT_CHK_SHOWLASTSAVED"] = "Afficher dans la discussion la date de dernière sauvegarde des paramètres"
+L["ACCWUI_OPT_CHK_SHOWLASTSAVED"] = "Afficher dans la fenêtre de chat la date de dernière sauvegarde des paramètres"
 L["ACCWUI_OPT_CHK_SHOWLASTSAVED_DESC"] = "Affiche la dernière date, l'heure et le personnage sur lequel le profil de synchronisation actuel a été sauvegardé lors de son chargement."
 
-L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS"] = "Afficher dans la discussion l'inscription ou l'abandon automatique des canaux de discussion Blizzard"
-L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS_DESC"] = "Affiche un message dans la discussion chaque fois que l'addon fait automatiquement rejoindre ou quitter un canal de discussion à votre personnage, selon les réglages de la section Canaux de discussion Blizzard."
+L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS"] = "Afficher dans la fenêtre de chat l'inscription ou l'abandon automatique des canaux de discussion Blizzard"
+L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS_DESC"] = "Afficher un message dans la fenêtre de chat chaque fois que l'addon fait automatiquement rejoindre ou quitter un canal de discussion à votre personnage, selon les réglages de la section Canaux de discussion Blizzard."
 
 L["ACCWUI_OPT_SYNCSETTINGS_TITLE"] = "Paramètres de synchronisation"
-L["ACCWUI_OPT_SYNCSETTINGS_DESC"] = "Sélectionnez les paramètres à synchroniser sur votre compte"
+L["ACCWUI_OPT_SYNCSETTINGS_DESC"] = "Sélectionnez les paramètres à synchroniser sur l'ensemble du compte"
 L["ACCWUI_OPT_MODULES_TITLE"] = "Options de synchronisation"
 L["ACCWUI_OPT_MODULES_DESC"] = "Quels paramètres d'interface souhaitez-vous synchroniser sur l'ensemble du compte ?"
 L["ACCWUI_OPT_MODULES_EXP_TITLE"] = "Options de synchronisation expérimentales"
@@ -43,7 +43,7 @@ L["ACCWUI_OPT_MODULES_CHK_ARENA_DESC"] = "Si activée, vos paramètres de cadres
 L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"] = "Fouille automatique"
 L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"] = "Si activée, vos paramètres de la fouille automatique seront synchronisés."
 L["ACCWUI_OPT_MODULES_CHK_BAGS"] = "Organisation des sacs"
-L["ACCWUI_OPT_MODULES_CHK_BAGS_DESC"] = "Si activée, l'attribution de vos sacs ainsi que les paramètres des différents à ignorer et de vente automatique de la camelote seront synchronisés.\n\nCela peut être instable si les conditions réseau ne sont pas optimales, car chaque paramètre de sac doit être envoyé un par un."
+L["ACCWUI_OPT_MODULES_CHK_BAGS_DESC"] = "Si activée, vos attributions de sacs ainsi que les paramètres « Ignorer » et « Vendre les objets indésirables » sont synchronisés.\n\nCette synchronisation peut s'avérer peu fiable si les conditions réseau ne sont pas optimales, car chaque paramètre de sac doit être envoyé un par un."
 L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD"] = "Bloquer les invitations de guilde"
 L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD_DESC"] = "Si activée, l'option permettant de bloquer ou d'autoriser les invitations de guilde sera synchronisée."
 L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD"] = "Bloquer les invitations de quartier"
@@ -87,7 +87,7 @@ L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"] = "Si activée, la visibilité, l'emplac
 L["ACCWUI_OPT_MODULES_CHK_ASSISTED"] = "Surbrillance d'aide"
 L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"] = "Si activée, le paramètre de mise en surbrillance d'aide sera synchronisé."
 L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS"] = "Affichage de la localisation"
-L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"] = "Si activée, le paramètre d'affichage de la localisation sera synchronisé.\n\nC'est le paramètre qui contrôle si vos alliés récents peuvent voir ou non votre position géographique, situé dans les options sociales."
+L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"] = "Si activée, le paramètre d'affichage de la localisation sera synchronisé.\n\nC'est le paramètre qui contrôle si vos contacts et camarades de guilde ainsi que vos alliés récents peuvent voir ou non votre position géographique dans le jeu."
 L["ACCWUI_OPT_MODULES_CHK_DMGMETER"] = "Compteur de dégâts"
 L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"] = "Si activée, la visibilité de votre compteur de dégâts sera synchronisée."
 L["ACCWUI_OPT_MODULES_CHK_EXTERNALDEF"] = "Défenses externes"
@@ -100,9 +100,9 @@ L["ACCWUI_OPT_MODULES_CHK_CALENDAR"] = "Filtres du calendrier"
 L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"] = "Si activée, les filtres sélectionnés sur le calendrier en jeu seront synchronisés."
 L["ACCWUI_OPT_MODULES_CHK_CAMERA"] = "Caméra"
 L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"] = "Si activée, plusieurs paramètres de la caméra seront synchronisés."
-L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"] = "Combat divers"
+L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"] = "Paramètres de combat divers"
 L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"] = "Si activée, plusieurs paramètres de combat qui n'entrent dans aucune autre catégorie seront synchronisés."
-L["ACCWUI_OPT_MODULES_CHK_UIMISC"] = "Interface divers"
+L["ACCWUI_OPT_MODULES_CHK_UIMISC"] = "Paramètres d'interface divers"
 L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"] = "Si activée, plusieurs paramètres d'interface qui n'entrent dans aucune autre catégorie seront synchronisés."
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Liste personnalisée de CVars"
@@ -120,7 +120,7 @@ L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW_DESC"] = "Cocher cette case forcera tous vos
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK_DESC"] = "Cocher cette case forcera tous vos personnages à quitter le canal %s."
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT_DESC"] = "Cocher cette case fera en sorte que l'addon ne fasse rien concernant le canal %s."
 L["ACCWUI_BLOCKBLIZZ_CHATFRAME"] = "Sélectionner la fenêtre de discussion où ajouter les canaux"
-L["ACCWUI_BLOCKBLIZZ_CHATFRAME_DESC"] = "Sélectionnez vers quelle fenêtre / onglet de discussion les canaux doivent être ajoutés lors de leur adhésion automatique via cet outil.\nChoisissez [Aucun] si vous préférez ajouter manuellement les canaux à une fenêtre de discussion par vous-même."
+L["ACCWUI_BLOCKBLIZZ_CHATFRAME_DESC"] = "Sélectionnez vers quelle fenêtre / onglet de discussion les canaux doivent être ajoutés lorsqu'ils sont rejoints automatiquement via cet outil.\nChoisissez [Aucun] si vous préférez ajouter manuellement les canaux à une fenêtre de discussion par vous-même."
 
 L["ACCWUI_CHARSPECIFIC_TITLE"] = "Options spécifiques à %s"
 L["ACCWUI_CHARSPECIFIC_DESC"] = "Choisissez d'utiliser ou non la disposition du Mode Édition sélectionnée pour les spécialisations de ce personnage."
@@ -156,8 +156,8 @@ L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN_DESC"] = "Si activée, l'addon n'ajoutera 
 
 L["ACCWUI_DEBUG_TITLE"] = BINDING_HEADER_DEBUG
 
-L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"] = "Afficher le texte de débogage Sauvegarde /  Chargement"
-L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"] = "Affiche le texte de débogage dans la discussion lorsque l'addon charge ou sauvegarde des paramètres."
+L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT"] = "Afficher le texte de débogage Sauvegarde / chargement"
+L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"] = "Affiche le texte de débogage dans la fenêtre de chat lorsque l'addon charge ou sauvegarde des paramètres."
 
 L["ACCWUI_DEBUG_BTN_FORCELOAD"] = "Forcer le chargement"
 L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"] = "Charge immédiatement les paramètres du profil actuellement sélectionné, écrasant tous les paramètres que vous auriez pu modifier depuis la dernière sauvegarde du profil.\n\nNormalement, les paramètres sont chargés immédiatement après la connexion ou après un changement de profil."
