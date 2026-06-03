@@ -31,7 +31,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			self.db.profile.lastSaved.character = AccWideUIAceAddon.TempData.ThisCharacter
 			self.db.profile.lastSaved.unixTime = GetServerTime()
 			
-			if ((self:IsMainline() or self:IsClassicTBC()) and doNotSaveEditMode == false) then
+			if (self:SupportsEditMode() and doNotSaveEditMode == false) then
 				self:SaveEditModeSettings()
 			end
 			
@@ -68,7 +68,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
-				if (self:IsClassicEra() == true or self:IsClassicProgression() == true) then
+				if (self:IsClassicEra() == true) then
 					-- Raid Profiles
 				
 					--if (GetNumRaidProfiles() > 1) then
@@ -544,7 +544,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self.db.profile.syncData.nameplates.cvars[v] = GetCVar(v) or nil
 				end
 				
-				if (self:IsMainline() == true) then
+				if (self:IsMainline() == true or self:IsClassicProgression()) then
 				
 					self.db.profile.syncData.nameplates.special.NamePlateSize = {}
 					self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2] = C_NamePlate.GetNamePlateSize()
@@ -762,7 +762,7 @@ end
 
 function AccWideUIAceAddon:SaveEditModeSettings()
 
-	if ((self:IsMainline() or self:IsClassicTBC()) and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
+	if (self:SupportsEditMode() and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
 	
 		local getLayoutsTable = C_EditMode.GetLayouts()
 		local currentActiveLayout = getLayoutsTable["activeLayout"]

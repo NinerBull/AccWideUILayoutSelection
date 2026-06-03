@@ -35,3 +35,7 @@ end
 function AccWideUIAceAddon:IsClassicEra()
 	return (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) or false
 end
+
+function AccWideUIAceAddon:SupportsEditMode()
+	return (self:IsMainline() or self:IsClassicTBC() or self:IsClassicProgression())
+end

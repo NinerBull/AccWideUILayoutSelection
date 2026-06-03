@@ -26,7 +26,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end
 			
 			
-			if self:IsMainline() or self:IsClassicTBC() then
+			if self:SupportsEditMode() then
 				
 				self:LoadEditModeSettings()
 
@@ -53,7 +53,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 				
 					self:ScheduleTimer(function() 
 				
-						if self:IsMainline() or self:IsClassicTBC() then
+						if self:SupportsEditMode() then
 							
 							SetActionBarToggles(self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5, self.db.profile.syncData.actionBars.visible.Bar6, self.db.profile.syncData.actionBars.visible.Bar7, self.db.profile.syncData.actionBars.visible.Bar8)
 						
@@ -91,7 +91,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				end
 			
-				if (self:IsClassicEra() == true or self:IsClassicProgression() == true) then
+				if (not self:SupportsEditMode()) then
 				
 					--How many Raid Profiles?
 					
@@ -547,7 +547,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 					end
 				end
 				
-				if (self:IsMainline() == true) then
+				if (self:IsMainline() == true or self:IsClassicProgression()) then
 					if (self.db.profile.syncData.nameplates.special.NamePlateSize) then
 						C_NamePlate.SetNamePlateSize(self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2])
 					end
@@ -1418,7 +1418,7 @@ end
 
 function AccWideUIAceAddon:LoadEditModeSettings()
 	
-	if ((self:IsMainline() or self:IsClassicTBC()) and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
+	if (self:SupportsEditMode() and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
 				
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())

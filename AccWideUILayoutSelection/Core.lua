@@ -99,7 +99,7 @@ function AccWideUIAceAddon:OnEnable()
 	end)
 
 
-	if (self:IsMainline() or self:IsClassicTBC()) then
+	if (self:SupportsEditMode()) then
 		self:SecureHook(C_EditMode, "OnEditModeExit", function()
 			if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
 				if (self.db.global.printDebugTextToChat == true) then
