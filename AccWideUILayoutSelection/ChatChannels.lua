@@ -20,6 +20,7 @@ elseif (AccWideUIAceAddon:IsClassicProgression()) then --MoP
 	AccWideUIAceAddon.chatChannelNames.localDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUIAceAddon.chatChannelNames.worldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
 	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
+	AccWideUIAceAddon.chatChannelNames.services = C_ChatInfo.GetChannelShortcutForChannelID(45)
 
 elseif (AccWideUIAceAddon:IsClassicWrath()) then --Wrath
 
