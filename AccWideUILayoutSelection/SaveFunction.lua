@@ -329,6 +329,96 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Save Loss of Control Variables
+			if (self.db.profile.syncToggles.lossOfControl == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Loss of Control] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.LossOfControl) do
+					self.db.profile.syncData.lossOfControl.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end 
+			
+			-- Save Mouseover Cast Settings
+			if (self.db.profile.syncToggles.mouseoverCast == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Mouseover Cast] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.MouseoverCast) do
+					self.db.profile.syncData.mouseoverCast.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			-- External Defensives Variables
+			if (self.db.profile.syncToggles.externalDefensives == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[External Defensives] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.ExternalDefensives) do
+					self.db.profile.syncData.externalDefensives.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+
+			
+		
+			-- Save Empowered Tap/Hold Settings
+			if (self.db.profile.syncToggles.empowerTap == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Empowered Tap/Hold] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.EmpowerTap) do
+					self.db.profile.syncData.empowerTap.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
+			-- Save Cooldown Manager Setting
+			if (self.db.profile.syncToggles.cooldownViewer == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Cooldown Manager] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.CooldownViewer) do
+					self.db.profile.syncData.cooldownViewer.cvars[v] = GetCVar(v) or nil
+				end
+				
+				--[[if (self:IsMainline() == true) then
+					if (C_CooldownViewer.IsCooldownViewerAvailable()) then
+						local thisClass = UnitClassBase("player")
+						self.db.profile.syncData.cooldownViewer.classes[thisClass] = C_CooldownViewer.GetLayoutData()
+						--self.db.profile.syncData.cooldownViewer.classes[thisClass] = CooldownViewerSettings:GetSerializer():GetSerializedData()
+					end
+				end]]
+			
+			end
+			
+			-- Save Assisted Highlight Setting
+			if (self.db.profile.syncToggles.assistedCombat == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Assisted Highlight] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.AssistedCombat) do
+					self.db.profile.syncData.assistedCombat.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
 			-- Custom CVars
 			if (self.db.global.allowCustomCVars == true) then
 			
@@ -574,103 +664,15 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end -- EO accountWideNameplates
 
+
 			
-			-- RETAIL and TBC only variables
-			if (self:IsMainline() == true or self:IsClassicTBC()) then
 			
-				-- Save Loss of Control Variables
-				if (self.db.profile.syncToggles.lossOfControl == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Loss of Control] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.LossOfControl) do
-						self.db.profile.syncData.lossOfControl.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end 
-				
-		
-			end
+			
+			
 			
 			-- RETAIL only variables
 			if (self:IsMainline() == true) then
 			
-				-- External Defensives Variables
-				if (self.db.profile.syncToggles.externalDefensives == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[External Defensives] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.ExternalDefensives) do
-						self.db.profile.syncData.externalDefensives.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end
-
-				-- Save Mouseover Cast Settings
-				if (self.db.profile.syncToggles.mouseoverCast == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Mouseover Cast] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.MouseoverCast) do
-						self.db.profile.syncData.mouseoverCast.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end
-			
-				-- Save Empowered Tap/Hold Settings
-				if (self.db.profile.syncToggles.empowerTap == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Empowered Tap/Hold] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.EmpowerTap) do
-						self.db.profile.syncData.empowerTap.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end
-				
-				
-				-- Save Cooldown Manager Setting
-				if (self.db.profile.syncToggles.cooldownViewer == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Cooldown Manager] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.CooldownViewer) do
-						self.db.profile.syncData.cooldownViewer.cvars[v] = GetCVar(v) or nil
-					end
-					
-					--[[if (self:IsMainline() == true) then
-						if (C_CooldownViewer.IsCooldownViewerAvailable()) then
-							local thisClass = UnitClassBase("player")
-							self.db.profile.syncData.cooldownViewer.classes[thisClass] = C_CooldownViewer.GetLayoutData()
-							--self.db.profile.syncData.cooldownViewer.classes[thisClass] = CooldownViewerSettings:GetSerializer():GetSerializedData()
-						end
-					end]]
-				
-				end
-				
-				-- Save Assisted Highlight Setting
-				if (self.db.profile.syncToggles.assistedCombat == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Assisted Highlight] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.AssistedCombat) do
-						self.db.profile.syncData.assistedCombat.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end
-				
 				
 				-- Save Location Visibility Setting
 				if (self.db.profile.syncToggles.locationVisibility == true and isForced == true) then -- Does not work on logout
