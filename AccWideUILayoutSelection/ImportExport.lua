@@ -209,7 +209,7 @@ function AccWideUIAceAddon:ExportGraphicsSoundSettings()
 			thisExportTable.values[v] = GetCVar(v) or nil
 		end
 		
-		for k, v in pairs(AccWideUIAceAddon.CVars.System_Sound) do
+		for k, v in pairs(AccWideUIAceAddon.CVars.System_Audio) do
 			thisExportTable.values[v] = GetCVar(v) or nil
 		end
 

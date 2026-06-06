@@ -1,5 +1,2 @@
-- Enabled Edit Mode Sync functionality for MoP Classic 5.5.4.
-- Added French Localisation courtesy of [@Machou](https://github.com/NinerBull/AccWideUILayoutSelection/pull/37), thank you very much!
-- Added ability to import and export Graphics and Sound settings. Useful for people who play more than one WoW client (e.g. Retail _and_ Classic) to keep settings in sync.
-- Services Channel can now be blocked in MoP Classic.
-- Update TOC for 12.0.7 and 5.5.4
+- Graphics and Audio settings can now be synchronised on a per-profile basis. 
+  - Enable the "Graphics Settings" and "Audio Settings" sync settings for each profile you want to save these settings to.

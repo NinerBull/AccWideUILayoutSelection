@@ -306,6 +306,8 @@ AccWideUIAceAddon.CVars = {
 	
 	
 	System_Graphics = {
+		"graphicsQuality",
+		"RAIDgraphicsQuality",
 		"AllowSoftwareRenderer",
 		"AllowSoftwareRendererDX12",
 		"animFrameSkipLOD",
@@ -590,7 +592,7 @@ AccWideUIAceAddon.CVars = {
 		"UseOldVolumeFog"
 	},
 	
-	System_Sound = {
+	System_Audio = {
 		"autojoinBGVoice",
 		"autojoinPartyVoice",
 		"ChatAmbienceVolume",

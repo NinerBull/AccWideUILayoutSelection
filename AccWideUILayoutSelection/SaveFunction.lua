@@ -15,6 +15,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 	else
 		
 		if (InCombatLockdown()) then
+		
 			if (self.db.global.printDebugTextToChat == true) then
 				self:Print("[Debug] Not saving UI Settings while in combat.")
 			end
@@ -30,6 +31,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 
 			self.db.profile.lastSaved.character = AccWideUIAceAddon.TempData.ThisCharacter
 			self.db.profile.lastSaved.unixTime = GetServerTime()
+
 			
 			if (self:SupportsEditMode() and doNotSaveEditMode == false) then
 				self:SaveEditModeSettings()
@@ -68,7 +70,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
-				if (self:IsClassicEra() == true) then
+				if (not self:SupportsEditMode()) then
 					-- Raid Profiles
 				
 					--if (GetNumRaidProfiles() > 1) then
@@ -121,9 +123,9 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						end
 						
 					end
-			end
-				
 			
+				end
+				
 			end
 			
 			
@@ -753,7 +755,36 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 				end
 			end
+		
+
+
+			-- Save Graphics Settings
+			if (self.db.profile.syncToggles.systemGraphics == true) then
 			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Graphics Settings] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.System_Graphics) do
+					self.db.profile.syncData.systemGraphics.cvars[v] = GetCVar(v) or nil
+				end
+				
+			end
+			
+			
+			
+			-- Save Audio Settings
+			if (self.db.profile.syncToggles.systemAudio == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Audio Settings] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.System_Audio) do
+					self.db.profile.syncData.systemAudio.cvars[v] = GetCVar(v) or nil
+				end
+				
+			end
 			
 			
 		end

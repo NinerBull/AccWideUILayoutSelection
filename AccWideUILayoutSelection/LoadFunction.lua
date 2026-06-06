@@ -1,6 +1,6 @@
 local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
-function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
+function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadSystemSettings)
 
 	local LoadUIAllowSaveTime = 36
 	
@@ -14,6 +14,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			self.TempData.LoadSettingsAfterCombat = false
 
 			doNotLoadChatOrBagSettings = doNotLoadChatOrBagSettings or false
+			doNotLoadSystemSettings = doNotLoadSystemSettings or false
 			self.TempData.IsCurrentlyLoadingSettings = true
 		
 			if (self.db.global.printWhenLastSaved == true) then
@@ -1396,12 +1397,51 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings)
 			end
 			
 			
+			
+			if (doNotLoadSystemSettings ~= true) then
+			
+				-- Use Graphics Settings
+				if (self.db.profile.syncToggles.systemGraphics == true) then
+			
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Graphics Settings] Loading Settings.")
+					end
+					
+					for k, v in pairs(self.CVars.System_Graphics) do
+						if (self.db.profile.syncData.systemGraphics.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.systemGraphics.cvars[v])
+						end
+					end
+					
+				end
+				
+				
+				-- Use Audio Settings
+				if (self.db.profile.syncToggles.systemAudio == true) then
+			
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Audio Settings] Loading Settings.")
+					end
+					
+					for k, v in pairs(self.CVars.System_Audio) do
+						if (self.db.profile.syncData.systemAudio.cvars[v] ~= nil) then
+							SetCVar(v, self.db.profile.syncData.systemAudio.cvars[v])
+						end
+					end
+					
+				end
+			
+			end
+			
+			
 			self:ScheduleTimer(function()
 				self.TempData.IsCurrentlyLoadingSettings = false
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Debug] Settings can now be saved.")
 				end
 			end, LoadUIAllowSaveTime)
+			
+			
 			
 		end
 	
