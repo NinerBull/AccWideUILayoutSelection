@@ -441,7 +441,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Chat Window Variables
-			if (self.db.profile.syncToggles.chatWindow == true) then
+			if (self.db.profile.syncToggles.chatWindow == true and C_AddOns.IsAddOnLoaded("Chattynator") == false) then
 			
 			
 				if (self.db.global.printDebugTextToChat == true) then

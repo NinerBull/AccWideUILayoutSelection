@@ -438,6 +438,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
 										order = 70,
 										width = thisCheckboxWidth,
+										disabled = function() return C_AddOns.IsAddOnLoaded("Chattynator") end,
 										desc = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW_DESC"],
 									},
 									chatWindowPosition = {
@@ -1354,7 +1355,9 @@ function AccWideUIAceAddon:SetCustomCVarList(info, value)
 end
 
 function AccWideUIAceAddon:ShouldChatOptsDisable()
-	if (self.db.profile.syncToggles.chatWindow == true) then
+	if (C_AddOns.IsAddOnLoaded("Chattynator") == true) then
+		return true
+	elseif (self.db.profile.syncToggles.chatWindow == true) then
 		return false
 	else
 		return true

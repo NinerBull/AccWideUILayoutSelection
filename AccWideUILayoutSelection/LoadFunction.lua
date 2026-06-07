@@ -927,7 +927,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 		
 		
 			-- Chat Window Settings
-			if (self.db.profile.syncToggles.chatWindow == true and doNotLoadChatOrBagSettings == false) then
+			if (self.db.profile.syncToggles.chatWindow == true and doNotLoadChatOrBagSettings == false and C_AddOns.IsAddOnLoaded("Chattynator") == false) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Chat Window] Loading Settings.")
