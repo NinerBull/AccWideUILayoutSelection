@@ -923,6 +923,25 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				end 
 				
 			end
+			
+			
+			-- Custom Chat Channels
+			if (self.db.profile.syncToggles.chatChannels == true) then
+				
+				self:ScheduleTimer(function() 
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Chat Channels] Joining Channels.")
+					end
+					
+					AccWideUIAceAddon:BlizzChannelManager()
+					
+					
+					for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
+						JoinChannelByName(v)
+					end
+				end, 10)
+				
+			end
 		
 		
 		
@@ -933,25 +952,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					self:Print("[Chat Window] Loading Settings.")
 				end
 				
-				
-				if (self.db.profile.syncToggles.chatChannels == true) then
-				
-					self:ScheduleTimer(function() 
-						if (self.db.global.printDebugTextToChat == true) then
-							self:Print("[Chat Window] Joining Channels.")
-						end
-						
-						AccWideUIAceAddon:BlizzChannelManager()
-						
-						-- Chat Channels
-						for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
-							JoinChannelByName(v)
-						end
-					end, 10)
-					
-				end
-				
-				
+
 				
 				if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
 				
