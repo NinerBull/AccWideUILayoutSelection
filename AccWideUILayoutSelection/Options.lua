@@ -454,7 +454,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										name = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS"],
 										order = 90,
 										width = thisCheckboxWidth,
-										disabled = "ShouldChatOptsDisable",
+										--disabled = "ShouldChatOptsDisable",
 										desc = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS_DESC"],
 									},
 									locationVisibility = {

@@ -440,6 +440,42 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Chat Channels
+			if (self.db.profile.syncToggles.chatChannels == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Chat Channels] Saving Settings.")
+				end
+				
+				do
+					self.db.profile.syncData.chat.channelsJoined = {}
+					--self.db.profile.syncData.chat.channelOrder = {}
+					local channels = {GetChannelList()}
+					for i = 1, #channels, 3 do
+						local id, name, disabled = channels[i], channels[i+1], channels[i+2]
+						
+						local isCustomChannel = true
+						
+						if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
+							self.db.profile.syncData.chat.channelOrder[id] = name
+						end
+						
+						for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
+							if v == name then
+								isCustomChannel = false
+							end
+						end
+						
+						if isCustomChannel == true then
+							self.db.profile.syncData.chat.channelsJoined[id] = name
+						end
+						
+						
+					end
+				end
+			end
+		
+			
 			-- Save Chat Window Variables
 			if (self.db.profile.syncToggles.chatWindow == true and C_AddOns.IsAddOnLoaded("Chattynator") == false) then
 			
@@ -552,35 +588,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
-				if (self.db.profile.syncToggles.chatChannels == true) then
-					-- Chat Channels
-					do
-						self.db.profile.syncData.chat.channelsJoined = {}
-						--self.db.profile.syncData.chat.channelOrder = {}
-						local channels = {GetChannelList()}
-						for i = 1, #channels, 3 do
-							local id, name, disabled = channels[i], channels[i+1], channels[i+2]
-							
-							local isCustomChannel = true
-							
-							if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
-								self.db.profile.syncData.chat.channelOrder[id] = name
-							end
-							
-							for k, v in pairs(AccWideUIAceAddon.chatChannelNames) do
-								if v == name then
-									isCustomChannel = false
-								end
-							end
-							
-							if isCustomChannel == true then
-								self.db.profile.syncData.chat.channelsJoined[id] = name
-							end
-							
-							
-						end
-					end
-				end
+				
 				
 				
 				--Chat Colours Etc
