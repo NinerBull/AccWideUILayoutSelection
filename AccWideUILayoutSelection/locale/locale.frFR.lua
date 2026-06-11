@@ -1,5 +1,6 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "frFR", false) -- Translator(s): Klep-Ysondre
 if not L then return end
+
 L["ACCWUI_ADDONNAME"] = "Account Wide Interface Settings"
 L["ACCWUI_ADDONNAME_SHORT"] = "Account Wide Interface"
 
@@ -30,7 +31,7 @@ L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS"] = "Afficher dans la fenêtre de chat l'ins
 L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS_DESC"] = "Afficher un message dans la fenêtre de chat chaque fois que l'addon fait automatiquement rejoindre ou quitter un canal de discussion à votre personnage, selon les réglages de la section Canaux de discussion Blizzard."
 
 L["ACCWUI_OPT_SYNCSETTINGS_TITLE"] = "Paramètres de synchronisation"
-L["ACCWUI_OPT_SYNCSETTINGS_DESC"] = "Sélectionnez les paramètres à synchroniser sur l'ensemble du compte"
+L["ACCWUI_OPT_SYNCSETTINGS_DESC"] = "Sélectionner les paramètres à synchroniser sur l'ensemble du compte"
 L["ACCWUI_OPT_MODULES_TITLE"] = "Options de synchronisation"
 L["ACCWUI_OPT_MODULES_DESC"] = "Quels paramètres d'interface souhaitez-vous synchroniser sur l'ensemble du compte ?"
 L["ACCWUI_OPT_MODULES_EXP_TITLE"] = "Options de synchronisation expérimentales"
@@ -108,14 +109,15 @@ L["ACCWUI_OPT_MODULES_CHK_SYSGRAPHICS"] = "Paramètres Graphiques"
 L["ACCWUI_OPT_MODULES_CHK_SYSGRAPHICS_DESC"] = "Si activée, vos paramètres graphiques actuels seront synchronisés avec ce profil."
 L["ACCWUI_OPT_MODULES_CHK_SYSAUDIO"] = "Paramètres Audio"
 L["ACCWUI_OPT_MODULES_CHK_SYSAUDIO_DESC"] = "Si activée, vos paramètres Audio actuels seront synchronisés avec ce profil."
+
 L["ACCWUI_OPT_MODULES_CVARS"] = "Liste personnalisée de CVars"
-L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Entrez une liste personnalisée de CVars que vous souhaitez synchroniser avec ce profil.\n\nEntrez le nom exact de la CVar, un par ligne."
+L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Saisissez une liste personnalisée des variables CVar que vous souhaitez synchroniser avec ce profil.\n\nSaisissez le nom exact de chaque variable CVar, à raison d'un par ligne."
 
 L["ACCWUI_BLOCKBLIZZ_TITLE"] = "Canaux de discussion Blizzard"
 L["ACCWUI_BLOCKBLIZZ_DESC"] = "Autoriser ou empêcher tous les personnages utilisant ce profil de rejoindre les différents canaux de discussion par défaut"
-L["ACCWUI_BLOCKBLIZZ_TEXT_DESC"] = "Sélectionnez ci-dessous les canaux de discussion Blizzard que vos personnages doivent toujours rejoindre, ou bloquer pour ne plus jamais les voir.\n\nRejoindre : Vos personnages essaieront toujours de rejoindre ce canal.\nBloquer : Vos personnages quitteront toujours ce canal.\nNe rien faire : Vos personnages ne seront pas forcés de rejoindre ou de quitter ce canal."
+L["ACCWUI_BLOCKBLIZZ_TEXT_DESC"] = "Sélectionner ci-dessous les canaux de discussion Blizzard que vos personnages doivent toujours rejoindre, ou bloquer pour ne plus jamais les voir.\n\nRejoindre : Vos personnages essaieront toujours de rejoindre ce canal.\nBloquer : Vos personnages quitteront toujours ce canal.\nNe rien faire : Vos personnages ne seront pas forcés de rejoindre ou de quitter ce canal."
 L["ACCWUI_BLOCKBLIZZ_CHANNEL"] = "%s " .. CHANNEL
-L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"] = "Sélectionnez ce que vous souhaitez faire avec le canal %s."
+L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"] = "Sélectionner ce que vous souhaitez faire avec le canal %s."
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"] = "Rejoindre"
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"] = "Bloquer"
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"] = "Ne rien faire"
@@ -123,7 +125,7 @@ L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW_DESC"] = "Cocher cette case forcera tous vos
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK_DESC"] = "Cocher cette case forcera tous vos personnages à quitter le canal %s."
 L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT_DESC"] = "Cocher cette case fera en sorte que l'addon ne fasse rien concernant le canal %s."
 L["ACCWUI_BLOCKBLIZZ_CHATFRAME"] = "Sélectionner la fenêtre de discussion où ajouter les canaux"
-L["ACCWUI_BLOCKBLIZZ_CHATFRAME_DESC"] = "Sélectionnez vers quelle fenêtre / onglet de discussion les canaux doivent être ajoutés lorsqu'ils sont rejoints automatiquement via cet outil.\nChoisissez [Aucun] si vous préférez ajouter manuellement les canaux à une fenêtre de discussion par vous-même."
+L["ACCWUI_BLOCKBLIZZ_CHATFRAME_DESC"] = "Sélectionner vers quelle fenêtre / onglet de discussion les canaux doivent être ajoutés lorsqu'ils sont rejoints automatiquement via cet outil.\nChoisissez [Aucun] si vous préférez ajouter manuellement les canaux à une fenêtre de discussion par vous-même."
 
 L["ACCWUI_CHARSPECIFIC_TITLE"] = "Options spécifiques à %s"
 L["ACCWUI_CHARSPECIFIC_DESC"] = "Choisissez d'utiliser ou non la disposition du Mode Édition sélectionnée pour les spécialisations de ce personnage."
