@@ -1,6 +1,2 @@
-- Graphics and Audio settings can now be synchronised on a per-profile basis. 
-  - Enable the "Graphics Settings" and "Audio Settings" sync settings for each profile you want to save these settings to.
-- To prevent conflicts, some Chat Window settings (Size, location, colours etc) will no longer be synced when [Chattynator](https://www.curseforge.com/wow/addons/chattynator) is enabled, as it uses its own Account Wide settings profiles.
-  - This does not affect the Auto Join/Leave Channels functionality.
-- Updated Russian Translation courtesy of [@ZamestoTV](https://github.com/NinerBull/AccWideUILayoutSelection/pull/40), thank you!
-- Updated French Translation courtesy of [@Machou](https://github.com/NinerBull/AccWideUILayoutSelection/issues?q=is%3Apr%20author%3AMachou%20merged%3A%3E2026-06-01%20merged%3A%3C2026-06-09), thank you!
+- Updated French Translation courtesy of [@Machou](https://github.com/NinerBull/AccWideUILayoutSelection/pull/43), thank you!
+- Updated Simplified Chinese Translation courtesy of [@nanjuekaien1](https://github.com/NinerBull/AccWideUILayoutSelection/pull/42), thank you!
