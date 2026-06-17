@@ -1,2 +1,1 @@
-- Updated French Translation courtesy of [@Machou](https://github.com/NinerBull/AccWideUILayoutSelection/pull/43), thank you!
-- Updated Simplified Chinese Translation courtesy of [@nanjuekaien1](https://github.com/NinerBull/AccWideUILayoutSelection/pull/42), thank you!
+- Fixed Midnight Damage Meters not keeping their size and position after clicking "Load Damage Meter Settings" and then reloading the UI or switching character.

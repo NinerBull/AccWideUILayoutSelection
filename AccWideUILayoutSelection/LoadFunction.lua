@@ -1602,6 +1602,7 @@ function AccWideUIAceAddon:RetailTaintableLoadDamageMeter(skipLoadMessage)
 										end
 									
 										thisDamageMeter:ClearAllPoints()
+										thisDamageMeter:SetUserPlaced(true)
 										thisDamageMeter:SetPoint(
 											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].point,
 											UIParent,
@@ -1609,6 +1610,7 @@ function AccWideUIAceAddon:RetailTaintableLoadDamageMeter(skipLoadMessage)
 											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetX,
 											self.db.profile.syncData.retailTaintables.damageMeter.special.position[i].offsetY
 										)
+										thisDamageMeter:StopMovingOrSizing()
 									end
 								end, 0.6)
 							
