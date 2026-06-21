@@ -1,1 +1,2 @@
-- Fixed Midnight Damage Meters not keeping their size and position after clicking "Load Damage Meter Settings" and then reloading the UI or switching character.
+- Exporting a profile string no longer includes any saved Graphics or Audio Settings.
+  - These can still be exported/imported seperately with the relevant buttons in the Advanced Settings tab.

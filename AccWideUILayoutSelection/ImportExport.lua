@@ -30,6 +30,8 @@ function AccWideUIAceAddon:ExportProfile()
 		}
 		thisExportTable.syncData.chat.channelsJoined = {}
 		thisExportTable.syncData.tutorialTooltips.cvars = {}
+		thisExportTable.syncData.systemGraphics.cvars = {}
+		thisExportTable.syncData.systemAudio.cvars = {}
 		thisExportTable.syncData.editModeLayoutID = "unset"
 		if (thisExportTable.syncData.screenResolutionSpecific and #thisExportTable.syncData.screenResolutionSpecific > 0) then
 			for k, v in pairs(thisExportTable.syncData.screenResolutionSpecific) do
