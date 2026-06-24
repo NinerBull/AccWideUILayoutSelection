@@ -1481,6 +1481,25 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 
 			--Set the spec
 			C_EditMode.SetActiveLayout(thisEditModeLayoutID)
+			
+			-- If CooldownManagerCentered is installed, changing the EditMode Layout this way makes any custom CD bars visible, whether they should do or not.
+			-- So let's refresh their visibility status. https://www.curseforge.com/wow/addons/cooldown-manager-centered
+			
+			if (C_AddOns.IsAddOnLoaded("CooldownManagerCentered") == true) then
+			
+				self:ScheduleTimer(function() 
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Debug] CooldownManagerCentered installed, refreshing visibility of custom CD bars.")
+					end
+				
+					if (CooldownManagerCentered and CooldownManagerCentered.ns and CooldownManagerCentered.ns.CMCVisibility) then
+						CooldownManagerCentered.ns.CMCVisibility:UpdateAll()	
+					end
+				end, 0.5)
+			
+			end
+			
+			
 	
 		end
 	

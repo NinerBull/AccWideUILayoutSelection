@@ -1,2 +1,3 @@
+- Loading a profile that synchronises an Edit Mode layout should no longer cause any custom CD bars created with [Cooldown Manager Centered](https://www.curseforge.com/wow/addons/cooldown-manager-centered) to be permanently visible when it shouldn't, despite its visiblity settings.
 - Exporting a profile string no longer includes any saved Graphics or Audio Settings.
   - These can still be exported/imported seperately with the relevant buttons in the Advanced Settings tab.
