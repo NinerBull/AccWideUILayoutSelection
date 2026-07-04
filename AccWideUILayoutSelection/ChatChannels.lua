@@ -39,7 +39,6 @@ elseif (AccWideUIAceAddon:IsClassicTBC()) then --TBC
 	AccWideUIAceAddon.chatChannelNames.localDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUIAceAddon.chatChannelNames.worldDefense = C_ChatInfo.GetChannelShortcutForChannelID(23)
 	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(24)
-	AccWideUIAceAddon.chatChannelNames.hardcoreDeaths = C_ChatInfo.GetChannelShortcutForChannelID(44)
 	AccWideUIAceAddon.chatChannelNames.guildRecruitment = C_ChatInfo.GetChannelShortcutForChannelID(25)
 
 elseif (AccWideUIAceAddon:IsClassicEra()) then --Era
