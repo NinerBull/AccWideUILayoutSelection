@@ -10,7 +10,7 @@ StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP"] = {
 		AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup = true
 		AccWideUIAceAddon:SaveUISettings()
 		AccWideUIAceAddon.TempData.HasDoneInitialLoad = true
-		if (AccWideUIAceAddon:IsMainline()) then
+		if (AccWideUIAceAddon:SupportsGameFunction("editModeLayout")) then
 			AccWideUIAceAddon:SaveEditModeSettings()
 		end
 		C_Timer.After(0.1, function() 

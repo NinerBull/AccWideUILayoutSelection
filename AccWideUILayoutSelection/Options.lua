@@ -311,6 +311,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 20,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_TARGETING_DESC"],
+										hidden = (not self:SupportsGameFunction("softTarget"))
 									},
 									assistedCombat = {
 										type = "toggle",
@@ -318,6 +319,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 30,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_ASSISTED_DESC"],
+										hidden = (not self:SupportsGameFunction("assistedCombat"))
 									},
 									autoLoot = {
 										type = "toggle",
@@ -325,6 +327,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 50,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
+										hidden = (not self:SupportsGameFunction("autoLoot"))
 									},
 									empowerTap = {
 										type = "toggle",
@@ -332,6 +335,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 120,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_EMPOWERED_DESC"],
+										hidden = (not self:SupportsGameFunction("empowerTap"))
 									},
 									lossOfControl = {
 										type = "toggle",
@@ -339,6 +343,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 140,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_LOC_DESC"],
+										hidden = (not self:SupportsGameFunction("lossOfControl"))
 									},
 									mouseoverCast = {
 										type = "toggle",
@@ -346,6 +351,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 150,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_MOUSEOVER_DESC"],
+										hidden = (not self:SupportsGameFunction("mouseoverCast"))
 									},
 									selfCast = {
 										type = "toggle",
@@ -353,6 +359,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 151,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_SELFCAST_DESC"],
+										hidden = (not self:SupportsGameFunction("selfCast"))
 									},
 									combatMisc = {
 										type = "toggle",
@@ -360,6 +367,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 1000,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"],
+										hidden = (not self:SupportsGameFunction("combatMisc"))
 									},
 								}
 							},
@@ -378,6 +386,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 40,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_ARENA_DESC"],
+										hidden = (not self:SupportsGameFunction("arenaFrames"))
 									},
 									nameplates = {
 										type = "toggle",
@@ -385,6 +394,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 160,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_NAMEPLATES_DESC"],
+										hidden = (not self:SupportsGameFunction("nameplates"))
 									},
 									raidFrames = {
 										type = "toggle",
@@ -392,6 +402,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 170,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_PARTYRAID_DESC"],
+										hidden = (not self:SupportsGameFunction("raidFrames"))
 									},
 
 								}
@@ -411,6 +422,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 60,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKCHANNEL_DESC"],
+										hidden = (not self:SupportsGameFunction("blockChannelInvites"))
 									},
 									blockGuildInvites = {
 										type = "toggle",
@@ -418,6 +430,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 61,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKGUILD_DESC"],
+										hidden = (not self:SupportsGameFunction("blockGuildInvites"))
 									},
 									blockNeighborhoodInvites = {
 										type = "toggle",
@@ -425,6 +438,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 62,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKNEIGHBORHOOD_DESC"],
+										hidden = (not self:SupportsGameFunction("blockNeighborhoodInvites"))
 									},
 									blockTrades = {
 										type = "toggle",
@@ -432,13 +446,14 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 62,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_BLOCKTRADE_DESC"],
+										hidden = (not self:SupportsGameFunction("blockTrades"))
 									},
 									chatWindow = {
 										type = "toggle",
 										name = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW"],
 										order = 70,
 										width = thisCheckboxWidth,
-										disabled = function() return C_AddOns.IsAddOnLoaded("Chattynator") end,
+										disabled = (C_AddOns.IsAddOnLoaded("Chattynator")),
 										desc = L["ACCWUI_OPT_MODULES_CHK_CHATWINDOW_DESC"],
 									},
 									chatWindowPosition = {
@@ -463,6 +478,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 130,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_LOCATIONVIS_DESC"],
+										hidden = (not self:SupportsGameFunction("locationVisibility"))
 									},
 								}
 							},
@@ -481,6 +497,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 65,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"],
+										hidden = (not self:SupportsGameFunction("calendarFilters"))
 									},
 									camera = {
 										type = "toggle",
@@ -488,6 +505,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 68,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"],
+										hidden = (not self:SupportsGameFunction("camera"))
 									},
 									cooldownViewer = {
 										type = "toggle",
@@ -495,6 +513,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 100,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_COOLDOWN_DESC"],
+										hidden = (not self:SupportsGameFunction("cooldownViewer"))
 									},
 									damageMeter = {
 										type = "toggle",
@@ -502,6 +521,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 101,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_DMGMETER_DESC"],
+										hidden = (not self:SupportsGameFunction("damageMeter"))
 									},
 									editModeLayout = {
 										type = "toggle",
@@ -509,6 +529,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 110,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_EDITMODE_DESC"],
+										hidden = (not self:SupportsGameFunction("editModeLayout"))
 									},
 									externalDefensives = {
 										type = "toggle",
@@ -516,6 +537,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 120,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_EXTERNALDEF_DESC"],
+										hidden = (not self:SupportsGameFunction("externalDefensives"))
 									},
 									minimap = {
 										type = "toggle",
@@ -523,6 +545,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 150,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_MINIMAP_DESC"],
+										hidden = (not self:SupportsGameFunction("minimap"))
 									},
 									spellOverlay = {
 										type = "toggle",
@@ -530,13 +553,15 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 180,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_SPELLOVERLAY_DESC"],
+										hidden = (not self:SupportsGameFunction("spellOverlay"))
 									},
 									tutorialTooltips = {
 										type = "toggle",
 										name = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP"],
 										order = 190,
 										width = thisCheckboxWidth,
-										desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"] ,
+										desc = L["ACCWUI_OPT_MODULES_CHK_TUTTOOLTIP_DESC"],
+										hidden = (not self:SupportsGameFunction("tutorialTooltips"))
 									},
 									actionBars = {
 										type = "toggle",
@@ -544,6 +569,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 200,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_ACTIONBARS_DESC"],
+										hidden = (not self:SupportsGameFunction("actionBars"))
 									},
 									worldMap = {
 										type = "toggle",
@@ -551,6 +577,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 205,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_WORLDMAP_DESC"],
+										hidden = (not self:SupportsGameFunction("worldMap"))
 									},
 									battlefieldMap = {
 										type = "toggle",
@@ -558,6 +585,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 210,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_BTLMAP_DESC"],
+										hidden = (not self:SupportsGameFunction("battlefieldMap"))
 									},
 									uiMisc = {
 										type = "toggle",
@@ -565,6 +593,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										order = 1100,
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_UIMISC_DESC"],
+										hidden = (not self:SupportsGameFunction("uiMisc"))
 									},
 								}
 							},
@@ -601,6 +630,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								hidden = "ShouldExperimentalSyncsListBeHidden",
 								get = "GetSyncToggle",
 								set = "SetSyncToggle",
+								hidden = (not self:IsMainline()),
 								args = {
 									desc = {
 										type = "description",
@@ -632,6 +662,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						inline = true,
 						get = "GetSyncToggle",
 						set = "SetSyncToggle",
+						hidden = (not self:SupportsGameFunction("editModeLayout")),
 						args = {
 							editModeLayout = {
 								type = "toggle",
@@ -689,6 +720,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				order = 40,
 				get = "GetBlizzChannelToggle",
 				set = "SetBlizzChannelToggle",
+				hidden = (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels")),
 				args = {
 					desc = {
 						type = "description",
@@ -738,7 +770,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.general)
 					},
 					trade = {
 						type = "select",
@@ -752,7 +785,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.trade)
 					},
 					localDefense = {
 						type = "select",
@@ -766,7 +800,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.localDefense)
 					},
 					lookingForGroup = {
 						type = "select",
@@ -780,7 +815,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.lookingForGroup)
 					},
 					services = {
 						type = "select",
@@ -794,7 +830,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.services)
 					},
 					guildRecruitment = {
 						type = "select",
@@ -808,7 +845,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.guildRecruitment)
 					},
 					worldDefense = {
 						type = "select",
@@ -822,7 +860,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.worldDefense)
 					},
 					hardcoreDeaths = {
 						type = "select",
@@ -836,7 +875,8 @@ function AccWideUIAceAddon:GenerateOptions()
 							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
 							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
 						},
-						sorting = {"join", "block", "default"}
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.hardcoreDeaths)
 					},
 				}
 			},
@@ -845,6 +885,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				name = L["ACCWUI_TAINTABLES_TITLE"],
 				desc = L["ACCWUI_TAINTABLES_DESC_SHORT"],
 				order = 30,
+				hidden = (not self:IsMainline()),
 				args = {
 					desc = {
 						type = "description",
@@ -982,6 +1023,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth2,
 								order = 3,
 								desc = L["ACCWUI_ADVANCED_ALLOW_EXP_DESC"],
+								hidden = (not self:IsMainline())
 							},
 							hideMinimapButton = {
 								type = "toggle",
@@ -1138,6 +1180,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = "full",
 								order = 5,
 								desc = L["ACCWUI_OPT_CHK_SHOWBLIZZCHANNELS_DESC"],
+								hidden = (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels"))
 							},
 							printDebugTextToChat = {
 								type = "toggle",
@@ -1174,6 +1217,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								name = L["ACCWUI_UTILITY_BTN_RESETDMGMETER"],
 								desc = L["ACCWUI_UTILITY_TXT_RESETDMGMETER"],
 								width = thisCheckboxWidth2,
+								hidden = not(self:SupportsGameFunction("editModeLayout")),
 								order = 2,
 								func = function()
 									C_CVar.SetCVar("damageMeterEnabled", 0)
@@ -1214,7 +1258,7 @@ function AccWideUIAceAddon:GenerateOptions()
 
 
 	-- Edit Mode Specs
-	if (AccWideUIAceAddon:IsMainline() == true) then
+	if (self:SupportsGameFunction("editModeLayout")) then
 
 		local NumOfSpecs = GetNumSpecializations(false, false)
 
@@ -1233,72 +1277,7 @@ function AccWideUIAceAddon:GenerateOptions()
 			}
 		end
 
-	else
-		self.optionsData.args.settings.args.editModeSettings = nil
 	end
-
-
-
-
-
-	-- Remove Sync options that are not applicable to various versions	
-	if (not AccWideUIAceAddon:IsMainline()) then
-		self.optionsData.args.settings.args.editModeSettings = nil
-		self.optionsData.args.settings.args.headerDiv2 = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.empowerTap = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.assistedCombat = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.locationVisibility = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupSocial.args.blockNeighborhoodInvites = nil
-		self.optionsData.args.settings.args.syncToggles.args.experimentalSyncToggles.args.bagOrganisation = nil
-		self.optionsData.args.advanced.args.advanced.args.allowExperimentalSyncs = nil
-		self.optionsData.args.retailTaintables = nil
-	end
-	
-	if (not AccWideUIAceAddon:IsMainline()) then
-		-- CVars exist in MoP Classic and TBC Classic Anniversary, keep seperate just in case.
-		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.damageMeter = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.externalDefensives = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.cooldownViewer = nil
-		self.optionsData.args.advanced.args.utility.args.btnResetDamageMeter = nil
-	end
-
-	if (not AccWideUIAceAddon:SupportsEditMode()) then
-		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.lossOfControl = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.editModeLayout = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupCombat.args.mouseoverCast = nil
-	end
-	
-	if (AccWideUIAceAddon:IsClassicEra()) then
-		self.optionsData.args.settings.args.syncToggles.args.groupUnits.args.arenaFrames = nil
-		self.optionsData.args.settings.args.syncToggles.args.groupInterface.args.spellOverlay = nil
-	end
-
-
-	-- Remove Chat options that are not applicable to various versions
-	if (AccWideUIAceAddon:IsMainline()) then
-		self.optionsData.args.channels.args.worldDefense = nil
-		self.optionsData.args.channels.args.HardcoreDeaths = nil
-	end
-
-	if (not AccWideUIAceAddon:IsClassicWrath() and not AccWideUIAceAddon:IsClassicTBC() and not AccWideUIAceAddon:IsClassicEra()) then
-		self.optionsData.args.channels.args.guildRecruitment = nil
-	end
-
-	if (AccWideUIAceAddon:IsClassicEra() == false) then
-		self.optionsData.args.channels.args.hardcoreDeaths = nil
-	end
-
-	if (not AccWideUIAceAddon:IsMainline() and not AccWideUIAceAddon:IsClassicProgression() and not AccWideUIAceAddon:IsClassicTBC() and not AccWideUIAceAddon:IsClassicEra()) then
-		self.optionsData.args.channels.args.services = nil
-	end
-
-
-	-- Hide Block Chat Channels if BlockBlizzChatChannels is installed
-	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == true) then
-		self.optionsData.args.channels = nil
-		self.optionsData.args.advanced.args.debug.args.printBlizzChatChanges = nil
-	end
-
 
 
 

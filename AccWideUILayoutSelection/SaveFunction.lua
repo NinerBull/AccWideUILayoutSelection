@@ -33,13 +33,13 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			self.db.profile.lastSaved.unixTime = GetServerTime()
 
 			
-			if (self:SupportsEditMode() and doNotSaveEditMode == false) then
+			if (self:SupportsGameFunction("editModeLayout") and doNotSaveEditMode == false) then
 				self:SaveEditModeSettings()
 			end
 			
 		
 			--Save Shown Action Bars
-			if (self.db.profile.syncToggles.actionBars == true) then
+			if (self:SupportsGameFunction("actionBars") and self.db.profile.syncToggles.actionBars == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Action Bar] Saving Settings.")
@@ -49,7 +49,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self.db.profile.syncData.actionBars.cvars[v] = GetCVar(v) or nil
 				end
 
-					if self:IsMainline() or self:IsClassicTBC() then
+					if self:SupportsGameFunction("editModeLayout") then
 						self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5, self.db.profile.syncData.actionBars.visible.Bar6, self.db.profile.syncData.actionBars.visible.Bar7, self.db.profile.syncData.actionBars.visible.Bar8 = GetActionBarToggles()
 					else
 						self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5 = GetActionBarToggles()
@@ -59,7 +59,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Raid Frames
-			if (self.db.profile.syncToggles.raidFrames == true) then
+			if (self:SupportsGameFunction("raidFrames") and self.db.profile.syncToggles.raidFrames == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Raid Frames] Saving Settings.")
@@ -70,7 +70,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				
-				if (not self:SupportsEditMode()) then
+				if (not self:SupportsGameFunction("editModeLayout")) then
 					-- Raid Profiles
 				
 					--if (GetNumRaidProfiles() > 1) then
@@ -130,7 +130,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Block Channel Invite Variables
-			if (self.db.profile.syncToggles.blockChannelInvites == true) then
+			if (self:SupportsGameFunction("blockChannelInvites") and self.db.profile.syncToggles.blockChannelInvites == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Channel Invites] Saving Settings.")
@@ -142,8 +142,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 			end
 			
+			
+			
 			-- Save Block Trade Variables
-			if (self.db.profile.syncToggles.blockTrades == true) then
+			if (self:SupportsGameFunction("blockTrades") and self.db.profile.syncToggles.blockTrades == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Trade Invites] Saving Settings.")
@@ -155,8 +157,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 			end
 			
+			
+			
 			-- Save Auto Loot Variables
-			if (self.db.profile.syncToggles.autoLoot == true) then
+			if (self:SupportsGameFunction("autoLoot") and self.db.profile.syncToggles.autoLoot == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Auto Loot] Saving Settings.")
@@ -171,7 +175,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Soft Target Variables
-			if (self.db.profile.syncToggles.softTarget == true) then
+			if (self:SupportsGameFunction("softTarget") and self.db.profile.syncToggles.softTarget == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Soft Target] Saving Settings.")
@@ -185,7 +189,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Tutorial Variables
-			if (self.db.profile.syncToggles.tutorialTooltips == true) then
+			if (self:SupportsGameFunction("tutorialTooltips") and self.db.profile.syncToggles.tutorialTooltips == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Tutorial Tooltip] Saving Settings.")
@@ -199,7 +203,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Battlefield Map Variables
-			if (self.db.profile.syncToggles.battlefieldMap == true) then
+			if (self:SupportsGameFunction("battlefieldMap") and self.db.profile.syncToggles.battlefieldMap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Zone Map] Saving Settings.")
@@ -233,8 +237,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end
 			
+			
+			
 			-- Save Self Cast Settings
-			if (self.db.profile.syncToggles.selfCast == true) then
+			if (self:SupportsGameFunction("selfCast") and self.db.profile.syncToggles.selfCast == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Self Cast] Saving Settings.")
@@ -247,8 +253,9 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			
 			-- Save World Map Settings
-			if (self.db.profile.syncToggles.worldMap == true) then
+			if (self:SupportsGameFunction("worldMap") and self.db.profile.syncToggles.worldMap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[World Map] Saving Settings.")
@@ -262,7 +269,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Minimap Settings
-			if (self.db.profile.syncToggles.minimap == true) then
+			if (self:SupportsGameFunction("minimap") and self.db.profile.syncToggles.minimap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Minimap] Saving Settings.")
@@ -276,7 +283,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Calendar Filter Settings
-			if (self.db.profile.syncToggles.calendarFilters == true) then
+			if (self:SupportsGameFunction("calendarFilters") and self.db.profile.syncToggles.calendarFilters == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Calendar Filters] Saving Settings.")
@@ -290,7 +297,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Camera Settings
-			if (self.db.profile.syncToggles.camera == true) then
+			if (self:SupportsGameFunction("camera") and self.db.profile.syncToggles.camera == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Camera] Saving Settings.")
@@ -304,7 +311,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Misc. Combat Settings
-			if (self.db.profile.syncToggles.combatMisc == true) then
+			if (self:SupportsGameFunction("combatMisc") and self.db.profile.syncToggles.combatMisc == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Misc. Combat] Saving Settings.")
@@ -318,7 +325,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Misc. UI Settings
-			if (self.db.profile.syncToggles.uiMisc == true) then
+			if (self:SupportsGameFunction("uiMisc") and self.db.profile.syncToggles.uiMisc == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Misc. UI] Saving Settings.")
@@ -332,7 +339,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Loss of Control Variables
-			if (self.db.profile.syncToggles.lossOfControl == true) then
+			if (self:SupportsGameFunction("lossOfControl") and self.db.profile.syncToggles.lossOfControl == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Loss of Control] Saving Settings.")
@@ -344,8 +351,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end 
 			
+			
+			
 			-- Save Mouseover Cast Settings
-			if (self.db.profile.syncToggles.mouseoverCast == true) then
+			if (self:SupportsGameFunction("mouseoverCast") and self.db.profile.syncToggles.mouseoverCast == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Mouseover Cast] Saving Settings.")
@@ -357,8 +366,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end
 			
+			
+			
 			-- External Defensives Variables
-			if (self.db.profile.syncToggles.externalDefensives == true) then
+			if (self:SupportsGameFunction("externalDefensives") and self.db.profile.syncToggles.externalDefensives == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[External Defensives] Saving Settings.")
@@ -373,7 +384,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 		
 			-- Save Empowered Tap/Hold Settings
-			if (self.db.profile.syncToggles.empowerTap == true) then
+			if (self:SupportsGameFunction("empowerTap") and self.db.profile.syncToggles.empowerTap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Empowered Tap/Hold] Saving Settings.")
@@ -387,7 +398,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Cooldown Manager Setting
-			if (self.db.profile.syncToggles.cooldownViewer == true) then
+			if (self:SupportsGameFunction("cooldownViewer") and self.db.profile.syncToggles.cooldownViewer == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Cooldown Manager] Saving Settings.")
@@ -408,7 +419,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			-- Save Assisted Highlight Setting
-			if (self.db.profile.syncToggles.assistedCombat == true) then
+			if (self:SupportsGameFunction("assistedCombat") and self.db.profile.syncToggles.assistedCombat == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Assisted Highlight] Saving Settings.")
@@ -421,8 +432,74 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			
+			-- Save Location Visibility Setting
+			if (self:SupportsGameFunction("locationVisibility") and self.db.profile.syncToggles.locationVisibility == true and isForced == true) then -- Does not work on logout
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Location Visibility] Saving Settings.")
+				end
+			
+				self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation = GetAllowRecentAlliesSeeLocation()
+			
+			end
+			
+			
+			-- Save Damage Meter Setting
+			if (self:SupportsGameFunction("damageMeter") and self.db.profile.syncToggles.damageMeter == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Damage Meter] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.DamageMeter) do
+					self.db.profile.syncData.damageMeter.cvars[v] = GetCVar(v) or nil
+				end
+				
+			end
+		
+		
+			-- Save Spell Overlay Variables
+			if (self:SupportsGameFunction("spellOverlay") and self.db.profile.syncToggles.spellOverlay == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Spell Overlay] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.SpellOverlay) do
+					self.db.profile.syncData.spellOverlay.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+		
+		
+			-- Save Arena Frames
+			if (self:SupportsGameFunction("arenaFrames") and self.db.profile.syncToggles.arenaFrames == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Arena Frames] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.ArenaFrames) do
+					self.db.profile.syncData.arenaFrames.cvars[v] = GetCVar(v) or nil
+				end
+
+			end
+			
+			
+			
+			-- Save Bag Organisation Settings
+			if (self.db.global.allowExperimentalSyncs == true) then
+				if (self:SupportsGameFunction("bagOrganisation") and self.db.profile.syncToggles.bagOrganisation == true) then
+					self:SaveBagFlagSettings()
+				end
+			end
+			
+			
+			
 			-- Custom CVars
-			if (self.db.global.allowCustomCVars == true) then
+			if (self:SupportsGameFunction("customCVars") and self.db.global.allowCustomCVars == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Custom CVars] Saving Settings.")
@@ -438,6 +515,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 			
 			end
+			
 			
 			
 			-- Chat Channels
@@ -479,11 +557,9 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			-- Save Chat Window Variables
 			if (self.db.profile.syncToggles.chatWindow == true and C_AddOns.IsAddOnLoaded("Chattynator") == false) then
 			
-			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Chat Window] Saving Settings.")
 				end
-			
 			
 				for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
 				
@@ -560,8 +636,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						
 					end
 
-
-
 					--Message Types
 					do
 						self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes = {GetChatWindowMessages(thisChatFrame)}
@@ -569,7 +643,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					
 					
 					--Chat Channels
-					
 					if (not self:IsMainline()) then -- 12.0.0 Taints in Midnight
 						self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible = {}
 						
@@ -582,15 +655,10 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						
 					end
 						
-					
-					
 
 				end
 				
-				
-				
-				
-				
+
 				--Chat Colours Etc
 				do
 					self.db.profile.syncData.chat.info = {}
@@ -634,7 +702,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			
 			-- Save Nameplates
-			if (self.db.profile.syncToggles.nameplates == true) then
+			if (self:SupportsGameFunction("nameplates") and self.db.profile.syncToggles.nameplates == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Nameplates] Saving Settings.")
@@ -644,7 +712,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self.db.profile.syncData.nameplates.cvars[v] = GetCVar(v) or nil
 				end
 				
-				if (self:IsMainline() == true or self:IsClassicProgression()) then
+				if (self:SupportsGameFunction("nameplateSizeFunc")) then
 				
 					self.db.profile.syncData.nameplates.special.NamePlateSize = {}
 					self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2] = C_NamePlate.GetNamePlateSize()
@@ -674,96 +742,6 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			
 			end -- EO accountWideNameplates
 
-
-			
-			
-			
-			
-			
-			-- RETAIL only variables
-			if (self:IsMainline() == true) then
-			
-				
-				-- Save Location Visibility Setting
-				if (self.db.profile.syncToggles.locationVisibility == true and isForced == true) then -- Does not work on logout
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Location Visibility] Saving Settings.")
-					end
-				
-					self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation = GetAllowRecentAlliesSeeLocation()
-				
-				end
-				
-				
-				-- Save Bag Organisation Settings
-				if (self.db.global.allowExperimentalSyncs == true) then
-					if (self.db.profile.syncToggles.bagOrganisation == true) then
-						self:SaveBagFlagSettings()
-					end
-				end
-	
-			end
-			
-			
-			
-			
-			--  Midnight only settings
-			if (self:IsMainline() == true) then
-			
-				-- Save Damage Meter Setting
-				if (self.db.profile.syncToggles.damageMeter == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Damage Meter] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.DamageMeter) do
-						self.db.profile.syncData.damageMeter.cvars[v] = GetCVar(v) or nil
-					end
-					
-				end
-			
-			end
-			
-			
-			
-			
-			-- NOT CLASSIC ERA only variables
-			if (self:IsClassicEra() == false) then
-				-- Save Spell Overlay Variables
-				if (self.db.profile.syncToggles.spellOverlay == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Spell Overlay] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.SpellOverlay) do
-						self.db.profile.syncData.spellOverlay.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end
-				
-				
-			end
-			
-			
-			-- NOT Vanilla only variables
-			if (self:IsClassicVanilla() == false) then
-				-- Save Arena Frames
-				if (self.db.profile.syncToggles.arenaFrames == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Arena Frames] Saving Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.ArenaFrames) do
-						self.db.profile.syncData.arenaFrames.cvars[v] = GetCVar(v) or nil
-					end
-				
-				end
-			end
-		
 
 
 			-- Save Graphics Settings
@@ -803,7 +781,7 @@ end
 
 function AccWideUIAceAddon:SaveEditModeSettings()
 
-	if (self:SupportsEditMode() and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
+	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
 	
 		local getLayoutsTable = C_EditMode.GetLayouts()
 		local currentActiveLayout = getLayoutsTable["activeLayout"]
@@ -884,7 +862,7 @@ function AccWideUIAceAddon:ForceSaveSettings()
 	self:SaveBagFlagSettings(); 
 	self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = GetAutoDeclineGuildInvites()
 	
-	if (AccWideUIAceAddon:IsMainline()) then
+	if (self:IsMainline()) then
 		self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites = GetAutoDeclineNeighborhoodInvites()
 	
 		self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()

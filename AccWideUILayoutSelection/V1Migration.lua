@@ -95,7 +95,7 @@ function AccWideUIAceAddon:MigrateFromV1()
 			self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = (AccWideUI_AccountData.SpecialVariables.BlockGuildInvites == true and true or false)
 		end
 		
-		if (AccWideUIAceAddon:IsMainline() and AccWideUI_AccountData.BagOrganisation) then
+		if (AccWideUIAceAddon:SupportsGameFunction("bagOrganisation") and AccWideUI_AccountData.BagOrganisation) then
 			self.db.profile.syncData.bagOrganisation.bags = AccWideUI_AccountData.BagOrganisation.Bags or {}
 			self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = AccWideUI_AccountData.BagOrganisation.SortBagsRightToLeft or C_Container.GetSortBagsRightToLeft()
 			self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight = AccWideUI_AccountData.BagOrganisation.InsertItemsLeftToRight or C_Container.GetInsertItemsLeftToRight()

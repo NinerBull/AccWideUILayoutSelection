@@ -27,16 +27,14 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end
 			
 			
-			if self:SupportsEditMode() then
-				
+			if (self:SupportsGameFunction("editModeLayout")) then
 				self:LoadEditModeSettings()
-
 			end
 			
 			
 			
 			-- Use Action Bars
-			if (self.db.profile.syncToggles.actionBars == true) then
+			if (self:SupportsGameFunction("actionBars") and self.db.profile.syncToggles.actionBars == true) then
 					
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Action Bars] Loading Settings.")
@@ -54,7 +52,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 					self:ScheduleTimer(function() 
 				
-						if self:SupportsEditMode() then
+						if self:SupportsGameFunction("editModeLayout") then
 							
 							SetActionBarToggles(self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5, self.db.profile.syncData.actionBars.visible.Bar6, self.db.profile.syncData.actionBars.visible.Bar7, self.db.profile.syncData.actionBars.visible.Bar8)
 						
@@ -80,7 +78,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Use Raid Frames
-			if (self.db.profile.syncToggles.raidFrames == true) then
+			if (self:SupportsGameFunction("raidFrames") and self.db.profile.syncToggles.raidFrames == true) then
 		
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Raid Frames] Loading Settings.")
@@ -92,7 +90,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					end
 				end
 			
-				if (not self:SupportsEditMode()) then
+				if (not self:SupportsGameFunction("editModeLayout")) then
 				
 					--How many Raid Profiles?
 					
@@ -213,7 +211,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Block Channel Invite Variables
-			if (self.db.profile.syncToggles.blockChannelInvites == true) then
+			if (self:SupportsGameFunction("blockChannelInvites") and self.db.profile.syncToggles.blockChannelInvites == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Channel Invites] Loading Settings.")
@@ -229,7 +227,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Block Trade Variables
-			if (self.db.profile.syncToggles.blockTrades == true) then
+			if (self:SupportsGameFunction("blockTrades") and self.db.profile.syncToggles.blockTrades == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Trade Invites] Loading Settings.")
@@ -246,7 +244,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 	
 			
 			-- Block Guild Invite Variables
-			if (self.db.profile.syncToggles.blockGuildInvites == true) then
+			if (self:SupportsGameFunction("blockGuildInvites") and self.db.profile.syncToggles.blockGuildInvites == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Guild Invites] Loading Settings.")
@@ -263,7 +261,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Tutorial Variables
-			if (self.db.profile.syncToggles.tutorialTooltips == true) then
+			if (self:SupportsGameFunction("tutorialTooltips") and self.db.profile.syncToggles.tutorialTooltips == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Tutorial Tooltip] Loading Settings.")
@@ -276,8 +274,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				end
 			end 
 			
+			
+			
+			
 			-- Auto Loot Variables
-			if (self.db.profile.syncToggles.autoLoot == true) then
+			if (self:SupportsGameFunction("autoLoot") and self.db.profile.syncToggles.autoLoot == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Auto Loot] Loading Settings.")
@@ -294,7 +295,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Soft Target Variables
-			if (self.db.profile.syncToggles.softTarget == true) then
+			if (self:SupportsGameFunction("softTarget") and self.db.profile.syncToggles.softTarget == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Soft Target] Loading Settings.")
@@ -308,8 +309,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			end 
 			
+			
+			
 			-- Battlefield Map Variables
-			if (self.db.profile.syncToggles.battlefieldMap == true) then
+			if (self:SupportsGameFunction("battlefieldMap") and self.db.profile.syncToggles.battlefieldMap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Zone Map] Loading Settings.")
@@ -444,10 +447,12 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				
 			end
+			
+			
 						
 			
 			-- Self Cast Variables
-			if (self.db.profile.syncToggles.selfCast == true) then
+			if (self:SupportsGameFunction("selfCast") and self.db.profile.syncToggles.selfCast == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Self Cast] Loading Settings.")
@@ -462,8 +467,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end 
 			
 			
+			
+			
 			-- World Map Variables
-			if (self.db.profile.syncToggles.worldMap == true) then
+			if (self:SupportsGameFunction("worldMap") and self.db.profile.syncToggles.worldMap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[World Map] Loading Settings.")
@@ -478,8 +485,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end 
 			
 			
+			
+			
 			-- Minimap Variables
-			if (self.db.profile.syncToggles.minimap == true) then
+			if (self:SupportsGameFunction("minimap") and self.db.profile.syncToggles.minimap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Minimap] Loading Settings.")
@@ -503,7 +512,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Calendar Filter Variables
-			if (self.db.profile.syncToggles.calendarFilters == true) then
+			if (self:SupportsGameFunction("calendarFilters") and self.db.profile.syncToggles.calendarFilters == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Calendar Filters] Loading Settings.")
@@ -518,8 +527,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end 
 			
 			
+			
 			-- Camera Variables
-			if (self.db.profile.syncToggles.camera == true) then
+			if (self:SupportsGameFunction("camera") and self.db.profile.syncToggles.camera == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Camera] Loading Settings.")
@@ -536,7 +546,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 
 			
 			-- Use Nameplates 
-			if (self.db.profile.syncToggles.nameplates == true) then
+			if (self:SupportsGameFunction("nameplates") and self.db.profile.syncToggles.nameplates == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Nameplates] Loading Settings.")
@@ -548,11 +558,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					end
 				end
 				
-				if (self:IsMainline() == true or self:IsClassicProgression()) then
+				if (self:SupportsGameFunction("nameplateSizeFunc")) then -- New Nameplate Size Func
 					if (self.db.profile.syncData.nameplates.special.NamePlateSize) then
 						C_NamePlate.SetNamePlateSize(self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2])
 					end
-				else
+				else -- Old Nameplate Size Func
 					if (self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough) then
 						C_NamePlate.SetNamePlateEnemyClickThrough(self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough)
 					end
@@ -596,7 +606,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Misc. Combat Variables
-			if (self.db.profile.syncToggles.combatMisc == true) then
+			if (self:SupportsGameFunction("combatMisc") and self.db.profile.syncToggles.combatMisc == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Misc. Combat] Loading Settings.")
@@ -612,7 +622,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Misc. UI Variables
-			if (self.db.profile.syncToggles.combatMisc == true) then
+			if (self:SupportsGameFunction("uiMisc") and self.db.profile.syncToggles.uiMisc == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Misc. UI] Loading Settings.")
@@ -628,7 +638,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Loss of Control Variables
-			if (self.db.profile.syncToggles.lossOfControl == true) then
+			if (self:SupportsGameFunction("lossOfControl") and self.db.profile.syncToggles.lossOfControl == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Loss of Control] Loading Settings.")
@@ -642,8 +652,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			end
 			
+			
+			
 			-- External Defensives Variables
-			if (self.db.profile.syncToggles.externalDefensives == true) then
+			if (self:SupportsGameFunction("externalDefensives") and self.db.profile.syncToggles.externalDefensives == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[External Defensives] Loading Settings.")
@@ -656,9 +668,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				end
 			
 			end 
+			
+			
 		
 			-- Mouseover Cast Variables
-			if (self.db.profile.syncToggles.mouseoverCast == true) then
+			if (self:SupportsGameFunction("mouseoverCast") and self.db.profile.syncToggles.mouseoverCast == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Mouseover Cast] Loading Settings.")
@@ -671,9 +685,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				end
 			
 			end 
+			
+			
 	
 			-- Empowered Tap/Hold Variables
-			if (self.db.profile.syncToggles.empowerTap == true) then
+			if (self:SupportsGameFunction("empowerTap") and self.db.profile.syncToggles.empowerTap == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Empowered Tap/Hold] Loading Settings.")
@@ -687,8 +703,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			end 
 			
+			
+			
 			-- Assisted Highlight Variables
-			if (self.db.profile.syncToggles.assistedCombat == true) then
+			if (self:SupportsGameFunction("assistedCombat") and self.db.profile.syncToggles.assistedCombat == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Assisted Highlight] Loading Settings.")
@@ -702,9 +720,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			end 
 			
+			
 
 			-- Cooldown Manager Variables
-			if (self.db.profile.syncToggles.cooldownViewer == true) then
+			if (self:SupportsGameFunction("cooldownViewer") and self.db.profile.syncToggles.cooldownViewer == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Cooldown Manager] Loading Settings.")
@@ -716,29 +735,159 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					end
 				end
 				
-				--[[if (self:IsMainline() == true) then
-					local thisClass = UnitClassBase("player")
-					if (C_CooldownViewer.IsCooldownViewerAvailable() and self.db.profile.syncData.cooldownViewer.classes[thisClass]) then
-						if (self.db.global.printDebugTextToChat == true) then
-							self:Print("[Cooldown Manager] Loading CD Viewer String.")
-						end
-						C_CooldownViewer.SetLayoutData(self.db.profile.syncData.cooldownViewer.classes[thisClass])
-						--CooldownViewerSettings:GetSerializer():SetSerializedData(self.db.profile.syncData.cooldownViewer.classes[thisClass])
-						--CooldownViewerSettings:GetSerializer():SetSerializedData:WriteData()
-						CooldownViewerSettings:CheckSaveCurrentLayout()
-						EssentialCooldownViewer:RefreshData()
-						EssentialCooldownViewer:RefreshLayout()
-						UtilityCooldownViewer:RefreshData()
-						UtilityCooldownViewer:RefreshLayout()
-					end
-				end]]
+				
+			end
+			
+			
+			
+			-- Block Neighborhood Invite
+			if (self:SupportsGameFunction("blockNeighborhoodInvites") and self.db.profile.syncToggles.blockNeighborhoodInvites == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Block Neighborhood Invites] Loading Settings.")
+				end
+				
+				--Special
+				if (self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites ~= nil) then
+					SetAutoDeclineNeighborhoodInvites(self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites)
+				end
 			
 			end
 			
 			
 			
+			-- Location Visibility Variables
+			if (self:SupportsGameFunction("locationVisibility") and self.db.profile.syncToggles.locationVisibility == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Location Visibility] Loading Settings.")
+				end
+
+				--Special
+				if (self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation ~= nil) then
+					SetAllowRecentAlliesSeeLocation(self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation)
+				end
+			
+			end
+			
+			
+			-- Bag Organisation Settings
+			if (self.db.global.allowExperimentalSyncs == true) then
+				if (self:SupportsGameFunction("bagOrganisation") and self.db.profile.syncToggles.bagOrganisation == true and doNotLoadChatOrBagSettings == false) then
+				
+					if (self.db.global.printDebugTextToChat == true) then
+						self:Print("[Bags] Loading Settings.")
+					end
+					
+					
+					local extraTimer = 1
+					local extraTimerAdd = 0.7
+					
+					self:ScheduleTimer(function() 
+					
+						C_Container.SetSortBagsRightToLeft(self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft)
+						C_Container.SetInsertItemsLeftToRight(self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight)
+						
+						C_Container.SetBackpackAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled)
+						C_Container.SetBackpackSellJunkDisabled(self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled)
+						
+						C_Container.SetBankAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled)
+						
+						
+						for bagName, bagId in pairs(Enum.BagIndex) do
+						
+							if (string.find(string.lower(bagName), "bank") == nil) then 
+								
+								if (type(self.db.profile.syncData.bagOrganisation.bags[bagName]) == "table") then	
+
+									for k, v in pairs(Enum.BagSlotFlags) do
+										if (type(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) == "boolean") then
+										
+											self:ScheduleTimer(function() 
+											
+												if (self.db.global.printDebugTextToChat == true) then
+													self:Print("[Bags] Setting " .. k .. " to " .. tostring(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) .. " for " .. bagName .. ".")
+													--print("C_Container.SetBagSlotFlag(" .. bagId .. ", " .. Enum.BagSlotFlags[tostring(k)] .. ", " .. tostring(self:ToBoolean(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])) .. ")")
+												end
+											
+												C_Container.SetBagSlotFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])
+												
+												ContainerFrameSettingsManager:SetFilterFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]);
+											
+											end, extraTimer)
+											
+											extraTimer = extraTimer + extraTimerAdd
+											
+										end
+									end
+
+								end
+							
+							end
+						
+						end
+						
+					end, 4)
+					
+				
+				end
+			end
+			
+			
+			
+			-- Use Damage Meter Setting
+			if (self:SupportsGameFunction("damageMeter") and self.db.profile.syncToggles.damageMeter == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Damage Meter] Loading Settings.")
+				end
+				
+				for k, v in pairs(self.CVars.DamageMeter) do
+					if (self.db.profile.syncData.damageMeter.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.damageMeter.cvars[v])
+					end
+				end
+				
+			end
+			
+			
+			
+			-- Spell Overlay Variables
+			if (self:SupportsGameFunction("spellOverlay") and self.db.profile.syncToggles.spellOverlay == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Spell Overlay] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.SpellOverlay) do
+					if (self.db.profile.syncData.spellOverlay.cvars ~= nil) then
+						SetCVar(v, self.db.profile.syncData.spellOverlay.cvars[v])
+					end
+				end
+				
+			end
+			
+			
+			
+			-- Arena FramesVariables
+			if (self:SupportsGameFunction("arenaFrames") and self.db.profile.syncToggles.arenaFrames == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Arena Frames] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.ArenaFrames) do
+					if (self.db.profile.syncData.arenaFrames.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.arenaFrames.cvars[v])
+					end
+				end
+			
+			end 
+			
+			
+			
 			-- Custom CVars
-			if (self.db.global.allowCustomCVars == true) then
+			if (self:SupportsGameFunction("customCVars") and self.db.global.allowCustomCVars == true) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Custom CVars] Loading Settings.")
@@ -754,176 +903,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end 
 			
 			
-			
-			
-			-- RETAIL Only settings
-			if (self:IsMainline() == true) then
-				
-				-- Block Neighborhood Invite
-				if (self.db.profile.syncToggles.blockNeighborhoodInvites == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Block Neighborhood Invites] Loading Settings.")
-					end
-					
-					--Special
-					if (self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites ~= nil) then
-						SetAutoDeclineNeighborhoodInvites(self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites)
-					end
-				
-				end 
-				
 
-				
-				-- Location Visibility Variables
-				if (self.db.profile.syncToggles.locationVisibility == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Location Visibility] Loading Settings.")
-					end
-
-					--Special
-					if (self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation ~= nil) then
-						SetAllowRecentAlliesSeeLocation(self.db.profile.syncData.locationVisibility.special.allowRecentAlliesSeeLocation)
-					end
-				
-				end 
-				
-				
-				-- Bag Organisation Settings
-				if (self.db.global.allowExperimentalSyncs == true) then
-					if (self.db.profile.syncToggles.bagOrganisation == true and doNotLoadChatOrBagSettings == false) then
-					
-						if (self.db.global.printDebugTextToChat == true) then
-							self:Print("[Bags] Loading Settings.")
-						end
-						
-						
-						local extraTimer = 1
-						local extraTimerAdd = 0.7
-						
-						self:ScheduleTimer(function() 
-						
-							C_Container.SetSortBagsRightToLeft(self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft)
-							C_Container.SetInsertItemsLeftToRight(self.db.profile.syncData.bagOrganisation.settings.insertItemsLeftToRight)
-							
-							C_Container.SetBackpackAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.backpackAutosortDisabled)
-							C_Container.SetBackpackSellJunkDisabled(self.db.profile.syncData.bagOrganisation.settings.backpackSellJunkDisabled)
-							
-							C_Container.SetBankAutosortDisabled(self.db.profile.syncData.bagOrganisation.settings.bankAutosortDisabled)
-							
-							
-							for bagName, bagId in pairs(Enum.BagIndex) do
-							
-								if (string.find(string.lower(bagName), "bank") == nil) then 
-									
-									if (type(self.db.profile.syncData.bagOrganisation.bags[bagName]) == "table") then	
-
-										for k, v in pairs(Enum.BagSlotFlags) do
-											if (type(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) == "boolean") then
-											
-												self:ScheduleTimer(function() 
-												
-													if (self.db.global.printDebugTextToChat == true) then
-														self:Print("[Bags] Setting " .. k .. " to " .. tostring(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]) .. " for " .. bagName .. ".")
-														--print("C_Container.SetBagSlotFlag(" .. bagId .. ", " .. Enum.BagSlotFlags[tostring(k)] .. ", " .. tostring(self:ToBoolean(self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])) .. ")")
-													end
-												
-													C_Container.SetBagSlotFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)])
-													
-													ContainerFrameSettingsManager:SetFilterFlag(bagId, Enum.BagSlotFlags[tostring(k)], self.db.profile.syncData.bagOrganisation.bags[bagName][tostring(k)]);
-												
-												end, extraTimer)
-												
-												extraTimer = extraTimer + extraTimerAdd
-												
-											end
-										end
-
-									end
-								
-								end
-							
-							end
-							
-						end, 4)
-						
-					
-					end
-				end
-	
-			
-			end
-			
-			
-			
-			
-			--  Midnight only settings
-			if (self:IsMainline() == true) then
-			
-				-- Use Damage Meter Setting
-				if (self.db.profile.syncToggles.damageMeter == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Damage Meter] Loading Settings.")
-					end
-					
-					for k, v in pairs(self.CVars.DamageMeter) do
-						if (self.db.profile.syncData.damageMeter.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.damageMeter.cvars[v])
-						end
-					end
-					
-				
-				end
-			
-			end
-			
-			
-		
-			
-			-- NOT CLASSIC ERA Only settings
-			if (self:IsClassicEra() == false) then
-
-				-- Spell Overlay Variables
-				if (self.db.profile.syncToggles.spellOverlay == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Spell Overlay] Loading Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.SpellOverlay) do
-						if (self.db.profile.syncData.spellOverlay.cvars ~= nil) then
-							SetCVar(v, self.db.profile.syncData.spellOverlay.cvars[v])
-						end
-					end
-					
-				end
-				
-			end
-			
-			
-			
-			-- NOT Vanilla Only settings
-			if (self:IsClassicVanilla() == false) then
-			
-				-- Use Arena Frames
-				if (self.db.profile.syncToggles.arenaFrames == true) then
-				
-					if (self.db.global.printDebugTextToChat == true) then
-						self:Print("[Arena Frames] Loading Settings.")
-					end
-				
-					for k, v in pairs(self.CVars.ArenaFrames) do
-						if (self.db.profile.syncData.arenaFrames.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.arenaFrames.cvars[v])
-						end
-					end
-				
-				end 
-				
-			end
-			
 			
 			-- Custom Chat Channels
 			if (self.db.profile.syncToggles.chatChannels == true) then
@@ -1455,7 +1435,7 @@ end
 
 function AccWideUIAceAddon:LoadEditModeSettings()
 	
-	if (self:SupportsEditMode() and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
+	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
 				
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
