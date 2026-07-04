@@ -49,7 +49,7 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	elseif (functionName == "arenaFrames") then -- Arena Frames
 		return (not self:IsClassicEra())
 	elseif (functionName == "spellOverlay") then -- Spell Overlay
-		return (not self:IsClassicEra())
+		return (not self:IsClassicTBC() and not self:IsClassicEra())
 	elseif (functionName == "empowerTap") then -- Empower Tap
 		return (self:IsMainline())
 	elseif (functionName == "assistedCombat") then -- 1 Button Assist
@@ -60,7 +60,11 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 		return (self:IsMainline())
 	elseif (functionName == "bagOrganisation") then -- Bag Organisation
 		return (self:IsMainline())
-	elseif (functionName == "nameplateSizeFunc") then -- New Nameplate Size Func
+	elseif (functionName == "damageMeter") then -- Damage Meter
+		return (self:IsMainline())
+	elseif (functionName == "cooldownViewer") then -- Cooldown Manager
+		return (self:IsMainline())
+	elseif (functionName == "externalDefensives") then -- External Defensives
 		return (self:IsMainline())
 	else
 		return true

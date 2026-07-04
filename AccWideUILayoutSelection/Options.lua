@@ -682,13 +682,15 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "header",
 								name = string.format(L["ACCWUI_CHARSPECIFIC_TITLE"], UnitNameUnmodified("player")),
 								order = 3,
+								hidden = ((GetNumSpecializations(false, false) == 0) and true or false)
 							},
 							desc1 = {
 								type = "description",
 								fontSize = "medium",
 								order = 4,
 								width = "full",
-								name = L["ACCWUI_CHARSPECIFIC_DESC"]
+								name = L["ACCWUI_CHARSPECIFIC_DESC"],
+								hidden = ((GetNumSpecializations(false, false) == 0) and true or false)
 							},
 						}
 					},
@@ -1217,7 +1219,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								name = L["ACCWUI_UTILITY_BTN_RESETDMGMETER"],
 								desc = L["ACCWUI_UTILITY_TXT_RESETDMGMETER"],
 								width = thisCheckboxWidth2,
-								hidden = not(self:SupportsGameFunction("editModeLayout")),
+								hidden = not(self:SupportsGameFunction("damageMeter")),
 								order = 2,
 								func = function()
 									C_CVar.SetCVar("damageMeterEnabled", 0)
