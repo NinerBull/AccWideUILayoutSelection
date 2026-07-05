@@ -558,7 +558,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					end
 				end
 				
-				if (self:SupportsGameFunction("nameplateSizeFunc")) then -- New Nameplate Size Func
+				if (C_NamePlate.SetNamePlateSize) then -- New Nameplate Size Func
 					if (self.db.profile.syncData.nameplates.special.NamePlateSize) then
 						C_NamePlate.SetNamePlateSize(self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2])
 					end
