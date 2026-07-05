@@ -49,7 +49,7 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	elseif (functionName == "arenaFrames") then -- Arena Frames
 		return (not self:IsClassicEra())
 	elseif (functionName == "spellOverlay") then -- Spell Overlay (C_SpellActivationOverlay)
-		return (not self:IsClassicTBC() and not self:IsClassicEra()
+		return (not self:IsClassicTBC() and not self:IsClassicEra())
 	elseif (functionName == "empowerTap") then -- Empower Tap
 		return (self:IsMainline())
 	elseif (functionName == "assistedCombat") then -- Rotation Assist (C_AssistedCombat)
