@@ -74,7 +74,13 @@ AccWideUIAceAddon.CVars = {
 		"showVKeyCastbarOnlyOnTarget",
 		"nameplateShowCastBars",
 		"nameplateSimplifiedScale",
-		"nameplateUseClassColorForFriendlyPlayerUnitNames"
+		"nameplateUseClassColorForFriendlyPlayerUnitNames",
+		"nameplateShowFriends",
+		"nameplateShowAllPersonalAuras",
+		"nameplatePlayRemovalAnimation",
+		"nameplateNotSelectedAlpha",
+		"nameplateForceShowUnitName",
+		"nameplateCheckDistanceForTarget"
 	},
 
 	RaidFrames = {
@@ -105,6 +111,7 @@ AccWideUIAceAddon.CVars = {
 		"threatWarning",
 		"noBuffDebuffFilterOnTarget",
 		"raidFramesCenterBigDefensive",
+		"raidFramesDispelIndicatorOverlayAnimation",
 		"raidFramesDispelIndicatorOverlay",
 		"raidFramesDispelIndicatorType",
 		"raidFramesDisplayLargerRoleSpecificDebuffs",
