@@ -323,10 +323,10 @@ function AccWideUIAceAddon:GenerateOptions()
 									},
 									autoLoot = {
 										type = "toggle",
-										name = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"],
+										name = (self:IsMainline() and L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_RATE"] or L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"]),
 										order = 50,
 										width = thisCheckboxWidth,
-										desc = L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"],
+										desc = (self:IsMainline() and L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_RATE_DESC"] or L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"]),
 										hidden = (not self:SupportsGameFunction("autoLoot"))
 									},
 									empowerTap = {
