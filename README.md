@@ -63,8 +63,8 @@ The addon can synchronise the following, and you can disable any that you'd rath
 ## Compatibility
 * **Midnight** - 12.0.7
 * **MoP Classic** - 5.5.4
-* **TBC Classic** - 2.5.5
-* **Classic Era** - 1.15.8
+* **TBC Classic** - 2.5.6
+* **Classic Era** - 1.15.9
 
 ## Installation
 Download the latest version from one of the places below, and unzip it in your `<warcraft>\<_version_>\Interface\Addons` folder if installing manually.
