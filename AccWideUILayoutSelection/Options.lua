@@ -630,7 +630,6 @@ function AccWideUIAceAddon:GenerateOptions()
 								hidden = "ShouldExperimentalSyncsListBeHidden",
 								get = "GetSyncToggle",
 								set = "SetSyncToggle",
-								hidden = (not self:IsMainline()),
 								args = {
 									desc = {
 										type = "description",
@@ -1350,5 +1349,9 @@ function AccWideUIAceAddon:ShouldCustomCVarListBeHidden()
 end
 
 function AccWideUIAceAddon:ShouldExperimentalSyncsListBeHidden()
-	return not self.db.global.allowExperimentalSyncs
+	if self:IsMainline() then
+		return not self.db.global.allowExperimentalSyncs
+	else
+		return true
+	end
 end
