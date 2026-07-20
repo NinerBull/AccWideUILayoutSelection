@@ -58,7 +58,7 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	-- Only things that are not in all clients (e.g. Arena) should be listed here.
 	
 	if (functionName == "editModeLayout") then -- Edit Mode (C_EditMode)
-		return (not self:IsClassicWrathChina())
+		return (C_AddOns.DoesAddOnExist("Blizzard_EditMode"))
 	elseif (functionName == "lossOfControl") then -- Loss of Control Banners (C_LossOfControl)
 		return (not self:IsClassicEra())
 	elseif (functionName == "mouseoverCast") then -- Mouseover Cast
