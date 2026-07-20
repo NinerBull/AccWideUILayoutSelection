@@ -145,6 +145,7 @@ AccWideUIAceAddon.CVars = {
 
 	LossOfControl = {
 		"lossOfControl",
+		"lossOfControlDisarm",
 		"lossOfControlFull",
 		"lossOfControlInterrupt",
 		"lossOfControlRoot",
@@ -240,7 +241,8 @@ AccWideUIAceAddon.CVars = {
 		"contentTrackingFilter",
 		"questHelper",
 		"showBosses",
-		"worldMapOpacity"
+		"worldMapOpacity",
+		"digSites"
 	},
 	
 	Minimap = {
@@ -273,6 +275,11 @@ AccWideUIAceAddon.CVars = {
 		"externalDefensivesEnabled"
 	},
 	
+	EncounterTimeline = {
+		"encounterTimelineHideForOtherRoles",
+		"encounterWarningsHideIfNotTargetingPlayer"
+	},
+	
 	CombatMisc = {
 		"assistAttack",
 		"autoRangedCombat",
@@ -292,6 +299,7 @@ AccWideUIAceAddon.CVars = {
 		"guildNewsFilter",
 		"guildRewardsCategory",
 		"guildRewardsUsable",
+		"guildRosterView",
 		"miniCommunitiesFrame",
 		"miniDressUpFrame",
 		"consolidateBuffs",
@@ -300,10 +308,11 @@ AccWideUIAceAddon.CVars = {
 		"auctionSortByBuyoutPrice",
 		"auctionSortByUnitPrice",
 		"showHonorAsExperience",
-		"showCustomSetDetails"
+		"showCustomSetDetails",
+		"pvpLocklistMaps0",
+		"pvpLocklistMaps1",
+		"missingTransmogSourceInItemTooltips"
 	},
-	
-	
 	
 	System_Graphics = {
 		"graphicsQuality",
@@ -526,6 +535,14 @@ AccWideUIAceAddon.CVars = {
 		"SkyCloudLOD",
 		"specular",
 		"spellClutter",
+		"spellClutterDefaultTargetScalar",
+		"spellClutterHostileScalar",
+		"spellClutterMinSpellCount",
+		"spellClutterMinWeaponTrailCount",
+		"spellClutterPartySizeScalar",
+		"spellClutterPlayerScalarMultiplier",
+		"spellClutterRangeConstant",
+		"spellClutterRangeConstantRaid",
 		"SSAO",
 		"ssaoMagicNormals",
 		"ssaoMagicThresholdHigh",
@@ -589,7 +606,8 @@ AccWideUIAceAddon.CVars = {
 		"worldMaxMipLevel",
 		"graphicsSunshafts",
 		"raidGraphicsSunshafts",
-		"UseOldVolumeFog"
+		"UseOldVolumeFog",
+		"userFontScale"
 	},
 	
 	System_Audio = {
