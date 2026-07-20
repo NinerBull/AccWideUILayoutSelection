@@ -83,6 +83,8 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 		return (self:IsMainline())
 	elseif (functionName == "externalDefensives") then -- External Defensives
 		return (self:IsMainline())
+	elseif (functionName == "encounterTimeline") then -- Encounter Timeline
+		return (self:IsMainline())
 	else
 		return true
 	end
