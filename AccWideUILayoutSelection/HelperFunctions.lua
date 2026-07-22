@@ -59,10 +59,6 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	
 	if (functionName == "editModeLayout") then -- Edit Mode (C_EditMode)
 		return (C_AddOns.DoesAddOnExist("Blizzard_EditMode"))
-	elseif (functionName == "lossOfControl") then -- Loss of Control Banners (C_LossOfControl)
-		return (not self:IsClassicEra())
-	elseif (functionName == "mouseoverCast") then -- Mouseover Cast
-		return (not self:IsClassicEra())
 	elseif (functionName == "arenaFrames") then -- Arena Frames
 		return (not self:IsClassicEra())
 	elseif (functionName == "spellOverlay") then -- Spell Overlay (C_SpellActivationOverlay)
