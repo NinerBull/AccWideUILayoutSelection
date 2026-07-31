@@ -1,2 +1,1 @@
-- Enabled Edit Mode Sync Support for Classic Era/Hardcore/SoD
-- Update TOC for 1.15.9
+- Interrupting the loading of settings by entering combat will now not re-reload most CVars after exiting combat. This should prevent any potential hitching etc when chain pulling during the loading of settings.

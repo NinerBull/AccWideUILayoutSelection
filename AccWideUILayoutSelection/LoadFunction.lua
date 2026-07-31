@@ -12,6 +12,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			self.TempData.LoadSettingsAfterCombat = true
 		else
 			self.TempData.LoadSettingsAfterCombat = false
+			
 
 			doNotLoadChatOrBagSettings = doNotLoadChatOrBagSettings or false
 			doNotLoadSystemSettings = doNotLoadSystemSettings or false
@@ -24,17 +25,20 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 		
 			if (self.db.global.printDebugTextToChat == true) then
 				self:Print("[Debug] Loading UI Settings. (" .. self.db:GetCurrentProfile() .. ")")
+				if (self.TempData.HasPartiallyLoaded) then
+					self:Print("[Debug] Skipping already loaded CVars due to loading settings being interrupted by combat.")
+				end
 			end
 			
 			
-			if (self:SupportsGameFunction("editModeLayout")) then
+			if (self:SupportsGameFunction("editModeLayout")  and not self.TempData.HasPartiallyLoaded) then
 				self:LoadEditModeSettings()
 			end
 			
 			
 			
 			-- Use Action Bars
-			if (self:SupportsGameFunction("actionBars") and self.db.profile.syncToggles.actionBars == true) then
+			if (self:SupportsGameFunction("actionBars") and self.db.profile.syncToggles.actionBars == true and not self.TempData.HasPartiallyLoaded) then
 					
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Action Bars] Loading Settings.")
@@ -78,7 +82,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Use Raid Frames
-			if (self:SupportsGameFunction("raidFrames") and self.db.profile.syncToggles.raidFrames == true) then
+			if (self:SupportsGameFunction("raidFrames") and self.db.profile.syncToggles.raidFrames == true and not self.TempData.HasPartiallyLoaded) then
 		
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Raid Frames] Loading Settings.")
@@ -211,7 +215,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Block Channel Invite Variables
-			if (self:SupportsGameFunction("blockChannelInvites") and self.db.profile.syncToggles.blockChannelInvites == true) then
+			if (self:SupportsGameFunction("blockChannelInvites") and self.db.profile.syncToggles.blockChannelInvites == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Channel Invites] Loading Settings.")
@@ -227,7 +231,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Block Trade Variables
-			if (self:SupportsGameFunction("blockTrades") and self.db.profile.syncToggles.blockTrades == true) then
+			if (self:SupportsGameFunction("blockTrades") and self.db.profile.syncToggles.blockTrades == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Trade Invites] Loading Settings.")
@@ -244,7 +248,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 	
 			
 			-- Block Guild Invite Variables
-			if (self:SupportsGameFunction("blockGuildInvites") and self.db.profile.syncToggles.blockGuildInvites == true) then
+			if (self:SupportsGameFunction("blockGuildInvites") and self.db.profile.syncToggles.blockGuildInvites == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Guild Invites] Loading Settings.")
@@ -261,7 +265,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Tutorial Variables
-			if (self:SupportsGameFunction("tutorialTooltips") and self.db.profile.syncToggles.tutorialTooltips == true) then
+			if (self:SupportsGameFunction("tutorialTooltips") and self.db.profile.syncToggles.tutorialTooltips == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Tutorial Tooltip] Loading Settings.")
@@ -278,7 +282,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Auto Loot Variables
-			if (self:SupportsGameFunction("autoLoot") and self.db.profile.syncToggles.autoLoot == true) then
+			if (self:SupportsGameFunction("autoLoot") and self.db.profile.syncToggles.autoLoot == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Auto Loot] Loading Settings.")
@@ -295,7 +299,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Soft Target Variables
-			if (self:SupportsGameFunction("softTarget") and self.db.profile.syncToggles.softTarget == true) then
+			if (self:SupportsGameFunction("softTarget") and self.db.profile.syncToggles.softTarget == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Soft Target] Loading Settings.")
@@ -312,7 +316,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Battlefield Map Variables
-			if (self:SupportsGameFunction("battlefieldMap") and self.db.profile.syncToggles.battlefieldMap == true) then
+			if (self:SupportsGameFunction("battlefieldMap") and self.db.profile.syncToggles.battlefieldMap == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Zone Map] Loading Settings.")
@@ -452,7 +456,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 						
 			
 			-- Self Cast Variables
-			if (self:SupportsGameFunction("selfCast") and self.db.profile.syncToggles.selfCast == true) then
+			if (self:SupportsGameFunction("selfCast") and self.db.profile.syncToggles.selfCast == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Self Cast] Loading Settings.")
@@ -470,7 +474,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- World Map Variables
-			if (self:SupportsGameFunction("worldMap") and self.db.profile.syncToggles.worldMap == true) then
+			if (self:SupportsGameFunction("worldMap") and self.db.profile.syncToggles.worldMap == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[World Map] Loading Settings.")
@@ -488,7 +492,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Minimap Variables
-			if (self:SupportsGameFunction("minimap") and self.db.profile.syncToggles.minimap == true) then
+			if (self:SupportsGameFunction("minimap") and self.db.profile.syncToggles.minimap == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Minimap] Loading Settings.")
@@ -512,7 +516,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Calendar Filter Variables
-			if (self:SupportsGameFunction("calendarFilters") and self.db.profile.syncToggles.calendarFilters == true) then
+			if (self:SupportsGameFunction("calendarFilters") and self.db.profile.syncToggles.calendarFilters == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Calendar Filters] Loading Settings.")
@@ -529,7 +533,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Camera Variables
-			if (self:SupportsGameFunction("camera") and self.db.profile.syncToggles.camera == true) then
+			if (self:SupportsGameFunction("camera") and self.db.profile.syncToggles.camera == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Camera] Loading Settings.")
@@ -546,7 +550,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 
 			
 			-- Use Nameplates 
-			if (self:SupportsGameFunction("nameplates") and self.db.profile.syncToggles.nameplates == true) then
+			if (self:SupportsGameFunction("nameplates") and self.db.profile.syncToggles.nameplates == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Nameplates] Loading Settings.")
@@ -606,7 +610,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Misc. Combat Variables
-			if (self:SupportsGameFunction("combatMisc") and self.db.profile.syncToggles.combatMisc == true) then
+			if (self:SupportsGameFunction("combatMisc") and self.db.profile.syncToggles.combatMisc == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Misc. Combat] Loading Settings.")
@@ -622,7 +626,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Misc. UI Variables
-			if (self:SupportsGameFunction("uiMisc") and self.db.profile.syncToggles.uiMisc == true) then
+			if (self:SupportsGameFunction("uiMisc") and self.db.profile.syncToggles.uiMisc == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Misc. UI] Loading Settings.")
@@ -638,7 +642,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Loss of Control Variables
-			if (self:SupportsGameFunction("lossOfControl") and self.db.profile.syncToggles.lossOfControl == true) then
+			if (self:SupportsGameFunction("lossOfControl") and self.db.profile.syncToggles.lossOfControl == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Loss of Control] Loading Settings.")
@@ -655,7 +659,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- External Defensives Variables
-			if (self:SupportsGameFunction("externalDefensives") and self.db.profile.syncToggles.externalDefensives == true) then
+			if (self:SupportsGameFunction("externalDefensives") and self.db.profile.syncToggles.externalDefensives == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[External Defensives] Loading Settings.")
@@ -672,7 +676,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 		
 			-- Mouseover Cast Variables
-			if (self:SupportsGameFunction("mouseoverCast") and self.db.profile.syncToggles.mouseoverCast == true) then
+			if (self:SupportsGameFunction("mouseoverCast") and self.db.profile.syncToggles.mouseoverCast == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Mouseover Cast] Loading Settings.")
@@ -689,7 +693,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 	
 			-- Empowered Tap/Hold Variables
-			if (self:SupportsGameFunction("empowerTap") and self.db.profile.syncToggles.empowerTap == true) then
+			if (self:SupportsGameFunction("empowerTap") and self.db.profile.syncToggles.empowerTap == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Empowered Tap/Hold] Loading Settings.")
@@ -706,7 +710,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Assisted Highlight Variables
-			if (self:SupportsGameFunction("assistedCombat") and self.db.profile.syncToggles.assistedCombat == true) then
+			if (self:SupportsGameFunction("assistedCombat") and self.db.profile.syncToggles.assistedCombat == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Assisted Highlight] Loading Settings.")
@@ -723,7 +727,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 
 			-- Cooldown Manager Variables
-			if (self:SupportsGameFunction("cooldownViewer") and self.db.profile.syncToggles.cooldownViewer == true) then
+			if (self:SupportsGameFunction("cooldownViewer") and self.db.profile.syncToggles.cooldownViewer == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Cooldown Manager] Loading Settings.")
@@ -741,7 +745,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Block Neighborhood Invite
-			if (self:SupportsGameFunction("blockNeighborhoodInvites") and self.db.profile.syncToggles.blockNeighborhoodInvites == true) then
+			if (self:SupportsGameFunction("blockNeighborhoodInvites") and self.db.profile.syncToggles.blockNeighborhoodInvites == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Block Neighborhood Invites] Loading Settings.")
@@ -757,7 +761,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Location Visibility Variables
-			if (self:SupportsGameFunction("locationVisibility") and self.db.profile.syncToggles.locationVisibility == true) then
+			if (self:SupportsGameFunction("locationVisibility") and self.db.profile.syncToggles.locationVisibility == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Location Visibility] Loading Settings.")
@@ -836,7 +840,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Use Damage Meter Setting
-			if (self:SupportsGameFunction("damageMeter") and self.db.profile.syncToggles.damageMeter == true) then
+			if (self:SupportsGameFunction("damageMeter") and self.db.profile.syncToggles.damageMeter == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Damage Meter] Loading Settings.")
@@ -853,7 +857,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Spell Overlay Variables
-			if (self:SupportsGameFunction("spellOverlay") and self.db.profile.syncToggles.spellOverlay == true) then
+			if (self:SupportsGameFunction("spellOverlay") and self.db.profile.syncToggles.spellOverlay == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Spell Overlay] Loading Settings.")
@@ -869,8 +873,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			
-			-- Arena FramesVariables
-			if (self:SupportsGameFunction("arenaFrames") and self.db.profile.syncToggles.arenaFrames == true) then
+			-- Arena Frames Variables
+			if (self:SupportsGameFunction("arenaFrames") and self.db.profile.syncToggles.arenaFrames == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Arena Frames] Loading Settings.")
@@ -887,7 +891,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			
 			-- Custom CVars
-			if (self:SupportsGameFunction("customCVars") and self.db.global.allowCustomCVars == true) then
+			if (self:SupportsGameFunction("customCVars") and self.db.global.allowCustomCVars == true and not self.TempData.HasPartiallyLoaded) then
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Custom CVars] Loading Settings.")
@@ -1382,7 +1386,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			if (doNotLoadSystemSettings ~= true) then
 			
 				-- Use Graphics Settings
-				if (self.db.profile.syncToggles.systemGraphics == true) then
+				if (self.db.profile.syncToggles.systemGraphics == true and not self.TempData.HasPartiallyLoaded) then
 			
 					if (self.db.global.printDebugTextToChat == true) then
 						self:Print("[Graphics Settings] Loading Settings.")
@@ -1398,7 +1402,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				
 				-- Use Audio Settings
-				if (self.db.profile.syncToggles.systemAudio == true) then
+				if (self.db.profile.syncToggles.systemAudio == true and not self.TempData.HasPartiallyLoaded) then
 			
 					if (self.db.global.printDebugTextToChat == true) then
 						self:Print("[Audio Settings] Loading Settings.")
@@ -1417,6 +1421,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			self:ScheduleTimer(function()
 				self.TempData.IsCurrentlyLoadingSettings = false
+				self.TempData.HasPartiallyLoaded = false
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Debug] Settings can now be saved.")
 				end
@@ -1489,6 +1494,7 @@ end
 
 
 function AccWideUIAceAddon:ForceLoadSettings() 
+	self.TempData.HasPartiallyLoaded = false
 	if (not InCombatLockdown() and not IsEncounterInProgress()) then
 		if (C_AddOns.IsAddOnLoaded("EditModeExpanded") == true and not self.TempData.EditModeExpandedTriggered) then
 			 self.TempData.EditModeExpandedTriggered = true

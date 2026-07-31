@@ -11,6 +11,7 @@ local ACD = LibStub("AceConfigDialog-3.0")
 AccWideUIAceAddon.TempData = {
 	TextSlash = "/awi",
 	IsCurrentlyLoadingSettings = false,
+	HasPartiallyLoaded = false,
 	LoadSettingsAfterCombat = false,
 	ProfileSaveVer = 3
 }
@@ -720,6 +721,7 @@ end
 function AccWideUIAceAddon:PLAYER_REGEN_DISABLED(event, arg1, arg2)
 	if (self.TempData.IsCurrentlyLoadingSettings == true) then
 		self.TempData.IsCurrentlyLoadingSettings = false
+		self.TempData.HasPartiallyLoaded = true
 		self.TempData.LoadSettingsAfterCombat = true
 		self:CancelAllTimers();
 		if (self.db.global.printDebugTextToChat == true) then
