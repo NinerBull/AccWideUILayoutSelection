@@ -1419,6 +1419,22 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end
 			
 			
+			-- Use Modifier Keybind Settings
+			if (self.db.profile.syncToggles.systemModifierKeys == true and not self.TempData.HasPartiallyLoaded) then
+		
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Modifier Keybind Settings] Loading Settings.")
+				end
+				
+				for k, v in pairs(self.CVars.System_ModifierKeys) do
+					if (self.db.profile.syncData.systemModifierKeys.special[v] ~= nil) then
+						SetModifiedClick(v, self.db.profile.syncData.systemModifierKeys.special[v])
+					end
+				end
+				
+			end
+			
+			
 			self:ScheduleTimer(function()
 				self.TempData.IsCurrentlyLoadingSettings = false
 				self.TempData.HasPartiallyLoaded = false

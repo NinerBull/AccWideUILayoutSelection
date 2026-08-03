@@ -1,1 +1,3 @@
 - Interrupting the loading of settings by entering combat will now not re-reload most CVars after exiting combat. This should prevent any potential hitching etc when chain pulling during the loading of settings.
+- Added syncing of Modifier Keybinds (such as the Auto Loot and Self Cast modifier keys) to the addon.
+	- This is disabled by default and can be enabled under the 'System' section of the profile settings.

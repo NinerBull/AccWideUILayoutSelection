@@ -773,6 +773,20 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Save Modifier Keybinds
+			if (self.db.profile.syncToggles.systemModifierKeys == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Modifier Keybind Settings] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.System_ModifierKeys) do
+					self.db.profile.syncData.systemModifierKeys.special[v] = GetModifiedClick(v) or nil
+				end
+				
+			end
+			
+			
 		end
 	
 	end

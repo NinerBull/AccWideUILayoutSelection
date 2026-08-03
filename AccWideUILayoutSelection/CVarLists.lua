@@ -274,12 +274,7 @@ AccWideUIAceAddon.CVars = {
 	ExternalDefensives = {
 		"externalDefensivesEnabled"
 	},
-	
-	EncounterTimeline = {
-		"encounterTimelineHideForOtherRoles",
-		"encounterWarningsHideIfNotTargetingPlayer"
-	},
-	
+		
 	CombatMisc = {
 		"assistAttack",
 		"autoRangedCombat",
@@ -675,6 +670,24 @@ AccWideUIAceAddon.CVars = {
 		"VoiceSelfDeafened",
 		"VoiceSelfMuted",
 		"VoiceVADSensitivity"
+	},
+	
+	System_ModifierKeys = {
+		"AUTOLOOTTOGGLE",
+		"CHATLINK",
+		"COMPAREITEMS",
+		"DRESSUP",
+		"FOCUSCAST",
+		"OPENALLBAGS",
+		"PICKUPACTION",
+		"QUESTWATCHTOGGLE",
+		"SELFCAST",
+		"SHOWITEMFLYOUT",
+		"SOCKETITEM",
+		"SPLITSTACK",
+		"STICKYCAMERA",
+		"TOKENWATCHTOGGLE",
+		"SHOWMULTICASTFLYOUT"
 	},
 
 	-- https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_ChatFrameBase/Shared/ChatTypeInfoConstants.lua

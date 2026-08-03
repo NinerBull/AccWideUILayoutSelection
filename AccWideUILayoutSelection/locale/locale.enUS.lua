@@ -108,6 +108,8 @@ L["ACCWUI_OPT_MODULES_CHK_SYSGRAPHICS"] = "Graphics Settings"
 L["ACCWUI_OPT_MODULES_CHK_SYSGRAPHICS_DESC"] = "When checked, your current System Graphics settings will be synchronised with this profile."
 L["ACCWUI_OPT_MODULES_CHK_SYSAUDIO"] = "Audio Settings"
 L["ACCWUI_OPT_MODULES_CHK_SYSAUDIO_DESC"] = "When checked, your current System Audio settings will be synchronised with this profile."
+L["ACCWUI_OPT_MODULES_CHK_SYSMODKEYS"] = "Modifier Keybinds"
+L["ACCWUI_OPT_MODULES_CHK_SYSMODKEYS_DESC"] = "When checked, your modifier keybinds (such as the Auto Loot and Self Cast modifier keys) will be synchronised with this profile."
 
 L["ACCWUI_OPT_MODULES_CVARS"] = "Custom CVar List"
 L["ACCWUI_OPT_MODULES_CVARS_DESC"] = "Enter a custom list of CVars you'd like to synchonise with this profile.\n\nEnter an exact CVar Name, one per line."
