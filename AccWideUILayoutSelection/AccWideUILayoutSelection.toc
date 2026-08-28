@@ -7,7 +7,7 @@
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
 ## DefaultState: enabled
-## OptionalDeps: Ace3, MoveAny, EditModeExpanded, ZygorGuidesViewer
+## OptionalDeps: Ace3, MoveAny, EditModeExpanded, ZygorGuidesViewer, RaiderIO, EllesmereUI, EUIStandaloneChat, Plumber, EnhanceQoL
 
 ## IconTexture: interface\icons\inv_misc_punchcards_yellow.blp
 ## X-Category: HUDs
