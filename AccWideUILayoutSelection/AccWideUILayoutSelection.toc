@@ -7,7 +7,8 @@
 ## Author: ConineSpiritwolf
 ## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
 ## DefaultState: enabled
-## OptionalDeps: Ace3, MoveAny, EditModeExpanded, ZygorGuidesViewer, RaiderIO, EllesmereUI, EUIStandaloneChat, Plumber, EnhanceQoL, Plater, Platynator, Chattynator
+## OptionalDeps: Ace3, MoveAny, EditModeExpanded, ZygorGuidesViewer, RaiderIO, EllesmereUI, EUIStandaloneChat, Plumber, EnhanceQoL, Plater, Platynator, Chattynator, Titan, RareScanner, Details, IceHUD, TomTom
+# Note - Just want to make sure other addons have chance to load and make changes etc before this addon does.
 
 ## IconTexture: interface\icons\inv_misc_punchcards_yellow.blp
 ## X-Category: HUDs
