@@ -1,1 +1,2 @@
+- Made several addons load before this one, to test and see if it helps avoid certain lua errors.
 - Updated Simplified Chinese translations by [nanjuekaien1](https://github.com/nanjuekaien1), thank you!
