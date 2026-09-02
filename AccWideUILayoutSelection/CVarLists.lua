@@ -313,7 +313,9 @@ AccWideUIAceAddon.CVars = {
 		"showCustomSetDetails",
 		"pvpLocklistMaps0",
 		"pvpLocklistMaps1",
-		"missingTransmogSourceInItemTooltips"
+		"missingTransmogSourceInItemTooltips",
+		"displayFreeBagSlots",
+		"showOutfitDetails"
 	},
 	
 	System_Graphics = {
