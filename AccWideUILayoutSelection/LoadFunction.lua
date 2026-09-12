@@ -1104,10 +1104,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
 								) ]]
 								
-								SetChatWindowName(
+								--[[SetChatWindowName(
 									thisChatFrame,
 									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-								)
+								)]]
 								
 								FCF_SetWindowName(
 									thisChatFrameVar,
@@ -1311,6 +1311,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 									if (self.db.global.printDebugTextToChat == true) then
 										self:Print("[Chat Window] Setting Chat Types for Window " .. thisChatFrame .. ".")
 									end
+									
+									thisChatFrameVar:ReceiveAllPrivateMessages()
 								
 									if (type(self.db.profile.syncData.chat.windows[thisChatFrame].MessageTypes) == "table") then
 									
