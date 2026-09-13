@@ -1015,13 +1015,15 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					--local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
 					local thisChatFrameVar = FCF_GetChatFrameByID(thisChatFrame);
 					local thisChatFrameTab =  _G["ChatFrame"..thisChatFrame.."Tab"];
+					local isThisChatFrameVisible = nil
 					
 					
 					if (type(self.db.profile.syncData.chat.windows[thisChatFrame]) == "table") then
 					
 						if(type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo) == "table") then
-												
-	
+
+							isThisChatFrameVisible = self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown
+							
 							self:ScheduleTimer(function()
 								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a) then
 								
@@ -1104,15 +1106,21 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
 								) ]]
 								
-								--[[SetChatWindowName(
-									thisChatFrame,
-									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-								)]]
+								if (not self:IsMainline()) then
 								
-								FCF_SetWindowName(
-									thisChatFrameVar,
-									self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-								)
+									SetChatWindowName(
+										thisChatFrame,
+										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
+									)
+									
+								else
+								
+									FCF_SetWindowName(
+										thisChatFrameVar,
+										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
+									)
+								
+								end
 								
 								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size >= 10) then
 								
@@ -1144,7 +1152,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							
 						
 						self:ScheduleTimer(function()
-							if (self.db.profile.syncToggles.chatWindowPosition == true) then
+							if (self.db.profile.syncToggles.chatWindowPosition == true and isThisChatFrameVisible) then
 							
 									if self.db.global.useScreenSizeSpecificSettings == true then
 										--Res Specific
@@ -1200,27 +1208,39 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 								--FCF_RestorePositionAndDimensions(thisChatFrameVar)
 							end
 						end, 3)
-
-						self:ScheduleTimer(function()
+						
+						
+						
+						if (isThisChatFrameVisible) then
+						
 							FloatingChatFrame_Update(thisChatFrame, true)
+
+							--[[self:ScheduleTimer(function()							
+								if (not self:IsMainline()) then
+									--Triggering this in Retail causes secret errors when chat lockdown is enabled
+									local f = _G["ChatFrame" .. thisChatFrame];
+									f:GetScript("OnEvent")(f, "UPDATE_FLOATING_CHAT_WINDOWS");
+								else 
+									
+								end
+								
+							end, 4)]]
 							
-							--[[if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked) then
-								FCF_UnDockFrame(thisChatFrameVar)
-								FCF_DockFrame(thisChatFrameVar, self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked, thisChatFrame)
+							self:ScheduleTimer(function()
+								FCF_DockUpdate()
+							end, 5.5)
+							
+						else
+							
+							--[[if (not IsBuiltinChatWindow(thisChatFrameVar) then)
+								FCF_Close(thisChatFrameVar)
 							end]]
 							
-							if (not self:IsMainline()) then
-								--Triggering this in Retail causes secret errors when chat lockdown is enabled
-								local f = _G["ChatFrame" .. thisChatFrame];
-								f:GetScript("OnEvent")(f, "UPDATE_FLOATING_CHAT_WINDOWS");
-							
-							end
-							
-						end, 4)
+							--[[if (self.db.global.printDebugTextToChat == true) then
+								self:Print("[Chat Window] Closing Chat Frame " .. thisChatFrame .. ".")
+							end]]
 						
-						self:ScheduleTimer(function()
-							FCF_DockUpdate()
-						end, 5.5)
+						end
 						
 					
 					

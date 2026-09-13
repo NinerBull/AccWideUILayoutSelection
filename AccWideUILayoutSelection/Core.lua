@@ -180,7 +180,28 @@ function AccWideUIAceAddon:OnEnable()
 	
 	-- Minimap Button
 	self.LDBIcon:Register("AWI", self.LDB, self.db.global.minimapButton)
-
+	
+	-- FCF Close Protection
+	if (not self:IsMainline() and self.db.global.addFCFCloseProtection == true) then
+	
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Advanced] Adding FCF Close Protection.")
+		end
+		
+		FCF_Close_Original = FCF_Close
+		
+		function FCF_Close(frame, fallback)
+			if (InCombatLockdown()) then
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Advanced] Not Closing tab in Combat.")
+				end
+				return
+			else
+				return FCF_Close_Original(frame, fallback)
+			end
+		end
+		
+	end
 
 end
 

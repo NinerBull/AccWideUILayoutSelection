@@ -14,6 +14,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			useScreenSizeSpecificSettings = false,
 			allowCustomCVars = false,
 			allowExperimentalSyncs = false,
+			addFCFCloseProtection = true,
 			minimapButton = {
 				hide = true
 			}
@@ -1056,17 +1057,25 @@ function AccWideUIAceAddon:GenerateOptions()
 									
 								end,
 							},
+							addFCFCloseProtection = {
+								type = "toggle",
+								name = L["ACCWUI_ADVANCED_FCF_CLOSE_PROTECTION"],
+								width = thisCheckboxWidth2,
+								order = 5,
+								desc = L["ACCWUI_ADVANCED_FCF_CLOSE_PROTECTION_DESC"],
+								hidden = (self:IsMainline())
+							},
 							headerDiv1 = {
 								type = "header",
 								name = "",
-								order = 5,
+								order = 6,
 								width = "full",
 							},
 							disableAutoSaveLoad = {
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_DISABLE_AUTO"],
 								width = thisCheckboxWidth2,
-								order = 6,
+								order = 7,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTO_DESC"],
 								set = function(info, value)
 									self.db.global[info[#info]] = value
@@ -1079,7 +1088,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								type = "toggle",
 								name = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE"],
 								width = thisCheckboxWidth2,
-								order = 7,
+								order = 8,
 								desc = L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE_DESC"],
 								set = function(info, value)
 									self.db.global[info[#info]] = value
@@ -1093,7 +1102,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								name = L["ACCWUI_DEBUG_BTN_FORCELOAD"],
 								desc = L["ACCWUI_DEBUG_BTN_FORCELOAD_DESC"],
 								width = thisCheckboxWidth2,
-								order = 8,
+								order = 9,
 								func = function()
 									self:ForceLoadSettings()
 								end,
@@ -1103,7 +1112,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								name = L["ACCWUI_DEBUG_BTN_FORCESAVE"],
 								desc = L["ACCWUI_DEBUG_BTN_FORCESAVE_DESC"],
 								width = thisCheckboxWidth2,
-								order = 9,
+								order = 10,
 								func = function()
 									self:ForceSaveSettings()
 								end,
@@ -1201,6 +1210,8 @@ function AccWideUIAceAddon:GenerateOptions()
 								order = 6,
 								desc = L["ACCWUI_DEBUG_CHK_SHOWDEBUGPRINT_DESC"],
 							},
+							
+
 
 						}
 					},

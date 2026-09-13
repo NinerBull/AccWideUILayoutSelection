@@ -1,1 +1,2 @@
-- Testing fix for secret taint on chat tabs.
+- (Retail) Testing fix for secret taint on chat tabs.
+- (Classic) Testing preventing closing of chat tabs in Combat.
