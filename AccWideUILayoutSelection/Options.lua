@@ -14,7 +14,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			useScreenSizeSpecificSettings = false,
 			allowCustomCVars = false,
 			allowExperimentalSyncs = false,
-			addFCFCloseProtection = true,
+			addFCFCloseProtection = false,
 			minimapButton = {
 				hide = true
 			}
@@ -1063,7 +1063,11 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth2,
 								order = 5,
 								desc = L["ACCWUI_ADVANCED_FCF_CLOSE_PROTECTION_DESC"],
-								hidden = (self:IsMainline())
+								--hidden = (self:IsMainline()),
+								set = function(info, value)
+									self.db.global.addFCFCloseProtection = value
+									StaticPopup_Show("ACCWIDEUI_ACTION_REQUIREDRELOAD")
+								end
 							},
 							headerDiv1 = {
 								type = "header",

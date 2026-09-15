@@ -182,7 +182,7 @@ function AccWideUIAceAddon:OnEnable()
 	self.LDBIcon:Register("AWI", self.LDB, self.db.global.minimapButton)
 	
 	-- FCF Close Protection
-	if (not self:IsMainline() and self.db.global.addFCFCloseProtection == true) then
+	if (self.db.global.addFCFCloseProtection == true) then
 	
 		if (self.db.global.printDebugTextToChat == true) then
 			self:Print("[Advanced] Adding FCF Close Protection.")

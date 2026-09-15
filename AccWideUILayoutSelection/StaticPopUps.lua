@@ -60,3 +60,16 @@ StaticPopupDialogs["ACCWIDEUI_LOAD_REQUIREDRELOAD"] = {
 		ReloadUI()
 	end,
 }
+
+StaticPopupDialogs["ACCWIDEUI_ACTION_REQUIREDRELOAD"] = {
+	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. REQUIRES_RELOAD,
+	button1 = RELOADUI,
+	button2 = CLOSE,
+	timeout = 0,
+	sound = SOUNDKIT.TUTORIAL_POPUP,
+	whileDead = true,
+	hideOnEscape = false,
+	OnAccept  = function()
+		ReloadUI()
+	end,
+}
