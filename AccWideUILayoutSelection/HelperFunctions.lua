@@ -17,6 +17,10 @@ function AccWideUIAceAddon:IsMainline()
 	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or false
 end
 
+function AccWideUIAceAddon:IsForever()
+	return (self:GetInterfaceVersion() >= 10600 and self:GetInterfaceVersion() < 20000) or false
+end
+
 function AccWideUIAceAddon:IsClassicAny()
 	return (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) or false
 end
@@ -43,10 +47,6 @@ end
 
 
 -- China WoW Specific
-function AccWideUIAceAddon:IsClassicTitan()
-	return (self:GetInterfaceVersion() >= 30800 and self:GetInterfaceVersion() < 40000) or false
-end
-
 function AccWideUIAceAddon:IsClassicWrathChina()
 	return (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC and self:GetInterfaceVersion() < 30800) or false
 end
