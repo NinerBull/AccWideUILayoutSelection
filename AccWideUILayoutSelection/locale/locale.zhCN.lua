@@ -162,6 +162,8 @@ L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE"] = "仅禁用自动保存"
 L["ACCWUI_ADVANCED_DISABLE_AUTOSAVE_DESC"] = "勾选后，插件将不会在注销、更改配置文件或退出编辑模式时自动保存您的设置。\n\n登录或更改配置文件时仍会自动加载。\n\n如果您想加载设置但防止意外覆盖，请使用此选项。"
 L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN"] = "隐藏小地图按钮"
 L["ACCWUI_ADVANCED_DISABLE_MINIMAPBTN_DESC"] = "勾选后，插件将不会向小地图添加 AWI 的小地图按钮。"
+L["ACCWUI_ADVANCED_FCF_CLOSE_PROTECTION"] = "启用聊天标签页关闭保护"
+L["ACCWUI_ADVANCED_FCF_CLOSE_PROTECTION_DESC"] = "勾选后，将在战斗中禁止关闭聊天标签页，以避免界面报错。\r\n\r\n需重载界面后生效。"
 
 L["ACCWUI_DEBUG_TITLE"] = BINDING_HEADER_DEBUG
 
