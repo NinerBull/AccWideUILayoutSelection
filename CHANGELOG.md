@@ -1,2 +1,1 @@
-- (Retail) Testing fix for secret taint on chat tabs.
-- (Classic) Testing preventing closing of chat tabs in Combat.
+- Updated Simplified Chinese translations by nanjuekaien1, thank you!
