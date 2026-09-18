@@ -5,7 +5,7 @@
 ## Notes-frFR: Synchronise divers paramètres d'interface spécifiques aux personnages pour l'ensemble du compte. /awi
 ## Notes-zhCN: 将角色专属界面设置同步至账号内其他角色。命令 /awi
 ## Author: ConineSpiritwolf
-## SavedVariables: AccWideUIAceDB, AccWideUI_AccountData
+## SavedVariables: AccWideUIAceDB
 ## DefaultState: enabled
 ## OptionalDeps: Ace3, MoveAny, EditModeExpanded, ZygorGuidesViewer, RaiderIO, EllesmereUI, EUIStandaloneChat, Plumber, EnhanceQoL, Plater, Platynator, Chattynator, Titan, RareScanner, Details, IceHUD, TomTom
 # Note - Just want to make sure other addons have chance to load and make changes etc before this addon does.
