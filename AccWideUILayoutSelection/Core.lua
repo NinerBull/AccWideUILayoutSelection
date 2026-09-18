@@ -20,12 +20,6 @@ AccWideUIAceAddon.TempData = {
 function AccWideUIAceAddon:OnInitialize()
 
 	self.db = LibStub("AceDB-3.0"):New("AccWideUIAceDB", AccWideUIAceAddon:GenerateDefaultDB(), true)
-
-	if (AccWideUI_AccountData ~= nil and AccWideUI_AccountData.HasDoneV1Migration ~= true) then
-		AccWideUIAceAddon:MigrateFromV1()
-	end
-
-	AccWideUI_AccountData = nil
 	
 end
 

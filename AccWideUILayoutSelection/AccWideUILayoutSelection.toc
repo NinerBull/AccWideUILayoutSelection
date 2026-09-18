@@ -46,7 +46,6 @@ locale/locale.ruRU.lua
 Core.lua
 HelperFunctions.lua
 CVarLists.lua
-V1Migration.lua
 ChatChannels.lua
 SaveFunction.lua
 LoadFunction.lua
