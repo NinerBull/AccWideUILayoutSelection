@@ -18,7 +18,7 @@ function AccWideUIAceAddon:IsMainline()
 end
 
 function AccWideUIAceAddon:IsForever()
-	return (self:GetInterfaceVersion() >= 10600 and self:GetInterfaceVersion() < 20000) or false
+	return (self:GetInterfaceVersion() >= 16001 and self:GetInterfaceVersion() < 20000) or false
 end
 
 function AccWideUIAceAddon:IsClassicAny()
