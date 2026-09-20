@@ -4,7 +4,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
 AccWideUIAceAddon.chatChannelNames = {}
 
-if (AccWideUIAceAddon:IsMainline()) then --Retail
+if (AccWideUIAceAddon:IsStandard()) then --Retail
 
 	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
@@ -12,6 +12,16 @@ if (AccWideUIAceAddon:IsMainline()) then --Retail
 	AccWideUIAceAddon.chatChannelNames.localDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
 	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 	AccWideUIAceAddon.chatChannelNames.newcomerChat = C_ChatInfo.GetChannelShortcutForChannelID(32)
+	
+elseif (AccWideUIAceAddon:IsForever()) then --Retail
+
+	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
+	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
+	AccWideUIAceAddon.chatChannelNames.services = C_ChatInfo.GetChannelShortcutForChannelID(42)
+	AccWideUIAceAddon.chatChannelNames.localDefense = C_ChatInfo.GetChannelShortcutForChannelID(22)
+	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
+	AccWideUIAceAddon.chatChannelNames.newcomerChat = C_ChatInfo.GetChannelShortcutForChannelID(32)
+	AccWideUIAceAddon.chatChannelNames.tradeLocal = C_ChatInfo.GetChannelShortcutForChannelID(46)
 
 elseif (AccWideUIAceAddon:IsClassicProgression()) then --MoP
 

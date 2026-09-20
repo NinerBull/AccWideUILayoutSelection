@@ -20,12 +20,6 @@ AccWideUIAceAddon.TempData = {
 function AccWideUIAceAddon:OnInitialize()
 
 	self.db = LibStub("AceDB-3.0"):New("AccWideUIAceDB", AccWideUIAceAddon:GenerateDefaultDB(), true)
-
-	if (AccWideUI_AccountData ~= nil and AccWideUI_AccountData.HasDoneV1Migration ~= true) then
-		AccWideUIAceAddon:MigrateFromV1()
-	end
-
-	AccWideUI_AccountData = nil
 	
 end
 
@@ -418,7 +412,22 @@ function AccWideUIAceAddon:BlizzChannelManager()
 					end
 				end
 			end
-
+			
+			if (self.chatChannelNames.tradeLocal and self.db.profile.blizzChannels.tradeLocal == "join" and IsResting()) then
+				if (((GetChannelName(self.chatChannelNames.tradeLocal))) == 0) then
+					JoinChannelByName(self.chatChannelNames.tradeLocal)
+					if (thisChatFrameVar) then
+						if (ChatFrame_AddChannel) then
+							ChatFrame_AddChannel(thisChatFrameVar, self.chatChannelNames.tradeLocal)
+						else
+							ChatFrameMixin.AddChannel(thisChatFrameVar, self.chatChannelNames.tradeLocal) -- 12.0.0
+						end
+					end
+					if (self.db.global.printBlizzChatChanges == true) then
+						self:Printf(L["ACCWUI_JOINING_CHANNEL"], self.chatChannelNames.tradeLocal, self.TempData.TextSlash)
+					end
+				end
+			end
 
 			if (self.chatChannelNames.lookingForGroup and self.db.profile.blizzChannels.lookingForGroup == "join") then
 				if (((GetChannelName(self.chatChannelNames.lookingForGroup))) == 0) then
@@ -532,6 +541,15 @@ function AccWideUIAceAddon:BlizzChannelManager()
 					LeaveChannelByName(self.chatChannelNames.trade)
 					if (self.db.global.printBlizzChatChanges == true) then
 						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.trade, self.TempData.TextSlash)
+					end
+				end
+			end
+			
+			if (self.chatChannelNames.tradeLocal and self.db.profile.blizzChannels.tradeLocal == "block") then
+				if (GetChannelName((GetChannelName(self.chatChannelNames.tradeLocal))) > 0) then
+					LeaveChannelByName(self.chatChannelNames.tradeLocal)
+					if (self.db.global.printBlizzChatChanges == true) then
+						self:Printf(L["ACCWUI_LEAVING_CHANNEL"], self.chatChannelNames.tradeLocal, self.TempData.TextSlash)
 					end
 				end
 			end

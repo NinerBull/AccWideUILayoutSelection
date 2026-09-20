@@ -1,5 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "enUS", true, true)
 
+WOWLABS_MAINLINE = WOWLABS_MAINLINE or "Mainline"
+
 L["ACCWUI_ADDONNAME"] = "Account Wide Interface Settings"
 L["ACCWUI_ADDONNAME_SHORT"] = "Account Wide Interface"
 
@@ -102,6 +104,8 @@ L["ACCWUI_OPT_MODULES_CHK_CALENDAR"] = "Calendar Filter Settings"
 L["ACCWUI_OPT_MODULES_CHK_CALENDAR_DESC"] = "When checked, the selected filters on the ingame Calendar will be synchronised with this profile."
 L["ACCWUI_OPT_MODULES_CHK_CAMERA"] = "Camera Settings"
 L["ACCWUI_OPT_MODULES_CHK_CAMERA_DESC"] = "When checked, several Camera settings will be synchronised with this profile."
+L["ACCWUI_OPT_MODULES_CHK_GAMEPAD"] = "Gamepad Settings"
+L["ACCWUI_OPT_MODULES_CHK_GAMEPAD_DESC"] = "When checked, several Gamepad settings will be synchronised with this profile."
 L["ACCWUI_OPT_MODULES_CHK_COMBATMISC"] = "Misc. Combat Settings"
 L["ACCWUI_OPT_MODULES_CHK_COMBATMISC_DESC"] = "When checked, several Combat settings that don't fit into any other category will be synchronised with this profile."
 L["ACCWUI_OPT_MODULES_CHK_UIMISC"] = "Misc. UI Settings"
@@ -217,9 +221,9 @@ L["ACCWUI_GS_IMPORT_DESC"] = "Paste an import string into the box below and clic
 L["ACCWUI_GS_IMPORT_SUCCESS"] = "Import complete!"
 L["ACCWUI_GS_IMPORT_FAIL"] = "Import failed. The string you entered is not valid."
 
-L["ACCWUI_TAINTABLES_TITLE"] = "Midnight Specific"
-L["ACCWUI_TAINTABLES_DESC"] = "This tab contains various synchronisable settings specific to Midnight that can only be saved or loaded manually, as loading them irreversibly taints the UI in combat, until you /reload the interface.\nYou will need to manually load these settings for each character you wish to use them with."
-L["ACCWUI_TAINTABLES_DESC_SHORT"] = "Contains various synchronisable settings specific to Midnight that can only be saved or loaded manually"
+L["ACCWUI_TAINTABLES_TITLE"] = WOWLABS_MAINLINE .. " Specific"
+L["ACCWUI_TAINTABLES_DESC"] = "This tab contains various synchronisable settings specific to " .. WOWLABS_MAINLINE .. " that can only be saved or loaded manually, as loading them irreversibly taints the UI in combat, until you /reload the interface.\nYou will need to manually load these settings for each character you wish to use them with."
+L["ACCWUI_TAINTABLES_DESC_SHORT"] = "Contains various synchronisable settings specific to " .. WOWLABS_MAINLINE .. " that can only be saved or loaded manually"
 L["ACCWUI_TAINTABLES_RELOADNOW"] = "Settings loaded. You should Reload the UI immediately to prevent any Interface Taint issues during combat."
 L["ACCWUI_TAINTABLES_GROUPTITLE"] = "Save/Load Settings"
 L["ACCWUI_TAINTABLES_BTN_LOADALL"] = "Load All Settings"
