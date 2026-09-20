@@ -29,6 +29,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 	* Chosen Edit Mode Layout
 	* Damage Meter Settings
 	* External Defensives Visibility Setting
+	* Gamepad Settings
 	* Minimap Settings
 	* Spell Overlay Settings
 	* Viewed Tutorial Tooltips
@@ -65,6 +66,7 @@ The addon can synchronise the following, and you can disable any that you'd rath
 * **Midnight** - 12.1.0
 * **MoP Classic** - 5.5.4
 * **TBC Classic** - 2.5.6
+* **Forever** - 1.60.1
 * **Classic Era** - 1.15.9
 
 ## Installation
