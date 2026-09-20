@@ -111,6 +111,7 @@ AccWideUIAceAddon.CVars = {
 		"threatWarning",
 		"noBuffDebuffFilterOnTarget",
 		"raidFramesCenterBigDefensive",
+		"raidFramesDispelIndicatorAnimatedBorder",
 		"raidFramesDispelIndicatorOverlayAnimation",
 		"raidFramesDispelIndicatorOverlay",
 		"raidFramesDispelIndicatorType",
@@ -275,11 +276,32 @@ AccWideUIAceAddon.CVars = {
 		"cameraSavedPitch",
 		"cameraSavedVehicleDistance",
 		"cameraDistanceFixedValue",
-		"cameraBobbing"
+		"cameraBobbing",
+		"GamepadCameraSavedPitch"
 	},
 	
 	ExternalDefensives = {
 		"externalDefensivesEnabled"
+	},
+	
+	Gamepad = {
+		"GamepadShowActionBarHighlight",
+		"GamepadCompassCustomFilterBoss",
+		"GamepadFocusStateColor",
+		"GamepadFocusStateOpacity",
+		"GamepadHudModifierUsesToggle",
+		"GamepadPossessBarOverride",
+		"GamepadPreferScreenTargeting",
+		"GamepadRaidTargetingStyle",
+		"GamepadRaidTargetingHoverMode",
+		"GamepadStanceBarOverride",
+		"GamepadShowEmptyActionbars",
+		"GamepadShowActionBarScaling",
+		"GamepadShowActionBarHighlight",
+		"GamepadShowPersistentInputLegend",
+		"GamepadShowActionBarButtonPrompts",
+		"GamepadTargetingModifierVisualDelay",
+		"GamepadUseCompactActionBar"
 	},
 		
 	CombatMisc = {

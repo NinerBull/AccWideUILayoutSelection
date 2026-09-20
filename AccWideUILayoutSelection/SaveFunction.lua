@@ -310,6 +310,20 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Save Gamepad Settings
+			if (self:SupportsGameFunction("gamepad") and self.db.profile.syncToggles.gamepad == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Gamepad] Saving Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.Gamepad) do
+					self.db.profile.syncData.gamepad.cvars[v] = GetCVar(v) or nil
+				end
+			
+			end
+			
+			
 			-- Save Misc. Combat Settings
 			if (self:SupportsGameFunction("combatMisc") and self.db.profile.syncToggles.combatMisc == true) then
 			

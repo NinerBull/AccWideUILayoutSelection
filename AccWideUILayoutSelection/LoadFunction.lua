@@ -606,7 +606,21 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 			end
 			
-
+			
+			-- Gamepad Variables
+			if (self:SupportsGameFunction("gamepad") and self.db.profile.syncToggles.gamepad == true and not self.TempData.HasPartiallyLoaded) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Gamepad] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.Gamepad) do
+					if (self.db.profile.syncData.gamepad.cvars[v] ~= nil) then
+						SetCVar(v, self.db.profile.syncData.gamepad.cvars[v])
+					end
+				end
+			
+			end 
 			
 			
 			-- Misc. Combat Variables

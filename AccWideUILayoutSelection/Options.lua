@@ -55,6 +55,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				minimap = true,
 				calendarFilters = true,
 				camera = true,
+				gamepad = true,
 				combatMisc = true,
 				uiMisc = true,
 				chatWindow = true,
@@ -161,6 +162,9 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 					cvars = {}
 				},
 				camera = {
+					cvars = {}
+				},
+				gamepad = {
 					cvars = {}
 				},
 				combatMisc = {
@@ -544,6 +548,14 @@ function AccWideUIAceAddon:GenerateOptions()
 										desc = L["ACCWUI_OPT_MODULES_CHK_EXTERNALDEF_DESC"],
 										hidden = (not self:SupportsGameFunction("externalDefensives"))
 									},
+									gamepad = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_GAMEPAD"],
+										order = 130,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_GAMEPAD_DESC"],
+										hidden = (not self:SupportsGameFunction("gamepad"))
+									},
 									minimap = {
 										type = "toggle",
 										name = L["ACCWUI_OPT_MODULES_CHK_MINIMAP"],
@@ -775,7 +787,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.general or "General"),
 						width = 1,
-						order = 3,
+						order = 10,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.general or "General"),
 						style = "radio",
 						values = {
@@ -790,7 +802,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.trade or "Trade"),
 						width = 1,
-						order = 4,
+						order = 20,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.trade or "Trade"),
 						style = "radio",
 						values = {
@@ -801,11 +813,26 @@ function AccWideUIAceAddon:GenerateOptions()
 						sorting = {"join", "block", "default"},
 						hidden = (not self.chatChannelNames.trade)
 					},
+					tradeLocal = {
+						type = "select",
+						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.tradeLocal or "Trade (Local)"),
+						width = 1,
+						order = 30,
+						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.tradeLocal or "Trade (Local)"),
+						style = "radio",
+						values = {
+							join = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_ALLOW"],
+							block = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_BLOCK"],
+							default = L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DEFAULT"]
+						},
+						sorting = {"join", "block", "default"},
+						hidden = (not self.chatChannelNames.tradeLocal)
+					},
 					localDefense = {
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.localDefense or "LocalDefense"),
 						width = 1,
-						order = 5,
+						order = 40,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.localDefense or "LocalDefense"),
 						style = "radio",
 						values = {
@@ -820,7 +847,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.lookingForGroup or "LookingForGroup"),
 						width = 1,
-						order = 6,
+						order = 50,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.lookingForGroup or "LookingForGroup"),
 						style = "radio",
 						values = {
@@ -835,7 +862,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.services or "Services"),
 						width = 1,
-						order = 7,
+						order = 60,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.services or "Services"),
 						style = "radio",
 						values = {
@@ -850,7 +877,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.guildRecruitment or "GuildRecruitment"),
 						width = 1,
-						order = 8,
+						order = 70,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.guildRecruitment or "GuildRecruitment"),
 						style = "radio",
 						values = {
@@ -865,7 +892,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.worldDefense or "WorldDefense"),
 						width = 1,
-						order = 9,
+						order = 80,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.worldDefense or "WorldDefense"),
 						style = "radio",
 						values = {
@@ -880,7 +907,7 @@ function AccWideUIAceAddon:GenerateOptions()
 						type = "select",
 						name = string.format(L["ACCWUI_BLOCKBLIZZ_CHANNEL"], self.chatChannelNames.hardcoreDeaths or "HardcoreDeaths"),
 						width = 1,
-						order = 10,
+						order = 90,
 						desc = string.format(L["ACCWUI_BLOCKBLIZZ_CHECKBOX_DESC"], self.chatChannelNames.hardcoreDeaths or "HardcoreDeaths"),
 						style = "radio",
 						values = {

@@ -13,35 +13,40 @@ function AccWideUIAceAddon:GetInterfaceVersion()
 	return thisInterface
 end
 
-function AccWideUIAceAddon:IsMainline()
-	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or false
+
+function AccWideUIAceAddon:IsStandard() -- Retail
+	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and self:GetInterfaceVersion() >= 120001) or false
 end
 
-function AccWideUIAceAddon:IsForever()
+function AccWideUIAceAddon:IsForever() -- Forever
 	return (self:GetInterfaceVersion() >= 16001 and self:GetInterfaceVersion() < 20000) or false
 end
 
-function AccWideUIAceAddon:IsClassicAny()
+function AccWideUIAceAddon:IsMainline() -- Mainline, either Retail or Forever
+	return (self:IsStandard() or self:IsForever())
+end
+
+function AccWideUIAceAddon:IsClassicAny() -- Not Retail
 	return (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) or false
 end
 
-function AccWideUIAceAddon:IsClassicProgression()
+function AccWideUIAceAddon:IsClassicProgression() -- MoP Classic
 	return (WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC) or false
 end
 
-function AccWideUIAceAddon:IsClassicWrath()
+function AccWideUIAceAddon:IsClassicWrath() -- Wrath Classic
 	return (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC) or false
 end
 
-function AccWideUIAceAddon:IsClassicTBC()
+function AccWideUIAceAddon:IsClassicTBC() -- TBC Classic
 	return (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC) or false
 end
 
-function AccWideUIAceAddon:IsClassicVanilla()
+function AccWideUIAceAddon:IsClassicVanilla() -- Era
 	return (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) or false
 end
 
-function AccWideUIAceAddon:IsClassicEra()
+function AccWideUIAceAddon:IsClassicEra() -- Era
 	return (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC) or false
 end
 
@@ -60,19 +65,19 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	if (functionName == "editModeLayout") then -- Edit Mode (C_EditMode)
 		return (C_AddOns.DoesAddOnExist("Blizzard_EditMode"))
 	elseif (functionName == "arenaFrames") then -- Arena Frames
-		return (not self:IsClassicEra())
+		return (not self:IsClassicEra() and not self:IsForever())
 	elseif (functionName == "spellOverlay") then -- Spell Overlay (C_SpellActivationOverlay)
 		return (not self:IsClassicTBC() and not self:IsClassicEra())
 	elseif (functionName == "empowerTap") then -- Empower Tap
 		return (self:IsMainline())
 	elseif (functionName == "assistedCombat") then -- Rotation Assist (C_AssistedCombat)
-		return (self:IsMainline())
+		return (self:IsStandard())
 	elseif (functionName == "locationVisibility") then -- Location Visibility Toggle (SetAllowRecentAlliesSeeLocation)
 		return (self:IsMainline())
 	elseif (functionName == "blockNeighborhoodInvites") then -- Block Neighborhood Invites (SetAutoDeclineNeighborhoodInvites)
-		return (self:IsMainline())
+		return (self:IsStandard())
 	elseif (functionName == "bagOrganisation") then -- Bag Organisation (C_Container.SetBankAutosortDisabled)
-		return (self:IsMainline())
+		return (self:IsStandard())
 	elseif (functionName == "damageMeter") then -- Damage Meter (C_DamageMeter)
 		return (self:IsMainline())
 	elseif (functionName == "cooldownViewer") then -- Cooldown Manager (C_CooldownViewer)
@@ -80,7 +85,9 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	elseif (functionName == "externalDefensives") then -- External Defensives
 		return (self:IsMainline())
 	elseif (functionName == "encounterTimeline") then -- Encounter Timeline
-		return (self:IsMainline())
+		return (self:IsStandard())
+	elseif (functionName == "gamepad") then -- Gamepad
+		return (self:IsForever())
 	else
 		return true
 	end
