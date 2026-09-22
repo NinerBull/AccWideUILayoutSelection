@@ -276,8 +276,7 @@ AccWideUIAceAddon.CVars = {
 		"cameraSavedPitch",
 		"cameraSavedVehicleDistance",
 		"cameraDistanceFixedValue",
-		"cameraBobbing",
-		"GamepadCameraSavedPitch"
+		"cameraBobbing"
 	},
 	
 	ExternalDefensives = {
@@ -301,7 +300,16 @@ AccWideUIAceAddon.CVars = {
 		"GamepadShowPersistentInputLegend",
 		"GamepadShowActionBarButtonPrompts",
 		"GamepadTargetingModifierVisualDelay",
-		"GamepadUseCompactActionBar"
+		"GamepadUseCompactActionBar",
+		"GamepadCameraSavedDistance",
+		"GamepadCameraSavedPitch",
+		"GamepadCameraSavedPetBattleDistance",
+		"GamepadCompassCustomFilterBoss",
+		"GamepadCompassCustomFilterCritter",
+		"GamepadCompassCustomFilterEnemy",
+		"GamepadCompassCustomFilterFriendly",
+		"GamepadCompassCustomFilterParty",
+		
 	},
 		
 	CombatMisc = {
@@ -337,7 +345,9 @@ AccWideUIAceAddon.CVars = {
 		"pvpLocklistMaps1",
 		"missingTransmogSourceInItemTooltips",
 		"displayFreeBagSlots",
-		"showOutfitDetails"
+		"showOutfitDetails",
+		"showQuestDifficultyColor",
+		"showQuestLevel"
 	},
 	
 	System_Graphics = {
