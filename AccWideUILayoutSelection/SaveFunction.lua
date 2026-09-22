@@ -215,24 +215,28 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 				--self.db.profile.syncData.battlefieldMap.options = {}
 				
-				if (type(BattlefieldMapOptions.locked) == "boolean") then
-					self.db.profile.syncData.battlefieldMap.options.locked = BattlefieldMapOptions.locked 
-				end
+				if (BattlefieldMapOptions) then
 				
-				if (type(BattlefieldMapOptions.opacity) == "number") then
-					self.db.profile.syncData.battlefieldMap.options.opacity = BattlefieldMapOptions.opacity or 0.7
-				end
+					if (type(BattlefieldMapOptions.locked) == "boolean") then
+						self.db.profile.syncData.battlefieldMap.options.locked = BattlefieldMapOptions.locked 
+					end
+					
+					if (type(BattlefieldMapOptions.opacity) == "number") then
+						self.db.profile.syncData.battlefieldMap.options.opacity = BattlefieldMapOptions.opacity or 0.7
+					end
+					
+					if (type(BattlefieldMapOptions.showPlayers) == "boolean") then
+						self.db.profile.syncData.battlefieldMap.options.showPlayers = BattlefieldMapOptions.showPlayers 
+					end
+					
+					if self.db.global.useScreenSizeSpecificSettings == true then
+						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
+						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
+					else 
+						self.db.profile.syncData.battlefieldMap.options.position = {}
+						self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
+					end
 				
-				if (type(BattlefieldMapOptions.showPlayers) == "boolean") then
-					self.db.profile.syncData.battlefieldMap.options.showPlayers = BattlefieldMapOptions.showPlayers 
-				end
-				
-				if self.db.global.useScreenSizeSpecificSettings == true then
-					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
-					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
-				else 
-					self.db.profile.syncData.battlefieldMap.options.position = {}
-					self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
 				end
 			
 			end
