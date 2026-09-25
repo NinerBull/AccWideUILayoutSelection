@@ -80,7 +80,10 @@ AccWideUIAceAddon.CVars = {
 		"nameplatePlayRemovalAnimation",
 		"nameplateNotSelectedAlpha",
 		"nameplateForceShowUnitName",
-		"nameplateCheckDistanceForTarget"
+		"nameplateCheckDistanceForTarget",
+		"nameplateBottomInset",
+		"nameplateMotionSpeed",
+		"nameplateTopInset"
 	},
 
 	RaidFrames = {
