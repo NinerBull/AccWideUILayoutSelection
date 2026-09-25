@@ -194,7 +194,7 @@ AccWideUIAceAddon.CVars = {
 	},
 
 	ActionBars = {
-		--"enableMultiActionBars",
+		"enableMultiActionBars",
 		"multiBarRightVerticalLayout"
 	},
 

@@ -73,7 +73,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				self:ScheduleTimer(function() 
 					if (not InCombatLockdown()) then
-						securecall(MultiActionBar_Update)
+						if (not self:IsForever()) then -- Causes taint in Forever
+							securecall(MultiActionBar_Update)
+						end
 					end
 				end, 5)
 			
