@@ -8,6 +8,18 @@ function AccWideUIAceAddon:ToBoolean(str)
 	return bool
 end
 
+function AccWideUIAceAddon:GetPlayerName()
+	
+	local thisFirstName, thisLastName = UnitNameUnmodified("player")
+	
+	if (thisLastName) then
+		return (thisFirstName .. " " .. thisLastName)
+	else
+		return (thisFirstName)
+	end
+
+end
+
 function AccWideUIAceAddon:GetInterfaceVersion()
 	local thisInterface, _, _ = select(4, GetBuildInfo())
 	return thisInterface

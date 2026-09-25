@@ -27,7 +27,7 @@ function AccWideUIAceAddon:OnEnable()
 
 	local thisScreenWidth, thisScreenHeight = GetPhysicalScreenSize()
 	self.TempData.ScreenRes = thisScreenWidth .. "x" .. thisScreenHeight
-	self.TempData.ThisCharacter = UnitNameUnmodified("player") .. "-" .. GetNormalizedRealmName()
+	self.TempData.ThisCharacter = self:GetPlayerName() .. "-" .. GetNormalizedRealmName()
 
 	self:GenerateOptions()
 	local profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
