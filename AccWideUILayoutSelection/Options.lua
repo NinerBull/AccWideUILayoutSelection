@@ -66,7 +66,8 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				systemModifierKeys = false
 			},
 			syncData = {
-				editModeLayoutID = "unset",
+				editModeLayoutID = nil,
+				editModeLayoutIDGamepad = nil,
 				actionBars = {
 					visible = {},
 					cvars = {}
@@ -216,7 +217,8 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				},
 				screenResolutionSpecific = {
 					['**'] = {
-						editModeLayoutID = "unset",
+						editModeLayoutID = nil,
+						editModeLayoutIDGamepad = nil,
 						chat = {
 							windows = {
 								['**'] = {}

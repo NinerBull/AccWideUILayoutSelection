@@ -39,6 +39,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			-- Use Action Bars
 			if (self:SupportsGameFunction("actionBars") and self.db.profile.syncToggles.actionBars == true and not self.TempData.HasPartiallyLoaded) then
+			
+				local haveActionBarsChanged
+				local existingBars = {}
+				existingBars.Bar2, existingBars.Bar3, existingBars.Bar4, existingBars.Bar5, existingBars.Bar6, existingBars.Bar7, existingBars.Bar8  = GetActionBarToggles()
 					
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Action Bars] Loading Settings.")
@@ -54,9 +58,16 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				if (type(self.db.profile.syncData.actionBars.visible.Bar2) == "boolean") then
 				
-					self:ScheduleTimer(function() 
+					self:ScheduleTimer(function()
+					
 				
 						if self:SupportsGameFunction("editModeLayout") then
+							
+							for k,v in pairs(existingBars) do
+								if (self.db.profile.syncData.actionBars.visible[k] ~= v) then
+									haveActionBarsChanged = true
+								end
+							end
 							
 							SetActionBarToggles(self.db.profile.syncData.actionBars.visible.Bar2, self.db.profile.syncData.actionBars.visible.Bar3, self.db.profile.syncData.actionBars.visible.Bar4, self.db.profile.syncData.actionBars.visible.Bar5, self.db.profile.syncData.actionBars.visible.Bar6, self.db.profile.syncData.actionBars.visible.Bar7, self.db.profile.syncData.actionBars.visible.Bar8)
 						
@@ -73,8 +84,10 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				self:ScheduleTimer(function() 
 					if (not InCombatLockdown()) then
-						if (not self:IsForever()) then -- Causes taint in Forever
-							securecall(MultiActionBar_Update)
+						securecall(MultiActionBar_Update) -- Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", false);
+						
+						if (self:IsForever() and haveActionBarsChanged) then
+							StaticPopup_Show("ACCWIDEUI_LOAD_ACTIONBAR_REQUIREDRELOAD")
 						end
 					end
 				end, 5)
@@ -1501,29 +1514,52 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 		
 		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 		
-			local thisEditModeLayoutID = self.db.profile.syncData.editModeLayoutID or 1
+			local thisEditModeLayoutID = self.db.profile.syncData.editModeLayoutID or (C_EditMode.GetEditModeDefaultLayout and C_EditMode.GetEditModeDefaultLayout() or 1)
+			local thisEditModeLayoutIDGamepad = self.db.profile.syncData.editModeLayoutIDGamepad or (C_EditMode.GetEditModeDefaultLayout and C_EditMode.GetEditModeDefaultLayout() or 1)
 			
-			if self.db.global.useScreenSizeSpecificSettings == true then
+			if (self:IsUsingGamepadUI()) then
+			
+				-- Gamepad Screen Specific Size
+				if self.db.global.useScreenSizeSpecificSettings == true then
+					if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad) then
+						C_EditMode.SetActiveLayout(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad)
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Debug] Loading Screen Specific Gamepad Edit Mode Layout (ID: " .. self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad .. ").")
+						end
+					end	
+				else -- Gamepad Layout
+					if (self.db.profile.syncData.editModeLayoutIDGamepad) then
+						C_EditMode.SetActiveLayout(self.db.profile.syncData.editModeLayoutIDGamepad)
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Debug] Loading Gamepad Edit Mode Layout (ID: " .. self.db.profile.syncData.editModeLayoutIDGamepad .. ").")
+						end
+					end	
+				end
 				
-				if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID ~= "unset") then
-				
-					thisEditModeLayoutID = self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID or thisEditModeLayoutID
-					
+			else
+			
+				-- Desktop Screen Specific Size Layout
+				if self.db.global.useScreenSizeSpecificSettings == true then
+					if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID) then
+						C_EditMode.SetActiveLayout(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID)
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Debug] Loading Screen Specific Desktop Edit Mode Layout (ID: " .. self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID .. ").")
+						end
+					end	
+				else -- Desktop Layout
+					if (self.db.profile.syncData.editModeLayoutID) then
+						C_EditMode.SetActiveLayout(self.db.profile.syncData.editModeLayoutID)
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Debug] Loading Desktop Edit Mode Layout (ID: " .. self.db.profile.syncData.editModeLayoutID .. ").")
+						end
+					end	
 				end
 			
-				
 			end
 
-			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Debug] Loading Chosen Edit Mode Layout (ID: " .. thisEditModeLayoutID .. ").")
-			end
-
-			--Set the spec
-			C_EditMode.SetActiveLayout(thisEditModeLayoutID)
 			
 			-- If CooldownManagerCentered is installed, changing the EditMode Layout this way makes any custom CD bars visible, whether they should do or not.
 			-- So let's refresh their visibility status. https://www.curseforge.com/wow/addons/cooldown-manager-centered
-			
 			if (C_AddOns.IsAddOnLoaded("CooldownManagerCentered") == true) then
 			
 				self:ScheduleTimer(function() 

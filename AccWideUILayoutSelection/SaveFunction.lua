@@ -822,17 +822,30 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
 		
 			if (self.db.global.printDebugTextToChat == true) then
-				self:Print("[Debug] Saving Chosen Edit Mode Layout (ID: " .. currentActiveLayout .. ").")
+				self:Print("[Debug] Saving Chosen Edit Mode Layout " .. (self:IsUsingGamepadUI() and "[Gamepad]" or "[Desktop]") .. " (ID: " .. currentActiveLayout .. ").")
 			end
 
 			if (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then
-
-				--Set the spec
-				if self.db.global.useScreenSizeSpecificSettings == true then
-					self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID = currentActiveLayout
+			
+				if (self:IsUsingGamepadUI()) then
+					
+					if self.db.global.useScreenSizeSpecificSettings == true then
+						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad = currentActiveLayout
+					else
+						self.db.profile.syncData.editModeLayoutIDGamepad = currentActiveLayout
+					end
+					
 				else
-					self.db.profile.syncData.editModeLayoutID = currentActiveLayout
+				
+					if self.db.global.useScreenSizeSpecificSettings == true then
+						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID = currentActiveLayout
+					else
+						self.db.profile.syncData.editModeLayoutID = currentActiveLayout
+					end
+				
 				end
+
+				
 			
 			end
 			

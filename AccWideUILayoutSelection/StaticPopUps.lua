@@ -49,7 +49,20 @@ StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP_DECLINED"] = {
 }
 
 StaticPopupDialogs["ACCWIDEUI_LOAD_REQUIREDRELOAD"] = {
-	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. L["ACCWUI_TAINTABLES_RELOADNOW"],
+	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. L["ACCWUI_TAINTABLES_SETTINGSLOADED"] .. " " .. L["ACCWUI_TAINTABLES_RELOADNOW"],
+	button1 = RELOADUI,
+	button2 = CLOSE,
+	timeout = 0,
+	sound = SOUNDKIT.TUTORIAL_POPUP,
+	whileDead = true,
+	hideOnEscape = false,
+	OnAccept  = function()
+		ReloadUI()
+	end,
+}
+
+StaticPopupDialogs["ACCWIDEUI_LOAD_ACTIONBAR_REQUIREDRELOAD"] = {
+	text = FAIR_DIFFICULTY_COLOR:WrapTextInColorCode(L["ACCWUI_ADDONNAME"] .. "\n--------------------------------") .. "\n\n" .. L["ACCWUI_TAINTABLES_ACTIONBARLOADED"] .. " " .. L["ACCWUI_TAINTABLES_RELOADNOW"],
 	button1 = RELOADUI,
 	button2 = CLOSE,
 	timeout = 0,

@@ -9,15 +9,7 @@ function AccWideUIAceAddon:ToBoolean(str)
 end
 
 function AccWideUIAceAddon:GetPlayerName()
-	
-	local thisFirstName, thisLastName = UnitNameUnmodified("player")
-	
-	if (thisLastName) then
-		return (thisFirstName .. " " .. thisLastName)
-	else
-		return (thisFirstName)
-	end
-
+	return(NameUtil and NameUtil.GetUnmodifiedUnitFullName and NameUtil.GetUnmodifiedUnitFullName("player") or UnitNameUnmodified("player"))
 end
 
 function AccWideUIAceAddon:GetInterfaceVersion()
@@ -68,6 +60,11 @@ function AccWideUIAceAddon:IsClassicWrathChina()
 	return (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC and self:GetInterfaceVersion() < 30800) or false
 end
 -- EO China WoW Specific
+
+
+function AccWideUIAceAddon:IsUsingGamepadUI()
+	return(C_InputInterfaceStyle and C_InputInterfaceStyle.GetCurrentStyle and C_InputInterfaceStyle.GetCurrentStyle() == 1)
+end
 
 
 function AccWideUIAceAddon:SupportsGameFunction(functionName)
