@@ -815,8 +815,7 @@ function AccWideUIAceAddon:SaveEditModeSettings()
 
 	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
 	
-		local getLayoutsTable = C_EditMode.GetLayouts()
-		local currentActiveLayout = getLayoutsTable["activeLayout"]
+		local currentActiveLayout = C_EditMode.GetLayouts().activeLayout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
 
 		if (self.db.profile.syncToggles.editModeLayout == true) and (self.db.char.useEditModeLayout["specialization" .. currentSpec] == true) then

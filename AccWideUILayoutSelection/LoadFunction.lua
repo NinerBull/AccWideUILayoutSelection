@@ -1516,19 +1516,23 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 		
 			local thisEditModeLayoutID = self.db.profile.syncData.editModeLayoutID or (C_EditMode.GetEditModeDefaultLayout and C_EditMode.GetEditModeDefaultLayout() or 1)
 			local thisEditModeLayoutIDGamepad = self.db.profile.syncData.editModeLayoutIDGamepad or (C_EditMode.GetEditModeDefaultLayout and C_EditMode.GetEditModeDefaultLayout() or 1)
+
+			local currentLayout = C_EditMode.GetLayouts().activeLayout
 			
 			if (self:IsUsingGamepadUI()) then
 			
 				-- Gamepad Screen Specific Size
 				if self.db.global.useScreenSizeSpecificSettings == true then
-					if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad) then
+					if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad
+					and self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad ~= currentLayout) then
 						C_EditMode.SetActiveLayout(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad)
 						if (self.db.global.printDebugTextToChat == true) then
 							self:Print("[Debug] Loading Screen Specific Gamepad Edit Mode Layout (ID: " .. self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutIDGamepad .. ").")
 						end
 					end	
 				else -- Gamepad Layout
-					if (self.db.profile.syncData.editModeLayoutIDGamepad) then
+					if (self.db.profile.syncData.editModeLayoutIDGamepad 
+					and self.db.profile.syncData.editModeLayoutIDGamepad ~= currentLayout) then
 						C_EditMode.SetActiveLayout(self.db.profile.syncData.editModeLayoutIDGamepad)
 						if (self.db.global.printDebugTextToChat == true) then
 							self:Print("[Debug] Loading Gamepad Edit Mode Layout (ID: " .. self.db.profile.syncData.editModeLayoutIDGamepad .. ").")
@@ -1540,14 +1544,16 @@ function AccWideUIAceAddon:LoadEditModeSettings()
 			
 				-- Desktop Screen Specific Size Layout
 				if self.db.global.useScreenSizeSpecificSettings == true then
-					if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID) then
+					if (self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID 
+					and self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID ~= currentLayout) then
 						C_EditMode.SetActiveLayout(self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID)
 						if (self.db.global.printDebugTextToChat == true) then
 							self:Print("[Debug] Loading Screen Specific Desktop Edit Mode Layout (ID: " .. self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].editModeLayoutID .. ").")
 						end
 					end	
 				else -- Desktop Layout
-					if (self.db.profile.syncData.editModeLayoutID) then
+					if (self.db.profile.syncData.editModeLayoutID
+					and self.db.profile.syncData.editModeLayoutID ~= currentLayout) then
 						C_EditMode.SetActiveLayout(self.db.profile.syncData.editModeLayoutID)
 						if (self.db.global.printDebugTextToChat == true) then
 							self:Print("[Debug] Loading Desktop Edit Mode Layout (ID: " .. self.db.profile.syncData.editModeLayoutID .. ").")

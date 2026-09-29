@@ -97,6 +97,8 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 		return (self:IsStandard())
 	elseif (functionName == "gamepad") then -- Gamepad
 		return (self:IsForever())
+	elseif (functionName == "actionBars") then
+		return (not self:IsUsingGamepadUI()) -- Modifying action bars breaks if Gamepad UI is enabled
 	else
 		return true
 	end
