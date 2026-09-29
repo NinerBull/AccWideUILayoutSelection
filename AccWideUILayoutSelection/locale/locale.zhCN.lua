@@ -2,7 +2,6 @@ local L = LibStub("AceLocale-3.0"):NewLocale("AccWideUIAceAddonLocale", "zhCN", 
 if not L then return end
 
 WOWLABS_MAINLINE = WOWLABS_MAINLINE or "正式服"
-
 L["ACCWUI_ADDONNAME"] = "Account Wide Interface Settings"
 L["ACCWUI_ADDONNAME_SHORT"] = "Account Wide Interface"
 
@@ -225,7 +224,9 @@ L["ACCWUI_GS_IMPORT_FAIL"] = "导入失败。您输入的字符串无效。"
 L["ACCWUI_TAINTABLES_TITLE"] = WOWLABS_MAINLINE .. "专属"
 L["ACCWUI_TAINTABLES_DESC"] = "此选项卡包含" .. WOWLABS_MAINLINE .. "特有的各种可同步设置，这些设置只能手动保存或加载，因为在战斗中加载它们会不可逆地污染界面，直到您 /reload 界面。\n您需要为每个希望使用这些设置的角色手动加载这些设置。"
 L["ACCWUI_TAINTABLES_DESC_SHORT"] = "包含" .. WOWLABS_MAINLINE .. "特有的各种可同步设置，只能手动保存或加载"
-L["ACCWUI_TAINTABLES_RELOADNOW"] = "设置已加载。您应立即重载界面，以防止战斗中出现任何界面污染问题。"
+L["ACCWUI_TAINTABLES_SETTINGSLOADED"] = "设置已加载。"
+L["ACCWUI_TAINTABLES_ACTIONBARLOADED"] = "动作条显示设置已更改。"
+L["ACCWUI_TAINTABLES_RELOADNOW"] = "你应该立即重载界面，以防止在战斗中发生任何界面污染问题。"
 L["ACCWUI_TAINTABLES_GROUPTITLE"] = "保存/加载设置"
 L["ACCWUI_TAINTABLES_BTN_LOADALL"] = "加载所有设置"
 L["ACCWUI_TAINTABLES_BTN_LOADALL_DESC"] = "加载此选项卡中所有可用的设置。需要重新加载界面。"
