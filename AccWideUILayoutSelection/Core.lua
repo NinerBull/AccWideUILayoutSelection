@@ -58,6 +58,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("ENABLE_DECLINE_GUILD_INVITE")
 	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("CINEMATIC_STOP")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -631,7 +632,7 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 					self:Printf(L["ACCWUI_LOAD_REGULAR"], self.TempData.TextSlash)
 				end
 
-				if (not InCombatLockdown() and not IsEncounterInProgress()) then
+				if (not InCombatLockdown() and not IsEncounterInProgress() and not InCinematic() and not IsInCinematicScene()) then
 					self:ScheduleTimer(function()
 						self:LoadUISettings()
 					end, 5)
@@ -643,7 +644,6 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 			else
 
 				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
-				--self:Print("Show First Time Popup")
 
 			end
 
@@ -668,6 +668,17 @@ function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
 	end, 5)
 end
 
+function AccWideUIAceAddon:CINEMATIC_START(event, arg1, arg2)
+	if (self.TempData.IsCurrentlyLoadingSettings == true) then
+		self.TempData.IsCurrentlyLoadingSettings = false
+		self.TempData.HasPartiallyLoaded = true
+		self.TempData.LoadSettingsAfterCombat = true
+		self:CancelAllTimers();
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print(L["ACCWUI_WAIT_TILL_COMBAT"])
+		end
+	end
+end
 
 function AccWideUIAceAddon:CINEMATIC_STOP(event, arg1, arg2)
 
