@@ -9,7 +9,7 @@ function AccWideUIAceAddon:ToBoolean(str)
 end
 
 function AccWideUIAceAddon:GetPlayerName()
-	return(NameUtil and NameUtil.GetUnmodifiedUnitFullName and NameUtil.GetUnmodifiedUnitFullName("player") or UnitNameUnmodified("player"))
+	return(NameUtil and NameUtil.GetUnmodifiedUnitFullName and NameUtil.GetUnmodifiedUnitFullName("player") or UnitNameUnmodified("player").. "-" .. GetNormalizedRealmName())
 end
 
 function AccWideUIAceAddon:GetInterfaceVersion()
