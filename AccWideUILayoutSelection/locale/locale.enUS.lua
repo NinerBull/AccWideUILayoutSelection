@@ -221,9 +221,9 @@ L["ACCWUI_GS_IMPORT_DESC"] = "Paste an import string into the box below and clic
 L["ACCWUI_GS_IMPORT_SUCCESS"] = "Import complete!"
 L["ACCWUI_GS_IMPORT_FAIL"] = "Import failed. The string you entered is not valid."
 
-L["ACCWUI_TAINTABLES_TITLE"] = WOWLABS_MAINLINE .. " Specific"
-L["ACCWUI_TAINTABLES_DESC"] = "This tab contains various synchronisable settings specific to " .. WOWLABS_MAINLINE .. " that can only be saved or loaded manually, as loading them irreversibly taints the UI in combat, until you /reload the interface.\nYou will need to manually load these settings for each character you wish to use them with."
-L["ACCWUI_TAINTABLES_DESC_SHORT"] = "Contains various synchronisable settings specific to " .. WOWLABS_MAINLINE .. " that can only be saved or loaded manually"
+L["ACCWUI_TAINTABLES_TITLE"] = "Client Specific"
+L["ACCWUI_TAINTABLES_DESC"] = "This tab contains various synchronisable settings specific to this game client that can only be saved or loaded manually, as loading them irreversibly taints the UI in combat, until you /reload the interface.\nYou will need to manually load these settings for each character you wish to use them with."
+L["ACCWUI_TAINTABLES_DESC_SHORT"] = "Contains various synchronisable settings specific to this game client that can only be saved or loaded manually"
 L["ACCWUI_TAINTABLES_SETTINGSLOADED"] = "Settings loaded."
 L["ACCWUI_TAINTABLES_ACTIONBARLOADED"] = "Action Bar Visibility Settings have changed."
 L["ACCWUI_TAINTABLES_RELOADNOW"] = "You should Reload the UI immediately to prevent any Interface Taint issues during combat."

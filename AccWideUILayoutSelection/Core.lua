@@ -64,7 +64,7 @@ function AccWideUIAceAddon:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("CHAT_MSG_CHANNEL_NOTICE_USER")
 
-	if (AccWideUIAceAddon:IsMainline()) then
+	if (AccWideUIAceAddon:IsModern()) then
 		self:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 		self:RegisterEvent("BAG_SLOT_FLAGS_UPDATED")
 		self:RegisterEvent("BANK_BAG_SLOT_FLAGS_UPDATED")
@@ -309,7 +309,7 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		self:CancelAllTimers()
 	end
 	
-	AccWideUIAceAddon.LDB.text = AccWideUIAceAddon.db:GetCurrentProfile()
+	self.LDB.text = self.db:GetCurrentProfile()
 	
 	self.db.profile.profileSaveVer = self.TempData.ProfileSaveVer
 

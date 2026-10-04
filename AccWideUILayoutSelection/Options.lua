@@ -202,7 +202,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 						}
 					},
 					special = {
-						channelManagerFrame = (self:IsMainline() == true and 0 or 1)
+						channelManagerFrame = (self:IsModern() == true and 0 or 1)
 					}
 				},
 				bagOrganisation = {
@@ -334,10 +334,10 @@ function AccWideUIAceAddon:GenerateOptions()
 									},
 									autoLoot = {
 										type = "toggle",
-										name = (self:IsMainline() and L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_RATE"] or L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"]),
+										name = (self:IsModern() and L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_RATE"] or L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT"]),
 										order = 50,
 										width = thisCheckboxWidth,
-										desc = (self:IsMainline() and L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_RATE_DESC"] or L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"]),
+										desc = (self:IsModern() and L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_RATE_DESC"] or L["ACCWUI_OPT_MODULES_CHK_AUTOLOOT_DESC"]),
 										hidden = (not self:SupportsGameFunction("autoLoot"))
 									},
 									empowerTap = {
@@ -482,6 +482,7 @@ function AccWideUIAceAddon:GenerateOptions()
 										width = thisCheckboxWidth,
 										--disabled = "ShouldChatOptsDisable",
 										desc = L["ACCWUI_OPT_MODULES_CHK_CHATCHANNELS_DESC"],
+										hidden = (not self:SupportsGameFunction("customChatChannels"))
 									},
 									locationVisibility = {
 										type = "toggle",
@@ -927,7 +928,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				name = L["ACCWUI_TAINTABLES_TITLE"],
 				desc = L["ACCWUI_TAINTABLES_DESC_SHORT"],
 				order = 30,
-				hidden = (not self:IsMainline()),
+				hidden = (not self:IsModern()),
 				args = {
 					desc = {
 						type = "description",
@@ -1065,7 +1066,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth2,
 								order = 3,
 								desc = L["ACCWUI_ADVANCED_ALLOW_EXP_DESC"],
-								hidden = (not self:IsMainline())
+								hidden = (not self:IsModern())
 							},
 							hideMinimapButton = {
 								type = "toggle",
@@ -1092,7 +1093,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth2,
 								order = 5,
 								desc = L["ACCWUI_ADVANCED_FCF_CLOSE_PROTECTION_DESC"],
-								--hidden = (self:IsMainline()),
+								--hidden = (self:IsModern()),
 								set = function(info, value)
 									self.db.global.addFCFCloseProtection = value
 									StaticPopup_Show("ACCWIDEUI_ACTION_REQUIREDRELOAD")
@@ -1404,7 +1405,7 @@ function AccWideUIAceAddon:ShouldCustomCVarListBeHidden()
 end
 
 function AccWideUIAceAddon:ShouldExperimentalSyncsListBeHidden()
-	if self:IsMainline() then
+	if self:IsModern() then
 		return not self.db.global.allowExperimentalSyncs
 	else
 		return true

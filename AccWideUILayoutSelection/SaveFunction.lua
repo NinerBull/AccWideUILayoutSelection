@@ -426,7 +426,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					self.db.profile.syncData.cooldownViewer.cvars[v] = GetCVar(v) or nil
 				end
 				
-				--[[if (self:IsMainline() == true) then
+				--[[if (self:IsModern() == true) then
 					if (C_CooldownViewer.IsCooldownViewerAvailable()) then
 						local thisClass = UnitClassBase("player")
 						self.db.profile.syncData.cooldownViewer.classes[thisClass] = C_CooldownViewer.GetLayoutData()
@@ -552,7 +552,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						
 						local isCustomChannel = true
 						
-						if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
+						if (self:IsModern() ~= true) then -- 12.0.1 Sometimes Taints in Combat
 							self.db.profile.syncData.chat.channelOrder[id] = name
 						end
 						
@@ -661,7 +661,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 					
 					
 					--Chat Channels
-					if (not self:IsMainline()) then -- 12.0.0 Taints in Midnight
+					if (not self:IsModern()) then -- 12.0.0 Taints in Midnight
 						self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible = {}
 						
 						local thisWindowChannels = {GetChatWindowChannels(thisChatFrame)}
@@ -690,7 +690,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				
 				
 				-- Newcomer Chat Exception
-				if (self:IsMainline() and self.chatChannelNames.newcomerChat) then
+				if (self:IsRetail() and self.chatChannelNames.newcomerChat) then
 				
 					if (((GetChannelName(self.chatChannelNames.newcomerChat))) ~= 0) then
 					
@@ -857,7 +857,7 @@ end
 
 function AccWideUIAceAddon:SaveBagFlagSettings()
 
-	if (self:IsMainline() and self.db.global.allowExperimentalSyncs == true) then
+	if (self:IsModern() and self.db.global.allowExperimentalSyncs == true) then
 		if (self.db.profile.syncToggles.bagOrganisation == true) then
 					
 			-- C_Container.GetBagSlotFlag always seems to return -false- when logging out. So save this only when BAG_SLOT_FLAGS_UPDATED or BANK_BAG_SLOT_FLAGS_UPDATED is triggered.
@@ -906,7 +906,7 @@ function AccWideUIAceAddon:ForceSaveSettings()
 	self:SaveBagFlagSettings(); 
 	self.db.profile.syncData.blockGuildInvites.special.blockGuildInvites = GetAutoDeclineGuildInvites()
 	
-	if (self:IsMainline()) then
+	if (self:IsModern()) then
 		self.db.profile.syncData.blockNeighborhoodInvites.special.blockNeighborhoodInvites = GetAutoDeclineNeighborhoodInvites()
 	
 		self.db.profile.syncData.bagOrganisation.settings.sortBagsRightToLeft = C_Container.GetSortBagsRightToLeft()
@@ -922,7 +922,7 @@ end
 
 function AccWideUIAceAddon:RetailTaintableSaveAll() 
 	
-	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	if (self:IsModern() and not InCombatLockdown() and not IsEncounterInProgress()) then
 		self:RetailTaintableSaveDamageMeter(true) 
 		self:RetailTaintableSaveChat(true)
 		self:Print("[Midnight] Saved all Midnight Settings.")
@@ -932,7 +932,7 @@ end
 
 function AccWideUIAceAddon:RetailTaintableSaveDamageMeter(skipSaveMessage) 
 
-	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	if (self:IsModern() and not InCombatLockdown() and not IsEncounterInProgress()) then
 	
 			
 		self.db.profile.syncData.retailTaintables.damageMeter.special.settings = {
@@ -981,7 +981,7 @@ end
 
 function AccWideUIAceAddon:RetailTaintableSaveChat(skipSaveMessage)
 	
-	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	if (self:IsModern() and not InCombatLockdown() and not IsEncounterInProgress()) then
 	
 		-- Visible Chat Channels
 		for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows

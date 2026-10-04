@@ -9,7 +9,7 @@ function AccWideUIAceAddon:ToBoolean(str)
 end
 
 function AccWideUIAceAddon:GetPlayerName()
-	return(NameUtil and NameUtil.GetUnmodifiedUnitFullName and NameUtil.GetUnmodifiedUnitFullName("player") or UnitNameUnmodified("player").. "-" .. GetNormalizedRealmName())
+	return((NameUtil and NameUtil.GetUnmodifiedUnitFullName and NameUtil.GetUnmodifiedUnitFullName("player")) or UnitNameUnmodified("player") .. "-" .. GetNormalizedRealmName())
 end
 
 function AccWideUIAceAddon:GetInterfaceVersion()
@@ -17,21 +17,24 @@ function AccWideUIAceAddon:GetInterfaceVersion()
 	return thisInterface
 end
 
-
-function AccWideUIAceAddon:IsStandard() -- Retail
-	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE and self:GetInterfaceVersion() >= 120001) or false
+function AccWideUIAceAddon:IsRetail() -- Retail
+	return (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or false
 end
 
 function AccWideUIAceAddon:IsForever() -- Forever
-	return (self:GetInterfaceVersion() >= 16001 and self:GetInterfaceVersion() < 20000) or false
+	return (WOW_PROJECT_ID == WOW_PROJECT_CAMELOT) or false
 end
 
-function AccWideUIAceAddon:IsMainline() -- Mainline, either Retail or Forever
-	return (self:IsStandard() or self:IsForever())
+function AccWideUIAceAddon:IsModern() -- Mainline, either Retail or Forever
+	return (self:IsRetail() or self:IsForever())
 end
 
-function AccWideUIAceAddon:IsClassicAny() -- Not Retail
-	return (WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE) or false
+function AccWideUIAceAddon:IsMainline() -- Alias for above
+	return (self:IsModern())
+end
+
+function AccWideUIAceAddon:IsClassicAny() -- Not Retail or Forever
+	return (not self:IsModern()) or false
 end
 
 function AccWideUIAceAddon:IsClassicProgression() -- MoP Classic
@@ -78,23 +81,23 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	elseif (functionName == "spellOverlay") then -- Spell Overlay (C_SpellActivationOverlay)
 		return (not self:IsClassicTBC() and not self:IsClassicEra())
 	elseif (functionName == "empowerTap") then -- Empower Tap
-		return (self:IsMainline())
+		return (self:IsModern())
 	elseif (functionName == "assistedCombat") then -- Rotation Assist (C_AssistedCombat)
-		return (self:IsStandard())
+		return (self:IsRetail())
 	elseif (functionName == "locationVisibility") then -- Location Visibility Toggle (SetAllowRecentAlliesSeeLocation)
-		return (self:IsMainline())
+		return (self:IsModern())
 	elseif (functionName == "blockNeighborhoodInvites") then -- Block Neighborhood Invites (SetAutoDeclineNeighborhoodInvites)
-		return (self:IsStandard())
+		return (self:IsRetail())
 	elseif (functionName == "bagOrganisation") then -- Bag Organisation (C_Container.SetBankAutosortDisabled)
-		return (self:IsStandard())
+		return (self:IsRetail())
 	elseif (functionName == "damageMeter") then -- Damage Meter (C_DamageMeter)
-		return (self:IsMainline())
+		return (self:IsModern())
 	elseif (functionName == "cooldownViewer") then -- Cooldown Manager (C_CooldownViewer)
-		return (self:IsMainline())
+		return (self:IsModern())
 	elseif (functionName == "externalDefensives") then -- External Defensives
-		return (self:IsMainline())
+		return (self:IsModern())
 	elseif (functionName == "encounterTimeline") then -- Encounter Timeline
-		return (self:IsStandard())
+		return (self:IsRetail())
 	elseif (functionName == "gamepad") then -- Gamepad
 		return (self:IsForever())
 	elseif (functionName == "actionBars") then

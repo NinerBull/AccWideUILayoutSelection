@@ -4,7 +4,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 
 AccWideUIAceAddon.chatChannelNames = {}
 
-if (AccWideUIAceAddon:IsStandard()) then --Retail
+if (AccWideUIAceAddon:IsRetail()) then --Retail
 
 	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)
@@ -13,7 +13,7 @@ if (AccWideUIAceAddon:IsStandard()) then --Retail
 	AccWideUIAceAddon.chatChannelNames.lookingForGroup = C_ChatInfo.GetChannelShortcutForChannelID(26)
 	AccWideUIAceAddon.chatChannelNames.newcomerChat = C_ChatInfo.GetChannelShortcutForChannelID(32)
 	
-elseif (AccWideUIAceAddon:IsForever()) then --Retail
+elseif (AccWideUIAceAddon:IsForever()) then --Forever
 
 	AccWideUIAceAddon.chatChannelNames.general = C_ChatInfo.GetChannelShortcutForChannelID(1)
 	AccWideUIAceAddon.chatChannelNames.trade = C_ChatInfo.GetChannelShortcutForChannelID(2)

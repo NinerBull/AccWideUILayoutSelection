@@ -939,14 +939,14 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 
 			
 			-- Custom Chat Channels
-			if (self.db.profile.syncToggles.chatChannels == true) then
+			if (self:SupportsGameFunction("customChatChannels") and self.db.profile.syncToggles.chatChannels == true) then
 				
 				self:ScheduleTimer(function() 
 					if (self.db.global.printDebugTextToChat == true) then
 						self:Print("[Chat Channels] Joining Channels.")
 					end
 					
-					AccWideUIAceAddon:BlizzChannelManager()
+					self:BlizzChannelManager()
 					
 					
 					for k, v in pairs(self.db.profile.syncData.chat.channelsJoined) do
@@ -967,7 +967,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 
 				
-				if (self:IsMainline() ~= true) then -- 12.0.1 Sometimes Taints in Combat
+				if (self:IsModern() ~= true) then -- 12.0.1 Sometimes Taints in Combat
 				
 					self:ScheduleTimer(function() 
 						
@@ -1008,7 +1008,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				
 				-- Newcomer Chat Exception
-				if (self:IsMainline() and self.chatChannelNames.newcomerChat) then
+				if (self:IsRetail() and self.chatChannelNames.newcomerChat) then
 					local id, name, instanceID, isCommunitiesChannel = GetChannelName(self.chatChannelNames.newcomerChat)
 					if (id ~= 0) then
 						self:ScheduleTimer(function()
@@ -1135,7 +1135,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
 								) ]]
 								
-								if (not self:IsMainline()) then
+								if (not self:IsModern()) then
 								
 									SetChatWindowName(
 										thisChatFrame,
@@ -1158,7 +1158,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
 									)
 									
-									if (self:IsMainline()) then
+									if (self:IsModern()) then
 										FCF_SetChatWindowFontSize(
 											nil,
 											thisChatFrameVar,
@@ -1245,7 +1245,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							FloatingChatFrame_Update(thisChatFrame, true)
 
 							--[[self:ScheduleTimer(function()							
-								if (not self:IsMainline()) then
+								if (not self:IsModern()) then
 									--Triggering this in Retail causes secret errors when chat lockdown is enabled
 									local f = _G["ChatFrame" .. thisChatFrame];
 									f:GetScript("OnEvent")(f, "UPDATE_FLOATING_CHAT_WINDOWS");
@@ -1300,7 +1300,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					self:ScheduleTimer(function() 
 					
 						-- Duplicated in Taintables below
-						if (not self:IsMainline()) then
+						if (not self:IsModern()) then
 					
 							if (self.db.profile.syncData.chat.windows[thisChatFrame]) then
 								if (type(self.db.profile.syncData.chat.windows[thisChatFrame].ChatChannelsVisible) == "table") then
@@ -1607,7 +1607,7 @@ end
 
 function AccWideUIAceAddon:RetailTaintableLoadAll() 
 	
-	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	if (self:IsModern() and not InCombatLockdown() and not IsEncounterInProgress()) then
 		self:RetailTaintableLoadDamageMeter(true) 
 		self:RetailTaintableLoadChat(true)
 		self:Print("[Midnight] Loaded all Midnight Settings.")
@@ -1618,7 +1618,7 @@ end
 
 function AccWideUIAceAddon:RetailTaintableLoadDamageMeter(skipLoadMessage) 
 
-	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	if (self:IsModern() and not InCombatLockdown() and not IsEncounterInProgress()) then
 	
 		if (self.db.profile.syncData.retailTaintables.damageMeter.special.settings) then
 		
@@ -1741,7 +1741,7 @@ end
 
 function AccWideUIAceAddon:RetailTaintableLoadChat(skipLoadMessage)
 	
-	if (self:IsMainline() and not InCombatLockdown() and not IsEncounterInProgress()) then
+	if (self:IsModern() and not InCombatLockdown() and not IsEncounterInProgress()) then
 	
 		-- Visible Chat Channels
 		for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
