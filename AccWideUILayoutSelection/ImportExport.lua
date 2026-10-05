@@ -45,10 +45,10 @@ function AccWideUIAceAddon:ExportProfile()
 		end
 		
 		-- Serialize and compress the profile table
-		local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
-		local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
-		local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
-
+		--local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
+		--local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
+		--local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
+		local thisExportTableExCDPT = C_EncodingUtil.EncodeBase64(C_EncodingUtil.CompressString(C_EncodingUtil.SerializeCBOR(thisExportTable)))
 
 		-- Description Text
 		thisExportWindow.TextLine1 = AccWideUIAceAddon.AceGUI:Create("Label")
@@ -133,19 +133,22 @@ function AccWideUIAceAddon:ImportProfile()
 		
 			if not InCombatLockdown() then
 			
-				local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
+				--local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
+				local thisImportTableExCDPT = C_EncodingUtil.DecodeBase64(thisImportWindow.BigTextBox:GetText())
 
-				local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
+				--local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
+				local thisImportTableExCD = C_EncodingUtil.DecompressString(thisImportTableExCDPT)
 
 				if thisImportTableExCD then
-					local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
+					--local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
+					local thisImportTableEx = C_EncodingUtil.DeserializeCBOR(thisImportTableExCD)
 					
 					if thisImportTableEx then
 					
-						if type(thisImportTableExData) == "table" and thisImportTableExData.profileSaveVer then
+						if type(thisImportTableEx) == "table" and thisImportTableEx.profileSaveVer then
 						
 							--Import it!
-							self.db.profile = thisImportTableExData
+							self.db.profile = thisImportTableEx
 							
 							self:Print(L["ACCWUI_IE_IMPORT_SUCCESS"])
 							
@@ -217,10 +220,10 @@ function AccWideUIAceAddon:ExportGraphicsSoundSettings()
 
 		
 		-- Serialize and compress the settings table
-		local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
-		local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
-		local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
-
+		--local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
+		--local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
+		--local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
+		local thisExportTableExCDPT = C_EncodingUtil.EncodeBase64(C_EncodingUtil.CompressString(C_EncodingUtil.SerializeCBOR(thisExportTable)))
 
 		-- Description Text
 		thisExportWindow.TextLine1 = AccWideUIAceAddon.AceGUI:Create("Label")
@@ -300,18 +303,22 @@ function AccWideUIAceAddon:ImportGraphicsSoundSettings()
 		
 			if not InCombatLockdown() then
 			
-				local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
+				--local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
+				local thisImportTableExCDPT = C_EncodingUtil.DecodeBase64(thisImportWindow.BigTextBox:GetText())
 
-				local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
+				--local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
+				local thisImportTableExCD = C_EncodingUtil.DecompressString(thisImportTableExCDPT)
 
 				if thisImportTableExCD then
-					local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
+					--local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
+					local thisImportTableEx = C_EncodingUtil.DeserializeCBOR(thisImportTableExCD)
+					
 					
 					if thisImportTableEx then
 					
-						if type(thisImportTableExData) == "table" and thisImportTableExData.AWIGSData then
+						if type(thisImportTableEx) == "table" and thisImportTableEx.AWIGSData then
 						
-							for k, v in pairs(thisImportTableExData.values) do
+							for k, v in pairs(thisImportTableEx.values) do
 								SetCVar(k, v)
 							end
 												
