@@ -48,7 +48,9 @@ function AccWideUIAceAddon:ExportProfile()
 		--local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
 		--local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
 		--local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
-		local thisExportTableExCDPT = C_EncodingUtil.EncodeBase64(C_EncodingUtil.CompressString(C_EncodingUtil.SerializeCBOR(thisExportTable)))
+		local thisExportTableEx = C_EncodingUtil.SerializeCBOR(thisExportTable)
+		local thisExportTableExCD = C_EncodingUtil.CompressString(thisExportTableEx, Enum.CompressionMethod.Deflate, Enum.CompressionLevel.Default)
+		local thisExportTableExCDPT = C_EncodingUtil.EncodeBase64(thisExportTableExCD)
 
 		-- Description Text
 		thisExportWindow.TextLine1 = AccWideUIAceAddon.AceGUI:Create("Label")
@@ -134,14 +136,14 @@ function AccWideUIAceAddon:ImportProfile()
 			if not InCombatLockdown() then
 			
 				--local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
-				local thisImportTableExCDPT = C_EncodingUtil.DecodeBase64(thisImportWindow.BigTextBox:GetText())
+				local thisImportTableExCDPTResult, thisImportTableExCDPT = pcall(C_EncodingUtil.DecodeBase64,thisImportWindow.BigTextBox:GetText())
 
 				--local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
-				local thisImportTableExCD = C_EncodingUtil.DecompressString(thisImportTableExCDPT)
+				local thisImportTableExCDResult, thisImportTableExCD = pcall(C_EncodingUtil.DecompressString,thisImportTableExCDPT, Enum.CompressionMethod.Deflate)
 
 				if thisImportTableExCD then
 					--local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
-					local thisImportTableEx = C_EncodingUtil.DeserializeCBOR(thisImportTableExCD)
+					local thisImportTableExResult, thisImportTableEx = pcall(C_EncodingUtil.DeserializeCBOR,thisImportTableExCD)
 					
 					if thisImportTableEx then
 					
@@ -223,7 +225,9 @@ function AccWideUIAceAddon:ExportGraphicsSoundSettings()
 		--local thisExportTableEx = self.LibSerialize:Serialize(thisExportTable)
 		--local thisExportTableExCD = self.LibDeflate:CompressDeflate(thisExportTableEx)
 		--local thisExportTableExCDPT = self.LibDeflate:EncodeForPrint(thisExportTableExCD)
-		local thisExportTableExCDPT = C_EncodingUtil.EncodeBase64(C_EncodingUtil.CompressString(C_EncodingUtil.SerializeCBOR(thisExportTable)))
+		local thisExportTableEx = C_EncodingUtil.SerializeCBOR(thisExportTable)
+		local thisExportTableExCD = C_EncodingUtil.CompressString(thisExportTableEx, Enum.CompressionMethod.Deflate, Enum.CompressionLevel.Default)
+		local thisExportTableExCDPT = C_EncodingUtil.EncodeBase64(thisExportTableExCD)
 
 		-- Description Text
 		thisExportWindow.TextLine1 = AccWideUIAceAddon.AceGUI:Create("Label")
@@ -304,14 +308,14 @@ function AccWideUIAceAddon:ImportGraphicsSoundSettings()
 			if not InCombatLockdown() then
 			
 				--local thisImportTableExCDPT = self.LibDeflate:DecodeForPrint(thisImportWindow.BigTextBox:GetText())
-				local thisImportTableExCDPT = C_EncodingUtil.DecodeBase64(thisImportWindow.BigTextBox:GetText())
+				local thisImportTableExCDPTResult, thisImportTableExCDPT = pcall(C_EncodingUtil.DecodeBase64,thisImportWindow.BigTextBox:GetText())
 
 				--local thisImportTableExCD = self.LibDeflate:DecompressDeflate(thisImportTableExCDPT) or nil
-				local thisImportTableExCD = C_EncodingUtil.DecompressString(thisImportTableExCDPT)
+				local thisImportTableExCDResult, thisImportTableExCD = pcall(C_EncodingUtil.DecompressString,thisImportTableExCDPT, Enum.CompressionMethod.Deflate)
 
 				if thisImportTableExCD then
 					--local thisImportTableEx, thisImportTableExData = self.LibSerialize:Deserialize(thisImportTableExCD)
-					local thisImportTableEx = C_EncodingUtil.DeserializeCBOR(thisImportTableExCD)
+					local thisImportTableExResult, thisImportTableEx = pcall(C_EncodingUtil.DeserializeCBOR,thisImportTableExCD)
 					
 					
 					if thisImportTableEx then
