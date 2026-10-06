@@ -11,8 +11,10 @@ end
 function AccWideUIAceAddon:GetPlayerName()
 	if (NameUtil and NameUtil.GetUnmodifiedUnitFullName) then
 		return(NameUtil.GetUnmodifiedUnitFullName("player"))
-	else
+	elseif (UnitNameUnmodified and UnitNameUnmodified("player")) then
 		return(UnitNameUnmodified("player") .. "-" .. GetNormalizedRealmName())
+	else
+		return CHARACTER
 	end
 end
 

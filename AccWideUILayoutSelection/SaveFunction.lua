@@ -29,7 +29,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			self.db.global.hasDoneFirstTimeSetup = true
 
 
-			self.db.profile.lastSaved.character = AccWideUIAceAddon.TempData.ThisCharacter
+			self.db.profile.lastSaved.character = self:GetPlayerName()
 			self.db.profile.lastSaved.unixTime = GetServerTime()
 
 			

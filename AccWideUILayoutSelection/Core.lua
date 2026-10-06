@@ -27,7 +27,7 @@ function AccWideUIAceAddon:OnEnable()
 
 	local thisScreenWidth, thisScreenHeight = GetPhysicalScreenSize()
 	self.TempData.ScreenRes = thisScreenWidth .. "x" .. thisScreenHeight
-	self.TempData.ThisCharacter = self:GetPlayerName()
+	self.TempData.ThisCharacter = self:GetPlayerName() or UNKNOWN
 
 	self:GenerateOptions()
 	local profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
@@ -687,6 +687,14 @@ function AccWideUIAceAddon:CINEMATIC_STOP(event, arg1, arg2)
 		C_Timer.After(5, function()
 			if (self.db.global.hasDoneFirstTimeSetup ~= true and not self.TempData.HasDimissedFTPAlready) then
 				StaticPopup_Show("ACCWIDEUI_FIRSTTIMEPOPUP")
+			else
+				if (self.TempData.LoadSettingsAfterCombat == true and not InCombatLockdown()) then
+					self.TempData.LoadSettingsAfterCombat = false
+					self:CancelAllTimers();
+					self:ScheduleTimer(function()
+						self:LoadUISettings()
+					end, 3)
+				end
 			end
 		end)
 

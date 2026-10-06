@@ -10,6 +10,7 @@ StaticPopupDialogs["ACCWIDEUI_FIRSTTIMEPOPUP"] = {
 		AccWideUIAceAddon.db.global.hasDoneFirstTimeSetup = true
 		AccWideUIAceAddon:SaveUISettings()
 		AccWideUIAceAddon.TempData.HasDoneInitialLoad = true
+		AccWideUIAceAddon.TempData.LoadSettingsAfterCombat = false
 		if (AccWideUIAceAddon:SupportsGameFunction("editModeLayout")) then
 			AccWideUIAceAddon:SaveEditModeSettings()
 		end
