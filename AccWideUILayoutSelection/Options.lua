@@ -706,7 +706,7 @@ function AccWideUIAceAddon:GenerateOptions()
 							},
 							header1 = {
 								type = "header",
-								name = string.format(L["ACCWUI_CHARSPECIFIC_TITLE"], UnitNameUnmodified("player")),
+								name = string.format(L["ACCWUI_CHARSPECIFIC_TITLE"], self:GetPlayerName()),
 								order = 3,
 								hidden = ((GetNumSpecializations(false, false) == 0) and true or false)
 							},
@@ -1330,7 +1330,7 @@ function AccWideUIAceAddon:GenerateOptions()
 				--width = "full",
 				get = "GetEditModeSpec",
 				set = "SetEditModeSpec",
-				desc = string.format(L["ACCWUI_CHARSPECIFIC_CHECK_DESC"], UnitNameUnmodified("player"), thisSpecName),
+				desc = string.format(L["ACCWUI_CHARSPECIFIC_CHECK_DESC"], self:GetPlayerName(), thisSpecName),
 			}
 		end
 
