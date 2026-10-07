@@ -14,7 +14,7 @@ function AccWideUIAceAddon:GetPlayerName()
 	elseif (UnitFullName and UnitFullName("player")) then
 		local thisCharName, thisRealm = UnitFullName("player")
 		if (thisCharName and thisRealm) then
-			return(thisCharName .. "-" .. thisRealm)
+			return(string.join("-", thisCharName, thisRealm))
 		elseif (thisCharName) then
 			return(thisCharName)
 		else
