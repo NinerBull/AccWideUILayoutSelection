@@ -13,7 +13,7 @@ AccWideUIAceAddon.TempData = {
 	IsCurrentlyLoadingSettings = false,
 	HasPartiallyLoaded = false,
 	LoadSettingsAfterCombat = false,
-	ProfileSaveVer = 3
+	ProfileSaveVer = 4
 }
 
 
@@ -255,24 +255,8 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		end
 
 		
-		if (self:SupportsGameFunction("editModeLayout")) then
-			-- Edit Mode
-			if (type(self.db.profile.syncData.editModeLayoutID) ~= "number") then
-				local getLayoutsTable = C_EditMode.GetLayouts()
-				local currentActiveLayout = getLayoutsTable["activeLayout"]
-
-				self.db.profile.syncData.editModeLayoutID = currentActiveLayout or 1
-
-				if self.db.global.useScreenSizeSpecificSettings == true then
-					self.db.profile.syncData.screenResolutionSpecific[AccWideUIAceAddon.TempData.ScreenRes].editModeLayoutID = currentActiveLayout or 1
-				end
-
-				if (self.db.global.printDebugTextToChat == true) then
-					self:Print("[Debug] Setting default Edit Mode.")
-				end
-
-			end
-		end
+		--Edit Mode
+		self:SaveEditModeSettings()
 
 
 	end

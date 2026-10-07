@@ -1507,7 +1507,7 @@ end
 
 function AccWideUIAceAddon:LoadEditModeSettings()
 	
-	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
+	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
 				
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())
