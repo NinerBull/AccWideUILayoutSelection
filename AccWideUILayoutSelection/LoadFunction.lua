@@ -1045,7 +1045,11 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					local thisChatFrameVar = FCF_GetChatFrameByID(thisChatFrame);
 					local thisChatFrameTab =  _G["ChatFrame"..thisChatFrame.."Tab"];
 					local isThisChatFrameVisible = nil
+					local hasThisChatFrameChanged = nil
 					
+					local name, size, r, g, b, a, isShown, isLocked, isDocked, isUninteractable = GetChatWindowInfo(thisChatFrame);
+					local point, xOffset, yOffset = GetChatWindowSavedPosition(thisChatFrame);
+					local width, height = GetChatWindowSavedDimensions(thisChatFrame);
 					
 					if (type(self.db.profile.syncData.chat.windows[thisChatFrame]) == "table") then
 					
@@ -1054,7 +1058,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							isThisChatFrameVisible = self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown
 							
 							self:ScheduleTimer(function()
-								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a) then
+																						
+								if (RoundToSignificantDigits(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a, 5) ~= RoundToSignificantDigits(a, 5)) then
 								
 									SetChatWindowAlpha(
 										thisChatFrame, 
@@ -1065,10 +1070,18 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 											thisChatFrameVar, 
 											self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.a
 									) ]]
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Alpha.")
+									end
+											
+									hasThisChatFrameChanged = true
 								
 								end
 								
-								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.r) then
+								if ((self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.r ~= r)
+									and (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.g ~= g)
+									and (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.b ~= b)) then
 								
 									SetChatWindowColor(
 										thisChatFrame,
@@ -1083,93 +1096,167 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.g,
 										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.b
 									) ]]
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Color.")
+									end
+											
+									hasThisChatFrameChanged = true
 								
 								end
 								
-								SetChatWindowDocked(
-									thisChatFrame,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or false)
-								)
 								
-								--[[ if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked == true) then
-									FCF_DockFrame(
-										thisChatFrameVar,
-										(#FCFDock_GetChatFrames(GENERAL_CHAT_DOCK)+1),
+								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked ~= isDocked) then
+								
+									SetChatWindowDocked(
+										thisChatFrame,
 										(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or false)
 									)
-								else
-									FCF_UnDockFrame(
-										thisChatFrameVar
-									)
-								end ]]
-								
-								SetChatWindowLocked(
-									thisChatFrame,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked or false)
-								)
-								
-								--[[ FCF_SetLocked(
-									thisChatFrameVar,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked or false)
-								) ]]
-								
-								SetChatWindowShown(
-									thisChatFrame,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown or false)
-								)
-								
-								--[[ if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown == true) then
-									thisChatFrameVar:Show()
-								else
-									thisChatFrameVar:Hide()
-								end ]]
-								
-								
-								SetChatWindowUninteractable(
-									thisChatFrame,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
-								)
-								
-								--[[ FCF_SetUninteractable(
-									thisChatFrameVar,
-									(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
-								) ]]
-								
-								if (not self:IsModern()) then
-								
-									SetChatWindowName(
-										thisChatFrame,
-										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-									)
 									
-								else
-								
-									FCF_SetWindowName(
-										thisChatFrameVar,
-										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
-									)
+									--[[ if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked == true) then
+										FCF_DockFrame(
+											thisChatFrameVar,
+											(#FCFDock_GetChatFrames(GENERAL_CHAT_DOCK)+1),
+											(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isDocked or false)
+										)
+									else
+										FCF_UnDockFrame(
+											thisChatFrameVar
+										)
+									end ]]
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Docked.")
+									end
+											
+									hasThisChatFrameChanged = true
 								
 								end
 								
-								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size >= 10) then
 								
-									SetChatWindowSize(
+								
+								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked ~= isLocked) then
+								
+									SetChatWindowLocked(
 										thisChatFrame,
-										self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
+										(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked or false)
 									)
 									
-									if (self:IsModern()) then
-										FCF_SetChatWindowFontSize(
-											nil,
+									--[[ FCF_SetLocked(
+										thisChatFrameVar,
+										(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isLocked or false)
+									) ]]
+								
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Locked.")
+									end
+											
+									hasThisChatFrameChanged = true
+								
+								end
+								
+								
+								
+								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown ~= isShown) then
+								
+									SetChatWindowShown(
+										thisChatFrame,
+										(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown or false)
+									)
+									
+									--[[ if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isShown == true) then
+										thisChatFrameVar:Show()
+									else
+										thisChatFrameVar:Hide()
+									end ]]
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Shown.")
+									end
+											
+									hasThisChatFrameChanged = true
+								
+								end
+								
+								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable ~= isUninteractable) then
+								
+									SetChatWindowUninteractable(
+										thisChatFrame,
+										(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
+									)
+									
+									--[[ FCF_SetUninteractable(
+										thisChatFrameVar,
+										(self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.isUninteractable or false)
+									) ]]
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Uninteractable.")
+									end
+											
+									hasThisChatFrameChanged = true
+								
+								end
+								
+								
+								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name ~= name) then
+								
+									if (not self:IsModern()) then
+									
+										SetChatWindowName(
+											thisChatFrame,
+											self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
+										)
+										
+									else
+									
+										FCF_SetWindowName(
 											thisChatFrameVar,
+											self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.name
+										)
+									
+									end
+									
+									if (self.db.global.printDebugTextToChat == true) then
+										self:Print("[Chat Window " .. thisChatFrame .. "] Setting Window Name.")
+									end
+											
+									hasThisChatFrameChanged = true
+									
+								end
+								
+								
+								
+								if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size 
+								and self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size >= 10) then
+								
+									if (self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size ~= size) then
+								
+										SetChatWindowSize(
+											thisChatFrame,
 											self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
 										)
+										
+										if (self:IsModern()) then
+											FCF_SetChatWindowFontSize(
+												nil,
+												thisChatFrameVar,
+												self.db.profile.syncData.chat.windows[thisChatFrame].ChatWindowInfo.size
+											)
+										end
+										
+										if (self.db.global.printDebugTextToChat == true) then
+											self:Print("[Chat Window " .. thisChatFrame .. "] Setting Chat Size.")
+										end
+												
+										hasThisChatFrameChanged = true
+									
 									end
 								
 								else
 								
 									if (self.db.global.printDebugTextToChat == true) then
-										self:Print("[Chat Window] Invalid Chat Text Size.")
+										self:Print("[Chat Window " .. thisChatFrame .. "] Invalid Chat Text Size.")
 									end
 								
 								end
@@ -1181,7 +1268,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							
 						
 						self:ScheduleTimer(function()
-							if (self.db.profile.syncToggles.chatWindowPosition == true and isThisChatFrameVisible) then
+							if (self.db.profile.syncToggles.chatWindowPosition == true 
+							and isThisChatFrameVisible
+							and (self:SupportsGameFunction("editModeLayout") and DEFAULT_CHAT_FRAME ~= thisChatFrameVar)) then
 							
 									if self.db.global.useScreenSizeSpecificSettings == true then
 										--Res Specific
@@ -1240,36 +1329,44 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 						
 						
 						
-						if (isThisChatFrameVisible) then
 						
-							FloatingChatFrame_Update(thisChatFrame, true)
+						self:ScheduleTimer(function()
+							if (hasThisChatFrameChanged) then
+							
+								FloatingChatFrame_Update(thisChatFrame, true)
 
-							--[[self:ScheduleTimer(function()							
-								if (not self:IsModern()) then
-									--Triggering this in Retail causes secret errors when chat lockdown is enabled
-									local f = _G["ChatFrame" .. thisChatFrame];
-									f:GetScript("OnEvent")(f, "UPDATE_FLOATING_CHAT_WINDOWS");
-								else 
+								--[[self:ScheduleTimer(function()							
+									if (not self:IsModern()) then
+										--Triggering this in Retail causes secret errors when chat lockdown is enabled
+										local f = _G["ChatFrame" .. thisChatFrame];
+										f:GetScript("OnEvent")(f, "UPDATE_FLOATING_CHAT_WINDOWS");
+									else 
+										
+									end
 									
+								end, 4)]]
+								
+								self:ScheduleTimer(function()
+									FCF_DockUpdate()
+								end, 5.5)
+								
+								if (self.db.global.printDebugTextToChat == true) then
+									self:Print("[Chat Window " .. thisChatFrame .. "] Triggering FCF Update.")
 								end
 								
-							end, 4)]]
+							else
+								
+								--[[if (not IsBuiltinChatWindow(thisChatFrameVar) then)
+									FCF_Close(thisChatFrameVar)
+								end]]
+								
+								--[[if (self.db.global.printDebugTextToChat == true) then
+									self:Print("[Chat Window] Closing Chat Frame " .. thisChatFrame .. ".")
+								end]]
 							
-							self:ScheduleTimer(function()
-								FCF_DockUpdate()
-							end, 5.5)
-							
-						else
-							
-							--[[if (not IsBuiltinChatWindow(thisChatFrameVar) then)
-								FCF_Close(thisChatFrameVar)
-							end]]
-							
-							--[[if (self.db.global.printDebugTextToChat == true) then
-								self:Print("[Chat Window] Closing Chat Frame " .. thisChatFrame .. ".")
-							end]]
+							end
 						
-						end
+						end, 4)
 						
 					
 					
@@ -1507,7 +1604,7 @@ end
 
 function AccWideUIAceAddon:LoadEditModeSettings()
 	
-	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true) then
+	if (self:SupportsGameFunction("editModeLayout") and not InCombatLockdown() and self.db.global.hasDoneFirstTimeSetup == true and type(self.db.profile.syncData.editModeLayoutID) == "number") then
 				
 		-- Use Edit Mode Layout
 		local currentSpec = tostring(C_SpecializationInfo.GetSpecialization())

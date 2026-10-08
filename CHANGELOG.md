@@ -8,6 +8,7 @@ This beta version adds initial support for WoW: Forever!
 ## Additional Changes
 - Updated Simplified Chinese translations by nanjuekaien1, thank you!
 - Switched Profile and Graphics Import/Export settings to use Blizz's own Encoding/Decoding functions.
+- Most Chat Window Settings will now only be changed if needed, instead upon every addon settings load. This is a test to try and prevent taint in Mythic+/Boss Encounters.
 
 ### Known Issues
 - (Forever) Any time Action Bar visibility is changed by this addon, a UI Reload will be required.  This is due to secret taint that occurs when manually refreshing the Action Bar visibility.
