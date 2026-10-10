@@ -579,7 +579,9 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				if (C_NamePlate.SetNamePlateSize) then -- New Nameplate Size Func
 					if (self.db.profile.syncData.nameplates.special.NamePlateSize) then
-						C_NamePlate.SetNamePlateSize(self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2])
+						if (not self:IsForever()) then-- Breaks Edit Mode
+							C_NamePlate.SetNamePlateSize(self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2])
+						end
 					end
 				else -- Old Nameplate Size Func
 					if (self.db.profile.syncData.nameplates.special.NamePlateEnemyClickThrough) then
