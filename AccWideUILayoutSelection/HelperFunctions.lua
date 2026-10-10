@@ -79,7 +79,7 @@ end
 
 
 function AccWideUIAceAddon:IsUsingGamepadUI()
-	return(C_InputInterfaceStyle and C_InputInterfaceStyle.GetCurrentStyle and C_InputInterfaceStyle.GetCurrentStyle() == 1)
+	return(InputUtil and InputUtil.IsGamepadUIEnabled and InputUtil.IsGamepadUIEnabled() == true)
 end
 
 

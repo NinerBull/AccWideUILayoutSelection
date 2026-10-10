@@ -731,7 +731,7 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 				end
 				
 				if (C_NamePlate.GetNamePlateSize) then
-					if (not self:IsForever()) then-- Breaks Edit Mode
+					if (not self:IsForever()) then -- Breaks Edit Mode
 						self.db.profile.syncData.nameplates.special.NamePlateSize = {}
 						self.db.profile.syncData.nameplates.special.NamePlateSize[1], self.db.profile.syncData.nameplates.special.NamePlateSize[2] = C_NamePlate.GetNamePlateSize()
 					end
