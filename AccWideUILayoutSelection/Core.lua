@@ -72,27 +72,16 @@ function AccWideUIAceAddon:OnEnable()
 	end
 
 
-	C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
-
-	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
-		if (self.db.global.printDebugTextToChat == true) then
-			self:Print("[Zone Map] Saving Map Coords.")
-		end
-
-		-- Save Zone Map Coords
-		if ((self:SupportsGameFunction("battlefieldMap")) and (self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
-			if self.db.global.useScreenSizeSpecificSettings == true then
-				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
-				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
-			else
-				self.db.profile.syncData.battlefieldMap.options.position = {}
-				self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
-			end
-			
-			--self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity or 0.7
-			
-		end
-	end)
+	-- Only force-load Blizzard_BattlefieldMap when zone map sync is on; otherwise hook it whenever
+	-- it does load (Shift+M, another addon, or the sync being turned on later).
+	if (self.db.profile.syncToggles.battlefieldMap == true) then
+		self:EnsureBattlefieldMapLoaded()
+	elseif (C_AddOns.IsAddOnLoaded("Blizzard_BattlefieldMap")) then
+		self:HookBattlefieldMap()
+	end
+	if (not (BattlefieldMapTab and self:IsHooked(BattlefieldMapTab, "StopMovingOrSizing"))) then
+		self:RegisterEvent("ADDON_LOADED")
+	end
 
 
 	if (self:SupportsGameFunction("editModeLayout")) then
@@ -642,14 +631,73 @@ end
 
 
 
+function AccWideUIAceAddon:HookBattlefieldMap()
+	if (not BattlefieldMapTab or self:IsHooked(BattlefieldMapTab, "StopMovingOrSizing")) then
+		return
+	end
+
+	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Zone Map] Saving Map Coords.")
+		end
+
+		-- Save Zone Map Coords
+		if ((self:SupportsGameFunction("battlefieldMap")) and (self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
+			-- Read both coordinates first so x and y always land in the same table
+			local thisCenterX, thisCenterY = BattlefieldMapTab:GetCenter()
+			if self.db.global.useScreenSizeSpecificSettings == true then
+				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
+			else
+				self.db.profile.syncData.battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
+			end
+			
+			--self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity or 0.7
+			
+		end
+	end)
+end
+
+function AccWideUIAceAddon:EnsureBattlefieldMapLoaded()
+	if (not C_AddOns.IsAddOnLoaded("Blizzard_BattlefieldMap")) then
+		C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
+	end
+	self:HookBattlefieldMap()
+end
+
+function AccWideUIAceAddon:ADDON_LOADED(event, addonName)
+	if (addonName == "Blizzard_BattlefieldMap") then
+		self:HookBattlefieldMap()
+		self:UnregisterEvent("ADDON_LOADED")
+	end
+end
+
+
+-- Debounced channel manager. CHANNEL_UI_UPDATE fires in bursts (e.g. at login as each channel joins), and each
+-- zone change used to add another 5s timer without cancelling the last. Keep at most one pending run: a new
+-- request only replaces it if it asks for a later time, so a burst collapses into one run at its end.
+-- Uses C_Timer rather than AceTimer so the CancelAllTimers() calls elsewhere can't drop a queued run.
+function AccWideUIAceAddon:QueueBlizzChannelManager(delay)
+	local runAt = GetTime() + delay
+	if (self.TempData.ChannelManagerTimer) then
+		if (self.TempData.ChannelManagerRunAt and self.TempData.ChannelManagerRunAt >= runAt) then
+			return
+		end
+		self.TempData.ChannelManagerTimer:Cancel()
+	end
+	self.TempData.ChannelManagerRunAt = runAt
+	self.TempData.ChannelManagerTimer = C_Timer.NewTimer(delay, function()
+		self.TempData.ChannelManagerTimer = nil
+		self.TempData.ChannelManagerRunAt = nil
+		self:BlizzChannelManager()
+	end)
+end
+
 function AccWideUIAceAddon:CHANNEL_UI_UPDATE(event, arg1, arg2)
-	self:BlizzChannelManager()
+	self:QueueBlizzChannelManager(1)
 end
 
 function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
-	self:ScheduleTimer(function()
-		self:BlizzChannelManager()
-	end, 5)
+	self:QueueBlizzChannelManager(5)
 end
 
 function AccWideUIAceAddon:CINEMATIC_START(event, arg1, arg2)

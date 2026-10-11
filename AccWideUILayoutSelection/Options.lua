@@ -1262,6 +1262,7 @@ function AccWideUIAceAddon:GenerateOptions()
 								width = thisCheckboxWidth2,
 								order = 1,
 								func = function()
+									AccWideUIAceAddon:EnsureBattlefieldMapLoaded() -- the zone map is no longer always preloaded
 									BattlefieldMapTab:ClearAllPoints()
 									BattlefieldMapTab:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 									--BattlefieldMapTab:Show()
