@@ -642,14 +642,32 @@ end
 
 
 
+-- Debounced channel manager. CHANNEL_UI_UPDATE fires in bursts (e.g. at login as each channel joins), and each
+-- zone change used to add another 5s timer without cancelling the last. Keep at most one pending run: a new
+-- request only replaces it if it asks for a later time, so a burst collapses into one run at its end.
+-- Uses C_Timer rather than AceTimer so the CancelAllTimers() calls elsewhere can't drop a queued run.
+function AccWideUIAceAddon:QueueBlizzChannelManager(delay)
+	local runAt = GetTime() + delay
+	if (self.TempData.ChannelManagerTimer) then
+		if (self.TempData.ChannelManagerRunAt and self.TempData.ChannelManagerRunAt >= runAt) then
+			return
+		end
+		self.TempData.ChannelManagerTimer:Cancel()
+	end
+	self.TempData.ChannelManagerRunAt = runAt
+	self.TempData.ChannelManagerTimer = C_Timer.NewTimer(delay, function()
+		self.TempData.ChannelManagerTimer = nil
+		self.TempData.ChannelManagerRunAt = nil
+		self:BlizzChannelManager()
+	end)
+end
+
 function AccWideUIAceAddon:CHANNEL_UI_UPDATE(event, arg1, arg2)
-	self:BlizzChannelManager()
+	self:QueueBlizzChannelManager(1)
 end
 
 function AccWideUIAceAddon:ZONE_CHANGED_NEW_AREA(event, arg1, arg2)
-	self:ScheduleTimer(function()
-		self:BlizzChannelManager()
-	end, 5)
+	self:QueueBlizzChannelManager(5)
 end
 
 function AccWideUIAceAddon:CINEMATIC_START(event, arg1, arg2)
