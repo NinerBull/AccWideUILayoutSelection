@@ -32,15 +32,24 @@ function AccWideUIAceAddon:ExportProfile()
 		thisExportTable.syncData.tutorialTooltips.cvars = {}
 		thisExportTable.syncData.systemGraphics.cvars = {}
 		thisExportTable.syncData.systemAudio.cvars = {}
-		thisExportTable.syncData.editModeLayoutID = "unset"
-		if (thisExportTable.syncData.screenResolutionSpecific and #thisExportTable.syncData.screenResolutionSpecific > 0) then
+		-- Edit Mode layout IDs are indexes into this account's own layout list, so don't export them.
+		-- nil matches the defaults; LoadEditModeSettings only switches layout for a stored ID.
+		thisExportTable.syncData.editModeLayoutID = nil
+		thisExportTable.syncData.editModeLayoutIDGamepad = nil
+		-- screenResolutionSpecific is keyed by strings ("1920x1080"), so the # operator is always 0 here; use pairs()
+		if (type(thisExportTable.syncData.screenResolutionSpecific) == "table") then
 			for k, v in pairs(thisExportTable.syncData.screenResolutionSpecific) do
-				thisExportTable.syncData.screenResolutionSpecific[k].editModeLayoutID = "unset"
+				if (type(v) == "table") then
+					v.editModeLayoutID = nil
+					v.editModeLayoutIDGamepad = nil
+				end
 			end
 		end
-		if (thisExportTable.syncData.chat.windows and #thisExportTable.syncData.chat.windows > 0) then
+		if (type(thisExportTable.syncData.chat.windows) == "table") then
 			for k, v in pairs(thisExportTable.syncData.chat.windows) do
-				thisExportTable.syncData.chat.windows[k].ChatChannelsVisible = nil
+				if (type(v) == "table") then
+					v.ChatChannelsVisible = nil
+				end
 			end
 		end
 		
