@@ -366,10 +366,22 @@ function AccWideUIAceAddon:ImportGraphicsSoundSettings()
 					
 					if thisImportTableEx then
 					
-						if type(thisImportTableEx) == "table" and thisImportTableEx.AWIGSData then
+						if type(thisImportTableEx) == "table" and thisImportTableEx.AWIGSData and type(thisImportTableEx.values) == "table" then
+						
+							-- Only apply CVars this addon exports (the graphics and audio lists) that exist in this client
+							local allowedCVars = {}
+							for _, cvarName in pairs(self.CVars.System_Graphics) do
+								allowedCVars[cvarName] = true
+							end
+							for _, cvarName in pairs(self.CVars.System_Audio) do
+								allowedCVars[cvarName] = true
+							end
 						
 							for k, v in pairs(thisImportTableEx.values) do
-								SetCVar(k, v)
+								local valueType = type(v)
+								if (allowedCVars[k] and GetCVar(k) ~= nil and (valueType == "string" or valueType == "number" or valueType == "boolean")) then
+									SetCVar(k, v)
+								end
 							end
 												
 							self:Print(L["ACCWUI_GS_IMPORT_SUCCESS"])
