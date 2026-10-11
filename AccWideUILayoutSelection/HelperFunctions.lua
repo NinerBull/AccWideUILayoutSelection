@@ -8,6 +8,20 @@ function AccWideUIAceAddon:ToBoolean(str)
 	return bool
 end
 
+-- Only call SetCVar when the value actually differs. Saved values come from GetCVar, so on a typical
+-- load most of them already match and the write (and any UI refresh it triggers) can be skipped.
+-- Anything that doesn't compare equal as a string still goes through a normal SetCVar.
+function AccWideUIAceAddon:SetCVarIfChanged(cvarName, value)
+	if (value == nil) then
+		return
+	end
+	local current = GetCVar(cvarName)
+	if (current ~= nil and tostring(current) == tostring(value)) then
+		return
+	end
+	SetCVar(cvarName, value)
+end
+
 function AccWideUIAceAddon:GetPlayerName()
 	if (NameUtil and NameUtil.GetUnmodifiedUnitFullName) then
 		return(NameUtil.GetUnmodifiedUnitFullName("player"))

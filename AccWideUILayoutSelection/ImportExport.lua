@@ -380,7 +380,7 @@ function AccWideUIAceAddon:ImportGraphicsSoundSettings()
 							for k, v in pairs(thisImportTableEx.values) do
 								local valueType = type(v)
 								if (allowedCVars[k] and GetCVar(k) ~= nil and (valueType == "string" or valueType == "number" or valueType == "boolean")) then
-									SetCVar(k, v)
+									self:SetCVarIfChanged(k, v)
 								end
 							end
 												

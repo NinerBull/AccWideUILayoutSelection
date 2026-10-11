@@ -51,7 +51,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				for k, v in pairs(AccWideUIAceAddon.CVars.ActionBars) do
 					if (self.db.profile.syncData.actionBars.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.actionBars.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.actionBars.cvars[v])
 					end
 				end
 				
@@ -105,7 +105,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				for k, v in pairs(self.CVars.RaidFrames) do
 					if (self.db.profile.syncData.raidFrames.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.raidFrames.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.raidFrames.cvars[v])
 					end
 				end
 			
@@ -238,7 +238,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							
 				for k, v in pairs(self.CVars.BlockChannelInvites) do
 					if (self.db.profile.syncData.blockChannelInvites.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.blockChannelInvites.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.blockChannelInvites.cvars[v])
 					end
 				end
 				
@@ -254,7 +254,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							
 				for k, v in pairs(self.CVars.BlockTrades) do
 					if (self.db.profile.syncData.blockTrades.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.blockTrades.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.blockTrades.cvars[v])
 					end
 				end
 				
@@ -288,7 +288,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.TutorialTooltip) do
 					if (self.db.profile.syncData.tutorialTooltips.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.tutorialTooltips.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.tutorialTooltips.cvars[v])
 					end
 				end
 			end 
@@ -305,7 +305,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.AutoLoot) do
 					if (self.db.profile.syncData.autoLoot.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.autoLoot.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.autoLoot.cvars[v])
 					end
 				end
 			
@@ -322,7 +322,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.SoftTarget) do
 					if (self.db.profile.syncData.softTarget.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.softTarget.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.softTarget.cvars[v])
 					end
 				end
 			
@@ -341,7 +341,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				for k, v in pairs(self.CVars.BattlefieldMap) do
 					if (self.db.profile.syncData.battlefieldMap.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.battlefieldMap.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.battlefieldMap.cvars[v])
 					end
 				end
 				
@@ -479,7 +479,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.SelfCast) do
 					if (self.db.profile.syncData.selfCast.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.selfCast.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.selfCast.cvars[v])
 					end
 				end
 			
@@ -497,7 +497,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.WorldMap) do
 					if (self.db.profile.syncData.worldMap.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.worldMap.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.worldMap.cvars[v])
 					end
 				end
 			
@@ -515,7 +515,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.Minimap) do
 					if (self.db.profile.syncData.minimap.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.minimap.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.minimap.cvars[v])
 					end
 				end
 				
@@ -539,7 +539,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.CalendarFilters) do
 					if (self.db.profile.syncData.calendarFilters.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.calendarFilters.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.calendarFilters.cvars[v])
 					end
 				end
 			
@@ -556,7 +556,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.Camera) do
 					if (self.db.profile.syncData.camera.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.camera.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.camera.cvars[v])
 					end
 				end
 			
@@ -573,7 +573,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.Nameplates) do
 					if (self.db.profile.syncData.nameplates.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.nameplates.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.nameplates.cvars[v])
 					end
 				end
 				
@@ -633,7 +633,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.Gamepad) do
 					if (self.db.profile.syncData.gamepad.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.gamepad.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.gamepad.cvars[v])
 					end
 				end
 			
@@ -649,7 +649,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.CombatMisc) do
 					if (self.db.profile.syncData.combatMisc.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.combatMisc.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.combatMisc.cvars[v])
 					end
 				end
 			
@@ -665,7 +665,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.UIMisc) do
 					if (self.db.profile.syncData.uiMisc.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.uiMisc.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.uiMisc.cvars[v])
 					end
 				end
 			
@@ -681,7 +681,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.LossOfControl) do
 					if (self.db.profile.syncData.lossOfControl.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.lossOfControl.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.lossOfControl.cvars[v])
 					end
 				end
 			
@@ -698,7 +698,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.ExternalDefensives) do
 					if (self.db.profile.syncData.externalDefensives.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.externalDefensives.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.externalDefensives.cvars[v])
 					end
 				end
 			
@@ -715,7 +715,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.MouseoverCast) do
 					if (self.db.profile.syncData.mouseoverCast.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.mouseoverCast.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.mouseoverCast.cvars[v])
 					end
 				end
 			
@@ -732,7 +732,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.EmpowerTap) do
 					if (self.db.profile.syncData.empowerTap.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.empowerTap.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.empowerTap.cvars[v])
 					end
 				end
 			
@@ -749,7 +749,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.AssistedCombat) do
 					if (self.db.profile.syncData.assistedCombat.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.assistedCombat.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.assistedCombat.cvars[v])
 					end
 				end
 			
@@ -766,7 +766,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.CooldownViewer) do
 					if (self.db.profile.syncData.cooldownViewer.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.cooldownViewer.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.cooldownViewer.cvars[v])
 					end
 				end
 				
@@ -879,7 +879,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				for k, v in pairs(self.CVars.DamageMeter) do
 					if (self.db.profile.syncData.damageMeter.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.damageMeter.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.damageMeter.cvars[v])
 					end
 				end
 				
@@ -896,7 +896,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.SpellOverlay) do
 					if (self.db.profile.syncData.spellOverlay.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.spellOverlay.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.spellOverlay.cvars[v])
 					end
 				end
 				
@@ -913,7 +913,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 				for k, v in pairs(self.CVars.ArenaFrames) do
 					if (self.db.profile.syncData.arenaFrames.cvars[v] ~= nil) then
-						SetCVar(v, self.db.profile.syncData.arenaFrames.cvars[v])
+						self:SetCVarIfChanged(v, self.db.profile.syncData.arenaFrames.cvars[v])
 					end
 				end
 			
@@ -931,7 +931,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				for line in self.db.profile.syncData.customCVars.cvarList:gmatch("([^\n]*)\n?") do
 					line = line:gsub("[^%w]+", "")
 					if (line ~= "" and GetCVar(line) ~= nil and self.db.profile.syncData.customCVars.cvarData[line] ~= nil) then
-						SetCVar(line, self.db.profile.syncData.customCVars.cvarData[line])
+						self:SetCVarIfChanged(line, self.db.profile.syncData.customCVars.cvarData[line])
 					end
 				end
 			
@@ -1544,7 +1544,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					
 					for k, v in pairs(self.CVars.System_Graphics) do
 						if (self.db.profile.syncData.systemGraphics.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.systemGraphics.cvars[v])
+							self:SetCVarIfChanged(v, self.db.profile.syncData.systemGraphics.cvars[v])
 						end
 					end
 					
@@ -1560,7 +1560,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					
 					for k, v in pairs(self.CVars.System_Audio) do
 						if (self.db.profile.syncData.systemAudio.cvars[v] ~= nil) then
-							SetCVar(v, self.db.profile.syncData.systemAudio.cvars[v])
+							self:SetCVarIfChanged(v, self.db.profile.syncData.systemAudio.cvars[v])
 						end
 					end
 					
