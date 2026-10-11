@@ -895,7 +895,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				end
 			
 				for k, v in pairs(self.CVars.SpellOverlay) do
-					if (self.db.profile.syncData.spellOverlay.cvars ~= nil) then
+					if (self.db.profile.syncData.spellOverlay.cvars[v] ~= nil) then
 						SetCVar(v, self.db.profile.syncData.spellOverlay.cvars[v])
 					end
 				end
