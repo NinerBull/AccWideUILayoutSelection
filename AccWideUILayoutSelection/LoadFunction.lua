@@ -337,7 +337,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					self:Print("[Zone Map] Loading Settings.")
 				end
 				
-				C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
+				self:EnsureBattlefieldMapLoaded() -- also installs the move hook if needed
 				
 				for k, v in pairs(self.CVars.BattlefieldMap) do
 					if (self.db.profile.syncData.battlefieldMap.cvars[v] ~= nil) then

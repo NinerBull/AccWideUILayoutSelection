@@ -72,27 +72,16 @@ function AccWideUIAceAddon:OnEnable()
 	end
 
 
-	C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
-
-	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
-		if (self.db.global.printDebugTextToChat == true) then
-			self:Print("[Zone Map] Saving Map Coords.")
-		end
-
-		-- Save Zone Map Coords
-		if ((self:SupportsGameFunction("battlefieldMap")) and (self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
-			-- Read both coordinates first so x and y always land in the same table
-			local thisCenterX, thisCenterY = BattlefieldMapTab:GetCenter()
-			if self.db.global.useScreenSizeSpecificSettings == true then
-				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
-			else
-				self.db.profile.syncData.battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
-			end
-			
-			--self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity or 0.7
-			
-		end
-	end)
+	-- Only force-load Blizzard_BattlefieldMap when zone map sync is on; otherwise hook it whenever
+	-- it does load (Shift+M, another addon, or the sync being turned on later).
+	if (self.db.profile.syncToggles.battlefieldMap == true) then
+		self:EnsureBattlefieldMapLoaded()
+	elseif (C_AddOns.IsAddOnLoaded("Blizzard_BattlefieldMap")) then
+		self:HookBattlefieldMap()
+	end
+	if (not (BattlefieldMapTab and self:IsHooked(BattlefieldMapTab, "StopMovingOrSizing"))) then
+		self:RegisterEvent("ADDON_LOADED")
+	end
 
 
 	if (self:SupportsGameFunction("editModeLayout")) then
@@ -640,6 +629,47 @@ function AccWideUIAceAddon:LOADING_SCREEN_DISABLED(event, arg1, arg2)
 
 end
 
+
+
+function AccWideUIAceAddon:HookBattlefieldMap()
+	if (not BattlefieldMapTab or self:IsHooked(BattlefieldMapTab, "StopMovingOrSizing")) then
+		return
+	end
+
+	self:SecureHook(BattlefieldMapTab, "StopMovingOrSizing", function()
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Zone Map] Saving Map Coords.")
+		end
+
+		-- Save Zone Map Coords
+		if ((self:SupportsGameFunction("battlefieldMap")) and (self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
+			-- Read both coordinates first so x and y always land in the same table
+			local thisCenterX, thisCenterY = BattlefieldMapTab:GetCenter()
+			if self.db.global.useScreenSizeSpecificSettings == true then
+				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
+			else
+				self.db.profile.syncData.battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
+			end
+			
+			--self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity or 0.7
+			
+		end
+	end)
+end
+
+function AccWideUIAceAddon:EnsureBattlefieldMapLoaded()
+	if (not C_AddOns.IsAddOnLoaded("Blizzard_BattlefieldMap")) then
+		C_AddOns.LoadAddOn("Blizzard_BattlefieldMap")
+	end
+	self:HookBattlefieldMap()
+end
+
+function AccWideUIAceAddon:ADDON_LOADED(event, addonName)
+	if (addonName == "Blizzard_BattlefieldMap") then
+		self:HookBattlefieldMap()
+		self:UnregisterEvent("ADDON_LOADED")
+	end
+end
 
 
 -- Debounced channel manager. CHANNEL_UI_UPDATE fires in bursts (e.g. at login as each channel joins), and each
