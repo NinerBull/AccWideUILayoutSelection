@@ -81,12 +81,12 @@ function AccWideUIAceAddon:OnEnable()
 
 		-- Save Zone Map Coords
 		if ((self:SupportsGameFunction("battlefieldMap")) and (self.db.profile.syncToggles.battlefieldMap == true) and (self.db.global.hasDoneFirstTimeSetup == true)) then
+			-- Read both coordinates first so x and y always land in the same table
+			local thisCenterX, thisCenterY = BattlefieldMapTab:GetCenter()
 			if self.db.global.useScreenSizeSpecificSettings == true then
-				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
-				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
+				self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
 			else
-				self.db.profile.syncData.battlefieldMap.options.position = {}
-				self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
+				self.db.profile.syncData.battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
 			end
 			
 			--self.db.profile.syncData.battlefieldMap.options.opacity = OpacityFrameSlider:GetValue() or BattlefieldMapOptions.opacity or 0.7

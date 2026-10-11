@@ -229,12 +229,12 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 						self.db.profile.syncData.battlefieldMap.options.showPlayers = BattlefieldMapOptions.showPlayers 
 					end
 					
+					-- Read both coordinates first so x and y always land in the same table
+					local thisCenterX, thisCenterY = BattlefieldMapTab:GetCenter()
 					if self.db.global.useScreenSizeSpecificSettings == true then
-						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = {}
-						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
-					else 
-						self.db.profile.syncData.battlefieldMap.options.position = {}
-						self.db.profile.syncData.battlefieldMap.options.position.x, self.db.profile.syncData.battlefieldMap.options.position.y = BattlefieldMapTab:GetCenter()
+						self.db.profile.syncData.screenResolutionSpecific[self.TempData.ScreenRes].battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
+					else
+						self.db.profile.syncData.battlefieldMap.options.position = { x = thisCenterX, y = thisCenterY }
 					end
 				
 				end
