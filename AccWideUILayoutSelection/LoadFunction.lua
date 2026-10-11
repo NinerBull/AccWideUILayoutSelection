@@ -1041,6 +1041,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				
 				-- Individual Chat Window/Tab Settings
+				local dockUpdateScheduled = false -- one FCF_DockUpdate covers every window changed below
 				for thisChatFrame = 1, NUM_CHAT_WINDOWS do -- 12.0.0 Constants.ChatFrameConstants.MaxChatWindows
 					
 					--local thisChatFrameVar = _G["ChatFrame" .. thisChatFrame]
@@ -1348,9 +1349,12 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 									
 								end, 4)]]
 								
-								self:ScheduleTimer(function()
-									FCF_DockUpdate()
-								end, 5.5)
+								if (not dockUpdateScheduled) then
+									dockUpdateScheduled = true
+									self:ScheduleTimer(function()
+										FCF_DockUpdate()
+									end, 5.5)
+								end
 								
 								if (self.db.global.printDebugTextToChat == true) then
 									self:Print("[Chat Window " .. thisChatFrame .. "] Triggering FCF Update.")
@@ -1374,24 +1378,27 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 					
 					end
 					
-					self:ScheduleTimer(function()
+					-- Not per-window work: schedule it once, not once per pass of the loop
+					if (thisChatFrame == 1) then
+						self:ScheduleTimer(function()
 					
-						if (C_AddOns.IsAddOnLoaded("ElvUI") == true) then
-							-- Redock chat windows in ElvUI if panel docking is enabled
-							local E, L, V, P, G = unpack(ElvUI);
-							local CH = E:GetModule('Chat');
+							if (C_AddOns.IsAddOnLoaded("ElvUI") == true) then
+								-- Redock chat windows in ElvUI if panel docking is enabled
+								local E, L, V, P, G = unpack(ElvUI);
+								local CH = E:GetModule('Chat');
 							
-							if (CH.LeftChatWindow ~= nil) then
-								CH:PositionChat(CH.LeftChatWindow);
+								if (CH.LeftChatWindow ~= nil) then
+									CH:PositionChat(CH.LeftChatWindow);
+								end
+							
+								if (CH.RightChatWindow ~= nil) then
+									CH:PositionChat(CH.RightChatWindow);
+								end
+							
 							end
-							
-							if (CH.RightChatWindow ~= nil) then
-								CH:PositionChat(CH.RightChatWindow);
-							end
-							
-						end
 						
-					end, 5)
+						end, 5)
+					end
 					
 					
 					
