@@ -3,6 +3,39 @@ local L = LibStub("AceLocale-3.0"):GetLocale("AccWideUIAceAddonLocale")
 -- C_EncodingUtil.EncodeBase64(C_EncodingUtil.CompressString(C_EncodingUtil.SerializeCBOR(TableHere)))
 -- C_EncodingUtil.DeserializeCBOR(C_EncodingUtil.DecompressString(C_EncodingUtil.DecodeBase64(Table)))
 
+
+-- Merge an imported (untrusted) table into an existing one in place.
+-- Only string/number keys and string/number/boolean/table values are taken. A table is never
+-- replaced by a non-table or the reverse, so a bad or older string can't turn a structure the addon
+-- indexes into (e.g. syncData.chat) into a plain value. Anything the import lacks keeps the existing
+-- (default) value.
+function AccWideUIAceAddon:MergeImportedTable(target, imported, depth)
+	depth = depth or 0
+	if (depth > 12) then
+		return
+	end
+	for k, v in pairs(imported) do
+		local keyType = type(k)
+		if (keyType == "string" or keyType == "number") then
+			local valueType = type(v)
+			local existing = target[k]
+			if (valueType == "table") then
+				if (existing == nil) then
+					existing = {}
+					target[k] = existing
+					self:MergeImportedTable(existing, v, depth + 1)
+				elseif (type(existing) == "table") then
+					self:MergeImportedTable(existing, v, depth + 1)
+				end
+			elseif (valueType == "string" or valueType == "number" or valueType == "boolean") then
+				if (type(existing) ~= "table") then
+					target[k] = v
+				end
+			end
+		end
+	end
+end
+
 function AccWideUIAceAddon:ExportProfile()
 
 	if not InCombatLockdown() then
@@ -156,10 +189,14 @@ function AccWideUIAceAddon:ImportProfile()
 					
 					if thisImportTableEx then
 					
-						if type(thisImportTableEx) == "table" and thisImportTableEx.profileSaveVer then
+						if type(thisImportTableEx) == "table" and type(thisImportTableEx.profileSaveVer) == "number" and type(thisImportTableEx.syncData) == "table" and type(thisImportTableEx.syncToggles) == "table" then
 						
 							--Import it!
-							self.db.profile = thisImportTableEx
+							-- Assigning to self.db.profile only replaces AceDB's reference; the saved table
+							-- (db.sv.profiles[key]) is untouched, so the import was lost on reload. Reset the real
+							-- profile in place (re-applying defaults, no callbacks), then merge the import over it.
+							self.db:ResetProfile(true, true)
+							self:MergeImportedTable(self.db.profile, thisImportTableEx)
 							
 							self:Print(L["ACCWUI_IE_IMPORT_SUCCESS"])
 							
