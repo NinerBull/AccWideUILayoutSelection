@@ -192,22 +192,17 @@ end
 function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 
 	-- Profile Upgrade
-	if (self.db.profile.profileSaveVer and self.db.profile.profileSaveVer < 3) then
+	if (self.db.profile.profileSaveVer and self.db.profile.profileSaveVer < 5) then
 	
 		if (GetCVar("spellActivationOverlayOpacity") == "0") then
 			SetCVar("spellActivationOverlayOpacity", GetCVarDefault("spellActivationOverlayOpacity"))
 		end
-	
-	end
-	
-	if (self.db.profile.profileSaveVer and self.db.profile.profileSaveVer < 5) then
 	
 		if (self:IsForever()) then
 			self.db.profile.syncToggles.actionBars = false -- Disable Action Bar sync by default in Forever as it can cause taint if user doesn't /reload.
 		end
 	
 	end
-	
 	
 	
 	-- Edit Mode Spec Settings
