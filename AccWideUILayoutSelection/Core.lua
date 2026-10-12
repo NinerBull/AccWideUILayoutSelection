@@ -319,6 +319,19 @@ function AccWideUIAceAddon:BlizzChannelManager()
 
 	if (C_AddOns.IsAddOnLoaded("BlockBlizzChatChannels") == false) then
 	
+		if (self.db.global.printDebugTextToChat == true) then
+			self:Print("[Channel Manager] Channel Manager Triggered.")
+		end
+		
+		if (IsInInstance()) then
+		
+			if (self.db.global.printDebugTextToChat == true) then
+				self:Print("[Channel Manager] Not managing Chat Channels while in an Instance.")
+			end
+		
+			return
+		end
+	
 		if (C_ChatInfo and C_ChatInfo.InChatMessagingLockdown and C_ChatInfo.InChatMessagingLockdown()) then
 		
 			if (self.db.global.printDebugTextToChat == true) then
