@@ -83,14 +83,25 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 				
 				
 				self:ScheduleTimer(function() 
-					if (not InCombatLockdown()) then
+					if (not InCombatLockdown() and haveActionBarsChanged) then
 						securecall(MultiActionBar_Update) -- Settings.SetValue("PROXY_SHOW_ACTIONBAR_2", false);
+						
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Action Bars] Bar visibility changed.")
+						end
 						
 						if (self:IsForever() and haveActionBarsChanged) then
 							StaticPopup_Show("ACCWIDEUI_LOAD_ACTIONBAR_REQUIREDRELOAD")
 						end
 					end
-				end, 5)
+					
+					if (not haveActionBarsChanged) then
+						if (self.db.global.printDebugTextToChat == true) then
+							self:Print("[Action Bars] Bar visibility not changed.")
+						end
+					end
+					
+				end, 6)
 			
 			end 
 
