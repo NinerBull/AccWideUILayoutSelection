@@ -221,9 +221,9 @@ L["ACCWUI_GS_IMPORT_DESC"] = "将导入字符串粘贴到下面的框中，然�
 L["ACCWUI_GS_IMPORT_SUCCESS"] = "导入完成！"
 L["ACCWUI_GS_IMPORT_FAIL"] = "导入失败。您输入的字符串无效。"
 
-L["ACCWUI_TAINTABLES_TITLE"] = WOWLABS_MAINLINE .. "专属"
-L["ACCWUI_TAINTABLES_DESC"] = "此选项卡包含" .. WOWLABS_MAINLINE .. "特有的各种可同步设置，这些设置只能手动保存或加载，因为在战斗中加载它们会不可逆地污染界面，直到您 /reload 界面。\n您需要为每个希望使用这些设置的角色手动加载这些设置。"
-L["ACCWUI_TAINTABLES_DESC_SHORT"] = "包含" .. WOWLABS_MAINLINE .. "特有的各种可同步设置，只能手动保存或加载"
+L["ACCWUI_TAINTABLES_TITLE"] = "客户端专属"
+L["ACCWUI_TAINTABLES_DESC"] = "此标签页包含各种可同步的、专属于此游戏客户端的设置，这些设置只能手动保存或加载，因为在战斗中加载它们会不可逆地污染界面，直到您 /reload 界面。\n您需要为每个希望使用这些设置的角色手动加载这些设置。"
+L["ACCWUI_TAINTABLES_DESC_SHORT"] = "包含各种可同步的、专属于此游戏客户端的设置，只能手动保存或加载"
 L["ACCWUI_TAINTABLES_SETTINGSLOADED"] = "设置已加载。"
 L["ACCWUI_TAINTABLES_ACTIONBARLOADED"] = "动作条显示设置已更改。"
 L["ACCWUI_TAINTABLES_RELOADNOW"] = "你应该立即重载界面，以防止在战斗中发生任何界面污染问题。"
