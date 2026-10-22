@@ -13,7 +13,7 @@ AccWideUIAceAddon.TempData = {
 	IsCurrentlyLoadingSettings = false,
 	HasPartiallyLoaded = false,
 	LoadSettingsAfterCombat = false,
-	ProfileSaveVer = 5
+	ProfileSaveVer = 6
 }
 
 
@@ -197,11 +197,7 @@ function AccWideUIAceAddon:DoProfileInit(event, db, profileKey)
 		if (GetCVar("spellActivationOverlayOpacity") == "0") then
 			SetCVar("spellActivationOverlayOpacity", GetCVarDefault("spellActivationOverlayOpacity"))
 		end
-	
-		if (self:IsForever()) then
-			self.db.profile.syncToggles.actionBars = false -- Disable Action Bar sync by default in Forever as it can cause taint if user doesn't /reload.
-		end
-	
+
 	end
 	
 	

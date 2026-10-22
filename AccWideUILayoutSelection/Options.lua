@@ -28,7 +28,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 			syncToggles = {
 				editModeLayout = true,
 				editModeOnByDefault = true,
-				actionBars = (not self:IsForever() and true or false), -- Breaks in Forever unless UI is reloaded
+				actionBars = true,
 				nameplates = true,
 				raidFrames = true,
 				blockChannelInvites = true,
