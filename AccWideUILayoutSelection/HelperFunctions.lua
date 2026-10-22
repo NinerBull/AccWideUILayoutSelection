@@ -30,7 +30,7 @@ function AccWideUIAceAddon:GetPlayerName()
 		if (thisCharName and thisRealm) then
 			return(string.join("-", thisCharName, thisRealm))
 		elseif (thisCharName) then
-			return(thisCharName)
+			return(string.join("-", thisCharName, GetNormalizedRealmName()))
 		else
 			return CHARACTER
 		end
