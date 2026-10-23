@@ -16,6 +16,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Subversion
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y subversion
+        
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
