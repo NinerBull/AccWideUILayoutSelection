@@ -12,11 +12,14 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			self.TempData.LoadSettingsAfterCombat = true
 		else
 			self.TempData.LoadSettingsAfterCombat = false
-			
-
+		
 			doNotLoadChatOrBagSettings = doNotLoadChatOrBagSettings or false
 			doNotLoadSystemSettings = doNotLoadSystemSettings or false
-			self.TempData.IsCurrentlyLoadingSettings = true
+			
+			self:ScheduleTimer(function()
+				self.TempData.IsCurrentlyLoadingSettings = true
+			end, 6.5)
+			
 		
 			if (self.db.global.printWhenLastSaved == true) then
 				self:Printf(L["ACCWUI_LOAD_LASTUPDATED"], LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(self.db.profile.lastSaved.character), LIGHTBLUE_FONT_COLOR:WrapTextInColorCode(date("%Y-%m-%d %H:%M", self.db.profile.lastSaved.unixTime)), self.db:GetCurrentProfile())
@@ -90,7 +93,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 							self:Print("[Action Bars] Bar visibility changed.")
 						end
 						
-						if (self:IsForever() and haveActionBarsChanged) then
+						if (self:IsForever()) then
+							self:Print(string.join(" ", L["ACCWUI_TAINTABLES_ACTIONBARLOADED"], L["ACCWUI_TAINTABLES_RELOADNOW"])
 							StaticPopup_Show("ACCWIDEUI_LOAD_ACTIONBAR_REQUIREDRELOAD")
 						end
 					end
