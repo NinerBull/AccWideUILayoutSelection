@@ -94,7 +94,7 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 						end
 						
 						if (self:IsForever()) then
-							self:Print(string.join(" ", L["ACCWUI_TAINTABLES_ACTIONBARLOADED"], L["ACCWUI_TAINTABLES_RELOADNOW"])
+							self:Print(string.join(" ", L["ACCWUI_TAINTABLES_ACTIONBARLOADED"], L["ACCWUI_TAINTABLES_RELOADNOW"]))
 							StaticPopup_Show("ACCWIDEUI_LOAD_ACTIONBAR_REQUIREDRELOAD")
 						end
 					end
