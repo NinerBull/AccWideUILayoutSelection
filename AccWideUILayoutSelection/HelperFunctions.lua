@@ -23,7 +23,7 @@ function AccWideUIAceAddon:SetCVarIfChanged(cvarName, value)
 end
 
 function AccWideUIAceAddon:GetPlayerName()
-	if (NameUtil and NameUtil.GetUnmodifiedUnitFullName) then
+	if ((NameUtil and NameUtil.GetUnmodifiedUnitFullName) and (RegionalUniqueNamesEnabled and RegionalUniqueNamesEnabled())) then
 		return(NameUtil.GetUnmodifiedUnitFullName("player"))
 	elseif (UnitFullName and UnitFullName("player")) then
 		local thisCharName, thisRealm = UnitFullName("player")
@@ -94,7 +94,6 @@ function AccWideUIAceAddon:IsClassicWrathChina()
 end
 -- EO China WoW Specific
 
-
 function AccWideUIAceAddon:IsUsingGamepadUI()
 	return(InputUtil and InputUtil.IsGamepadUIEnabled and InputUtil.IsGamepadUIEnabled() == true)
 end
@@ -113,23 +112,23 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 	elseif (functionName == "empowerTap") then -- Empower Tap
 		return (self:IsModern())
 	elseif (functionName == "assistedCombat") then -- Rotation Assist (C_AssistedCombat)
-		return (self:IsRetail())
+		return (C_AssistedCombat and C_AssistedCombat.IsAvailable and C_AssistedCombat.IsAvailable())
 	elseif (functionName == "locationVisibility") then -- Location Visibility Toggle (SetAllowRecentAlliesSeeLocation)
 		return (self:IsModern())
 	elseif (functionName == "blockNeighborhoodInvites") then -- Block Neighborhood Invites (SetAutoDeclineNeighborhoodInvites)
 		return (self:IsRetail())
 	elseif (functionName == "bagOrganisation") then -- Bag Organisation (C_Container.SetBankAutosortDisabled)
-		return (self:IsRetail())
+		return (self:IsModern())
 	elseif (functionName == "damageMeter") then -- Damage Meter (C_DamageMeter)
-		return (self:IsModern())
+		return (C_DamageMeter and C_DamageMeter.IsDamageMeterAvailable and C_DamageMeter.IsDamageMeterAvailable())
 	elseif (functionName == "cooldownViewer") then -- Cooldown Manager (C_CooldownViewer)
-		return (self:IsModern())
+		return (C_CooldownViewer and C_CooldownViewer.IsCooldownViewerAvailable and C_CooldownViewer.IsCooldownViewerAvailable())
 	elseif (functionName == "externalDefensives") then -- External Defensives
 		return (self:IsModern())
 	elseif (functionName == "encounterTimeline") then -- Encounter Timeline
-		return (self:IsRetail())
+		return (C_EncounterTimeline and C_EncounterTimeline.IsFeatureAvailable and C_EncounterTimeline.IsFeatureAvailable())
 	elseif (functionName == "gamepad") then -- Gamepad
-		return (self:IsForever())
+		return (InputUtil and InputUtil.IsGamepadUISupported and InputUtil.IsGamepadUISupported())
 	elseif (functionName == "actionBars") then
 		return (not self:IsUsingGamepadUI()) -- Modifying action bars breaks if Gamepad UI is enabled
 	else

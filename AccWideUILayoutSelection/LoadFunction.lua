@@ -313,6 +313,8 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			
 			-- Auto Loot Variables
 			if (self:SupportsGameFunction("autoLoot") and self.db.profile.syncToggles.autoLoot == true and not self.TempData.HasPartiallyLoaded) then
+				
+				-- C_AutoLoot.SetUseAutoLootToggle
 			
 				if (self.db.global.printDebugTextToChat == true) then
 					self:Print("[Auto Loot] Loading Settings.")
