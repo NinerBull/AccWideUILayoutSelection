@@ -1,1 +1,1 @@
-- Updated TOC for 12.1.7
+- Minimap Tracking settings can now be synced, and is a seperate toggle from other Minimap options.
