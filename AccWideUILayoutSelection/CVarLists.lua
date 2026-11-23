@@ -353,7 +353,9 @@ AccWideUIAceAddon.CVars = {
 		"displayFreeBagSlots",
 		"showOutfitDetails",
 		"showQuestDifficultyColor",
-		"showQuestLevel"
+		"showQuestLevel",
+		"wardrobeShowAllFactions",
+		"wardrobeShowAllRaces"
 	},
 	
 	System_Graphics = {
