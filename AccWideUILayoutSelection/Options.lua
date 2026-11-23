@@ -53,6 +53,7 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				externalDefensives = true,
 				worldMap = true,
 				minimap = true,
+				minimapTracking = true,
 				calendarFilters = true,
 				camera = true,
 				gamepad = true,
@@ -158,6 +159,10 @@ function AccWideUIAceAddon:GenerateDefaultDB()
 				},
 				minimap = {
 					cvars = {}
+				},
+				minimapTracking = {
+					cvars = {},
+					special = {}
 				},
 				calendarFilters = {
 					cvars = {}
@@ -566,6 +571,14 @@ function AccWideUIAceAddon:GenerateOptions()
 										width = thisCheckboxWidth,
 										desc = L["ACCWUI_OPT_MODULES_CHK_MINIMAP_DESC"],
 										hidden = (not self:SupportsGameFunction("minimap"))
+									},
+									minimapTracking = {
+										type = "toggle",
+										name = L["ACCWUI_OPT_MODULES_CHK_MINIMAPTRACKING"],
+										order = 160,
+										width = thisCheckboxWidth,
+										desc = L["ACCWUI_OPT_MODULES_CHK_MINIMAPTRACKING_DESC"],
+										hidden = (not self:SupportsGameFunction("minimapTracking"))
 									},
 									spellOverlay = {
 										type = "toggle",

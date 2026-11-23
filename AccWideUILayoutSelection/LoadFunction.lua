@@ -547,6 +547,34 @@ function AccWideUIAceAddon:LoadUISettings(doNotLoadChatOrBagSettings, doNotLoadS
 			end 
 			
 			
+			-- Minimap Tracking Variables
+			if (self:SupportsGameFunction("minimapTracking") and self.db.profile.syncToggles.minimapTracking == true and not self.TempData.HasPartiallyLoaded) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Minimap Tracking] Loading Settings.")
+				end
+			
+				for k, v in pairs(self.CVars.MinimapTracking) do
+					if (self.db.profile.syncData.minimapTracking.cvars[v] ~= nil) then
+						self:SetCVarIfChanged(v, self.db.profile.syncData.minimapTracking.cvars[v])
+					end
+				end
+				
+				for i = 1, C_Minimap.GetNumTrackingTypes() do
+				
+					local thisTrackingType = C_Minimap.GetTrackingInfo(i)
+					
+					if (self.db.profile.syncData.minimapTracking.special[tostring(thisTrackingType.name)]) then
+											
+						MinimapUtil.SetTrackingFilterByFilterIndex(i, self.db.profile.syncData.minimapTracking.special[thisTrackingType.name] == "true" and true or false);
+					
+					end
+				
+				end
+			
+			end 
+			
+			
 			-- Calendar Filter Variables
 			if (self:SupportsGameFunction("calendarFilters") and self.db.profile.syncToggles.calendarFilters == true and not self.TempData.HasPartiallyLoaded) then
 			

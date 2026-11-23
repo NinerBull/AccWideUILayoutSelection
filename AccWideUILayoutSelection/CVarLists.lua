@@ -260,7 +260,10 @@ AccWideUIAceAddon.CVars = {
 		"minimapInsideZoom",
 		"minimapShowArchBlobs",
 		"minimapShowQuestBlobs",
-		"minimapZoom",
+		"minimapZoom"
+	},
+	
+	MinimapTracking = {
 		"minimapTrackingShowAll"
 	},
 	

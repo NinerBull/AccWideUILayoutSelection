@@ -129,6 +129,8 @@ function AccWideUIAceAddon:SupportsGameFunction(functionName)
 		return (C_EncounterTimeline and C_EncounterTimeline.IsFeatureAvailable and C_EncounterTimeline.IsFeatureAvailable())
 	elseif (functionName == "gamepad") then -- Gamepad
 		return (InputUtil and InputUtil.IsGamepadUISupported and InputUtil.IsGamepadUISupported())
+	elseif (functionName == "minimapTracking") then -- Minimap Tracking
+		return (C_Minimap and C_Minimap.GetTrackingInfo)
 	elseif (functionName == "actionBars") then
 		return (not self:IsUsingGamepadUI()) -- Modifying action bars breaks if Gamepad UI is enabled
 	else

@@ -289,6 +289,25 @@ function AccWideUIAceAddon:SaveUISettings(doNotSaveEditMode, isForced)
 			end
 			
 			
+			-- Save Minimap Tracking Settings
+			if (self:SupportsGameFunction("minimapTracking") and self.db.profile.syncToggles.minimapTracking == true) then
+			
+				if (self.db.global.printDebugTextToChat == true) then
+					self:Print("[Minimap Tracking] Saving Settings.")
+				end
+				
+				for k, v in pairs(self.CVars.MinimapTracking) do
+					self.db.profile.syncData.minimapTracking.cvars[v] = GetCVar(v) or nil
+				end
+			
+				for i = 1, C_Minimap.GetNumTrackingTypes() do
+					local thisTrackingType = C_Minimap.GetTrackingInfo(i)
+					self.db.profile.syncData.minimapTracking.special[tostring(thisTrackingType.name)] = tostring(thisTrackingType.active) or "false"
+				end
+			
+			end
+			
+			
 			-- Save Calendar Filter Settings
 			if (self:SupportsGameFunction("calendarFilters") and self.db.profile.syncToggles.calendarFilters == true) then
 			
